@@ -1,0 +1,69 @@
+.reactions-list-container {
+  padding: 0 15px;
+}
+
+.reactions-list-container .tab-content {
+  min-height: 420px;
+  max-height: 420px;
+  overflow-y: auto;
+  margin: 5px;
+}
+
+.reactions-list-container .followSearch {
+  margin-bottom: 1rem;
+  padding: 0; 
+}
+
+.reactions-list-container .nav-pills {
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.reactions-list-container .nav-pills .nav-link {
+  border-radius: 0;
+  color: black;
+  padding: 0.5rem 1.5rem;
+}
+.reactions-list-container .nav-pills .nav-link img {
+  width: 24px;
+  height: 24px;
+}
+
+.reactions-list-container .nav-pills .nav-link.active {
+  background-color: #ffffff;
+  border-bottom: 3px solid #00808b;
+}
+
+.reactions-list-container .prf-bx {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  margin: 1rem 0;
+  border-bottom: 1px solid #d8d8d8;
+  width: 98%;
+}
+
+.reactions-list-container .prf-bx a {
+  position: relative;
+}
+
+.reactions-list-container .prf-bx img.prfimg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.reactions-list-container .prf-bx img.rc-icon {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  border: none;
+}
+
+.reactions-list-container .prf-bx .usrnm {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.reactions-list-container .prf-bx .subtitle {
+  font-size: 12px;
+}

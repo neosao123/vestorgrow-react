@@ -1,0 +1,52 @@
+.parent-div {
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+
+.like-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0px 0px;
+}
+ 
+.reactions-close {
+  position: absolute;
+  top: -10px;
+  right: 0px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.reactions-holder {
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 3px 3px 30px rgba(0, 10, 10, 0.2);
+  width: 120px;
+  position: absolute;
+  left: 50px;
+}
+
+.reactions-holder span {
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reactions-holder img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}

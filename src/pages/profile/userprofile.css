@@ -1,0 +1,31 @@
+.prf-img-container {
+  position: relative;
+}
+
+.prf-img-container .prf-img {
+  display: block;
+  width: 150px !important;
+  height: 150px !important;
+  border-radius: 50% !important;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.prf-img-container .middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.prf-img-container:hover .prf-img {
+  opacity: 0.3;
+}
+
+.prf-img-container:hover .middle {
+  opacity: 1;
+}

@@ -1,0 +1,1863 @@
+@media (min-width: 576px) {
+  .modal-sm {
+    max-width: 400px;
+  }
+
+  .createPostDropDown {
+    margin-right: 20px;
+  }
+
+  .modelError {
+    width: 660px;
+  }
+
+  .lessonOwlCarousel .owl-item .lessonSlideImg img,
+  .lessonMaterialSec .lessonSlideImg img,
+  .overlayContantParent img {
+    border-radius: 15px 15px 0 0;
+  }
+
+  .learningMaterialCarouselImg img {
+    border-radius: 15px 0px 0px 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  .stickyChatBox {
+    position: sticky;
+    top: 98px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .modal-lg,
+  .modal-xl {
+    max-width: 620px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .sigUpSection {
+    max-width: 980px;
+  }
+
+  .horizLineMembership {
+    margin: 20px 0;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .main_container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .feedChatBox {
+    right: unset;
+  }
+
+  .feedChatBox {
+    width: 300px;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .loginFormLeftInner {
+    width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 2200px) {
+  .loginForm_left {
+    display: flex;
+    align-items: center;
+  }
+
+  .loginpage {
+    height: 100vh;
+  }
+
+  .loginFormLeftInner {
+    width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1200px) {
+  .settingSide_tab {
+    width: 250px;
+    padding: 16px;
+  }
+
+  .setting_contant {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+  }
+
+  .loginForm_left {
+    padding: 40px 70px;
+  }
+
+  /* .login_heading {
+        padding: 50px 0 30px;
+   }
+    */
+  .login_heading h2 {
+    font-size: 45px;
+  }
+
+  .sarchTooltip {
+    left: 27%;
+  }
+
+  .loginFormLeftInner {
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 768px) {
+  aside.themeSidebar {
+    transform: translateX(-115px);
+    transition: all 0.5s ease;
+    z-index: 9999;
+    background: transparent;
+  }
+
+  aside.themeSidebar.active {
+    transform: translateX(0px);
+  }
+
+  .mobileLogo,
+  .mobileLogo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .topHeaderLeftSec {
+    min-width: calc(100% - 192px);
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  .notificationIcon {
+    position: relative;
+  }
+
+  .notificationIcon:before {
+    content: "";
+    border-left: 1px solid #d1d1d1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .toggleIcon a {
+    color: #4e4e4e;
+    font-size: 20px;
+  }
+
+  .toggleIcon {
+    display: block;
+  }
+
+  .themeContant {
+    transition: all 0.5s ease;
+  }
+
+  .themeContant {
+    padding-left: 0px;
+  }
+
+  .socialContant {
+    padding: 32px 15px;
+  }
+
+  .socialContantInner {
+    display: flex;
+    gap: 15px;
+  }
+
+  .feedChatBox {
+    width: 100%;
+    right: 16px;
+  }
+
+  .feedChatHeading {
+    padding: 12px 12px;
+  }
+
+  .becomeMember .btnColor {
+    padding: 12px 20px;
+  }
+
+  .likeShareIcon ul li a,
+  .becomeMember .btnColor {
+    font-size: 14px;
+  }
+
+  .feedChatHeading h5 {
+    font-size: 16px;
+  }
+
+  .graphSlider:after,
+  .graphSlider:before {
+    width: 10%;
+  }
+
+  .notificationIcon .notification-circle {
+    right: 16px;
+  }
+
+  .galleryImage,
+  .galleryImage img {
+    width: 180px;
+    height: 163px;
+  }
+
+  .leftSideContant {
+    width: calc(100% - 60px);
+  }
+
+  /* .allFeedUser {
+    height: calc(100vh - 334px);
+  } */
+
+  .stickyChatBox .allFeedUser {
+    height: calc(100vh - 266px);
+  }
+
+  .trending_newsHeight.allFeedUser {
+    height: calc(100vh - 266px);
+  }
+
+  .stickyChatBox .trending_newsHeight.allFeedUser {
+    height: calc(100vh - 200px);
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .about_profile .profileCoverPic {
+    height: 220px;
+  }
+
+  .about_profile .profilePic > img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .about_profile .profilePic {
+    bottom: -50px;
+  }
+
+  .usercontentBox {
+    margin-top: 75px;
+  }
+
+  .edit_profile {
+    padding: 0 20px;
+  }
+
+  .notification_right {
+    margin-right: 0px;
+  }
+
+  .settingSide_tab ul li {
+    padding: 10px 0;
+  }
+
+  .settingSide_tab {
+    width: 200px;
+    padding: 16px;
+  }
+
+  .setting_contant {
+    width: calc(100% - 200px);
+    margin-left: 200px;
+  }
+
+  .settingsaveBtn {
+    padding: 24px 0;
+  }
+
+  .loginForm_left {
+    padding: 30px 40px;
+  }
+
+  .login_heading {
+    padding: 30px 0 20px;
+  }
+
+  /**message page responsive start**/
+  .messageChatBox {
+    gap: 0px;
+  }
+
+  .allMsgUserTxt p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .messageChatLeftHead {
+    padding: 24px 15px;
+  }
+
+  .allMsgUserInner {
+    padding: 18px 15px;
+  }
+
+  .messageScreen {
+    gap: 40px;
+  }
+
+  .galleryImage,
+  .galleryImage img {
+    width: 135px !important;
+    height: 120px !important;
+  }
+
+  .deleteMsg {
+    width: 80%;
+  }
+
+  .messageChatRight .userProfile {
+    padding: 24px 20px;
+  }
+
+  /**message page responsive end**/
+  .signUpform {
+    padding: 32px 50px;
+  }
+
+  .sigUpSection {
+    padding: 50px 15px;
+  }
+
+  .sigUpSection2 .signUphead {
+    margin-top: 50px;
+  }
+
+  .sigUpSection2 .notA_member {
+    margin: 60px 0 40px;
+  }
+
+  .signUp_emaillogo img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .choose_photo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .back_Skipbtn {
+    padding: 15px;
+  }
+
+  .sarchTooltip {
+    left: 22%;
+  }
+
+  .chatCross_icon {
+    display: block !important;
+  }
+
+  .userchatIcon {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+  }
+
+  .userchatIcon > a {
+    background: #04747d;
+    padding: 12px;
+    border-radius: 50%;
+  }
+
+  .feedChatBox {
+    width: 320px;
+  }
+
+  .socialContantInner {
+    flex-wrap: wrap;
+  }
+
+  .leftColumn {
+    width: 40%;
+  }
+
+  .middleColumn {
+    width: 57.8%;
+  }
+
+  .graphSlider:before,
+  .graphSlider:after {
+    width: 9%;
+  }
+
+  .followBtn .btn {
+    width: auto;
+  }
+
+  .lessonSlideContant,
+  .lessonSlideBtn {
+    padding: 14px;
+  }
+
+  .lessonCreated {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+
+  .sliderContant {
+    width: 50%;
+  }
+
+  .learningImgContantSlider .carousel-inner,
+  .learningImgContantSlider .carousel-inner .carousel-item {
+    height: 400px;
+  }
+
+  .learningContantSlider .carousel-inner {
+    height: 400px;
+  }
+
+  .learningPageSec h5 {
+    margin-bottom: 12px;
+  }
+
+  .learningPageSec {
+    width: 380px;
+  }
+
+  .lessonsSec {
+    gap: 20px;
+  }
+
+  .asideLessonsSec {
+    width: 250px;
+    position: fixed;
+    top: 66px;
+    background-color: #fff;
+    left: 0;
+    height: calc(100% - 66px);
+    border-right: 0.5px solid #d1d1d1;
+    transform: translateX(-260px);
+    transition: all 0.6s ease;
+  }
+
+  .lessonsSec {
+    flex-direction: column;
+  }
+
+  .fliterMenuToogle {
+    display: flex;
+    justify-content: end;
+  }
+
+  .fliterMenuToogle a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .lessonsListSec {
+    width: 100%;
+  }
+
+  .lessonsSec .asideLessonsSec.active {
+    transform: translateX(0px);
+  }
+
+  .asideLessonsSec ul.asideMenuList {
+    overflow: auto;
+    height: 100%;
+  }
+
+  .asideLessonsSec ul.asideMenuList {
+    display: block;
+  }
+
+  .lessonMaterialCardRow {
+    grid-template-columns: repeat(3, auto);
+  }
+
+  .feedChatBox {
+    position: fixed;
+    top: unset;
+  }
+
+  .lessonSecInner .owl-carousel .owl-stage-outer {
+    height: calc(100%);
+    margin: 0;
+    padding: 0;
+    width: calc(100%);
+  }
+
+  .learningMaterialSec {
+    margin: 20px;
+    padding: 50px;
+  }
+
+  .progress_range a.ms-4 {
+    margin-left: 10px !important;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .rightColumn .feedChatBox {
+    transform: translateX(340px);
+  }
+
+  .rightColumn.showchatbox .feedChatBox {
+    transform: translateX(0px);
+  }
+
+  .userchatIcon > a img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .userchatIcon > a {
+    background: #04747d;
+    padding: 13px 10px;
+    border-radius: 50%;
+  }
+
+  /* .allFeedUser {
+    height: calc(100vh - 336px);
+  } */
+
+  .stickyChatBox .allFeedUser {
+    height: calc(100vh - 272px);
+  }
+
+  .trending_newsHeight.allFeedUser {
+    height: calc(100vh - 267px);
+  }
+
+  .stickyChatBox .trending_newsHeight.allFeedUser {
+    height: calc(100vh - 200px);
+  }
+
+  .suggestion_sec {
+    height: calc(100vh - 300px);
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .commonform input {
+    height: 35px;
+  }
+
+  .usercontentBox {
+    flex-wrap: wrap;
+  }
+
+  .setting_page {
+    flex-wrap: wrap;
+  }
+
+  .settingSide_tab {
+    width: 100%;
+    padding: 5px 16px;
+    height: auto;
+    overflow-x: auto;
+  }
+
+  .settingSide_tab ul {
+    display: flex !important;
+    gap: 25px;
+    flex-wrap: nowrap;
+    width: max-content;
+  }
+
+  .setting_contant {
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 50px;
+  }
+
+  .loginForm_left {
+    width: 100%;
+  }
+
+  .loginRight_img {
+    display: none;
+  }
+
+  .hideLoginPass,
+  .showLoginPass {
+    top: 8px;
+  }
+
+  .loginBtn .btnColor {
+    height: 35px;
+    line-height: 21px;
+  }
+
+  /**message page responsive start**/
+  .messageChatBox {
+    flex-wrap: wrap;
+  }
+
+  .messageChatBox .messageChatLeft,
+  .messageChatBox .messageChatRight {
+    width: 100%;
+  }
+
+  .messageChatBox .messageChatRight {
+    display: none;
+  }
+
+  .ChatBoxBackBtn {
+    color: #212529;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .chatsocialContant {
+    padding: 0 !important;
+  }
+
+  .messageChatLeft,
+  .messageChatRight {
+    border-radius: 0 !important;
+  }
+
+  .messageChatBox .messageChatLeft,
+  .messageChatBox .messageChatRight {
+    height: calc(100vh - 67px);
+  }
+
+  .messageChatBox .messageChatRight {
+    flex-direction: column;
+  }
+
+  .allMsgUserInner,
+  .messageChatLeftHead {
+    border-bottom: 1px solid #d1d1d1;
+  }
+
+  /**message page responsive end**/
+  .goggleBtn_link {
+    height: 35px;
+    line-height: 35px;
+  }
+
+  .signUplogo {
+    left: 50px;
+  }
+
+  .signUplogo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .resendActiation_link .btn-1 {
+    line-height: 26px;
+    height: 40px;
+  }
+
+  .sarchTooltip {
+    left: 18%;
+  }
+
+  .rightColumn {
+    display: none;
+    z-index: 99999;
+    position: fixed;
+    top: 0;
+  }
+
+  .userchatIcon > a img {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* .allFeedUser {
+    height: calc(100vh - 177px);
+    overflow: auto;
+  } */
+
+  .feedChatHead {
+    border-radius: 0;
+  }
+
+  .trending_newsHeight.allFeedUser {
+    height: calc(100vh - 108px);
+    overflow-y: auto;
+  }
+
+  .trending_news {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 12px;
+  }
+
+  .trending_news > a {
+    width: calc(50% - 6px);
+  }
+
+  .rightColumn.showchatbox {
+    display: block;
+  }
+
+  .feedChatHeading {
+    padding: 15px 16px !important;
+  }
+
+  .stickyChatBox .allFeedUser {
+    height: calc(100vh - 176px);
+  }
+
+  .stickyChatBox .trending_newsHeight.allFeedUser {
+    height: calc(100vh - 108px);
+  }
+
+  .feedChatBox {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .leftColumn {
+    width: 100%;
+  }
+
+  .middleColumn {
+    width: 100%;
+  }
+
+  .graphSlider:before,
+  .graphSlider:after {
+    width: 0%;
+  }
+
+  .SearchBar .inputGroup input,
+  .SearchBar .inputGroup {
+    width: 100%;
+  }
+
+  .feedChatUser.show {
+    height: calc(100% - 40px);
+  }
+
+  .feedChatHeadRight {
+    gap: 20px;
+  }
+
+  .likeShareIcon ul li a {
+    padding: 4px;
+  }
+
+  .followModel .modal-body {
+    padding: 16px 8px;
+  }
+
+  .followListsInner,
+  .followSearch {
+    padding: 0 8px;
+  }
+
+  .followSearch {
+    margin-bottom: 20px;
+  }
+
+  .topHeading {
+    margin-bottom: 0;
+  }
+
+  .learningImgContantSlider .carousel-inner,
+  .learningImgContantSlider .carousel-inner .carousel-item {
+    height: 250px;
+  }
+
+  .learningContantSlider .carousel-inner {
+    height: 250px;
+  }
+
+  .sliderContant {
+    width: 70%;
+  }
+
+  .lessonsVideoList .lessonsVideo {
+    width: 200px;
+  }
+
+  .lessonsVideo img {
+    width: 200px;
+  }
+
+  .lessonsVideoContant {
+    width: calc(100% - 200px);
+  }
+
+  .membershipPlanBox {
+    height: auto !important;
+    margin-bottom: 20px;
+  }
+
+  .headerBackBtn a.backArrow.btn span {
+    display: none;
+  }
+
+  .lessonMaterialCardRow {
+    grid-template-columns: repeat(2, auto);
+  }
+
+  .socialContant {
+    padding: 32px 0px 0px;
+  }
+
+  .bgWhiteCard,
+  .addPhotoVideoPost,
+  .feedBox,
+  .postHidden,
+  .aboutUserBox,
+  .profileCoverPic,
+  .learningMaterialSec,
+  .lessonsVideoList,
+  .about_profile .profileCoverPic,
+  .postInprofile .post_box {
+    border-radius: 0px;
+  }
+
+  .lessonOwlCarousel .owl-nav {
+    padding: 0 8px;
+  }
+
+  .lessonSecHead {
+    padding: 0 8px;
+  }
+
+  .lessonSec,
+  .learningSlider,
+  .lessonDiscoverSec,
+  .discoverTab,
+  .mostRecent {
+    padding: 0 15px;
+  }
+
+  .post_inprofile {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .fliterMenuToogle {
+    padding: 0 8px;
+  }
+
+  .learningPageSec {
+    padding: 0 15px;
+  }
+
+  .learningMaterialSec {
+    margin: 0;
+    padding: 25px;
+  }
+
+  .videoTime img {
+    width: 15px;
+  }
+
+  .topHeaderInner {
+    padding: 10px 4px;
+  }
+
+  .post_box {
+    border-radius: 15px;
+  }
+
+  .postInprofile {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .settig_heading,
+  .setti_account_Bill .userprof_btns {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .commonSettgcard {
+    border-radius: 0;
+  }
+
+  .topHeaderInner {
+    padding: 10px 4px 10px 10px;
+  }
+
+  .headerBackBtn a.backArrow {
+    padding: 6px 12px 6px 6px;
+  }
+
+  .profileImg_croper #image-cropper {
+    height: 300px !important;
+  }
+
+  .modelError {
+    max-width: 475px;
+    width: 100%;
+  }
+
+  /*mobile css*/
+  .themeSidebar {
+    top: unset;
+    bottom: 0;
+  }
+
+  .themeLogo,
+  .themeLogOut {
+    display: none;
+  }
+
+  .themeMenu {
+    overflow: unset;
+  }
+
+  .themeMenu ul {
+    flex-direction: unset !important;
+    flex-wrap: nowrap;
+  }
+
+  .themeSidebar {
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    z-index: 999;
+  }
+
+  .menuIcon img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .sideMenu .menuTxt span {
+    font-size: 12px;
+  }
+
+  .themeMenu ul li a,
+  .themeLogOutLink {
+    padding: 8px;
+    height: auto;
+  }
+
+  .sideMenu .menuTxt {
+    margin-top: 4px;
+  }
+
+  .themeMenu ul li a .menuTxt {
+    visibility: visible;
+  }
+
+  .moreMenu {
+    position: fixed;
+    z-index: 10;
+    bottom: 60px;
+    width: 100%;
+    background-color: #fff;
+    left: 0;
+    box-shadow: 0px 3px 8px rgb(0 0 0 / 11%);
+    border-radius: 12px 12px 0px 0px;
+  }
+
+  .themeMenu ul li .moreMenu ul {
+    flex-direction: column !important;
+    flex-wrap: wrap;
+  }
+
+  .moreMenu ul {
+    padding: 10px 0;
+  }
+
+  .moreMenu ul li a {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #465d61;
+    justify-content: flex-start;
+    padding: 10px 20px;
+  }
+
+  .moreMenu ul li a .mobMoreMenuOuter {
+    gap: 10px;
+  }
+
+  .themeMenu ul li .moreMenu ul li a.active,
+  .themeMenu ul li a .moreMenu ul li a:hover,
+  .moreMenu ul li a.active,
+  .moreMenu ul li a:hover {
+    background: rgba(4, 117, 107, 0.1);
+    color: #000 !important;
+  }
+
+  .moreMenu {
+    transition: all 0.8s ease;
+    transform: translateY(800px);
+  }
+
+  .moreMenu.active {
+    transform: translateY(0px);
+  }
+
+  .userchatIcon {
+    bottom: 80px;
+    right: 24px;
+  }
+
+  .notificationIcon:before {
+    content: unset;
+  }
+
+  .socialMediaTheme {
+    margin-bottom: 60px;
+  }
+
+  .topHeaderInner {
+    justify-content: space-between;
+  }
+
+  .topHeaderRightInner .headIcon {
+    width: 57px;
+  }
+
+  .topHeaderRightInner {
+    justify-content: end;
+  }
+
+  .topHeaderRightSec {
+    min-width: 130px;
+  }
+
+  .notificationIcon .notification-circle {
+    right: 18px;
+  }
+
+  .commonDropdown ul.dropdown-menu li a img,
+  .feedBoxHeadDropDown ul.dropdown-menu li a img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mob-pt-0 {
+    padding-top: 0;
+  }
+
+  .mob-pb-0 {
+    padding-bottom: 0;
+  }
+
+  .themeMenu ul li a:hover {
+    background: #00808b;
+  }
+
+  /*mobile css*/
+  /*mobile create post css start*/
+  .mobCreatePostBack h4 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21px;
+    color: #0d1b1d;
+  }
+
+  .mobCreatePostBack {
+    gap: 10px;
+  }
+
+  .mobCreatePostHead {
+    background-color: #fff;
+    padding: 14px;
+    border-bottom: 0.5px solid #d1d1d1;
+  }
+
+  .postProfInner {
+    gap: 10px;
+  }
+
+  .postProfTxt p {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .postProfTxt {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .postProfImg img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  .postProf {
+    padding: 14px;
+    background-color: #fff;
+  }
+
+  .mobPostContant {
+    height: calc(100vh - 60px);
+    background-color: #fff;
+  }
+
+  .selectWhoSeePost .dropdown .btn {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #0d1b1d;
+    background-color: #fff;
+    padding: 4px 15px;
+    border-color: #00808b;
+  }
+
+  .selectWhoSeePost .dropdown .btn img {
+    filter: invert(76%) sepia(30%) saturate(3461%) hue-rotate(321deg) brightness(0%) contrast(100%);
+    width: 10px;
+  }
+
+  .postTxtInput textarea {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .mobCreatePostFooter ul li a {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mobCreatePost {
+    height: 100%;
+    position: relative;
+  }
+
+  .mobCreatePostFooter {
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0px -1px 8px rgb(0 0 0 / 10%);
+    border-radius: 12px 12px 0px 0px;
+    left: 0;
+    bottom: 0;
+    padding: 12px 14px;
+  }
+
+  .mobCreatePostFooter ul {
+    gap: 10px;
+  }
+
+  .mobCreatePostBody {
+    height: calc(100% - 160px);
+    overflow: auto;
+  }
+
+  .postTxtInput textarea {
+    resize: none;
+  }
+
+  .galleyHead h5 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .galleyHead h5 img {
+    width: 10px;
+  }
+
+  .btnSelectMultiple {
+    background: rgba(4, 117, 107, 0.1);
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #00808b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .galleyHead {
+    padding: 14px;
+    background-color: #fff;
+  }
+
+  .galleryImageBoxInner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .galleryImageBoxInner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .galleryImgInner,
+  .galleryImgInner img {
+    width: 100%;
+    min-height: 124px;
+  }
+
+  .galleryImgInner img {
+    object-fit: cover;
+  }
+
+  .galleryImageBox {
+    height: calc(100vh - 181px);
+    overflow: auto;
+  }
+
+  .mobAddImgBody {
+    height: calc(100% - 60px);
+    overflow: auto;
+  }
+
+  .addMoreBtnOuter a {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .addMoreBtnOuter {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  .galleryImgInner {
+    position: relative;
+  }
+
+  .selectGalleryImgCheck {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+
+  .selectGalleryImgCheck img {
+    width: 20px;
+    height: 20px;
+    min-height: 20px;
+  }
+
+  .selectGalleryImgCheck .checkCircle,
+  .selectGalleryImgCheck.selected .uncheckCircle {
+    display: none;
+  }
+
+  .selectGalleryImgCheck.selected .checkCircle {
+    display: block;
+  }
+
+  .addImageGallery img {
+    width: 100%;
+  }
+
+  .userProfileInner .userProfileImg img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .userProfileImg span.msgOnline {
+    width: 8px;
+    height: 8px;
+    bottom: -1px;
+    right: 1px;
+  }
+
+  .messageChatRightHead,
+  .messageChatLeftHead {
+    height: 56px;
+  }
+
+  .messageChatLeftHead {
+    padding: 6px 15px;
+  }
+
+  .messageHeading h4 {
+    font-size: 18px;
+  }
+
+  .allMsgUser {
+    height: calc(100% - 55px);
+  }
+
+  .messageChatBox .messageChatLeft,
+  .messageChatBox {
+    height: calc(100vh - 127px);
+  }
+
+  .allMsgUserInner {
+    padding: 13px 15px;
+  }
+
+  .userRepliesOnReply .loadRepliesCollapse::-webkit-scrollbar {
+    width: 4px;
+    background-color: #d1d1d1;
+  }
+
+  /*mobile create post css end*/
+}
+
+@media (max-width: 600px) {
+  .sett_privacy .otherUser {
+    padding: 25px 0;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .sett_privacy .followOtherUser {
+    width: 100%;
+  }
+
+  .sett_privacy .followBtndiv {
+    margin-left: 67px;
+  }
+
+  .setti_account_Bill .otherUser {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .suggestion_sec {
+    height: calc(100vh - 300px);
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .edit_profile {
+    padding: 0;
+  }
+
+  .profileform_btn {
+    padding: 0 !important;
+  }
+
+  .settingsaveBtn {
+    padding: 24px 0 !important;
+  }
+
+  .customGroup {
+    padding: 24px 0;
+  }
+
+  .setti_account_Bill .otherUser {
+    padding: 15px;
+  }
+
+  .commonSettgcard {
+    padding: 0px 15px;
+  }
+
+  .compose_message .postBtn .btnColor {
+    height: 30px;
+    font-size: var(--s16);
+    letter-spacing: 1px;
+    padding: 4px 30px;
+  }
+
+  .loginForm_left {
+    padding: 20px;
+  }
+
+  .loginLogo img {
+    width: 55px;
+  }
+
+  .login_heading h2 {
+    font-size: 30px;
+  }
+
+  .loginBtn {
+    padding: 20px 0;
+  }
+
+  .agreementLogin label:before {
+    padding: 8px;
+  }
+
+  .agreementLogin input:checked + label:after {
+    top: 4px;
+    left: 8px;
+    width: 5px;
+    height: 12px;
+  }
+
+  .signUpform {
+    padding: 25px 15px;
+  }
+
+  .sigUpSection {
+    padding: 25px 15px 20px;
+  }
+
+  .sigUpSection2 {
+    padding: 35px 15px;
+  }
+
+  .signUp_emaillogo img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .sigUpSection2 .signUphead h3 {
+    margin-bottom: 24px;
+  }
+
+  .choose_photo {
+    margin: 40px auto;
+    width: 120px;
+    height: 120px;
+  }
+
+  .back_Skipbtn {
+    padding: 25px 15px 0 0;
+  }
+
+  .sarchTooltip {
+    left: 4%;
+  }
+
+  .tooltip_top:before {
+    top: -28px;
+    right: unset;
+    left: 18px;
+  }
+
+  .likeShareIcon ul li a,
+  .becomeMember .btnColor {
+    font-size: 11px;
+  }
+
+  .postBtn .btnColor {
+    padding: 4px 20px;
+    font-size: 12px;
+  }
+
+  .addPhoto a,
+  .addVideo a {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 14px;
+    color: #0d1b1d;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+  }
+
+  .owl-stage .owl-item.active.firstActiveItem .item .graphSliderItem .graphSliderInner {
+    padding: 4px;
+  }
+
+  .notificationIcon .dropdown-menu {
+    width: 300px;
+    right: -60px !important;
+  }
+
+  .followBtn .btn {
+    padding: 0px 16px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .followOtherUser h5 {
+    font-size: 16px;
+  }
+
+  .followOtherUserName p {
+    font-size: 13px;
+  }
+
+  .followOtherUserPic img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .createPostModel .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .createPostRight button.btn-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  .vertical-alignment-helper {
+    display: unset;
+    height: unset;
+    width: unset;
+    pointer-events: unset;
+  }
+
+  .vertical-align-center {
+    display: unset;
+    vertical-align: unset;
+    pointer-events: unset;
+  }
+
+  .galleryImg {
+    height: 250px;
+  }
+
+  .gridGallery .gridGalleryImg {
+    height: 70px;
+  }
+
+  .sliderContant {
+    width: 100%;
+  }
+
+  .learningPageSec {
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .lessonsVideoList {
+    flex-direction: column;
+  }
+
+  .lessonsVideoContant {
+    width: 100%;
+  }
+
+  .lessonsVideoList .lessonsVideo {
+    width: 100%;
+  }
+
+  .lessonsVideo img {
+    width: 100%;
+  }
+
+  .headerBackBtn a.backArrow img {
+    height: 24px;
+  }
+
+  .discoverModelProfInner .feedBoxHead {
+    margin-bottom: 10px;
+  }
+
+  .discoverFeed .feedBoxprofImg img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+  }
+
+  .discoverFeed .discoverModelProf {
+    width: 38px;
+  }
+
+  .discoverFeed .discoverModelProfInner {
+    width: calc(100% - 52px);
+  }
+
+  .discoverFeed .postTxt p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .discoverFeed {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+  }
+
+  .discoverFeed .discoverModelProfInner {
+    width: calc(100%);
+  }
+
+  .userRepliesInner .userRepliedTxt p {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .userRepliesInner .userReplyOnPost,
+  .userRepliesInner .userRepliedName,
+  .userRepliesInner .userRepliedTime {
+    display: flex;
+    gap: 6px;
+  }
+
+  .userReplyOnPost .userRepliedName {
+    margin-bottom: 4px;
+  }
+
+  .lessonMaterialSec .lessonSlideContant,
+  .lessonMaterialSec .lessonSlideBtn {
+    padding: 10px;
+  }
+
+  .lessonMaterialCardRow {
+    grid-template-columns: repeat(1, auto);
+  }
+
+  .lessonSec,
+  .learningSlider,
+  .lessonDiscoverSec {
+    padding: 0px;
+  }
+
+  .post_inprofile {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .discoverTab,
+  .mostRecent {
+    padding: 0 8px;
+  }
+
+  .lessonSlide,
+  .overlayContant,
+  .learningSlider .carousel-inner,
+  .learningMaterialCarousel,
+  .post_box {
+    border-radius: 0;
+  }
+
+  .signUp_Section {
+    padding: 35px 0;
+  }
+
+  .progress_range img {
+    width: 18px;
+  }
+
+  .chrome input {
+    width: 150px;
+  }
+
+  .modelError {
+    max-width: 280px;
+  }
+
+  .userProfileInner .userProfileImg img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 500px) {
+  .userprof_btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .sett_privacy .userprof_btns > a {
+    width: auto;
+  }
+
+  .editComm_btn:hover {
+    box-shadow: inset 30em 0 #00808b;
+  }
+
+  .settingPrivacy .settig_heading,
+  .setti_account_Bill .settig_heading {
+    margin: 25px 0 15px;
+  }
+
+  /**message page responsive start**/
+  .messageChatRight .userProfile {
+    padding: 20px 15px;
+  }
+
+  .chatSection {
+    padding: 15px;
+  }
+
+  .chatWeeks {
+    margin-bottom: 25px;
+  }
+
+  .leftSideProfile img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .chatMsgLeft {
+    padding: 12px;
+    border-radius: 15px;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .chatMsgTime {
+    margin-top: 0;
+  }
+
+  .chatMsgTime span {
+    font-size: 10px;
+  }
+
+  .messageScreen {
+    gap: 30px;
+  }
+
+  .galleryImage,
+  .galleryImage img {
+    width: 95px !important;
+    height: 78px !important;
+  }
+
+  .deleteMsg {
+    width: 90%;
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .leftSideMsg,
+  .chatMsgGroup,
+  .rightSideMsg {
+    gap: 8px;
+  }
+
+  .chatInputBox .chatInput {
+    width: 100%;
+  }
+
+  .chatInput .input-group {
+    height: 50px;
+    padding: 6px 12px;
+  }
+
+  .chatInputBox {
+    padding: 15px;
+  }
+
+  .messageChatRightHead {
+    height: 89px;
+  }
+
+  .chatSection {
+    height: calc(100% - 170px);
+  }
+
+  .leftSideThreeDots img {
+    width: 14px;
+  }
+
+  /**message page responsive end**/
+  .signUplogo {
+    left: 15px;
+    top: 24px;
+  }
+
+  .signUplogo img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 450px) {
+  .edit_profile .about_profile .profileCoverPic,
+  .about_profile .profileCoverPic {
+    height: 150px;
+  }
+
+  .edit_profile .about_profile .profilePic > img,
+  .about_profile .profilePic > img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .edit_profile .about_profile .profilePic,
+  .about_profile .profilePic {
+    bottom: -30px;
+    left: 20px;
+  }
+
+  .edit_btnImg img {
+    width: 23px;
+    height: 23px;
+  }
+
+  .edit_btn img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .usercontentBox {
+    margin: 0 20px;
+    margin-top: 48px !important;
+  }
+
+  .page_link {
+    padding: 10px 20px;
+  }
+
+  .userprofile_form {
+    margin-top: 75px;
+  }
+
+  .followBtndiv .disableBtn,
+  .allViews.followBtndiv .btn-1,
+  .followBtndiv .editComm_btn,
+  .billing_btn .followBtn .followingBtn {
+    padding: 0px 25px;
+    height: 32px;
+    line-height: 30px;
+  }
+
+  .billing_btn {
+    justify-content: start !important;
+  }
+
+  .skipBTn .btnColor {
+    height: 32px;
+    line-height: 32px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .membershipPlanBoxHead h4 {
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 72px;
+  }
+
+  .trendnews_content h5 {
+    font-size: 12px;
+    margin-bottom: 0px !important;
+  }
+
+  .trendnews_content p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .overflow_searchList {
+    width: 230px;
+  }
+}
+
+@media (max-width: 350px) {
+  .profileform_btn > a {
+    padding: 0px 20px !important;
+    line-height: 26px;
+    height: 28px;
+  }
+}

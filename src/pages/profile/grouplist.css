@@ -1,0 +1,81 @@
+.group-list {
+}
+
+.group {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0.25rem;
+  position: relative;
+  padding: 15px;
+}
+
+.group::after {
+  content: "";
+  position: absolute;
+  border-left: 1px solid #d1d1d1;
+  right: -5px;
+  height: 70%;
+}
+
+.group .group-logo {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.group .group-title {
+  max-width: 110px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group .group-logo img {
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+}
+
+.group .group-title {
+  font-size: 14px;
+}
+
+.group .group-btn {
+  border: none;
+  padding: 5px 15px;
+  width: 100px;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.group .group-btn.join-btn {
+  background-color: #00808b;
+  border: 1px solid #00808b;
+}
+
+.group .group-btn.join-btn:hover {
+  background-color: #000000;
+}
+
+.group .group-btn.member-btn {
+  background-color: #ffffff;
+  border: 1px solid #00808b;
+  color: #00808b;
+}
+
+.group .group-btn.member-btn:hover {
+  background-color: #00808b;
+  color: #ffffff;
+}
+
+@media (min-width: 601px) and (max-width: 991px) {
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 441px) {
+}

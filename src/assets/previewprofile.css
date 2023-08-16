@@ -1,0 +1,37 @@
+.hoverProfile {
+  width: "64px";
+  height: "64px";
+  border-radius: "50%";
+  margin-right: "8px";
+}
+
+.hover-profile-container {
+  position: absolute;
+  z-index: 8;
+  width: 280px;
+  max-width: 280px;
+  border-radius: 15px;
+  background: #f8f8f8;
+  max-height: 270px;
+  height: auto;
+}
+
+.hover-profile-container.discovery {
+  top: 50px;
+  left: 0px;
+}
+
+.hover-profile-container.feed {
+  top: 32px;
+  left: 0;
+}
+
+span.counts {
+  font-weight: 600;
+  color: #252525;
+}
+
+span.sb-title {
+  font-weight: 400;
+  color: #919191;
+}
