@@ -13,6 +13,8 @@ import ImageCarousel from "../../../popups/imageCarousel/ImageCarousel";
 import VideoImageThumbnail from "react-video-thumbnail-image";
 import Linkify from "react-linkify";
 import { SecureLink } from "react-secure-link";
+import { AiOutlineMinus } from "react-icons/ai"
+import { motion } from 'framer-motion';
 const serv = new ChatService();
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 export default function ChatMessage({
@@ -26,11 +28,14 @@ export default function ChatMessage({
   onClose,
   setMediaFiles,
   isOnline,
+  index,
+  item
 }) {
   let chatCompare = chatId;
   const navigate = useNavigate();
   const globalCtx = useContext(GlobalContext);
   const [user, setUser] = globalCtx.user;
+  const [messageData, setMessageData] = globalCtx.getMessageData;
   const [mUser, setMUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [messageList, setMessageList] = useState([]);
@@ -40,15 +45,25 @@ export default function ChatMessage({
   const [showEmoji, setShowEmoji] = useState(false);
   const [imageIdx, setImageIdx] = useState(0);
   const [activeBtn, setActiveBtn] = useState(false);
+  const [minimize, setMinimize] = useState(false);
+  const [expanded, setExpanded] = globalCtx.expandedArray;
+  const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
+
   // const [mediaFiles, setMediaFiles] = useState([]);
-  const [expend, setExpend] = useState(0); //0 for normal 1 for expend 2 for minimize
+  const [expend, setExpend] = useState(false); //0 for normal 1 for expend 2 for minimize
   const [message, setMessage] = useState({
     content: "",
     file: "",
     sender: user?._id,
   });
+  const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
+  const [chatName, setChatName] = useState(null)
+  const [chatLogo, setChatLogo] = useState(null)
+
+
 
   useEffect(() => {
+
     // var objDiv = document.getElementById(`messagess${chatId}`);
     // objDiv.scrollTop = objDiv.scrollHeight;
     socket.on("messageRecieved", (newMessage) => {
@@ -75,9 +90,69 @@ export default function ChatMessage({
     getMessage(getMessageData.id, getMessageData.oUser, getMessageData.users);
   }, [getMessageData]);
 
+  // console.log("messageData:",messageData)
+
+  const getChat = async () => {
+    try {
+      const res = await serv.getChat(chatId)
+      return res.data;
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+
+  useEffect(() => {
+    getChat()
+      .then((res) => {
+        setChatName(res.chatName)
+        setChatLogo(res.chatLogo)
+      })
+  }, [])
+
+
+
+  useEffect(() => {
+    let newArr = JSON.parse(localStorage.getItem("messageboxstate"))
+    if (messageData.length >= 4) {
+      newArr.forEach((el, i) => {
+        if (i === 0) {
+          el.isminimize = true
+        }
+      })
+    }
+    if (messageData.length >= 5) {
+
+      newArr.forEach((el, i) => {
+        if (i === 1) {
+          el.isminimize = true
+        }
+      })
+    }
+    if (newArr.length > 5) {
+      newArr = newArr.slice(1)
+    }
+    localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+    setMessageBoxState(newArr)
+
+  }, [messageData])
+
+  useEffect(() => {
+    messageBoxState.filter((el) => {
+      if (el.chatId === chatCompare) {
+        console.log(el.isExpanded)
+        setMinimize(el.isminimize)
+        setExpend(el.isExpanded)
+      }
+    })
+
+  }, [messageBoxState])
   useEffect(() => {
     var objDiv = document.getElementById(`messagess${chatId}`);
-    objDiv.scrollTop = objDiv.scrollHeight;
+    if (objDiv) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
   }, [messageList]);
   const getMessage = async (id, oUser, users) => {
     setMUser(oUser);
@@ -96,8 +171,11 @@ export default function ChatMessage({
           setMessageList([...resp.data]);
         }
 
+
         var objDiv = document.getElementById(`messagess${chatId}`);
-        objDiv.scrollTop = objDiv.scrollHeight;
+        if (objDiv) {
+          objDiv.scrollTop = objDiv.scrollHeight;
+        }
       });
     } catch (err) {
       console.log(err);
@@ -169,112 +247,159 @@ export default function ChatMessage({
   const handleNavigate = (url) => {
     navigate(url);
   };
+  const handleMaximize = (currChatId) => {
+
+    let existingArr = JSON.parse(localStorage.getItem("messageboxstate"));
+
+
+    // console.log(currChatId, existingArr)
+    if (expend) {
+      console.log(expend)
+      existingArr.forEach((el) => {
+        if (el.chatId === currChatId) {
+          el.isExpanded = false;
+        }
+      })
+      localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+      setMessageBoxState(existingArr)
+    } else {
+      if (messageData.length >= 3) {
+        existingArr.forEach((el) => {
+          if (el.chatId === currChatId) {
+            el.isExpanded = true;
+          }
+          else {
+            el.isminimize = true;
+            el.isExpanded = false
+          }
+        })
+        localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+        setMessageBoxState(existingArr)
+      } else {
+        existingArr.forEach((el) => {
+          if (el.chatId === currChatId) {
+            el.isExpanded = true;
+          }
+        })
+        localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+        setMessageBoxState(existingArr)
+      }
+    }
+
+  }
 
   return (
     <>
-      <div className={`chatBox chatBoxCustom position-relative ${expend === 1 ? "chatBoxLarge" : ""}`}>
-        <div
-          className="chatBoxHead position-relative"
-          onClick={(e) => {
-            if (
-              e.target.classList.contains("img-dots") ||
-              e.target.classList.contains("search_cross") ||
-              e.target.classList.contains("chatBoxUser") ||
-              e.target.classList.contains("userProfileImg")
-            ) {
-              e.preventDefault();
-            } else {
-              if (expend == 2) {
-                setExpend(0);
+      {!minimize ? (<motion.div
+        initial={!minimize ? 'hidden' : 'visible'}
+        animate={!minimize ? 'visible' : 'hidden'}
+        exit="hidden"
+        variants={{
+          visible: { opacity: 1, scale: 1, x: 0, y: 0 },
+          hidden: { opacity: 0, scale: 0, x: 0, y: 0 },
+        }}
+        transition={{ duration: 0.3 }}
+      ><div className={`chatBox chatBoxCustom position-relative  ${expend ? "chatBoxLarge" : ""}`} style={{ border: "1px solid white" ,borderRadius:"15px 15px 5px 5px"}} >
+          <div
+            className="chatBoxHead position-relative"
+            onClick={(e) => {
+              if (
+                e.target.classList.contains("img-dots") ||
+                e.target.classList.contains("search_cross") ||
+                e.target.classList.contains("chatBoxUser") ||
+                e.target.classList.contains("userProfileImg")
+              ) {
+                e.preventDefault();
+              } else {
+                if (expend == 2) {
+                  let existingArr = JSON.parse(localStorage.getItem("messageboxstate"))
+                  let newArr = existingArr.map((el, i) => {
+                    if (el.chatId === chatCompare) {
+                      el.isExpanded = false
+                    }
+                  })
+                  localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+                  // setExpend(0);
+                }
               }
-            }
-          }}
-        >
-          {/* <img src="/images/img/profile-image3.png" alt="profile-img" className="img-fluid" /> */}
-          <div className="userProfileImg" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
-            <ProfileImage url={mUser?.profile_img} style={{ width: "32px", borderRadius: "50%" }} />
-            {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
-          </div>
-          <div className="chatBoxUser" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
-            <h6 className={`mb-0 ${expend === 1 ? "userName-custom-classExpand" : "userName-custom-class"}`}>
-              <span className="mb-0" title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}>
-                {mUser?.user_name
-                  ? mUser.user_name.length > 15
-                    ? mUser?.user_name.slice(0, 15) + "..."
-                    : mUser?.user_name
-                  : "Vestorgrow user"}
-              </span>{" "}
-              {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
-            </h6>
-            <p>{isOnline.includes(mUser?._id) ? "Online" : "Offline"}</p>
-          </div>
-          <div className="options">
-            <div className="dropdown">
-              <Link data-bs-toggle="dropdown">
-                <img src="/images/icons/dots.svg" alt="dots" className="img-fluid img-dots" />
-              </Link>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link className="dropdown-item">
-                    Report
-                  </Link>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleBlockUser(mUser)}>
-                    Block
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="javascript:void(0);" onClick={() => setExpend(2)}>
-                    Minimize
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    href="javascript:void(0);"
-                    style={{ color: "#CC1F29" }}
-                    onClick={() => handleDeleteChat(chatId)}
-                  >
-                    Delete
-                  </a>
-                </li>
-              </ul>
+            }}
+          >
+
+            <div className="userProfileImg" onClick={() => { handleNavigate("/userprofile/" + mUser?._id) }}>
+              <ProfileImage url={isGroupChat ? chatLogo : mUser?.profile_img} style={{ width: "32px", borderRadius: "50%" }} />
+              {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
             </div>
-            <a href="javascript:void(0);" onClick={() => setExpend(expend !== 0 ? 0 : 1)}>
-              <img src="/images/icons/expend.svg" alt="dots" className="img-fluid" />
-            </a>
-            <a href="javascript:void(0);" onClick={onClose}>
-              <img src="images/profile/cross-icon.svg" className="search_cross" alt="" />
-            </a>
+            <div className="chatBoxUser" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
+              <h6 className={`mb-0 ${expend ? "userName-custom-classExpand" : "userName-custom-class"}`}>
+                <span className="mb-0" title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}>
+                  {!isGroupChat && (mUser?.user_name
+                    ? mUser.user_name.length > 15
+                      ? mUser?.user_name.slice(0, 15) + "..."
+                      : mUser?.user_name
+                    : "Vestorgrow user")}
+                  {
+                    isGroupChat && chatName
+                  }
+                </span>{" "}
+                {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
+              </h6>
+              <p>{isOnline.includes(mUser?._id) ? "Online" : "Offline"}</p>
+            </div>
+            <div className="options">
+              <div className="dropdown">
+                <div onClick={() => {
+                  // setMinimize(true)
+                  let existingArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+                  existingArr.forEach((el) => {
+                    if (el.chatId === chatCompare) {
+                      el.isminimize = true
+                    }
+                  })
+                  localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+                  setMessageBoxState(existingArr)
+                }}>
+                  <AiOutlineMinus style={{ color: "black" }} />
+                </div>
+              </div>
+              <span onClick={() => handleMaximize(chatCompare)}>
+                <img src="/images/icons/expend.svg" alt="dots" className="img-fluid" />
+              </span>
+              <span onClick={onClose}>
+                <img src="images/profile/cross-icon.svg" className="search_cross" alt="" />
+              </span>
+            </div>
           </div>
-        </div>
-        {expend !== 2 && (
-          <>
+          <div>
             <div
-              className={`messagess msgSection msgSection-Custom allFeedUser overflowScrollStop ${expend === 1 ? "msgSectionLarge" : ""
+              className={`messagess msgSection msgSection-Custom allFeedUser overflowScrollStop ${expend ? "msgSectionLarge" : ""
                 }`}
               id={`messagess${chatId}`}
             >
               <div className="userDetail">
                 <div className="chatMainProfile">
-                  <ProfileImage url={mUser?.profile_img} />
+                  <ProfileImage url={isGroupChat ? chatLogo : mUser?.profile_img} />
                   <div className="chatMainProfileContent">
                     <h6
-                      className={`mb-0 ${expend === 1 ? "userNameIn-custom-classExpand" : "userNameIn-custom-class"}`}
+                      className={`mb-0 ${expend ? "userNameIn-custom-classExpand" : "userNameIn-custom-class"}`}
                       title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}
                     >
-                      {/* {mUser?.user_name ? mUser?.user_name : "Vestorgrow user"} */}
-                      {mUser?.user_name
+                      {!isGroupChat && (mUser?.user_name
                         ? mUser.user_name.length > 15
                           ? mUser?.user_name.slice(0, 15) + "..."
                           : mUser?.user_name
-                        : "Vestorgrow user"}
+                        : "Vestorgrow user")}
+                      {
+                        isGroupChat && chatName
+                      }
                     </h6>
-                    <p>
+                    {!isGroupChat && <p>
                       {mUser?.first_name} {mUser?.last_name}
-                    </p>
-                    <p>{mUser?.bio}</p>
+                    </p>}
+                    {isGroupChat && <p>
+                      {user?.first_name} {user?.last_name}
+                    </p>}
+                    {!isGroupChat && <p>{mUser?.bio}</p>}
+                    {isGroupChat && <p></p>}
                   </div>
                 </div>
               </div>
@@ -342,7 +467,7 @@ export default function ChatMessage({
                         ) : (
                           <div className="position-relative messgage-sectionCustom">
                             <div className="msgContentHead">
-                              <div className={`msgContent h-100 ${expend === 1 ? "msgContentLarge" : ""}`}>
+                              <div className={`msgContent h-100 ${expend ? "msgContentLarge" : ""}`}>
                                 {item.file?.length > 0 && (
                                   <div className="chatGallery d-flex align-items-center">
                                     <div className="groupGallery">
@@ -474,8 +599,9 @@ export default function ChatMessage({
               </div>
             )}
             <div
-              className={`textArea chatInput ${expend === 1 ? "textAreaLarge" : ""} textAreaCustom`}
+              className={`textArea chatInput ${expend ? "textAreaLarge" : ""} textAreaCustom`}
               id="emojiPickerChat-id-custom"
+              style={{marginBottom:"25px"}}
             >
               {/* <input type="text" className="form-control gray-color-custom" placeholder="Write your message..." /> */}
               {/* <input
@@ -487,6 +613,7 @@ export default function ChatMessage({
             placeholder="Write your message..."
           /> */}
               <textarea
+                // style={{position:"absolute",bottom:0}}
                 className="form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser"
                 rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "2" : "3"}
                 type="text"
@@ -535,41 +662,72 @@ export default function ChatMessage({
                 }}
               />
             </div>
-          </>
-        )}
-      </div>
-      {showDeleteMsgPopup && (
-        <DeleteMessage
-          onClose={() => setShowDeleteMsgPopup(null)}
-          onFinish={() => {
-            setShowDeleteMsgPopup(null);
-            getMessage(showDeleteMsgPopup.chat, mUser, users);
+          </div>
+        </div></motion.div >) : (
+        <motion.div
+          initial={minimize ? 'hidden' : 'visible'}
+          animate={minimize ? 'visible' : 'hidden'}
+          exit="hidden"
+          variants={{
+            visible: { opacity: 1, scale: 1, x: 0, y: 0 },
+            hidden: { opacity: 0, scale: 1, x: '100%', y: '100%' },
           }}
-          message={showDeleteMsgPopup}
-        />
-      )}
-      {showDeleteChatPopup && (
-        <DeleteChat
-          onClose={() => setShowDeleteChatPopup(null)}
-          onFinish={() => {
-            setShowDeleteChatPopup(null);
-            getChatList();
-            onClose();
-          }}
-          chat={showDeleteChatPopup}
-        />
-      )}
-      {showBlockUserPopup && (
-        <BlockUser
-          onClose={() => setShowBlockUserPopup(null)}
-          onFinish={() => {
-            setShowBlockUserPopup(null);
-            getChatList();
-            onClose();
-          }}
-          user={showBlockUserPopup}
-        />
-      )}
+          transition={{ duration: 1 }}
+        >
+          <div style={{ zIndex: 300, width: "60px",marginBottom:"20px" }} onClick={() => {
+            // setMinimize(false)
+            let existingArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+            existingArr.forEach((el) => {
+              if (el.chatId === chatCompare) {
+                el.isminimize = false
+              }
+            })
+            localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+            setMessageBoxState(existingArr)
+          }}>
+            <ProfileImage url={mUser?.profile_img} style={{ width: "60px", borderRadius: "50%" }} />
+          </div>
+        </motion.div>
+      )
+      }
+      {
+        showDeleteMsgPopup && (
+          <DeleteMessage
+            onClose={() => setShowDeleteMsgPopup(null)}
+            onFinish={() => {
+              setShowDeleteMsgPopup(null);
+              getMessage(showDeleteMsgPopup.chat, mUser, users);
+            }}
+            message={showDeleteMsgPopup}
+          />
+        )
+      }
+      {
+        showDeleteChatPopup && (
+          <DeleteChat
+            onClose={() => setShowDeleteChatPopup(null)}
+            onFinish={() => {
+              setShowDeleteChatPopup(null);
+              getChatList();
+              onClose();
+            }}
+            chat={showDeleteChatPopup}
+          />
+        )
+      }
+      {
+        showBlockUserPopup && (
+          <BlockUser
+            onClose={() => setShowBlockUserPopup(null)}
+            onFinish={() => {
+              setShowBlockUserPopup(null);
+              getChatList();
+              onClose();
+            }}
+            user={showBlockUserPopup}
+          />
+        )
+      }
       {/* {mediaFiles && mediaFiles.length > 0 && (
         <ImageCarousel onClose={() => setMediaFiles(null)} mediaFiles={mediaFiles} imageIdx={imageIdx} />
       )} */}

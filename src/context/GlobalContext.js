@@ -16,11 +16,16 @@ export const GlobalProvider = ({ children }) => {
   const [activeChat, setActiveChat] = useState(1);
   const [groupJoinedByNoti, setGroupJoinedByNoti] = useState("");
   const [getMessageData, setGetMessageData] = useState([]);
+  const [expandedArr, setExpandedArr] = useState([]);
   const [unreadMsgCount, setUnreadMsgCount] = useState({
     messageChat: 0,
     premiumChat: 0,
     groupChat: 0,
   });
+  const [showChat, setShowChat] = useState(true)
+  const [messageBoxState, setMessageBoxState] = useState(JSON.parse(localStorage.getItem("messageboxstate")) || [])
+  const [isGroupChat, setIsGroupChat] = useState(JSON.parse(localStorage.getItem("isgroupchat")) || false)
+  const [isloading,setisLoading]=useState(false)
 
   return (
     <GlobalContext.Provider
@@ -39,6 +44,11 @@ export const GlobalProvider = ({ children }) => {
         getMessageData: [getMessageData, setGetMessageData],
         groupExecutionSuccess: [groupExecutionSuccess, setGroupExecutionSuccess],
         groupJoinedByNoti: [groupJoinedByNoti, setGroupJoinedByNoti],
+        ChatBoxVisibily: [showChat, setShowChat],
+        expandedArray: [expandedArr, setExpandedArr],
+        MessageBoxStateMaintainance: [messageBoxState, setMessageBoxState],
+        isGroupChat: [isGroupChat, setIsGroupChat],
+        isLoading:[isloading,setisLoading],
       }}
     >
       {children}

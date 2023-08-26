@@ -8,6 +8,7 @@ import UserService from "../../services/UserService";
 import News from "../../popups/news/News";
 import moment from "moment";
 import ProfileCard from "../../components/_main/Dashboard/ProfileCard";
+import Suggested from "./Suggested";
 
 const serv = new NewsService();
 const userServ = new UserService();
@@ -73,6 +74,7 @@ function Profile() {
       <div className="leftColumn d-none d-sm-none d-md-block">
         <div style={{ position: "sticky", top: "98px" }}>
           <ProfileCard handleClickFollowersCount={handleClickFollowersCount} />
+          <Suggested/>
           {
             /* 
             <div className="becomeMember text-center">
@@ -83,7 +85,7 @@ function Profile() {
             </div> 
             */
           }
-          <div className="bgWhiteCard todayNews">
+          {/* <div className="bgWhiteCard todayNews">
             <div className="todayNewsInner">
               <div className="todayNewsHead">
                 <h4>Today's News</h4>
@@ -146,7 +148,7 @@ function Profile() {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {showUserList && <FollowerFollowingList type={showUserList} onClose={() => setShowUserList(null)} />}

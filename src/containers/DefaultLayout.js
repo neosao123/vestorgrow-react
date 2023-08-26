@@ -1,20 +1,26 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { useLocation, useMatch } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import Sidebar from "./SideBar";
 import Header from "./Header";
 import OwlCarousel from "react-owl-carousel";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SideButtons } from "../components/SideButtons/SideButtons.js";
+import GlobalContext from "../context/GlobalContext";
+
 
 function DefaultLayout({ children }) {
+  const globalCtx = useContext(GlobalContext)
   const location = useLocation();
   const [layoutRequired, setLayoutRequired] = useState(true);
   const [headerRequired, setHeaderRequired] = useState(true);
   const match = useMatch("/signin/active/:id");
   const match2 = useMatch("/signin/inactive");
-
+  const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
   const [blockContent, setBlockContent] = useState(true);
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     const isMatchingPath = !!match;
@@ -66,6 +72,9 @@ function DefaultLayout({ children }) {
           pauseOnHover={false}
           theme="light"
         />
+        <div >
+          <SideButtons />
+        </div>
       </main>
     );
   } else {
@@ -93,6 +102,10 @@ function DefaultLayout({ children }) {
           pauseOnHover={false}
           theme="light"
         />
+
+        <div >
+          <SideButtons />
+        </div>
       </main>
     );
   }

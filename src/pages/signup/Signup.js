@@ -24,8 +24,10 @@ function Signup() {
 
   const onSubmit = async (values) => {
     let obj = { ...values };
+    console.log(obj)
     try {
       const resp = await serv.signup(obj);
+      console.log(resp)
       if (resp?.data) {
         localStorage.setItem("user", JSON.stringify(resp.data));
         navigate("/signup/inactive", { state: { email: obj.email } });

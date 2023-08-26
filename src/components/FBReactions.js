@@ -5,7 +5,7 @@ import PostService from "../services/postService";
 
 const FBReactions = ({ ...props }) => {
 
-    const { postId, postReaction, updatePostAfterReaction } = props;
+    const { postId, postReaction, getPost} = props;
 
     const likeImage = "/images/icons/thumbs-up.svg";
     const loveImage = "/images/icons/heart.svg";
@@ -38,6 +38,7 @@ const FBReactions = ({ ...props }) => {
             return [];
         }
     }
+    
 
     const addReaction = async (reaction) => {
         try {
@@ -55,11 +56,12 @@ const FBReactions = ({ ...props }) => {
                         setActiveReaction("Insightful");
                     }
 
-                    const reactionOfPost = await postUniqueReactions();
+                    // const reactionOfPost = await postUniqueReactions();
 
                     setTimeout(() => {
                         const data = resp.data;
-                        updatePostAfterReaction("inc", postId, data, reactionOfPost);
+                        getPost(postId)
+                        // updatePostAfterReaction("inc", postId, data, reactionOfPost);
                     }, 800);
                     setBtnCLicked(false);
                 }
@@ -72,15 +74,17 @@ const FBReactions = ({ ...props }) => {
 
     const removeReaction = async (postId) => {
         try {
+            console.log("POSTID:",postId)
             let resp = await postServ.dislikePost(postId);
             if (resp.message) {
 
-                const reactionOfPost = await postUniqueReactions();
+                // const reactionOfPost = await postUniqueReactions();
 
                 setTimeout(() => {
-                    updatePostAfterReaction("dec", postId, {}, reactionOfPost);
+                    // updatePostAfterReaction("dec", postId, {}, reactionOfPost);
                     setReactionImage(noreactionImage);
                     setActiveReaction("Like");
+                    getPost()
                 }, 800);
             }
         } catch (err) {
@@ -94,7 +98,8 @@ const FBReactions = ({ ...props }) => {
 
     const handleLikeButton = (e) => {
         e.preventDefault();
-        if (postReaction !== null) {
+        console.log(postReaction)
+        if (postReaction !== null && postReaction !== undefined) {
             removeReaction(postId);
         } else {
             //just open the popup

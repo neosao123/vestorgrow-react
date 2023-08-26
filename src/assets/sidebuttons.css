@@ -1,0 +1,138 @@
+.message-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    padding-right: 0px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.message-buttonWrap {
+    position: fixed;
+    bottom: 20px;
+    /* Adjust this value to control the distance from the bottom */
+    right: 50px;
+    /* Adjust this value to control the distance from the right */
+    z-index: 999;
+}
+
+.message-buttonWrapper {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    /* float: left; */
+
+    /* float: right; */
+    /* background-color: wheat; */
+    /* position: "relative", */
+}
+
+.message-buttonWrap:hover .sideHover {
+    display: block;
+    /* Show sideHover on button group hover */
+}
+
+.message-count {
+    margin-left: -4px;
+    width: 15px;
+    height: 15px;
+    justify-content: center;
+    text-align: center;
+    left: 0;
+    background-color: #d11111;
+    color: #ffffff;
+    top: 0;
+    border-radius: 50%;
+    position: relative;
+    z-index: 25;
+}
+
+.message-countHoverButton {
+    /* margin-left: -4px;
+    justify-content: center;
+    text-align: center;
+    left: 0;
+    color: #000000;
+    top: 0;
+    border-radius: 50%;
+    position: relative;
+    z-index: 25; */
+}
+
+.message-countheight {
+    position: absolute;
+    margin-left: -4px;
+    margin-top: 2px;
+    font-size: 8px;
+    /* Set the font size to 16 pixels */
+}
+
+.messageHoverButton {
+    position: absolute;
+    background-color: white;
+    margin-left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 0.5px solid black;
+    box-shadow: #ffffff;
+    font-size: clamp(5px, 10px, 5px);
+    /* Set the font size to 16 pixels */
+}
+
+.messageHover {
+    /* margin-left: -4px;
+    width: 15px;
+    height: 15px; */
+    /* justify-content: center; */
+    /* text-align: center;
+    left: 0;
+    background-color: #c5c0c0;
+    color: #ffffff;
+    top: 0; */
+    /* border-radius: 50%;
+    position: relative;
+    z-index: 25; */
+}
+
+/* here is hover are work there when i want to change there here we change */
+.sideHover {
+    display: none;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 145px;
+    height: 100px;
+    background-color: white;
+    margin-right: 20px;
+    border-radius: 10px;
+
+    /* border: solid 1px black; */
+    cursor: pointer;
+}
+
+.forAMarkasunread {
+    margin: 10px;
+    margin-right: 14px;
+}
+
+@media screen and (max-width: 1194px) {
+
+    /* Hide container3 when the screen is in md size */
+    .message-buttonWrap {
+        display: none;
+    }
+
+    .message-buttonWrap {
+        display: none;
+    }
+
+    /* Adjust container1 and container2 width for better display on smaller screens */
+}

@@ -276,7 +276,9 @@ a {
 }
 
 .rightColumn {
-  width: 25%;
+  width: 25% ;
+  /* height: 100%;*/
+  border: 2px solid black;
 }
 
 .profileCoverPic {
@@ -916,19 +918,21 @@ hr.horiz {
   display: flex;
   flex-direction: column;
   padding: 0 5px;
+  
 }
 
 .allFeedUser {
-  height: calc(100vh - 346px);
+  height: calc(100vh - 346px) ;
   overflow: auto;
 }
 
 .stickyChatBox .allFeedUser {
-  height: calc(100vh - 279px);
+  height: calc(100vh - 279px) !important;
 }
 
 .stickyChatBox .trending_newsHeight.allFeedUser {
   height: calc(100vh - 210px);
+  
 }
 
 /* width */

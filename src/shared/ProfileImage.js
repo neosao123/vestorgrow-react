@@ -2,7 +2,7 @@ export default function ProfileImage({ url, style }) {
   return url && url !== "" ? (
     <img
       src={url}
-      alt="profile-img"
+      // alt="image"
       className="img-fluid image-fluid-custom-message"
       style={style ? style : { borderRadius: "40px" }}
     />

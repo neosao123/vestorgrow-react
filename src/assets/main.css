@@ -272,7 +272,14 @@ a {
 }
 
 .rightColumn {
-  width: 25%;
+  width: 18em;
+  /* height: 100vh; */
+  /* position: fixed;
+  right: 0;
+  bottom: 0; */
+  /* flex: 1; */
+  /* bottom: 0; */
+  /* height: 89vh; */
 }
 
 .profileCoverPic {
@@ -774,16 +781,25 @@ hr.horiz {
 .feedChatContent {
   background: #ffffff;
   box-shadow: 0px 3px 4px rgb(0 0 0 / 5%);
-  border-radius: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 84.3vh;
+  /* flex:1 */
+  margin-top: 1.875em;
+  /* position: relative; */
+  
+  position: fixed;
 }
 
 .stickyChatBox {
   position: sticky;
   top: 98px;
+  
 }
 
 .feedChatBox.active {
   height: calc(100% - 200px);
+  
 }
 
 .feedChatUser.show {
@@ -793,6 +809,7 @@ hr.horiz {
 .feedChatUser {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .feedChatHeading h5 {
@@ -915,6 +932,7 @@ hr.horiz {
 .allFeedUser {
   height: calc(100vh - 346px);
   overflow: auto;
+
 }
 
 .stickyChatBox .allFeedUser {
@@ -2852,8 +2870,13 @@ s .multiplePostRight .multiplePostimg {
 }
 
 .messageChatLeftHeadIcon {
-  width: 24px;
+  width: 100px;
+  display: flex;
 }
+.gap{
+  margin-left: 15px;
+}
+
 /* 
   .messageChatBox .messageChatRight {
     width: 55%;

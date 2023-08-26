@@ -108,7 +108,7 @@ function Sidebar() {
 
   return (
     <>
-      <aside className={"themeSidebar Sidebar-more-zindex-c"}>
+      <aside className={"themeSidebar Sidebar-more-zindex-c"} >
         <div className="sidebarInner sidebarInnerCustom">
           <div className="themeLogo">
             <Link to="/">

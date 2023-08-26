@@ -65,6 +65,9 @@ const Posts = () => {
   const [showOtherPostSharedPopup, setShowOtherPostSharedPopup] = useState(false);
   const [showOtherPostFailedPopup, setShowOtherPostFailedPopup] = useState(false);
   const [postCount, setPostCount] = useState(0);
+  const [change, setChange] = useState(false)
+  const [sharePostId, setSharePostId] = useState(null)
+
 
   const [search, setSearch] = useState({
     filter: {
@@ -80,7 +83,7 @@ const Posts = () => {
 
   // let link = encodeURI(window.location.origin + "/post")
 
-  let loading = false;
+  // let loading = false;
 
   const handleCreatePostPopup = () => {
     setCreatePostPopup(!createPostPopup);
@@ -95,22 +98,36 @@ const Posts = () => {
     setShowLoadingBar(false);
   };
 
-  
+
+
+
 
   useEffect(() => {
     setTimeout(() => {
       getPostList();
-    }, 1000);
-  }, [postSuccessPopup, search]);
+    }, 2000);
+  }, [postSuccessPopup, search, change]);
 
   const getPostList = async () => {
+    // alert("getpost")
     try {
-      loading = true;
+      // loading = true;
       const obj = search;
-      let resp = await postServ.myFeed(obj);
-      console.log(resp.data[0]);
+      let resp = await postServ.myFeed(obj)
+        .then((res) => {
+          console.log("DATA:", res.data)
+          setPostList(res.data)
+          setPostCount(res.total)
+        })
+      // .then((resp)=>{
+      //   setPostList(resp.data)
+      //   setPostCount(resp.total);
+      // })
+      // console.log(resp.data)
+      // console.log(resp.data[0]);
       if (resp.data) {
         setPostList(postList.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
+        // setPostList(resp.data)
         setPostCount(resp.total);
       }
     } catch (err) {
@@ -149,7 +166,7 @@ const Posts = () => {
     try {
       let resp = await postServ.unhidePost(postId);
       if (resp.message) {
-        loading = false;
+        // loading = false;
         getPostList();
       }
     } catch (err) {
@@ -182,7 +199,10 @@ const Posts = () => {
   }
 
   const handleSharePost = async (postIdx, shareType) => {
+    console.log("SHARETOFEED:", postIdx, shareType)
+    console.log(postList)
     let post = postList[postIdx];
+    console.log(post)
     if (!post.originalPostId) {
       post.originalPostId = post._id;
       post.parentPostId = post._id;
@@ -222,6 +242,7 @@ const Posts = () => {
   };
 
   const handleReportRequest = async (postId) => {
+    console.log(postId)
     let obj = {
       postId: postId,
       userId: user._id,
@@ -274,31 +295,32 @@ const Posts = () => {
         </div>
         {postList.length > 0 &&
           postList.map((item, idx) => {
-            return item.isHidden ? (
-              <div className="bgDarkCard postHidden d-none d-md-block">
-                <div className="postHiddenInner d-flex align-items-center">
-                  <div className="hideIconWhite">
-                    <img
-                      src="/images/icons/hide-icon-white.svg"
-                      alt="hide-icon-white"
-                      className="img-fluid"
-                      onClick={() => unhidePost(item._id)}
-                    />
-                  </div>
-                  <div className="postHiddenTxt">
-                    <h5>Post Hidden</h5>
-                    <p>You won't see this post on your timeline</p>
-                  </div>
-                  <div className="postHiddenClose">
-                    <NavLink onClick={() => unhidePost(item._id)}>
-                      <img src="/images/icons/close-white.svg" alt="close-white" className="img-fluid" />
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <SinglePost item={item} idx={idx} />
-            );
+            // return item.isHidden ? (
+            //   <div className="bgDarkCard postHidden d-none d-md-block">
+            //     <div className="postHiddenInner d-flex align-items-center">
+            //       <div className="hideIconWhite">
+            //         <img
+            //           src="/images/icons/hide-icon-white.svg"
+            //           alt="hide-icon-white"
+            //           className="img-fluid"
+            //           onClick={() => unhidePost(item._id)}
+            //         />
+            //       </div>
+            //       <div className="postHiddenTxt">
+            //         <h5>Post Hidden</h5>
+            //         <p>You won't see this post on your timeline</p>
+            //       </div>
+            //       <div className="postHiddenClose">
+            //         <NavLink onClick={() => unhidePost(item._id)}>
+            //           <img src="/images/icons/close-white.svg" alt="close-white" className="img-fluid" />
+            //         </NavLink>
+            //       </div>
+            //     </div>
+            //   </div>
+            // ) : (
+
+            return <SinglePost index={idx} item={item} idx={idx} key={idx} getPostList={getPostList} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} />
+            // );
           })}
       </div>
       {showReportPopup && (
@@ -316,8 +338,10 @@ const Posts = () => {
           onSuccess={() => {
             handleCreatePostPopup();
             handlePostSuccessPopup();
-            setSearch({ ...search, start: 0 });
+            // setSearch({ ...search, start: 0 });
+            // setChange(prev=>!prev)
           }}
+          getposts={getPostList}
           onFail={() => {
             handleCreatePostPopup();
             handlePostFailPopup();
@@ -332,7 +356,7 @@ const Posts = () => {
         <OtherPostShareFail onClose={() => setShowOtherPostFailedPopup(!showOtherPostFailedPopup)} />
       )}
       {postFailPopup && <PostShareFail onClose={handlePostFailPopup} />}
-      {showSharePost && <SharePostSelect onClose={() => setShowSharePost(!showSharePost)} post={dataForSharePost} />}
+      {showSharePost && <SharePostSelect onClose={() => setShowSharePost(!showSharePost)} postId={sharePostId} />}
       {mediaFiles && mediaFiles.length > 0 && (
         <ImageCarousel onClose={() => setMediaFiles(null)} mediaFiles={mediaFiles} imageIdx={imageIdx} />
       )}

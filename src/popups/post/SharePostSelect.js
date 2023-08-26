@@ -6,7 +6,7 @@ import ProfileImage from "../../shared/ProfileImage";
 import { Link } from "react-router-dom";
 import ChatService from "../../services/chatService";
 import UserService from "../../services/UserService";
-export default function SharePostSelect({ onClose, post }) {
+export default function SharePostSelect({ onClose, postId }) {
   const userFollowerServ = new UserFollowerService();
   const postServ = new PostService();
   const serv = new ChatService();
@@ -75,7 +75,7 @@ export default function SharePostSelect({ onClose, post }) {
       if (user.data) {
         let sharedtoUser = [user.data];
         let obj = {
-          content: window.location.origin + "/post/" + post._id,
+          content: window.location.origin + "/post/" + postId,
           // file: message.file,
           users: sharedtoUser,
         };

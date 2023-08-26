@@ -14,7 +14,7 @@
     "emoji-mart": "^5.5.2",
     "env-cmd": "^10.1.0",
     "formik": "^2.2.9",
-    "framer-motion": "^10.12.16",
+    "framer-motion": "^10.16.1",
     "linkify-plugin-mention": "^4.1.0",
     "moment": "^2.29.4",
     "rc-actions": "^1.0.3",

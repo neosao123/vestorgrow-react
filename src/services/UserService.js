@@ -2,6 +2,8 @@ import util from "../util/util";
 import axios from "axios";
 export default class UserService {
   signup(signupObj) {
+    console.log(signupObj)
+
     return util
       .sendApiRequest("/user", "POST", true, signupObj)
       .then(
