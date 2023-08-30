@@ -28,7 +28,7 @@ const chatServ = new ChatService()
 let socket;
 // let chatCompare = [];
 
-export default function Chat({atTop,setAtTop, setMediaFiles, setShowSentMsg, setShowCreateGroup }) {
+export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, setShowCreateGroup }) {
   const navigate = useNavigate();
   const params = useParams();
   const globalCtx = useContext(GlobalContext);
@@ -55,7 +55,7 @@ export default function Chat({atTop,setAtTop, setMediaFiles, setShowSentMsg, set
   const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
   const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
   const [isloading, setisLoading] = globalCtx.isLoading;
-  
+
   useEffect(() => {
     getChatList();
     setShowMsg(false);
@@ -238,7 +238,7 @@ export default function Chat({atTop,setAtTop, setMediaFiles, setShowSentMsg, set
     <>
       <div className="feedChatUser" style={{ width: "18em", height: "100%" }} >
         <div className="chatBoxGroupBottom" >
-          <div className="feedChatHeading d-flex d-flex-Custom" style={{paddingBottom:"20px"}} >
+          <div className="feedChatHeading d-flex d-flex-Custom" style={{ paddingBottom: `${!atTop?"25px":"0px"}` }} >
             <h5 className="mb-0">{isGroupChat ? "Groups" : "Messaging"}</h5>
             <div className="messageChatLeftHeadIcon" >
               {/* <div className="messageChatLeftHeadIcon ms-auto"> */}
@@ -271,7 +271,7 @@ export default function Chat({atTop,setAtTop, setMediaFiles, setShowSentMsg, set
                 </svg>
 
               </div>}
-              <div className="gap" onClick={() => setAtTop(prev=>!prev)}>
+              <div className="gap" onClick={() => setAtTop(prev => !prev)}>
                 {!atTop && <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.5002 6.35314C10.235 6.35314 9.98062 6.46217 9.79308 6.65623C9.60554 6.8503 9.50019 7.11351 9.50019 7.38796V9.03332L3.71019 3.03138C3.61695 2.9349 3.50626 2.85836 3.38443 2.80614C3.26261 2.75393 3.13204 2.72705 3.00019 2.72705C2.86833 2.72705 2.73776 2.75393 2.61594 2.80614C2.49411 2.85836 2.38342 2.9349 2.29019 3.03138C2.10188 3.22624 1.99609 3.49053 1.99609 3.7661C1.99609 4.04167 2.10188 4.30596 2.29019 4.50082L8.09019 10.4924H6.50019C6.23497 10.4924 5.98062 10.6014 5.79308 10.7955C5.60554 10.9896 5.50019 11.2528 5.50019 11.5272C5.50019 11.8017 5.60554 12.0649 5.79308 12.2589C5.98062 12.453 6.23497 12.562 6.50019 12.562H10.5002C10.6309 12.5604 10.76 12.5323 10.8802 12.4793C11.1245 12.3742 11.3187 12.1733 11.4202 11.9205C11.4714 11.796 11.4986 11.6624 11.5002 11.5272V7.38796C11.5002 7.11351 11.3948 6.8503 11.2073 6.65623C11.0198 6.46217 10.7654 6.35314 10.5002 6.35314ZM21.7102 21.6581L15.9102 15.6665H17.5002C17.7654 15.6665 18.0198 15.5575 18.2073 15.3634C18.3948 15.1693 18.5002 14.9061 18.5002 14.6317C18.5002 14.3572 18.3948 14.094 18.2073 13.8999C18.0198 13.7059 17.7654 13.5969 17.5002 13.5969H13.5002C13.3695 13.5985 13.2404 13.6266 13.1202 13.6796C12.8758 13.7846 12.6817 13.9856 12.5802 14.2384C12.5289 14.3628 12.5018 14.4964 12.5002 14.6317V18.7709C12.5002 19.0454 12.6055 19.3086 12.7931 19.5027C12.9806 19.6967 13.235 19.8058 13.5002 19.8058C13.7654 19.8058 14.0198 19.6967 14.2073 19.5027C14.3948 19.3086 14.5002 19.0454 14.5002 18.7709V17.1256L20.2902 23.1275C20.3831 23.2245 20.4937 23.3015 20.6156 23.354C20.7375 23.4066 20.8682 23.4336 21.0002 23.4336C21.1322 23.4336 21.2629 23.4066 21.3848 23.354C21.5066 23.3015 21.6172 23.2245 21.7102 23.1275C21.8039 23.0313 21.8783 22.9169 21.9291 22.7908C21.9798 22.6647 22.006 22.5294 22.006 22.3928C22.006 22.2562 21.9798 22.1209 21.9291 21.9948C21.8783 21.8687 21.8039 21.7543 21.7102 21.6581Z" fill="#465D61" />
                 </svg>}
@@ -285,8 +285,8 @@ export default function Chat({atTop,setAtTop, setMediaFiles, setShowSentMsg, set
           </div>
           {isloading ? (<div class="spinner-border text-primary" style={{ margin: "130px" }} role="status">
             <span class="visually-hidden">Loading...</span>
-          </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", height: "100%", paddingBottom:"10px"}}>
-            <div className="allFeedUser allFeedUserCustom" style={{ height: "100%"}} >
+          </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", height: "100%", paddingBottom: "10px" }}>
+            <div className="allFeedUser allFeedUserCustom" style={{ height: "100%" }} >
               {chatList.map((item, idx) => {
                 console.log("item:", item)
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
@@ -450,7 +450,8 @@ export default function Chat({atTop,setAtTop, setMediaFiles, setShowSentMsg, set
               ? "chatBoxParent chatBoxParent-cust-five"
               : "chatBoxParent"
         }
-        
+        style={{ position: "fixed",bottom: 0, right: "18.8em", zIndex: 9000,height: "auto",width:"auto" }}
+
       >
         {getMessageData.map((item, i) => {
           return (

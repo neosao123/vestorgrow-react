@@ -1174,8 +1174,6 @@
   /* bottom: 0px; */
   /* right: 350px; */
   /* position: fixed; */
-  background-color: "red";
-  left: 0;
   display: flex;
   /* flex-grow: var(--bs-gutter-x); */
   gap: 10px;

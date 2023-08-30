@@ -680,7 +680,7 @@ export default function ChatMessage({
           }}
           transition={{ duration: 1 }}
         >
-          <div style={{ zIndex: 300, width: "60px", marginBottom: "20px" }} onClick={() => {
+          <div style={{ zIndex: 300, width: "60px", margin: "0.5rem" }} onClick={() => {
             // setMinimize(false)
             let existingArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
             existingArr.forEach((el) => {
