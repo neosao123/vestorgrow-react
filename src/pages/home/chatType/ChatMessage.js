@@ -469,6 +469,7 @@ export default function ChatMessage({
                                         }
 
                                       >
+
                                         {item.file.map((i, idx) => {
                                           return (
 

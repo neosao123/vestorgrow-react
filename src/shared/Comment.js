@@ -247,8 +247,14 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
         setMessage({ ...message, content: "" });
         setShowEmoji(false);
       }
+      
     } catch (error) {
       console.log(error);
+      setInitialValue({
+        comment: "",
+        postId: post._id,
+        createdBy: user._id,
+      })
     }
   };
 
@@ -303,18 +309,20 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
       <div>
         <form onSubmit={formik.handleSubmit}>
           <div className="d-flex flex-column"
-            style={{position:"relative",justifyContent:"center"}}
+            style={{ position: "relative", justifyContent: "center" }}
           >
             <div className="mb-1 mx-auto bg-transparent"
-              style={{position:"absolute",bottom:"50px",left: "50%",
-              transform: "translateX(-50%)"}}
+              style={{
+                position: "absolute", bottom: "50px", left: "50%",
+                transform: "translateX(-50%)"
+              }}
             >
               {showEmoji && (
                 <div className="picker-head emojiPicker-comment-up"
-                  style={{position:"relative",width:"100%"}}
+                  style={{ position: "relative", width: "100%" }}
                 >
                   <div /*className="closeBtnPositionCustom close-btn-picker"*/
-                  style={{position:"absolute",top:"-20px",right:"-20px",zIndex:1}}
+                    style={{ position: "absolute", top: "-20px", right: "-20px", zIndex: 1 }}
                   >
                     <button
                       type="button"
@@ -333,7 +341,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                     onEmojiSelect={(e) => handleEmojiSelection(e, e.native)}
                     previewPosition={"none"}
                     searchPosition={"none"}
-                    navPosition={"top"} 
+                    navPosition={"top"}
                   />
                 </div>
               )}
@@ -419,7 +427,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                               <img src="/images/icons/dots.svg" alt="dots-white" className="img-fluid" />
                             </a>
                             <ul className="dropdown-menu">
-                              {user._id!==item?.createdBy._id && <li>
+                              {user._id !== item?.createdBy._id && <li>
                                 <Link className="dropdown-item">
                                   Report
                                 </Link>

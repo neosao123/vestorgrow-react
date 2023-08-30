@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SideButtons } from "../components/SideButtons/SideButtons.js";
 import GlobalContext from "../context/GlobalContext";
+import ChatsType from "../pages/home/ChatsType";
 
 
 function DefaultLayout({ children }) {
@@ -73,7 +74,7 @@ function DefaultLayout({ children }) {
           theme="light"
         />
         <div >
-          <SideButtons />
+          <ChatsType />
         </div>
       </main>
     );
@@ -104,7 +105,7 @@ function DefaultLayout({ children }) {
         />
 
         <div >
-          <SideButtons />
+          <ChatsType />
         </div>
       </main>
     );

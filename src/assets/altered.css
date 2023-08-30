@@ -1172,7 +1172,10 @@
 .chatBoxParent {
   /* position: absolute; */
   /* bottom: 0px; */
-  right: 350px;
+  /* right: 350px; */
+  /* position: fixed; */
+  background-color: "red";
+  left: 0;
   display: flex;
   /* flex-grow: var(--bs-gutter-x); */
   gap: 10px;
@@ -1955,8 +1958,10 @@
 }
 
 .sticky-top-header-custom {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1;
 }
 

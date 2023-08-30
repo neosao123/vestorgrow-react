@@ -14,6 +14,7 @@ import SentMessage from "../../popups/message/SentMessage";
 import Suggested from "./Suggested";
 
 
+
 function ChatsType() {
   const params = useParams();
   const globalCtx = useContext(GlobalContext);
@@ -33,6 +34,7 @@ function ChatsType() {
   const [groupChatRerender, setGroupChatRerender] = useState(false);
   const [mediaFiles, setMediaFiles] = useState([]);
   const [showSentMsg, setShowSentMsg] = useState(false);
+  const [atTop, setAtTop] = useState(false)
   useEffect(() => {
     if (isAuthentiCated && window.location.pathname.includes("groupinvite") && params?.id) {
       sendInvitation();
@@ -58,16 +60,16 @@ function ChatsType() {
 
   return (
     <>
-      <div className="feedChatBox stickyChatBox"  >
-        <div className="feedChatContent" style={{height:"90%"}} >
+      <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0,top:`${atTop?"6vh":"89.2vh"}`}} >
+        <div className="feedChatContent" style={{ height: "92%", width: "18.6em",borderRadius:"none"}} >
           <div className="tab-content" >
             {(user.role.includes("admin") || user.role.includes("userPaid")) && (
               <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`} >
                 <GlobalMessage setPremiumChat={setPremiumChat} setMediaFiles={setMediaFiles} />
               </div>
             )}
-            <div className={`tab-pane ${activeChat === 1 ? "active" : ""}`} style={{height:"100%"}}>
-              <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} />
+            <div className={`tab-pane ${activeChat === 1 ? "active" : ""}`} style={{ height: "100%" }}>
+              <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} atTop={atTop} setAtTop={setAtTop} />
             </div>
             <div className={`tab-pane ${activeChat === 2 ? "active" : ""}`}  >
               <GroupChat
