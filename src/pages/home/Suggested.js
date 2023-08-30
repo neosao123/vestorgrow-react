@@ -6,8 +6,15 @@ import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import UserFollowerService from "../../services/userFollowerService";
 import Loader from "../../components/Loader";
+import { useContext } from "react";
+import GlobalContext from "../../context/GlobalContext";
+import UserService from "../../services/UserService";
+
+const serv = new UserService()
 
 function Suggested() {
+  const globalCtx = useContext(GlobalContext)
+  const [user, setUser] = globalCtx.user;
   const suggestedServ = new SuggestedService();
   const followerServ = new UserFollowerService();
   const [modalShow, setModalShow] = useState(false);
@@ -72,6 +79,21 @@ function Suggested() {
     getSuggestedTab();
   };
 
+
+  const getUserData = async () => {
+    // setUserList([]);
+    try {
+      let resp = await serv.getUser(user?._id);
+      if (resp.data) {
+        setUser({ ...resp.data });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
+
   const filteredSuggested = suggestedTab.filter((user) => {
     return user?.user_name.toString().toLowerCase().includes(search);
   });
@@ -79,12 +101,18 @@ function Suggested() {
   const handleFollowRequest = async (id) => {
     try {
       let resp = await followerServ.sendFollowReq({ followingId: id });
+      // return resp.data;
+      // suggestedHome()
+      getSuggestedHome()
+      getUserData()
       return resp.data;
-    } catch (err) { }
+      console.log(resp.data)
+      return resp.data;
+    } catch (err) { console.log("ERROR:", err) }
   };
   return (
     <>
-      <div className="suggestionBox mb-3">
+      <div className="suggestionBox mb-3 " style={{ marginTop: "32px", top: "98px", paddingBottom: "20px" }}>
         <div className="suggestionHead">
           <span>Suggested for You</span>
           <span
@@ -96,60 +124,57 @@ function Suggested() {
             See All
           </span>
         </div>
-        <div className="suggestionBody">
-          {suggestedHome?.slice(0, 2).map((user) => {
+        <div style={{ backgroundColor: "#d1d1d1", height: "1px", width: "92%", marginLeft: "8%" }}></div>
+        <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
+          {suggestedHome?.slice(0, 4).map((user) => {
             return (
-              <>
-                <div className="profileBox">
-                  <img
-                    src="/images/icons/close.svg"
-                    className="suggestClose"
-                    alt="close"
-                    onClick={() => deleteSuggestedHome(user._id)}
-                  />
+              <div style={{ display: "flex", borderBottom: "1px solid #d1d1d1", width: "92%", marginLeft: "8%", paddingTop: "5px" }}>
+                <div className="profileBox" style={{ border: "1px solid #ffffff", display: "flex" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
+                      style={{ height: "55px", width: "55px", marginTop: "10px" }}
                       src={
                         user?.profile_img
                           ? user.profile_img
                           : "/images/profile/default-profile.png"
                       }
                       alt="profile"
+
                     />
-                    <span className="name">
-                      {user?.user_name?.length > 8
-                        ? user?.user_name?.slice(0, 8) + "..."
-                        : user.user_name}
-                    </span>
-                    <span className="title" style={{ whiteSpace: "pre-wrap" }}>
-                      {user?.title ? (
-                        user?.title?.length > 8 ? (
-                          user?.title?.slice(0, 10) + "..."
-                        ) : (
-                          user.title
-                        )
-                      ) : (
-                        <> </>
-                      )}
-                    </span>
                   </Link>
+                </div>
+                <div style={{ width: "70%", padding: "8px 0px", display: "flex", flexDirection: "column", gap: "1px" }}>
+                  <span style={{ fontSize: "16px", fontWeight: "600", color: "#0B1E1C" }} >{user?.user_name?.length > 20
+                    ? user?.user_name?.slice(0, 20) + "..."
+                    : user.user_name}
+                  </span>
+                  <span style={{ fontSize: "14px", fontWeight: 400, color: "#465D61" }} >
+                    {user?.title ? (
+                      user?.title?.length > 30 ? (
+                        user?.title?.slice(0, 30) + "..."
+                      ) : (
+                        user.title
+                      )
+                    ) : (
+                      "Vestorgrow User"
+                    )}
+                  </span>
                   {user.isFollowing === "following" ? (
-                    <button className="follow">Following</button>
-                  ) : user.isFollowing === "requested" ? (
-                    <button className="follow">Requested</button>
-                  ) : (
+                    <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}>Following</button>
+                  ) : user.isFollowing === "notfollowing" ? (
                     <button
-                      className="follow"
+                      style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}
                       onClick={() => {
                         handleFollowRequest(user._id);
                       }}
                     >
                       Follow
                     </button>
+                  ) : (
+                    <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}>Requested</button>
                   )}
                 </div>
-                <div className="border" style={{ height: "130px" }}></div>
-              </>
+              </div>
             );
           })}
         </div>

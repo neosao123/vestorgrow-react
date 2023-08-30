@@ -1,8 +1,13 @@
+body{
+  margin-top: 32px;
+  top: 98px;
+}
 .suggestionBox {
-  position: relative; 
+  position: sticky; 
   /* height: ; */
   background: #fff;
   border-radius: 15px;
+  padding-top: 10px;
 }
 
 .suggestionHead {
@@ -22,12 +27,14 @@
 }
 
 .suggestionBody {
-  height: 180px;
-  max-height: 180px;
+  /* height: 180px;
+  max-height: 180px; */
+  width: 100%;
+  height: auto;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
+  /* flex-wrap: wrap; */
+  /* align-items: center; */
+  /* justify-content: space-evenly; */
   /* overflow-y: scroll; */
 }
 
@@ -36,12 +43,13 @@
 }
 
 .suggestionBody .profileBox {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  width: 140px;
-  height: 152px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  width: 20%;
+  height: 100%;
+  /* height: 152px; */
   /* margin-top: 10px; */
 }
 
@@ -83,7 +91,10 @@
 }
 
 .profileBox .name {
-  font-weight: 600;
+  font-weight: 600 !important;
+  font-size: 16px;
+  color: #0B1E1C;
+  font-style: Gilroy;
 }
 
 .profileBox .title {
@@ -238,8 +249,9 @@
 
 @media only screen and (min-width: 992px) {
   .suggestionBox .profileBox {
-    width: 100px;
-    height: 120px;
+    width: 30%;
+    /* height: 120px; */
+    /* height: "auto"; */
     padding-bottom: 20px;
   }
 

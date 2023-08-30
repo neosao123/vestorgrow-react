@@ -1,0 +1,27 @@
+.chatBoxParent {
+    position: absolute;
+
+}
+
+@media (-webkit-device-pixel-ratio: 1.00) {
+    .chatBoxParent {
+        bottom: 0rem;
+        
+    }
+}
+
+
+@media (-webkit-device-pixel-ratio: 1.25) {
+    .chatBoxParent {
+        bottom: 1.0rem;
+        
+    }
+}
+
+
+@media (-webkit-device-pixel-ratio: 1.50) {
+    .chatBoxParent {
+        bottom: 1.75rem;
+        
+    }
+}

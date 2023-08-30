@@ -336,4 +336,15 @@ export default class ChatService {
         throw err;
       });
   }
+
+  getTotalUnreadCount(payload) {
+    return util.sendApiRequest("/chat/totalunreadcount", "POST", true, payload)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        throw err;
+      })
+  }
+  
 }

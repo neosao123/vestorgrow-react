@@ -109,25 +109,15 @@ const Posts = () => {
   }, [postSuccessPopup, search, change]);
 
   const getPostList = async () => {
-    // alert("getpost")
     try {
-      // loading = true;
       const obj = search;
       let resp = await postServ.myFeed(obj)
         .then((res) => {
-          console.log("DATA:", res.data)
           setPostList(res.data)
           setPostCount(res.total)
         })
-      // .then((resp)=>{
-      //   setPostList(resp.data)
-      //   setPostCount(resp.total);
-      // })
-      // console.log(resp.data)
-      // console.log(resp.data[0]);
       if (resp.data) {
         setPostList(postList.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
-        // setPostList(resp.data)
         setPostCount(resp.total);
       }
     } catch (err) {
@@ -259,11 +249,6 @@ const Posts = () => {
     return (url.match(p)) ? true : false;
   }
 
-  // const extractYouTubeURL = (text) => {
-  //   const youtubeURLRegex = /(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/\S+/gi;
-  //   const matches = text.match(youtubeURLRegex);
-  //   return matches ? matches[0] : null;
-  // }
 
   return (
     <>
@@ -295,32 +280,7 @@ const Posts = () => {
         </div>
         {postList.length > 0 &&
           postList.map((item, idx) => {
-            // return item.isHidden ? (
-            //   <div className="bgDarkCard postHidden d-none d-md-block">
-            //     <div className="postHiddenInner d-flex align-items-center">
-            //       <div className="hideIconWhite">
-            //         <img
-            //           src="/images/icons/hide-icon-white.svg"
-            //           alt="hide-icon-white"
-            //           className="img-fluid"
-            //           onClick={() => unhidePost(item._id)}
-            //         />
-            //       </div>
-            //       <div className="postHiddenTxt">
-            //         <h5>Post Hidden</h5>
-            //         <p>You won't see this post on your timeline</p>
-            //       </div>
-            //       <div className="postHiddenClose">
-            //         <NavLink onClick={() => unhidePost(item._id)}>
-            //           <img src="/images/icons/close-white.svg" alt="close-white" className="img-fluid" />
-            //         </NavLink>
-            //       </div>
-            //     </div>
-            //   </div>
-            // ) : (
-
-            return <SinglePost index={idx} item={item} idx={idx} key={idx} getPostList={getPostList} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} />
-            // );
+            return <SinglePost index={idx} item={item} idx={idx} key={idx} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} />
           })}
       </div>
       {showReportPopup && (

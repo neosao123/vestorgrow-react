@@ -33,6 +33,7 @@ const SinglePost = ({ ...props }) => {
     const reportServ = new ReportService();
     const helperServ = new HelperFunctions();
     const discoverServ = new DiscoverService()
+    
 
     const globalCtx = useContext(GlobalContext);
     const [user, setUser] = globalCtx.user;
@@ -69,6 +70,7 @@ const SinglePost = ({ ...props }) => {
     const [reaction, setReaction] = useState(null)
     const [message, setMessage] = useState("")
     const [isHidden, setIsHidden] = useState(false)
+    const [change,setChange]=useState(false)
 
 
 
@@ -79,11 +81,7 @@ const SinglePost = ({ ...props }) => {
     let facebookurl = "https://www.facebook.com/sharer/sharer.php?t=vestorgrow home page&u=";
     let mailto = `mailto:${user?.email}?subject=Vestorgrow!!!&body=`;
 
-    // const getPostReactions=async()=>{
-    //     console.log(item._id)
-    //     const res= await postServ.getPostUniqueReactions(item?._id)
-    //     return res.data;
-    // }
+    
 
     useEffect(() => {
         setId(item?._id)
@@ -104,7 +102,6 @@ const SinglePost = ({ ...props }) => {
         try {
             let resp = await discoverServ.getPost(item?._id);
             if (resp.data) {
-                console.log("resp:", resp.data)
                 setId(resp?.data?._id)
                 setLikes(resp?.data?.likeCount)
                 setProgile_img(resp?.data?.createdBy.profile_img)
@@ -112,13 +109,10 @@ const SinglePost = ({ ...props }) => {
                 setPostReaction(resp?.data?.postReactions)
                 setOriginalPostId(resp?.data.originalPostId)
                 setReaction(resp?.data?.reaction)
-                item.duration = moment.duration(moment(date).diff(moment(resp?.data?.createdAt)))
-                // setPost(resp.data);
-                // getFollowStatus(resp.data.createdBy._id);
+                item.duration = moment.duration(moment(date).diff(moment(resp?.data?.createdAt)));
                 setIsYouTubeURL(helperServ.extractYouTubeURL(resp.data.message));
                 setMessage(resp?.data?.message)
                 setIsHidden(resp?.data?.isHidden)
-                // handleShowComment(resp.data._id);
             }
         } catch (err) {
             console.log(err);
@@ -131,6 +125,20 @@ const SinglePost = ({ ...props }) => {
             mention: (href) => process.env.REACT_APP_API_BASEURL + "/userprofile/profiles" + href,
         },
     };
+
+    const blockUser = async (userId) => {
+        try {
+          let obj = {
+            blockedId: userId,
+          };
+          let resp = await blockedServ.sendBlockReq(obj);
+          if (resp.data) {
+            getPostList();
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
 
 
@@ -167,6 +175,8 @@ const SinglePost = ({ ...props }) => {
             if (resp.message) {
                 setTimeout(() => {
                     getPostList()
+                    getPost()
+                    setChange(!change)
                 }, 1000);
             }
         } catch (err) {
@@ -175,32 +185,7 @@ const SinglePost = ({ ...props }) => {
     };
 
 
-    // const handleSharePost = async (postIdx, shareType) => {
-    //     let post = postList[postIdx];
-    //     if (!post.originalPostId) {
-    //         post.originalPostId = post._id;
-    //         post.parentPostId = post._id;
-    //     } else {
-    //         post.parentPostId = post._id;
-    //     }
-    //     post.shareType = shareType;
-    //     if (shareType === "Selected") {
-    //         setDataForSharePost(post);
-    //         setShowSharePost(true);
-    //     } else {
-    //         try {
-    //             let resp = await postServ.sharePost(post);
-    //             if (resp.data) {
-    //                 getPostList();
-    //                 setShowOtherPostSharedPopup(!showOtherPostSharedPopup);
-    //             } else {
-    //                 setShowOtherPostFailedPopup(!showOtherPostFailedPopup);
-    //             }
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-    // };
+
 
     const handleShowComment = (id) => {
         if (showCommentPostList.includes(id)) {
@@ -215,14 +200,6 @@ const SinglePost = ({ ...props }) => {
         setShowUnfollowPopup(true);
     };
 
-    // const handleReportRequest = async (postId) => {
-    //     let obj = {
-    //         postId: postId,
-    //         userId: user._id,
-    //     };
-    //     setReportData(obj);
-    //     setShowReportPopup(true);
-    // };
 
     const updatePostAfterReaction = (mode, postId, data, uniqueReactions) => {
         if (mode === "inc") {
@@ -250,20 +227,6 @@ const SinglePost = ({ ...props }) => {
 
     document.body.addEventListener("click", () => setShowShareTo(false), true);
 
-    // const getPost = async () => {
-    //     try {
-    //       let resp = await discoverServ.getPost(params.id);
-    //       if (resp.data) {
-    //         setPost(resp.data);
-    //         // getFollowStatus(resp.data.createdBy._id);
-    //         // setMetaData(true);
-    //         // setPostReactions(resp.data.postReactions ?? []);
-    //         // setYouttubeURL(helperServ.extractYouTubeURL(resp.data.message));
-    //       }
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    //   };
 
     return isHidden ? (<div className="bgDarkCard postHidden d-none d-md-block">
         <div className="postHiddenInner d-flex align-items-center">
@@ -389,7 +352,7 @@ const SinglePost = ({ ...props }) => {
                                         <li>
                                             <a
                                                 href="javascript:void(0)"
-                                                // onClick={() => blockUser(item.createdBy._id)}
+                                                onClick={() => blockUser(item.createdBy._id)}
                                                 className="dropdown-item"
                                             >
                                                 <i className="fa-solid fa-user-lock me-1"></i> Block

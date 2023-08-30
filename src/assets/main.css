@@ -3,6 +3,7 @@
 body {
   font-family: gilroy;
   background: #fff;
+  width: 100%;
 }
 
 a {
@@ -260,7 +261,7 @@ a {
 
 .socialContantInner {
   display: flex;
-  gap: 32px;
+  gap: 20px;
 }
 
 .leftColumn {
@@ -272,7 +273,7 @@ a {
 }
 
 .rightColumn {
-  width: 18em;
+  width: 19.4em;
   /* height: 100vh; */
   /* position: fixed;
   right: 0;
@@ -493,6 +494,9 @@ hr.horiz {
 
 .todayNews {
   padding: 24px 20px;
+}
+.todayNewsList{
+  height: 200px;
 }
 
 .todayNewsList ul li a {

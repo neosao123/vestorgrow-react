@@ -16,9 +16,9 @@
 
 .message-buttonWrap {
     position: fixed;
-    bottom: 20px;
+    bottom: 1rem;
     /* Adjust this value to control the distance from the bottom */
-    right: 50px;
+    right: 1rem;
     /* Adjust this value to control the distance from the right */
     z-index: 999;
 }

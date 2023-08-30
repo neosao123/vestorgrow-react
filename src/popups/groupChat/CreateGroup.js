@@ -68,6 +68,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
   };
 
   const onSubmit = async (value) => {
+    console.log("handleSubmit")
     setActiveBtn(true);
     try {
       const formData = new FormData();
@@ -85,6 +86,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
           // console.log(resp);
         });
       } else {
+        
         await serv.createGroupChat(formData).then((resp) => {
           onFinish("created");
           setGroupExecutionSuccess(!groupExecutionSuccess);
@@ -252,14 +254,6 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                   <div className="keyWord mt-3 d-flex">
                                     {formik.values.chatKeyword.map((item, idx) => {
                                       return (
-                                        // <input
-                                        //   type={"text"}
-                                        //   placeholder=""
-                                        //   className=""
-                                        //   name={`chatKeyword[${idx}]`}
-                                        //   value={formik.values.chatKeyword[idx]}
-                                        //   onChange={formik.handleChange}
-                                        // />
                                         <span className="keywordListItem">
                                           <p>{formik.values.chatKeyword[idx]}</p>
                                           <img
@@ -315,6 +309,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                               <div className="postFile mt-3">
                                 <div className="postBtn postBtnCustom postBtnCustom-CustomBtnCreate">
                                   <button
+
                                     type="submit"
                                     className={"btn btnColor "}
                                     disabled={activeBtn}
