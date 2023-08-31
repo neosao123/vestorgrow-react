@@ -42,12 +42,9 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   const [user, setUser] = globalCtx.user;
   const [unreadMsgCount, setUnreadMsgCount] = globalCtx.unreadMsgCount;
   const [getMessageData, setGetMessageData] = globalCtx.getMessageData;
-  const [chatList, setChatList] = useState([]);
   const [chatId, setChatId] = useState(null);
   const [messageList, setMessageList] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
-  const [unreadCount, setUnreadCount] = useState({});
-  const [latestMsgList, setLatestMsgList] = useState({});
   const [showMsg, setShowMsg] = useState(false);
   const [showComposeMsgDkst, setShowComposeMsgDkst] = useState(false);
   // const [getMessageData, setGetMessageData] = useState([]);
@@ -62,6 +59,10 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
   const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
   const [isloading, setisLoading] = globalCtx.isLoading;
+  const [unreadCount, setUnreadCount] = globalCtx.UnReadCount;
+  const [latestMsgList, setLatestMsgList] = globalCtx.LatestmsgList;
+  const [chatList, setChatList] = globalCtx.ChatList;
+  const [chatData, setChatData] = globalCtx.ChatDATA;
 
 
 
@@ -174,6 +175,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   };
 
 
+
   const getMessage = async (id, oUser, users) => {
     if (getMessageData.findIndex((i) => i.id == id) == -1) {
       if (getMessageData.length > 4) {
@@ -241,6 +243,10 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
         console.log(err)
       })
   }
+
+  useEffect(() => {
+    handlePersonalChat()
+  }, [])
 
   const handlePersonalChat = () => {
     if (isGroupChat) {

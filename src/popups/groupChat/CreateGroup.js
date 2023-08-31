@@ -32,7 +32,12 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
   const [showCropper, setShowCropper] = useState(false);
   const [groupData, setGroupData] = useState();
   const [showEditProfileImg, setShowEditProfileImg] = useState(null);
-  
+  const [unreadCount, setUnreadCount] = globalCtx.UnReadCount;
+  const [latestMsgList, setLatestMsgList] = globalCtx.LatestmsgList;
+  const [chatList, setChatList] = globalCtx.ChatList;
+  const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
+  const [isloading, setisLoading] = globalCtx.isLoading;
+
 
   const [initialValue, setInitialValue] = useState({
     chatName: "",
@@ -68,6 +73,47 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
     }
   };
 
+
+
+
+
+
+  const getChatList = async () => {
+
+    try {
+      let obj = {
+        filter: {
+          isGroupChat: isGroupChat,
+        },
+      };
+      await serv.listAllChat(obj).then((resp) => {
+        if (resp.data) {
+          resp.data = resp.data.filter((i) => !i.deleted_for.includes(user._id));
+          setChatList([...resp.data]);
+          let unreadCountList = unreadCount;
+          let latestMsgListTemp = latestMsgList;
+          resp.data.map((item) => {
+            if (item.latestMessage.sender !== user._id) {
+              unreadCountList[item._id] = item.unreadCount;
+            }
+            latestMsgListTemp[item._id] = item.latestMessage;
+          });
+          setUnreadCount(unreadCountList);
+          setLatestMsgList(latestMsgListTemp);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      setisLoading(false)
+    }
+    setisLoading(false)
+  };
+
+
+
+
+
+
   const onSubmit = async (value) => {
     //alert("button clicked")
     console.log(value)
@@ -95,6 +141,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
         });
       }
       setActiveBtn(false);
+      getChatList()
     } catch (err) { }
   };
 

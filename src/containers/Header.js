@@ -250,7 +250,7 @@ function Header() {
     }
   };
 
-  return ( 
+  return (
     // <>    <header className="w-100 clearfix topHeader sticky-top" >
     <>
       {" "}
@@ -299,23 +299,22 @@ function Header() {
                       <div
                         className="notifyHeading d-flex notifyHeading-customSize notifyHeading-customfr-mobile"
                         onClick={handleShowFollowReqList}
+                        
                       >
                         <img className="arrow" src="/images/icons/left-arrow.svg" alt="" />
                         <h4 className="w-100 mb-0">Follow requests</h4>
                       </div>
-                      <div className="dropdownGroup dropdownGroupCustom overflowScrollStop">
+                      <div className="dropdownGroup dropdownGroupCustom overflowScrollStop" style={{backgroundColor:"green"}} >
                         {followReq.map((item, idx) => {
                           return (
                             <div key={idx}>
                               <Link className="dropdown-item position-relative" id={"noti-" + item._id}>
                                 <div className="notifyGroup followReqList">
                                   <div className=" position-relative">
-                                    {/* <div className="taskEmployeeImg rounded-circle" style={{ left: 0 }}> */}
                                     <ProfileImage
                                       url={item?.userId?.profile_img}
                                       style={{ minWidth: "48px", height: "48px", borderRadius: "50%" }}
                                     />
-                                    {/* </div> */}
                                   </div>
                                   <div
                                     className={
@@ -404,7 +403,7 @@ function Header() {
                     </>
                   ) : (
                     <>
-                      <div className="notifyHeading notifyHeading-custom-mobile">
+                      <div className="notifyHeading notifyHeading-custom-mobile" >
                         <div className="notifyHeading-backButton" onClick={() => setShowNotification(false)}>
                           <img
                             className="arrow"

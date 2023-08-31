@@ -1922,7 +1922,7 @@
 .sticky-top-custom {
   position: sticky;
   top: 66px;
-  z-index: 2;
+  z-index: 1;
   margin-bottom: 0px;
 }
 
