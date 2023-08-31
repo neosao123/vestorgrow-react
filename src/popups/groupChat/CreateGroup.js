@@ -32,6 +32,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
   const [showCropper, setShowCropper] = useState(false);
   const [groupData, setGroupData] = useState();
   const [showEditProfileImg, setShowEditProfileImg] = useState(null);
+  
 
   const [initialValue, setInitialValue] = useState({
     chatName: "",
@@ -68,7 +69,8 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
   };
 
   const onSubmit = async (value) => {
-    console.log("handleSubmit")
+    //alert("button clicked")
+    console.log(value)
     setActiveBtn(true);
     try {
       const formData = new FormData();
@@ -86,7 +88,6 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
           // console.log(resp);
         });
       } else {
-        
         await serv.createGroupChat(formData).then((resp) => {
           onFinish("created");
           setGroupExecutionSuccess(!groupExecutionSuccess);
@@ -145,6 +146,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                 : URL.createObjectURL(formik.values.chatLogo)
                             }
                           />
+                          {formik.touched.chatLogo && formik.errors.chatLogo ? (
+                            <div className="valid_feedbackMsg">{formik.errors.chatLogo}</div>
+                          ) : null}
                         </div>
 
                         <div onClick={() => setShowEditProfileImg(formik.values.chatLogo)}>
@@ -203,6 +207,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                     placeholder="Please describe your group"
                                     style={{ borderRadius: "5px" }}
                                   />
+                                  {formik.touched.chatDesc && formik.errors.chatDesc ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatDesc}</div>
+                                  ) : null}
                                 </div>
                                 <div className="m-4 mb-sm-4 commonform commonformBioCustom">
                                   <label>Rules*</label>
@@ -216,6 +223,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                     placeholder="Lay down some house rules"
                                     style={{ borderRadius: "5px" }}
                                   />
+                                  {formik.touched.chatRules && formik.errors.chatRules ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatRules}</div>
+                                  ) : null}
                                 </div>
                                 <div className="m-4 mb-sm-4 commonform">
                                   <p>
@@ -309,7 +319,6 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                               <div className="postFile mt-3">
                                 <div className="postBtn postBtnCustom postBtnCustom-CustomBtnCreate">
                                   <button
-
                                     type="submit"
                                     className={"btn btnColor "}
                                     disabled={activeBtn}

@@ -263,14 +263,13 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     <>
       <div className="feedChatUser" style={{ width: "18em", height: "100%" }} >
         <div className="chatBoxGroupBottom" >
-          <div className="feedChatHeading d-flex d-flex-Custom" style={{ paddingBottom: `${!atTop ? "25px" : "0px"}` }} >
+          <div className="feedChatHeading d-flex d-flex-Custom" style={{ paddingBottom: `${!atTop ? "35px" : "15px"}` }} >
             {/* <h5 class Name="mb-0">{isGroupChat ? "Groups" : "Messaging"}</h5> */}
             <div style={{ display: "flex", gap: "10px" }} >
               <img src={PersonalChatImage} onClick={handlePersonalChat} alt="personalchatimage" />
               <img src={groupImage} onClick={handleGroupChat} alt="groupicon" />
             </div>
             <div className="messageChatLeftHeadIcon" >
-              {/* <div className="messageChatLeftHeadIcon ms-auto"> */}
               {!isGroupChat && <div onClick={showComposeMsgHandler} >
                 <img src={PersonalChatCreate} />
               </div>}
@@ -290,7 +289,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
           </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", height: "100%", paddingBottom: "10px" }}>
             <div className="allFeedUser allFeedUserCustom" style={{ height: "100%" }} >
               {chatList.map((item, idx) => {
-                console.log("item:", item)
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
                 time = `${time[0]} ${time[1].slice(0, 1)}`;
                 let oUser;

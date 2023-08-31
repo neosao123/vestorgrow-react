@@ -253,7 +253,7 @@ const Posts = () => {
   return (
     <>
       <div className="middleColumn">
-        <div className="new-post_custom-div sticky-top-custom">
+        <div className="new-post_custom-div sticky-top-custom" style={{marginTop:"35px"}}>
           <div className="new-post_custom-divInner-top"></div>
           <div className="new-post_custom-divInner">
             <div className="bgWhiteCard addPhotoVideoPost d-none d-md-block sticky-top-custom">
