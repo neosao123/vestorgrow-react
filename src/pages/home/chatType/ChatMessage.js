@@ -16,6 +16,8 @@ import { SecureLink } from "react-secure-link";
 import { AiOutlineMinus } from "react-icons/ai"
 import { RiArrowDropDownLine } from "react-icons/ri"
 import { motion } from 'framer-motion';
+import maxIcon from "../../../assets/images/maximize.svg"
+import minIcon from "../../../assets/images/minimize.svg"
 const serv = new ChatService();
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 export default function ChatMessage({
@@ -352,7 +354,8 @@ export default function ChatMessage({
                 </div>
               </div>
               <span onClick={() => handleMaximize(chatCompare)}>
-                <img src="/images/icons/expend.svg" alt="dots" className="img-fluid" />
+                {expend && <img src={maxIcon} alt="dots" className="img-fluid" />}
+                {!expend && <img src={minIcon} alt="dots" className="img-fluid" />}
               </span>
               <span onClick={onClose}>
                 <img src="images/profile/cross-icon.svg" className="search_cross" alt="" />
@@ -525,7 +528,7 @@ export default function ChatMessage({
                                       </span>
                                       <span className="dropdown" >
                                         <a href="javascript:void(0);" data-bs-toggle="dropdown">
-                                          {item.sender?._id !== user?._id && <RiArrowDropDownLine style={{fontSize:"14px", color: `${item.sender?._id !== user?._id ? "#282828" : "#ffffff"}` }} />}
+                                          {item.sender?._id !== user?._id && <RiArrowDropDownLine style={{ fontSize: "14px", color: `${item.sender?._id !== user?._id ? "#282828" : "#ffffff"}` }} />}
                                         </a>
                                         <ul className="dropdown-menu">
                                           <li>
@@ -691,7 +694,7 @@ export default function ChatMessage({
             localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
             setMessageBoxState(existingArr)
           }}>
-            <ProfileImage url={mUser?.profile_img} style={{ width: "60px", borderRadius: "50%" }} />
+            <ProfileImage url={isGroupChat ? chatLogo : mUser?.profile_img} style={{ width: "60px", borderRadius: "50%" }} />
           </div>
         </motion.div>
       )
