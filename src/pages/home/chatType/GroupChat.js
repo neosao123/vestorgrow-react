@@ -550,7 +550,7 @@ export default function GroupChat({
                                 }}
                               >
                                 {/* {item.chatName} */}
-                                {item?.chatName.length > 24 ? item?.chatName.slice(0, 24) + "..." : item?.chatName}
+                                {item?.isGroupChat===true &&  item?.chatName.length > 24 ? item?.chatName.slice(0, 24) + "..." : item?.chatName}
                               </h6>
                               <div className="feedChatHeadRight">
                                 <a data-bs-toggle="dropdown" className="dot-center" href="javascript:void(0);">

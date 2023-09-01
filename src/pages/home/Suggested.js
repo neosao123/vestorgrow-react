@@ -106,8 +106,6 @@ function Suggested() {
       getSuggestedHome()
       getUserData()
       return resp.data;
-      console.log(resp.data)
-      return resp.data;
     } catch (err) { console.log("ERROR:", err) }
   };
   return (

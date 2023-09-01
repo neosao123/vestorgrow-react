@@ -3,10 +3,30 @@
 
 }
 
+.input-container {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.input-container i {
+    margin-right: 5px;
+    /* Adjust as needed */
+    color: #999;
+    /* Icon color */
+}
+.input-field:focus{
+    outline: none;
+    border: none;
+}
+
+
 @media (-webkit-device-pixel-ratio: 1.00) {
     .chatBoxParent {
         bottom: 0rem;
-        
+
     }
 }
 
@@ -14,7 +34,7 @@
 @media (-webkit-device-pixel-ratio: 1.25) {
     .chatBoxParent {
         bottom: 1.0rem;
-        
+
     }
 }
 
@@ -22,6 +42,6 @@
 @media (-webkit-device-pixel-ratio: 1.50) {
     .chatBoxParent {
         bottom: 1.75rem;
-        
+
     }
 }

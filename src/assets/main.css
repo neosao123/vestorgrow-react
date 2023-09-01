@@ -823,7 +823,7 @@ hr.horiz {
 }
 
 .feedChatHeading {
-  padding: 20px 12px;
+  /* padding: 20px 12px; */
 }
 
 .feedUserChat a.userFeedLink {
@@ -1155,9 +1155,6 @@ hr.horiz {
   border-top: 0;
 }
 
-.feedChatHeading {
-  border-bottom: 0.5px solid #d1d1d1;
-}
 
 .feedChatSendMsgBox {
   border-top: 0.5px solid #d1d1d1;
@@ -2874,7 +2871,7 @@ s .multiplePostRight .multiplePostimg {
 }
 
 .messageChatLeftHeadIcon {
-  width: 100px;
+  width: 70px;
   display: flex;
 }
 .gap{
@@ -4704,7 +4701,7 @@ div#image-cropper-result img {
 }
 
 .feedChatHeading {
-  padding: 17px 12px;
+  padding: 5px 5px;
 }
 
 .menuTooltip {

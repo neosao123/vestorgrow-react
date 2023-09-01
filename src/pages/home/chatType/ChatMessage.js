@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -65,23 +65,35 @@ export default function ChatMessage({
   const [groupChat, setgroupChat] = useState(false)
 
 
+  // useEffect(()=>{
+
+  // })
 
   useEffect(() => {
     socket.on("messageRecieved", (newMessage) => {
+      console.log("NEW:", newMessage)
+      socket.emit("readMessage", {
+        chat: newMessage?.chat,
+        messageId: newMessage?._id,
+        receivedBy: user?._id
+      });
       for (const item in latestMsgList) {
         if (item === newMessage.chat) {
           setLatestMsgList({ ...latestMsgList, [item]: newMessage });
         }
       }
+      // if chat is not selected or doesn't match current chat
       if (
-        !chatCompare || // if chat is not selected or doesn't match current chat
-        chatCompare !== newMessage.chat
+        !chatCompare || chatCompare !== newMessage.chat
       ) {
+        // do nothing
       } else {
         setMessageList([...messageList, newMessage]);
+
       }
     });
   });
+
   useEffect(() => {
     getMessage(getMessageData.id, getMessageData.oUser, getMessageData.users);
   }, [getMessageData]);
@@ -97,23 +109,18 @@ export default function ChatMessage({
     }
   }
 
-
   useEffect(() => {
     getChat()
       .then((res) => {
         if (res.isGroupChat === false) {
           setgroupChat(false)
-        }
-        else {
+        } else {
           setgroupChat(true)
           setChatName(res.chatName)
           setChatLogo(res.chatLogo)
         }
-
       })
-  }, [])
-
-
+  }, []);
 
   useEffect(() => {
     let newArr = JSON.parse(localStorage.getItem("messageboxstate"))
@@ -147,14 +154,15 @@ export default function ChatMessage({
         setExpend(el.isExpanded)
       }
     })
+  }, [messageBoxState]);
 
-  }, [messageBoxState])
   useEffect(() => {
     var objDiv = document.getElementById(`messagess${chatId}`);
     if (objDiv) {
       objDiv.scrollTop = objDiv.scrollHeight;
     }
   }, [messageList]);
+
   const getMessage = async (id, oUser, users) => {
     setMUser(oUser);
     setUsers([...users]);
@@ -253,7 +261,6 @@ export default function ChatMessage({
 
     // console.log(currChatId, existingArr)
     if (expend) {
-      console.log(expend)
       existingArr.forEach((el) => {
         if (el.chatId === currChatId) {
           el.isExpanded = false;
@@ -287,6 +294,12 @@ export default function ChatMessage({
 
   }
 
+  const handleMessageReadEvent = useCallback((data) => {
+
+  }, [])
+
+
+
   return (
     <>
       {!minimize ? (<motion.div
@@ -298,7 +311,8 @@ export default function ChatMessage({
           hidden: { opacity: 0, scale: 0, x: 0, y: 0 },
         }}
         transition={{ duration: 0.3 }}
-      ><div className={`chatBox chatBoxCustom position-relative  ${expend ? "chatBoxLarge" : ""}`} style={{ border: "1px solid white", borderRadius: "15px 15px 5px 5px" }} >
+      >
+        <div className={`chatBox chatBoxCustom position-relative  ${expend ? "chatBoxLarge" : ""}`} style={{ border: "1px solid white", borderRadius: "15px 15px 5px 5px" }} >
           <div
             className="chatBoxHead position-relative"
             onClick={(e) => {
@@ -331,13 +345,13 @@ export default function ChatMessage({
             <div className="chatBoxUser" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
               <h6 className={`mb-0 ${expend ? "userName-custom-classExpand" : "userName-custom-class"}`}>
                 <span className="mb-0" title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}>
-                  {!groupChat && (mUser?.user_name
+                  {!isGroupChat && (mUser?.user_name
                     ? mUser.user_name.length > 15
                       ? mUser?.user_name.slice(0, 15) + "..."
                       : mUser?.user_name
                     : "Vestorgrow user")}
                   {
-                    groupChat && chatName
+                    isGroupChat && chatName
                   }
                 </span>{" "}
                 {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
@@ -357,15 +371,15 @@ export default function ChatMessage({
                   localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
                   setMessageBoxState(existingArr)
                 }}>
-                  <AiOutlineMinus style={{ color: "black" }} />
+                  <AiOutlineMinus style={{ color: "black", width: "24px", height: "24px" }} />
                 </div>
               </div>
               <span onClick={() => handleMaximize(chatCompare)}>
-                {expend && <img src={maxIcon} alt="dots" className="img-fluid" />}
-                {!expend && <img src={minIcon} alt="dots" className="img-fluid" />}
+                {!expend && <img src={maxIcon} style={{ width: "24px", height: "24px" }} alt="dots" className="img-fluid" />}
+                {expend && <img src={minIcon} style={{ width: "24px", height: "24px" }} alt="dots" className="img-fluid" />}
               </span>
               <span onClick={onClose}>
-                <img src="images/profile/cross-icon.svg" className="search_cross" alt="" />
+                <img style={{ width: "24px", height: "24px" }} src="images/profile/cross-icon.svg" className="search_cross" alt="" />
               </span>
             </div>
           </div>
@@ -421,7 +435,7 @@ export default function ChatMessage({
                       <div
                         className={
                           "messgage-sectionCustom left-section " +
-                          (item.sender?._id == user?._id ? "right-section" : "")
+                          (item?.sender?._id == user?._id ? "right-section" : "")
                         }
                       >
                         <div className="chatprofileImg">

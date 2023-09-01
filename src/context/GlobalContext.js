@@ -24,7 +24,7 @@ export const GlobalProvider = ({ children }) => {
   });
   const [showChat, setShowChat] = useState(true)
   const [messageBoxState, setMessageBoxState] = useState(JSON.parse(localStorage.getItem("messageboxstate")) || [])
-  const [isGroupChat, setIsGroupChat] = useState(JSON.parse(localStorage.getItem("isgroupchat")) || false)
+  const [isGroupChat, setIsGroupChat] = useState(JSON.parse(localStorage.getItem("isgroupchat")) || true)
   const [isloading, setisLoading] = useState(false)
   const [unreadCount, setUnreadCount] = useState({});
   const [latestMsgList, setLatestMsgList] = useState({});

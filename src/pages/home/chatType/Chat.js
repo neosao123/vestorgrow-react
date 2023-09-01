@@ -63,14 +63,12 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   const [latestMsgList, setLatestMsgList] = globalCtx.LatestmsgList;
   const [chatList, setChatList] = globalCtx.ChatList;
   const [chatData, setChatData] = globalCtx.ChatDATA;
-
-
-
+  const [groupChat, setgroupChat] = useState(false)
 
   useEffect(() => {
     getChatList();
     setShowMsg(false);
-  }, [chatCompare, unreadCount, isGroupChat]);
+  }, [chatCompare, unreadCount, groupChat]);
 
   useEffect(() => {
     socket = io(process.env.REACT_APP_API_BASEURL);
@@ -148,7 +146,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     try {
       let obj = {
         filter: {
-          isGroupChat: isGroupChat,
+          isGroupChat: groupChat,
         },
       };
       await serv.listAllChat(obj).then((resp) => {
@@ -178,7 +176,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
 
   const getMessage = async (id, oUser, users) => {
     if (getMessageData.findIndex((i) => i.id == id) == -1) {
-      if (getMessageData.length > 4) {
+      if (getMessageData?.length > 4) {
         let msgData = getMessageData;
         msgData.shift();
         setGetMessageData([...msgData, { id, oUser, users }]);
@@ -249,32 +247,36 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   }, [])
 
   const handlePersonalChat = () => {
-    if (isGroupChat) {
+    if (groupChat) {
       setisLoading(true)
       setisGroupChat(false)
+      setgroupChat(false)
     }
+
   }
 
   const handleGroupChat = () => {
-    if (!isGroupChat) {
+    if (!groupChat) {
       setisLoading(true)
       setisGroupChat(true)
+      setgroupChat(true)
     }
 
   }
+
+
 
 
 
   return (
     <>
-      <div className="feedChatUser" style={{ width: "18em", height: "100%" }} >
-        <div className="chatBoxGroupBottom" >
-          <div className="feedChatHeading d-flex d-flex-Custom" style={{ paddingBottom: `${!atTop ? "35px" : "15px"}` }} >
-            {/* <h5 class Name="mb-0">{isGroupChat ? "Groups" : "Messaging"}</h5> */}
-            <div style={{ display: "flex", gap: "10px" }} >
-              <img src={PersonalChatImage} onClick={handlePersonalChat} alt="personalchatimage" />
-              <img src={groupImage} onClick={handleGroupChat} alt="groupicon" />
-            </div>
+      <div className="feedChatUser" style={{ width: "18em", height: "100%", width: '100%' }} >
+        <div className="chatBoxGroupBottom"  >
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+            <div style={{ width: "50%", padding: "10px", borderBottom: `${groupChat ? "4px solid #00808b" : "none"}`, display: "flex", justifyContent: "center", alignItems: "center" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleGroupChat} >Group Chat</span></div>
+            <div style={{ width: "50%", padding: "10px", borderBottom: `${!groupChat ? "4px solid #00808b" : "none"}` }} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span style={{ fontWeight: "600", marginLeft: "5px" }} >Messages</span></div>
+          </div>
+          <div className="feedChatHeading d-flex d-flex-Custom justify-content-end" style={{ marginTop: "5px", marginBottom: "5px" }} >
             <div className="messageChatLeftHeadIcon" >
               {!isGroupChat && <div onClick={showComposeMsgHandler} >
                 <img src={PersonalChatCreate} />
@@ -290,11 +292,15 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               </div>
             </div>
           </div>
+          <div className="input-container" style={{ backgroundColor: "#E7E7E7", margin: "0px 20px", marginBottom: "15px" }}>
+            <i className="fas fa-search" style={{ paddingLeft: "10px" }}></i>
+            <input className="input-field" type="text" placeholder={`${groupChat ? "Search Groups" : "Search Chats"}`} style={{ border: "none", backgroundColor: "#E7E7E7" }} />
+          </div>
           {isloading ? (<div class="spinner-border text-primary" style={{ margin: "130px" }} role="status">
             <span class="visually-hidden">Loading...</span>
-          </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", height: "100%", paddingBottom: "10px" }}>
-            <div className="allFeedUser allFeedUserCustom" style={{ height: "100%" }} >
-              {chatList.map((item, idx) => {
+          </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh" }}>
+            <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >
+              {chatList.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
                 time = `${time[0]} ${time[1].slice(0, 1)}`;
                 let oUser;
@@ -342,25 +348,24 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                   index: idx
                                 }
 
-                                const isPresent = newArr.some(el => el.chatId === obj.chatId)
+                                const isPresent = newArr?.some(el => el.chatId === obj.chatId)
                                 if (!isPresent) {
                                   newArr.push(obj)
                                   localStorage.setItem("messageboxstate", JSON.stringify(newArr))
                                   setMessageBoxState(newArr)
                                 }
-                                console.log("chatitems:", item)
                                 getMessage(item?._id, oUser, item?.users);
                                 setShowMsg(true);
                               }
                             }}
                           >
-                            {isGroupChat === false && (oUser?.user_name
-                              ? oUser.user_name.length > 10
+                            {groupChat === false && (oUser?.user_name
+                              ? oUser?.user_name.length > 10
                                 ? oUser?.user_name.slice(0, 10) + "..."
                                 : oUser?.user_name
                               : "Vestorgrow user")}
                             {
-                              isGroupChat && item?.chatName
+                              groupChat && (item?.chatName.length > 10 ? item?.chatName.slice(0, 10) + "..." : item?.chatName)
                             }
                           </h6>
 
@@ -447,7 +452,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
             </div>
           </div>)}
         </div>
-      </div>
+      </div >
       <div
         className={
           getMessageData.length === 4
