@@ -59,17 +59,17 @@ function ChatsType() {
   };
 
 
-  const windowScale= window.devicePixelRatio
-  var bottom="82.5vh"
+  const windowScale = window.devicePixelRatio
+  var bottom = "82.5vh"
 
-  if(windowScale===1){
-    bottom="86vh"
+  if (windowScale === 1) {
+    bottom = "86vh"
   }
 
   return (
     <>
       <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: `${atTop ? "6vh" : bottom}` }} >
-        <div className="feedChatContent" style={{ height: "92%", width: "18.6em", borderRadius: "none",  boxShadow:"rgba(0, 0, 0, 0.24) 0px 3px 8px" }} >
+        <div className="feedChatContent" style={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px", height: "92%", width: "18.6em", borderRadius: "none", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} >
           <div className="tab-content" >
             {(user.role.includes("admin") || user.role.includes("userPaid")) && (
               <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`} >

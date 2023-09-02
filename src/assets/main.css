@@ -793,6 +793,7 @@ hr.horiz {
   /* position: relative; */
   
   position: fixed;
+  right: 0;
 }
 
 .stickyChatBox {
@@ -2724,7 +2725,7 @@ s .multiplePostRight .multiplePostimg {
 
 .mostRecent {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin-bottom: 30px;
 }
 

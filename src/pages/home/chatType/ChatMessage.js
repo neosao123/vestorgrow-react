@@ -62,16 +62,11 @@ export default function ChatMessage({
   const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
   const [chatName, setChatName] = useState(null)
   const [chatLogo, setChatLogo] = useState(null)
-  const [groupChat, setgroupChat] = useState(false)
+  // const [messageData?.groupChat, setmessageData?.groupChat] = useState(false)
 
-
-  // useEffect(()=>{
-
-  // })
 
   useEffect(() => {
     socket.on("messageRecieved", (newMessage) => {
-      console.log("NEW:", newMessage)
       socket.emit("readMessage", {
         chat: newMessage?.chat,
         messageId: newMessage?._id,
@@ -109,18 +104,20 @@ export default function ChatMessage({
     }
   }
 
-  useEffect(() => {
-    getChat()
-      .then((res) => {
-        if (res.isGroupChat === false) {
-          setgroupChat(false)
-        } else {
-          setgroupChat(true)
-          setChatName(res.chatName)
-          setChatLogo(res.chatLogo)
-        }
-      })
-  }, []);
+  console.log("getmessageDAta", getMessageData)
+
+  // useEffect(() => {
+  //   getChat()
+  //     .then((res) => {
+  //       if (res.isGroupChat === false) {
+  //         setmessageData?.groupChat(false)
+  //       } else {
+  //         setmessageData?.groupChat(true)
+  //         setChatName(res.chatName)
+  //         setChatLogo(res.chatLogo)
+  //       }
+  //     })
+  // }, []);
 
   useEffect(() => {
     let newArr = JSON.parse(localStorage.getItem("messageboxstate"))
@@ -339,19 +336,19 @@ export default function ChatMessage({
           >
 
             <div className="userProfileImg" onClick={() => { handleNavigate("/userprofile/" + mUser?._id) }}>
-              <ProfileImage url={groupChat ? chatLogo : mUser?.profile_img} style={{ width: "32px", borderRadius: "50%" }} />
+              <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} style={{ width: "32px", borderRadius: "50%" }} />
               {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
             </div>
             <div className="chatBoxUser" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
               <h6 className={`mb-0 ${expend ? "userName-custom-classExpand" : "userName-custom-class"}`}>
                 <span className="mb-0" title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}>
-                  {!groupChat && (mUser?.user_name
+                  {!getMessageData?.groupChat && (mUser?.user_name
                     ? mUser.user_name.length > 15
                       ? mUser?.user_name.slice(0, 15) + "..."
                       : mUser?.user_name
                     : "Vestorgrow user")}
                   {
-                    groupChat && chatName
+                    getMessageData?.groupChat && getMessageData?.chatName
                   }
                 </span>{" "}
                 {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
@@ -391,26 +388,26 @@ export default function ChatMessage({
             >
               <div className="userDetail">
                 <div className="chatMainProfile">
-                  <ProfileImage url={groupChat ? chatLogo : mUser?.profile_img} />
+                  <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} />
                   <div className="chatMainProfileContent">
                     <h6
                       className={`mb-0 ${expend ? "userNameIn-custom-classExpand" : "userNameIn-custom-class"}`}
                       title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}
                     >
-                      {!groupChat && (mUser?.user_name
+                      {!getMessageData?.groupChat && (mUser?.user_name
                         ? mUser.user_name.length > 15
                           ? mUser?.user_name.slice(0, 15) + "..."
                           : mUser?.user_name
                         : "Vestorgrow user")}
                       {
-                        groupChat && chatName
+                        getMessageData?.groupChat && getMessageData?.chatName
                       }
                     </h6>
-                    {!groupChat && <p>
+                    {!getMessageData?.groupChat && <p>
                       {mUser?.first_name} {mUser?.last_name}
                     </p>}
-                    {!groupChat && <p>{mUser?.bio}</p>}
-                    {groupChat && <p></p>}
+                    {!getMessageData?.groupChat && <p>{mUser?.bio}</p>}
+                    {getMessageData?.groupChat && <p></p>}
                   </div>
                 </div>
               </div>
@@ -540,7 +537,7 @@ export default function ChatMessage({
                                       }}
                                     >
                                       <span> {item.sender?._id !== user?._id &&
-                                        <span style={{ color: `${!groupChat && "#00808B"}`, marginRight: "0.3rem" }}>
+                                        <span style={{ color: `${!messageData?.groupChat && "#00808B"}`, marginRight: "0.3rem" }}>
                                           {mUser?.user_name.length <= 15 ? mUser?.user_name : mUser?.user_name.slice(0, 15) + "..."}</span>
                                       }{moment(item.createdAt).format("HH:mm")}
                                       </span>
@@ -712,7 +709,7 @@ export default function ChatMessage({
             localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
             setMessageBoxState(existingArr)
           }}>
-            <ProfileImage url={groupChat ? chatLogo : mUser?.profile_img} style={{ width: "60px", borderRadius: "50%" }} />
+            <ProfileImage url={messageData?.groupChat ? chatLogo : mUser?.profile_img} style={{ width: "60px", borderRadius: "50%" }} />
           </div>
         </motion.div>
       )

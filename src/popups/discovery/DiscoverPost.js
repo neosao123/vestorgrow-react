@@ -240,7 +240,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
                     </div>
                   )}
                 </div>
-                <div className="modal-body p-0">
+                <div className="modal-body p-0" >
                   <div className="discoverPostModelBody discoverPostModelBodyCustom">
                     {post?.mediaFiles && post?.mediaFiles.length > 0 && (
                       <div className="discoverPostBanner d-flex align-items-center">
