@@ -92,6 +92,8 @@ function Suggested() {
     }
   };
 
+  console.log("suggestedhome:",suggestedHome)
+
 
 
   const filteredSuggested = suggestedTab.filter((user) => {
@@ -124,13 +126,13 @@ function Suggested() {
         </div>
         <div style={{ backgroundColor: "#d1d1d1", height: "1px", width: "92%", marginLeft: "8%" }}></div>
         <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
-          {suggestedHome?.slice(0, 4).map((user) => {
+          {suggestedHome?.length>0 && suggestedHome?.slice(0, 4).map((user) => {
             return (
-              <div style={{ display: "flex", borderBottom: "1px solid #d1d1d1", width: "92%", marginLeft: "8%", paddingTop: "5px" }}>
-                <div className="profileBox" style={{ border: "1px solid #ffffff", display: "flex" }} >
+              <div style={{ display: "flex",gap:"15px", borderBottom: "1px solid #d1d1d1", width: "92%", marginLeft: "8%", paddingTop: "5px" }}>
+                <div  style={{ display: "flex" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
-                      style={{ height: "55px", width: "55px", marginTop: "10px" }}
+                      style={{ height: "55px", width: "55px", marginTop: "10px",borderRadius:"50%" }}
                       src={
                         user?.profile_img
                           ? user.profile_img
@@ -141,15 +143,15 @@ function Suggested() {
                     />
                   </Link>
                 </div>
-                <div style={{ width: "70%", padding: "8px 0px", display: "flex", flexDirection: "column", gap: "1px" }}>
+                <div style={{width: "70%", padding: "8px 0px", display: "flex", flexDirection: "column", gap: "1px" }}>
                   <span style={{ fontSize: "16px", fontWeight: "600", color: "#0B1E1C" }} >{user?.user_name?.length > 20
                     ? user?.user_name?.slice(0, 20) + "..."
                     : user.user_name}
                   </span>
                   <span style={{ fontSize: "14px", fontWeight: 400, color: "#465D61" }} >
                     {user?.title ? (
-                      user?.title?.length > 30 ? (
-                        user?.title?.slice(0, 30) + "..."
+                      user?.title?.length > 25 ? (
+                        user?.title?.slice(0, 25) + "..."
                       ) : (
                         user.title
                       )

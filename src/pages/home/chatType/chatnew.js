@@ -25,7 +25,6 @@ import CreategroupImage from "../../../assets/images/create_group (4).svg"
 import PersonalChatCreate from "../../../assets/images/createpersonalchat.svg"
 import MiniIcon from "../../../assets/images/minimize.svg"
 import MaxIcon from "../../../assets//images/maximize.svg"
-import { PiCaretDownBold, PiCaretUpBold } from "react-icons/pi"
 
 import "./chat.css";
 // import GroupChat from "./GroupChat";
@@ -65,12 +64,11 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   const [chatList, setChatList] = globalCtx.ChatList;
   const [chatData, setChatData] = globalCtx.ChatDATA;
   const [groupChat, setgroupChat] = useState(false)
-  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     getChatList();
     setShowMsg(false);
-  }, [unreadCount, groupChat, searchText]);
+  }, [chatCompare, unreadCount, groupChat]);
 
   useEffect(() => {
     socket = io(process.env.REACT_APP_API_BASEURL);
@@ -149,7 +147,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
       let obj = {
         filter: {
           isGroupChat: groupChat,
-          search: searchText
         },
       };
       await serv.listAllChat(obj).then((resp) => {
@@ -174,9 +171,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     }
     setisLoading(false)
   };
-
-
-  console.log("CHATLIST:", chatList)
 
 
 
@@ -272,44 +266,41 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
 
 
 
+
+
   return (
     <>
-      <div className="feedChatUser" style={{ width: "18em", height: "100%", width: '100%', paddingTop: "10px" }} >
+      <div className="feedChatUser" style={{ width: "18em", height: "100%", width: '100%' }} >
         <div className="chatBoxGroupBottom"  >
-          <div style={{ textAlign: "center", display: "flex", alignItems: "Center", justifyContent: "center" }} onClick={() => setAtTop(prev => !prev)}>
-            {atTop && <h6 style={{ color: "#08808b" }} >Collapse <span><PiCaretDownBold color="#08808b" fontSize={"20px"} /></span></h6>}
-            {
-              !atTop && <h6 style={{ color: "#08808b" }} >Collapse <span><PiCaretUpBold color="#08808b" fontSize={"20px"} /></span></h6>
-            }
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ width: "50%", padding: "5px", borderBottom: `${groupChat ? "4px solid #00808b" : "none"}`, display: "flex", justifyContent: "center", alignItems: "center" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleGroupChat} >Group Chat</span></div>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+            <div style={{ width: "50%", padding: "10px", borderBottom: `${groupChat ? "4px solid #00808b" : "none"}`, display: "flex", justifyContent: "center", alignItems: "center" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleGroupChat} >Group Chat</span></div>
             <div style={{ width: "50%", padding: "10px", borderBottom: `${!groupChat ? "4px solid #00808b" : "none"}` }} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span style={{ fontWeight: "600", marginLeft: "5px" }} >Messages</span></div>
           </div>
-          <div className="feedChatHeading d-flex d-flex-Custom " style={{ marginTop: "10px", marginBottom: "10px" }} >
-            <div className="input-container" style={{ backgroundColor: "#E7E7E7", margin: "0px 20px", marginBottom: "15px" }}>
-              <i className="fas fa-search" style={{ paddingLeft: "10px" }}></i>
-              <input onChange={(e) => {
-                setTimeout(() => {
-                  setSearchText(e.target.value)
-                }, 350);
-              }} className="input-field" type="text" placeholder={`${groupChat ? "Search Groups" : "Search Chats"}`} style={{ border: "none", backgroundColor: "#E7E7E7" }} />
-            </div>
-            <div className="messageChatLeftHeadIcon" style={{ marginBottom: "10px", marginLeft: "-10px" }}>
+          <div className="feedChatHeading d-flex d-flex-Custom justify-content-end" style={{ marginTop: "5px", marginBottom: "5px" }} >
+            <div className="messageChatLeftHeadIcon" >
               {!groupChat && <div onClick={showComposeMsgHandler} >
                 <img src={PersonalChatCreate} />
               </div>}
               {groupChat && <div onClick={() => setShowCreateGroup(true)}>
                 <img src={CreategroupImage} />
               </div>}
+              <div className="gap" onClick={() => setAtTop(prev => !prev)}>
+                {atTop && <img src={MiniIcon} alt="minimizeicon" />}
+                {
+                  !atTop && <img src={MaxIcon} alt="maxicon" />
+                }
+              </div>
             </div>
+          </div>
+          <div className="input-container" style={{ backgroundColor: "#E7E7E7", margin: "0px 20px", marginBottom: "15px" }}>
+            <i className="fas fa-search" style={{ paddingLeft: "10px" }}></i>
+            <input className="input-field" type="text" placeholder={`${groupChat ? "Search Groups" : "Search Chats"}`} style={{ border: "none", backgroundColor: "#E7E7E7" }} />
           </div>
           {isloading ? (<div class="spinner-border text-primary" style={{ margin: "130px" }} role="status">
             <span class="visually-hidden">Loading...</span>
           </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh" }}>
             <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >
-              {console.log("Chatlist:", chatList)}
-              {chatList?.length > 0 && chatList?.map((item, idx) => {
+              {chatList.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
                 time = `${time[0]} ${time[1].slice(0, 1)}`;
                 let oUser;
@@ -356,16 +347,13 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                   isminimize: false,
                                   index: idx
                                 }
-                                let isPresent;
-                                if (newArr) {
-                                  isPresent = newArr.some(el => el.chatId === obj.chatId)
-                                }
+
+                                const isPresent = newArr?.some(el => el.chatId === obj.chatId)
                                 if (!isPresent) {
                                   newArr.push(obj)
                                   localStorage.setItem("messageboxstate", JSON.stringify(newArr))
                                   setMessageBoxState(newArr)
                                 }
-                                console.log("ITEM:", item)
                                 getMessage(item?._id, oUser, item?.users);
                                 setShowMsg(true);
                               }

@@ -345,13 +345,13 @@ export default function ChatMessage({
             <div className="chatBoxUser" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
               <h6 className={`mb-0 ${expend ? "userName-custom-classExpand" : "userName-custom-class"}`}>
                 <span className="mb-0" title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}>
-                  {!isGroupChat && (mUser?.user_name
+                  {!groupChat && (mUser?.user_name
                     ? mUser.user_name.length > 15
                       ? mUser?.user_name.slice(0, 15) + "..."
                       : mUser?.user_name
                     : "Vestorgrow user")}
                   {
-                    isGroupChat && chatName
+                    groupChat && chatName
                   }
                 </span>{" "}
                 {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
@@ -408,9 +408,6 @@ export default function ChatMessage({
                     </h6>
                     {!groupChat && <p>
                       {mUser?.first_name} {mUser?.last_name}
-                    </p>}
-                    {groupChat && <p>
-                      {user?.first_name} {user?.last_name}
                     </p>}
                     {!groupChat && <p>{mUser?.bio}</p>}
                     {groupChat && <p></p>}

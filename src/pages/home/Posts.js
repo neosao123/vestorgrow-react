@@ -116,8 +116,8 @@ const Posts = () => {
           setPostList(res.data)
           setPostCount(res.total)
         })
-      if (resp.data) {
-        setPostList(postList.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
+      if (resp?.data) {
+        setPostList(postList?.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
         setPostCount(resp.total);
       }
     } catch (err) {
