@@ -122,12 +122,11 @@ export default function Discover() {
     }, [searchText]);
 
     return (
-        <>
+        <div className="socialContantInner d-flex flex-column">
             <div className="discoveryHeading discoveryHeading-mobile">
                 Discover the latest and trending insights within <span className="vestColor">VestorGrow</span>
             </div>
-            <div className="socialContant socialContentCustom main_container">
-                {/*Discover Column Section Start*/}
+            <div className="socialContant socialContentCustom"> 
                 <div className="mostRecent mostRecent-Custom">
                     <div className="dropdown">
                         <a type="button" className="btn btn-1" data-bs-toggle="dropdown">
@@ -147,7 +146,7 @@ export default function Discover() {
                         </ul>
                     </div>
                 </div>
-                <div className="container dis">
+                <div className="dis">
                     <div className="category-btn">
                         {items.map((items) => {
                             return (
@@ -295,6 +294,6 @@ export default function Discover() {
                         changePostIdx={changePostIdx}
                     />
                 )}
-        </>
+        </div>
     );
 }

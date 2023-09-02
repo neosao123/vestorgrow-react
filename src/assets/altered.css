@@ -200,7 +200,7 @@
   color: #465d61;
 }
 
-.profileform_btn>button {
+.profileform_btn > button {
   padding: 0px 30px !important;
   line-height: 32px;
   font-size: var(--s16);
@@ -777,7 +777,7 @@
 }
 
 .dropdown-notification {
-  z-index: 2000;
+  z-index: 1051;
   position: absolute;
   inset: 0px auto auto 0px;
   margin: 0px;
@@ -1200,7 +1200,6 @@
   /* bottom: 8px; */
   /* right: 16.7vw; */
   right: calc(100% - -11%);
-  ;
 }
 
 .chatBoxHead {
@@ -1220,7 +1219,7 @@
   color: rgb(112, 112, 112);
 }
 
-.chatBoxHead>a {
+.chatBoxHead > a {
   width: 36px;
 }
 
@@ -1293,7 +1292,7 @@
 
 .msgContent p {
   padding: 8px 12px;
-  background: #EDEDED;
+  background: #ededed;
   border-radius: 15px;
   font-weight: 500;
   font-size: 14px;
@@ -1540,8 +1539,6 @@
   /* height: 552px !important;
  */
   height: 36em;
-
-
 }
 
 .msgSectionLarge-message-sm {
@@ -1562,7 +1559,6 @@
   /* margin-bottom: 20px; */
   margin: 0px auto 25px auto;
   padding-bottom: 10px;
-
 }
 
 .page_link ul li a:hover {
@@ -2367,7 +2363,7 @@
   padding: 0px !important;
 }
 
-.profileform_btn>a.btnColor-dlt-custom {
+.profileform_btn > a.btnColor-dlt-custom {
   padding: 0px 0px !important;
 }
 
@@ -3493,8 +3489,10 @@ body.modal-custom-bg-scrollStop {
   }
 
   .leftColumn {
+    /*
     padding-left: 35px;
-    /* padding-top: 32px; */
+     padding-top: 32px; 
+     */
   }
 
   .dropdownGroupCustom {
@@ -3522,9 +3520,9 @@ body.modal-custom-bg-scrollStop {
    */
   }
 
-  @media (min-width:1024px) {
+  @media (min-width: 1024px) {
     .leftColumn {
-      padding-left: 35px;
+      /* padding-left: 35px; */
       padding-top: 32px;
     }
   }
@@ -4545,7 +4543,6 @@ body.modal-custom-bg-scrollStop {
 }
 
 @media only screen and (min-width: 600px) {
-
   .discover-post-heading_custom,
   .new-message-heading_custom {
     display: none;

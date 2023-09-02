@@ -261,7 +261,9 @@ a {
 
 .socialContantInner {
   display: flex;
-  gap: 20px;
+  gap: 15px;
+  max-width: 1150px;
+  margin: 0 auto;
 }
 
 .leftColumn {
@@ -270,10 +272,11 @@ a {
 
 .middleColumn {
   width: 50%;
+  position: relative;
 }
 
 .rightColumn {
-  width: 19.4em;
+  width: 25%;
   /* height: 100vh; */
   /* position: fixed;
   right: 0;
@@ -494,20 +497,40 @@ hr.horiz {
 
 .todayNews {
   padding: 24px 20px;
+  background: #ffffff;
+  border-radius: 15px;
 }
-.todayNewsList{
-  height: 200px;
+
+.todayNewsList {
+  height:150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00808b;
+  font-weight: 600;
 }
 
 .todayNewsList ul li a {
-  padding: 0;
+  padding: 0; 
+}
+
+.todayNewsHead a.see-all-news {
+  color:#00808b;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.todayNewsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .todayNewsHead h4 {
   font-weight: 600;
-  font-size: var(--s18);
+  font-size: var(--s16);
   line-height: 21px;
-  color: #0d1b1d;
+  color: #0d1b1d; 
 }
 
 .todayNewsList ul li a .newsAlert h6 {
@@ -791,19 +814,17 @@ hr.horiz {
   /* flex:1 */
   margin-top: 1.875em;
   /* position: relative; */
-  
+
   position: fixed;
 }
 
 .stickyChatBox {
   position: sticky;
   top: 98px;
-  
 }
 
 .feedChatBox.active {
   height: calc(100% - 200px);
-  
 }
 
 .feedChatUser.show {
@@ -936,7 +957,6 @@ hr.horiz {
 .allFeedUser {
   height: calc(100vh - 346px);
   overflow: auto;
-
 }
 
 .stickyChatBox .allFeedUser {
@@ -1154,7 +1174,6 @@ hr.horiz {
 .allFeedUser .feedUserChat:first-child a {
   border-top: 0;
 }
-
 
 .feedChatSendMsgBox {
   border-top: 0.5px solid #d1d1d1;
@@ -2667,17 +2686,6 @@ s .multiplePostRight .multiplePostimg {
   line-height: 20px;
 }
 
-/* .overlayContantParent:after {
-      background: rgb(0 0 0 / 50%);
-      content: '';
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      position: absolute;
-      border-radius: 15px 15px 0px 0px;
-  }
-  */
 .discoverContant .discoverContantTxt {
   width: 40px;
 }
@@ -2714,40 +2722,6 @@ s .multiplePostRight .multiplePostimg {
 
 .overlayContantDots {
   margin-left: 25px;
-}
-
-.mostRecent .btn-1 {
-  border-radius: 50px;
-  border-color: #1e1e1e;
-  padding: 8px 24px;
-}
-
-.mostRecent {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 30px;
-}
-
-.mostRecent .btn:hover {
-  border-color: #00808b;
-}
-
-.mostRecent .dropdown ul.dropdown-menu {
-  background: #ffffff;
-  box-shadow: 0px 3px 8px rgb(0 0 0 / 11%);
-  border-radius: 10px;
-  padding: 20px 0;
-  min-width: 100%;
-}
-
-.mostRecent .dropdown ul.dropdown-menu li a {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  color: #465d61;
 }
 
 .discoverTab ul.nav li a {
@@ -2874,7 +2848,7 @@ s .multiplePostRight .multiplePostimg {
   width: 70px;
   display: flex;
 }
-.gap{
+.gap {
   margin-left: 15px;
 }
 

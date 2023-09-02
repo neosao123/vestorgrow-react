@@ -78,13 +78,15 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     socket.on("connected", () => setSocketConnected(true));
 
   }, []);
+
   useEffect(() => {
     for (const item in unreadCount) {
-      if (getMessageData.filter((i) => i.id == item).length > 0) {
+      if (getMessageData.filter((i) => i.id === item).length > 0) {
         setUnreadCount({ ...unreadCount, [item]: 0 });
       }
     }
   }, [JSON.stringify(getMessageData)]);
+
   useEffect(() => {
     var objDiv = document.getElementById("messages");
     if (objDiv) {
@@ -138,7 +140,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
         setIsOnline(resp.result);
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -169,19 +171,14 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
         }
       });
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       setisLoading(false)
     }
     setisLoading(false)
   };
 
-
-  console.log("CHATLIST:", chatList)
-
-
-
   const getMessage = async (id, oUser, users) => {
-    if (getMessageData.findIndex((i) => i.id == id) == -1) {
+    if (getMessageData.findIndex((i) => i.id === id) === -1) {
       if (getMessageData?.length > 4) {
         let msgData = getMessageData;
         msgData.shift();
@@ -207,7 +204,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
         }
       });
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
 
@@ -304,11 +301,10 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               </div>}
             </div>
           </div>
-          {isloading ? (<div class="spinner-border text-primary" style={{ margin: "130px" }} role="status">
-            <span class="visually-hidden">Loading...</span>
+          {isloading ? (<div className="spinner-border text-primary" style={{ margin: "130px" }} role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh" }}>
-            <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >
-              {console.log("Chatlist:", chatList)}
+            <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >              
               {chatList?.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
                 time = `${time[0]} ${time[1].slice(0, 1)}`;
@@ -365,7 +361,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                   localStorage.setItem("messageboxstate", JSON.stringify(newArr))
                                   setMessageBoxState(newArr)
                                 }
-                                console.log("ITEM:", item)
+                                //console.log("ITEM:", item)
                                 getMessage(item?._id, oUser, item?.users);
                                 setShowMsg(true);
                               }
@@ -386,16 +382,15 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                           <div style={{ fontSize: "16px" }}>
                             <ChatMsgTimeStamp dateTime={latestMsgList[item?._id]?.createdAt} onlyTime={false} />
                             <span>
-                              <div class="btn-group">
+                              <div className="btn-group">
                                 <div type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   <RiArrowDropDownLine style={{ fontSize: "30px", marginLeft: "px" }} />
                                 </div>
-                                <ul class="dropdown-menu dropdown-menu-end" style={{ zIndex: 999 }}>
+                                <ul className="dropdown-menu dropdown-menu-end" style={{ zIndex: 999 }}>
                                   <li>
                                     <a
                                       className="dropdown-item"
                                       href="javascript:void(0);"
-
                                     >
                                       <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M20.9196 7.6C18.8996 2.91 15.0996 0 10.9996 0C6.89958 0 3.09958 2.91 1.07958 7.6C1.02452 7.72617 0.996094 7.86234 0.996094 8C0.996094 8.13766 1.02452 8.27383 1.07958 8.4C3.09958 13.09 6.89958 16 10.9996 16C15.0996 16 18.8996 13.09 20.9196 8.4C20.9746 8.27383 21.0031 8.13766 21.0031 8C21.0031 7.86234 20.9746 7.72617 20.9196 7.6ZM10.9996 14C7.82958 14 4.82958 11.71 3.09958 8C4.82958 4.29 7.82958 2 10.9996 2C14.1696 2 17.1696 4.29 18.8996 8C17.1696 11.71 14.1696 14 10.9996 14ZM10.9996 4C10.2085 4 9.43509 4.2346 8.7773 4.67412C8.1195 5.11365 7.60681 5.73836 7.30406 6.46927C7.00131 7.20017 6.9221 8.00444 7.07644 8.78036C7.23078 9.55628 7.61174 10.269 8.17115 10.8284C8.73056 11.3878 9.44329 11.7688 10.2192 11.9231C10.9951 12.0775 11.7994 11.9983 12.5303 11.6955C13.2612 11.3928 13.8859 10.8801 14.3255 10.2223C14.765 9.56448 14.9996 8.79113 14.9996 8C14.9996 6.93913 14.5782 5.92172 13.828 5.17157C13.0779 4.42143 12.0604 4 10.9996 4ZM10.9996 10C10.604 10 10.2173 9.8827 9.88844 9.66294C9.55954 9.44318 9.30319 9.13082 9.15182 8.76537C9.00044 8.39991 8.96084 7.99778 9.03801 7.60982C9.11518 7.22186 9.30566 6.86549 9.58537 6.58579C9.86507 6.30608 10.2214 6.1156 10.6094 6.03843C10.9974 5.96126 11.3995 6.00087 11.7649 6.15224C12.1304 6.30362 12.4428 6.55996 12.6625 6.88886C12.8823 7.21776 12.9996 7.60444 12.9996 8C12.9996 8.53043 12.7889 9.03914 12.4138 9.41421C12.0387 9.78929 11.53 10 10.9996 10Z" fill="black" />
@@ -417,14 +412,14 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                     </a>
                                   </li>
                                   <li>
-                                    <button class="dropdown-item" type="button" >
+                                    <button className="dropdown-item" type="button" >
                                       <AiOutlineRead style={{ fontSize: "25px" }} />
                                       <span style={{ fontSize: "18px", marginLeft: "5px" }}>Mark as read</span>
                                     </button>
                                   </li>
                                   {isGroupChat &&
                                     <li>
-                                      <button class="dropdown-item" type="button"><MdTimeToLeave style={{ fontSize: "25px" }} />
+                                      <button className="dropdown-item" type="button"><MdTimeToLeave style={{ fontSize: "25px" }} />
                                         <span style={{ fontSize: "18px", marginLeft: "5px" }}>
                                           Leave Group
                                         </span>
@@ -432,7 +427,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                     </li>
                                   }
                                   {isGroupChat && (item.createdBy === user._id) && <li>
-                                    <button class="dropdown-item" type="button" onClick={() => handleDeleteChat(item._id)}><MdDelete style={{ fontSize: "25px" }} />
+                                    <button className="dropdown-item" type="button" onClick={() => handleDeleteChat(item._id)}><MdDelete style={{ fontSize: "25px" }} />
                                       <span style={{ fontSize: "18px", marginLeft: "5px" }}>
                                         Delete Group
                                       </span>

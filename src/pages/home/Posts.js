@@ -1,39 +1,27 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "linkify-plugin-mention";
 import GlobalContext from "../../context/GlobalContext";
-import CreatePost from "../../popups/post/CreatePost";
-import PostShareSuccess from "../../popups/post/PostSharedSuccess";
-import PostShareFail from "../../popups/post/PostSharedFail";
+
 import PostService from "../../services/postService";
-import VideoImageThumbnail from "react-video-thumbnail-image";
-import moment from "moment";
 import ProfileImage from "../../shared/ProfileImage";
-import Comment from "../../shared/Comment";
-import SharePostSelect from "../../popups/post/SharePostSelect";
 import UserBlockedServ from "../../services/userBlockedService";
 import UserFollowerService from "../../services/userFollowerService";
+import HelperFunctions from "../../services/helperFunctions";
+import ReportService from "../../services/reportService";
+
+import Report from "../../popups/report/Report";
 import ImageCarousel from "../../popups/imageCarousel/ImageCarousel";
 import Unfollow from "../../popups/unfollow/Unfollow";
 import UserLikedPost from "../../popups/post/UserLikedPost";
 import UserSharedPost from "../../popups/post/UserSharedPost";
-import HelperFunctions from "../../services/helperFunctions";
-import ReportService from "../../services/reportService";
-import Linkify from "react-linkify";
-import { SecureLink } from "react-secure-link";
-import Report from "../../popups/report/Report";
-import LoadingSpin from "react-loading-spin";
-import FBReactions from "../../components/FBReactions";
-import "linkify-plugin-mention";
 import OtherPostSharedSuccess from "../../popups/post/OtherPostSharedSuccess";
 import OtherPostShareFail from "../../popups/post/OtherPostSharedFail";
-import ScrollMore from "../../shared/ScrollMore";
-import YoutubeThumbnail from "../../components/YoutubeThumbnail";
-import Playeryoutube from "../../components/Playeryoutube";
-import SharedPost from "../../components/SharedPost";
-import OriginalPostCreator from "../../components/OriginalPostCreator";
 import SinglePost from "../../components/_main/Dashboard/SinglePost";
-
-const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
+import CreatePost from "../../popups/post/CreatePost";
+import PostShareSuccess from "../../popups/post/PostSharedSuccess";
+import PostShareFail from "../../popups/post/PostSharedFail";
+import SharePostSelect from "../../popups/post/SharePostSelect";
 
 const Posts = () => {
 
@@ -68,7 +56,6 @@ const Posts = () => {
   const [change, setChange] = useState(false)
   const [sharePostId, setSharePostId] = useState(null)
 
-
   const [search, setSearch] = useState({
     filter: {
       is_active: true,
@@ -77,35 +64,25 @@ const Posts = () => {
     length: 20,
   });
 
-  let twitterurl = "http://twitter.com/share?text=vestorgrow home page&url=";
-  let facebookurl = "https://www.facebook.com/sharer/sharer.php?t=vestorgrow home page&u=";
-  let mailto = `mailto:${user?.email}?subject=Vestorgrow!!!&body=`;
-
-  // let link = encodeURI(window.location.origin + "/post")
-
-  // let loading = false;
-
   const handleCreatePostPopup = () => {
     setCreatePostPopup(!createPostPopup);
     setShowLoadingBar(false);
   };
+
   const handlePostSuccessPopup = () => {
     setPostSuccessPopup(!postSuccessPopup);
     setShowLoadingBar(false);
   };
+
   const handlePostFailPopup = () => {
     setPostFailPopup(!postFailPopup);
     setShowLoadingBar(false);
   };
 
-
-
-
-
   useEffect(() => {
     setTimeout(() => {
       getPostList();
-    }, 2000);
+    }, 200);
   }, [postSuccessPopup, search, change]);
 
   const getPostList = async () => {
@@ -124,19 +101,6 @@ const Posts = () => {
       console.log(err);
     }
   };
-
-  const options = {
-    formatHref: {
-      mention: (href) => process.env.REACT_APP_API_BASEURL + "/userprofile/profiles" + href,
-    },
-  };
-
-  function reachedBottomCall() {
-    let searchTemp = { ...search };
-    searchTemp.start = search.start + search.length;
-    setSearch(searchTemp);
-  }
-
 
   const blockUser = async (userId) => {
     try {
@@ -164,35 +128,11 @@ const Posts = () => {
     }
   };
 
-  const updatePostAfterReaction = (mode, postId, data, uniqueReactions) => {
-    if (mode === "inc") {
-      let _postList = postList;
-      let _postListIdx = _postList.findIndex((i) => i._id === postId);
-      _postList[_postListIdx].reaction = {
-        _id: data._id,
-        postId: data.postId,
-        type: data.type
-      };
-      _postList[_postListIdx].isLiked = true;
-      _postList[_postListIdx].postReactions = uniqueReactions;
-      _postList[_postListIdx].likeCount = _postList[_postListIdx].likeCount + 1;
-      setPostList([..._postList]);
-    } else {
-      let _postList = postList;
-      let _postListIdx = _postList.findIndex((i) => i._id === postId);
-      _postList[_postListIdx].reaction = null;
-      _postList[_postListIdx].isLiked = false;
-      _postList[_postListIdx].likeCount = _postList[_postListIdx].likeCount - 1;
-      _postList[_postListIdx].postReactions = uniqueReactions;
-      setPostList([..._postList]);
-    }
-  }
-
   const handleSharePost = async (postIdx, shareType) => {
-    console.log("SHARETOFEED:", postIdx, shareType)
-    console.log(postList)
+    // console.log("SHARETOFEED:", postIdx, shareType)
+    // console.log(postList)
     let post = postList[postIdx];
-    console.log(post)
+    // console.log(post)
     if (!post.originalPostId) {
       post.originalPostId = post._id;
       post.parentPostId = post._id;
@@ -243,17 +183,15 @@ const Posts = () => {
 
   document.body.addEventListener("click", () => setShowShareTo(false), true);
 
-  // check youtube video url 
-  const matchYoutubeUrl = (url) => {
-    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    return (url.match(p)) ? true : false;
+  const refreshPostList = async () => {
+    await getPostList();
   }
 
 
   return (
     <>
       <div className="middleColumn">
-        <div className="new-post_custom-div sticky-top-custom" style={{marginTop:"35px"}}>
+        <div className="new-post_custom-div sticky-top-custom" style={{ marginTop: "35px" }}>
           <div className="new-post_custom-divInner-top"></div>
           <div className="new-post_custom-divInner">
             <div className="bgWhiteCard addPhotoVideoPost d-none d-md-block sticky-top-custom">
@@ -280,7 +218,7 @@ const Posts = () => {
         </div>
         {postList.length > 0 &&
           postList.map((item, idx) => {
-            return <SinglePost index={idx} item={item} idx={idx} key={idx} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} />
+            return <SinglePost index={idx} item={item} idx={idx} key={idx} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} refreshPostList={refreshPostList} />
           })}
       </div>
       {showReportPopup && (
