@@ -73,9 +73,7 @@ function DefaultLayout({ children }) {
           pauseOnHover={false}
           theme="light"
         />
-        <div >
-          <ChatsType />
-        </div>
+        <ChatsType />
       </main>
     );
   } else {
@@ -104,9 +102,9 @@ function DefaultLayout({ children }) {
           theme="light"
         />
 
-        <div >
-          <ChatsType />
-        </div>
+
+        <ChatsType />
+
       </main>
     );
   }

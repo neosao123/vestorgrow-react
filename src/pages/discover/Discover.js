@@ -123,11 +123,11 @@ export default function Discover() {
 
     return (
         <div className="socialContantInner d-flex flex-column">
-            <div className="discoveryHeading discoveryHeading-mobile">
-                Discover the latest and trending insights within <span className="vestColor">VestorGrow</span>
-            </div>
-            <div className="socialContant socialContentCustom"> 
-                <div className="mostRecent mostRecent-Custom">
+            <div className="socialContant socialContentCustom">
+                <div className="discoveryHeading discoveryHeading-mobile">
+                    Discover the latest and trending insights within <span className="vestColor">VestorGrow</span>
+                </div>
+                <div className="mostRecent">
                     <div className="dropdown">
                         <a type="button" className="btn btn-1" data-bs-toggle="dropdown">
                             {sortType}

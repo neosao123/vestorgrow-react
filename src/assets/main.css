@@ -502,7 +502,7 @@ hr.horiz {
 }
 
 .todayNewsList {
-  height:150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -511,11 +511,11 @@ hr.horiz {
 }
 
 .todayNewsList ul li a {
-  padding: 0; 
+  padding: 0;
 }
 
 .todayNewsHead a.see-all-news {
-  color:#00808b;
+  color: #00808b;
   font-size: 15px;
   font-weight: 600;
 }
@@ -530,7 +530,7 @@ hr.horiz {
   font-weight: 600;
   font-size: var(--s16);
   line-height: 21px;
-  color: #0d1b1d; 
+  color: #0d1b1d;
 }
 
 .todayNewsList ul li a .newsAlert h6 {
@@ -563,7 +563,20 @@ hr.horiz {
   color: #0d1b1d;
 }
 
+.feedBox {
+  padding: 1.5rem;
+  margin-bottom: 15px;
+}
+
 .feedBoxHeadName h4 {
+  font-weight: 600;
+  font-size: var(--s16);
+  line-height: 19px;
+  color: #0d1b1d;
+  margin-bottom: 4px;
+}
+
+.feedBoxHeadName h4 a {
   font-weight: 600;
   font-size: var(--s16);
   line-height: 19px;
@@ -587,10 +600,6 @@ hr.horiz {
   gap: 4px;
   align-items: center;
   margin-bottom: 0;
-}
-
-.feedBox {
-  padding: 24px 20px;
 }
 
 .feedBoxHeadLeft {
@@ -703,10 +712,9 @@ hr.horiz {
   gap: 10px;
 }
 
-.addPhotoVideoPost,
-.feedBox,
+.addPhotoVideoPost, 
 .postHidden {
-  margin-bottom: 24px;
+  margin-bottom: 15px;
 }
 
 .feedChatHead {
@@ -4751,6 +4759,7 @@ div#image-cropper-result img {
 
 .themeContant {
   padding-left: 90px;
+  overflow-x: hidden;
 }
 
 .mostRecent .dropdown ul.dropdown-menu li a:hover,

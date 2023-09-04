@@ -183,11 +183,6 @@ const Posts = () => {
 
   document.body.addEventListener("click", () => setShowShareTo(false), true);
 
-  const refreshPostList = async () => {
-    await getPostList();
-  }
-
-
   return (
     <>
       <div className="middleColumn">
@@ -218,7 +213,7 @@ const Posts = () => {
         </div>
         {postList.length > 0 &&
           postList.map((item, idx) => {
-            return <SinglePost index={idx} item={item} idx={idx} key={idx} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} refreshPostList={refreshPostList} />
+            return <SinglePost index={idx} item={item} idx={idx} key={idx} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} />
           })}
       </div>
       {showReportPopup && (

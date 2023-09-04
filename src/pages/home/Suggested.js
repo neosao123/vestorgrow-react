@@ -61,6 +61,7 @@ function Suggested() {
     const updatedItems = suggestedHome.filter((item) => item._id !== id);
     setsuggestedHome(updatedItems);
   };
+
   const deleteSuggested = (id) => {
     const updatedItems = suggestedTab.filter((item) => item._id !== id);
     setsuggestedTab(updatedItems);
@@ -79,7 +80,6 @@ function Suggested() {
     getSuggestedTab();
   };
 
-
   const getUserData = async () => {
     // setUserList([]);
     try {
@@ -92,24 +92,20 @@ function Suggested() {
     }
   };
 
-  console.log("suggestedhome:",suggestedHome)
-
-
-
   const filteredSuggested = suggestedTab.filter((user) => {
     return user?.user_name.toString().toLowerCase().includes(search);
   });
+
   //for follow request
   const handleFollowRequest = async (id) => {
     try {
-      let resp = await followerServ.sendFollowReq({ followingId: id });
-      // return resp.data;
-      // suggestedHome()
+      let resp = await followerServ.sendFollowReq({ followingId: id }); 
       getSuggestedHome()
       getUserData()
       return resp.data;
     } catch (err) { console.log("ERROR:", err) }
   };
+
   return (
     <>
       <div className="suggestionBox mb-3 " style={{ marginTop: "32px", top: "98px", paddingBottom: "20px" }}>
@@ -126,13 +122,13 @@ function Suggested() {
         </div>
         <div style={{ backgroundColor: "#d1d1d1", height: "1px", width: "92%", marginLeft: "8%" }}></div>
         <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
-          {suggestedHome?.length>0 && suggestedHome?.slice(0, 4).map((user) => {
+          {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user) => {
             return (
-              <div style={{ display: "flex",gap:"15px", borderBottom: "1px solid #d1d1d1", width: "92%", marginLeft: "8%", paddingTop: "5px" }}>
-                <div  style={{ display: "flex" }} >
+              <div style={{ display: "flex", gap: "15px", borderBottom: "1px solid #d1d1d1", width: "92%", marginLeft: "8%", paddingTop: "5px" }}>
+                <div style={{ display: "flex" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
-                      style={{ height: "55px", width: "55px", marginTop: "10px",borderRadius:"50%" }}
+                      style={{ height: "55px", width: "55px", marginTop: "10px", borderRadius: "50%" }}
                       src={
                         user?.profile_img
                           ? user.profile_img
@@ -143,7 +139,7 @@ function Suggested() {
                     />
                   </Link>
                 </div>
-                <div style={{width: "70%", padding: "8px 0px", display: "flex", flexDirection: "column", gap: "1px" }}>
+                <div style={{ width: "70%", padding: "8px 0px", display: "flex", flexDirection: "column", gap: "1px" }}>
                   <span style={{ fontSize: "16px", fontWeight: "600", color: "#0B1E1C" }} >{user?.user_name?.length > 20
                     ? user?.user_name?.slice(0, 20) + "..."
                     : user.user_name}

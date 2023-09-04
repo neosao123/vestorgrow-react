@@ -794,11 +794,7 @@
 .socialContantInner {
   /* gap: 20px; */
 }
-
-.feedBox {
-  margin-bottom: 20px;
-}
-
+ 
 .userRepliedCommentCustom {
   background-color: #f5f5f5;
 }
@@ -1395,14 +1391,6 @@
 
 .discoverListImg img {
   border-radius: 14px 14px 0 0;
-}
-
-.feedBoxHeadName h4 a {
-  font-weight: 600;
-  font-size: var(--s16);
-  line-height: 19px;
-  color: #0d1b1d;
-  margin-bottom: 4px;
 }
 
 .aboutBio {

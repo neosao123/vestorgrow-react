@@ -59,27 +59,27 @@ function ChatsType() {
   };
 
 
-  const windowScale= window.devicePixelRatio
-  var bottom="82.5vh"
+  const windowScale = window.devicePixelRatio
+  var bottom = "82.5vh"
 
-  if(windowScale===1){
-    bottom="86vh"
+  if (windowScale === 1) {
+    bottom = "86vh"
   }
 
   return (
     <>
       <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: `${atTop ? "6vh" : bottom}` }} >
-        <div className="feedChatContent" style={{ height: "92%", width: "18.6em", borderRadius: "none",  boxShadow:"rgba(0, 0, 0, 0.24) 0px 3px 8px" }} >
-          <div className="tab-content" >
+        <div className="feedChatContent" style={{ height: "92%", width: "18.6em", borderRadius: "15px 15px 0 0", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} >
+          <div className="tab-content">
             {(user.role.includes("admin") || user.role.includes("userPaid")) && (
-              <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`} >
+              <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`}>
                 <GlobalMessage setPremiumChat={setPremiumChat} setMediaFiles={setMediaFiles} />
               </div>
             )}
-            <div className={`tab-pane ${activeChat === 1 ? "active" : ""}`} style={{ height: "100%" }}>
+            <div className={`tab-pane ${activeChat === 1 ? "active" : ""}`} style={{ height: "100%"}}>
               <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} atTop={atTop} setAtTop={setAtTop} />
             </div>
-            <div className={`tab-pane ${activeChat === 2 ? "active" : ""}`}  >
+            <div className={`tab-pane ${activeChat === 2 ? "active" : ""}`} >
               <GroupChat
                 groupChatRerendered={groupChatRerender}
                 setShowDeleteGroup={setShowDeleteGroup}
