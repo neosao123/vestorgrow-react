@@ -99,7 +99,7 @@ function Suggested() {
   //for follow request
   const handleFollowRequest = async (id) => {
     try {
-      let resp = await followerServ.sendFollowReq({ followingId: id }); 
+      let resp = await followerServ.sendFollowReq({ followingId: id });
       getSuggestedHome()
       getUserData()
       return resp.data;
@@ -108,7 +108,7 @@ function Suggested() {
 
   return (
     <>
-      <div className="suggestionBox mb-3 " style={{ marginTop: "32px", top: "98px", paddingBottom: "20px" }}>
+      <div className="suggestionBox mb-3 " style={{ top: "98px", paddingBottom: "15px" }}>
         <div className="suggestionHead">
           <span>Suggested for You</span>
           <span
@@ -120,15 +120,15 @@ function Suggested() {
             See All
           </span>
         </div>
-        <div style={{ backgroundColor: "#d1d1d1", height: "1px", width: "92%", marginLeft: "8%" }}></div>
+        <div style={{ backgroundColor: "#d1d1d1", height: "1px", width: "100%", }}></div>
         <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
           {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user) => {
             return (
-              <div style={{ display: "flex", gap: "15px", borderBottom: "1px solid #d1d1d1", width: "92%", marginLeft: "8%", paddingTop: "5px" }}>
+              <div style={{ display: "flex", gap: "15px", borderBottom: "1px solid #d1d1d1", width: "100%", paddingTop: "5px", paddingLeft: "10px"}}>
                 <div style={{ display: "flex" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
-                      style={{ height: "55px", width: "55px", marginTop: "10px", borderRadius: "50%" }}
+                      style={{ height: "50px", width: "50px", marginTop: "10px", borderRadius: "50%" }}
                       src={
                         user?.profile_img
                           ? user.profile_img
@@ -140,14 +140,14 @@ function Suggested() {
                   </Link>
                 </div>
                 <div style={{ width: "70%", padding: "8px 0px", display: "flex", flexDirection: "column", gap: "1px" }}>
-                  <span style={{ fontSize: "16px", fontWeight: "600", color: "#0B1E1C" }} >{user?.user_name?.length > 20
-                    ? user?.user_name?.slice(0, 20) + "..."
+                  <span style={{ fontSize: "16px", fontWeight: "600", color: "#0B1E1C" }} >{user?.user_name?.length > 15
+                    ? user?.user_name?.slice(0, 15) + "..."
                     : user.user_name}
                   </span>
                   <span style={{ fontSize: "14px", fontWeight: 400, color: "#465D61" }} >
                     {user?.title ? (
-                      user?.title?.length > 25 ? (
-                        user?.title?.slice(0, 25) + "..."
+                      user?.title?.length > 24 ? (
+                        user?.title?.slice(0, 24) + "..."
                       ) : (
                         user.title
                       )
@@ -159,7 +159,7 @@ function Suggested() {
                     <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}>Following</button>
                   ) : user.isFollowing === "notfollowing" ? (
                     <button
-                      style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}
+                      style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "5px 15px", borderRadius: "20px" }}
                       onClick={() => {
                         handleFollowRequest(user._id);
                       }}

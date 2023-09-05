@@ -223,7 +223,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
           <div className="vertical-align-center vertical-align-center-custom">
             <div
               className={
-                "discoverPosts modal-dialog modal-xl discoverPostSmall " +
+                "discoverPosts modal-dialog discoverPostSmall " +
                 (post?.mediaFiles && post?.mediaFiles.length > 0 ? "discoverPostsCustom" : "discoverPostsCustomText")
               }
             >

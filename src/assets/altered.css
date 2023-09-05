@@ -270,7 +270,7 @@
 }
 
 .socialContantCustom {
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 
 .profileImageCropper .cropper-crop-box,
@@ -662,6 +662,7 @@
 
 .socialContentCustom {
   padding-top: 0px;
+  margin-top: 20px;
 }
 
 .mostRecent {
@@ -783,7 +784,7 @@
   margin: 0px;
   transform: translate(-233px, 23px);
   overflow: hidden;
-  height: 90vh;
+  height: 80vh;
   padding-bottom: 50px;
 }
 
@@ -1202,7 +1203,7 @@
   /* position: relative; */
   width: 100%;
   /*height: 63px;*/
-  height: 80px;
+  /* height: 80px; */
   border-bottom: 0.5px solid #d1d1d1;
   display: flex;
   padding: 12px;
@@ -1906,7 +1907,7 @@
 .sticky-top-custom {
   position: sticky;
   top: 66px;
-  z-index: 1;
+  z-index: 0;
   margin-bottom: 0px;
 }
 

@@ -346,5 +346,5 @@ export default class ChatService {
         throw err;
       })
   }
-  
+
 }
