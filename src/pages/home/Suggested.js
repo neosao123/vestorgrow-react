@@ -125,7 +125,7 @@ function Suggested() {
           {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user) => {
             return (
               <div style={{ display: "flex", gap: "15px", borderBottom: "1px solid #d1d1d1", width: "100%", paddingTop: "5px", paddingLeft: "10px"}}>
-                <div style={{ display: "flex" }} >
+                <div style={{ display: "flex",paddingLeft:"5px"}} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
                       style={{ height: "50px", width: "50px", marginTop: "10px", borderRadius: "50%" }}
@@ -139,7 +139,7 @@ function Suggested() {
                     />
                   </Link>
                 </div>
-                <div style={{ width: "70%", padding: "8px 0px", display: "flex", flexDirection: "column", gap: "1px" }}>
+                <div style={{ width: "80%", padding: "15px 0px",paddingLeft:"5px", display: "flex", flexDirection: "column", gap: "1px" }}>
                   <span style={{ fontSize: "16px", fontWeight: "600", color: "#0B1E1C" }} >{user?.user_name?.length > 15
                     ? user?.user_name?.slice(0, 15) + "..."
                     : user.user_name}

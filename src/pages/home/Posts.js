@@ -211,6 +211,7 @@ const Posts = () => {
             </div>
           </div>
         </div>
+        {console.log("POSTs:", postList)}
         {postList.length > 0 &&
           postList.map((item, idx) => {
             return <SinglePost index={idx} item={item} idx={idx} key={idx} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} />

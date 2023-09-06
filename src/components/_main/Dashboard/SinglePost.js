@@ -255,7 +255,7 @@ const SinglePost = ({ ...props }) => {
                                         )
                                     }
                                     {
-                                        (originalPostId !== null) && (
+                                        (item?.originalPostId) && (
                                             <span className="repostedCustom">Reposted</span>
                                         )
                                     }
