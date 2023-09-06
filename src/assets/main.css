@@ -824,6 +824,7 @@ hr.horiz {
   /* position: relative; */
 
   position: fixed;
+  right: 0;
 }
 
 .stickyChatBox {
