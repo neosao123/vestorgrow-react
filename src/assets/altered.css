@@ -2107,7 +2107,7 @@
 
 .feedUserChat a.userFeedLink {
   border-bottom: 0.5px solid #ebeaea;
-  padding: 12px 5px;
+  padding: 12px 5px 12px 12px;
 }
 
 .discoverContant .discoverContantTxt {
@@ -5456,3 +5456,4 @@ div.form-input {
   border-width: 0;
   box-shadow: none;
 }
+

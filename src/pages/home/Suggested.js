@@ -50,7 +50,7 @@ function Suggested() {
     setLoading(true);
     try {
       let res = await suggestedServ.suggestListTab(tabRequest);
-      setsuggestedTab(res.users);
+      setsuggestedTab(res?.users);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -58,7 +58,7 @@ function Suggested() {
   };
 
   const deleteSuggestedHome = (id) => {
-    const updatedItems = suggestedHome.filter((item) => item._id !== id);
+    const updatedItems = suggestedHome.filter((item) => item?._id !== id);
     setsuggestedHome(updatedItems);
   };
 

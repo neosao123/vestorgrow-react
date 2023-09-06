@@ -30,6 +30,8 @@ export const GlobalProvider = ({ children }) => {
   const [latestMsgList, setLatestMsgList] = useState({});
   const [chatList, setChatList] = useState([]);
   const [chatData, setChatData] = useState([])
+  const [updateChatList, setUpdateChatList] = useState(false)
+  const [groupInfoId, setGroupInfoId] = useState("")
 
   return (
     <GlobalContext.Provider
@@ -57,6 +59,8 @@ export const GlobalProvider = ({ children }) => {
         LatestmsgList: [latestMsgList, setLatestMsgList],
         ChatList: [chatList, setChatList],
         ChatDATA: [chatData, setChatData],
+        UpdateChat: [updateChatList, setUpdateChatList],
+        groupInfoId: [groupInfoId, setGroupInfoId]
       }}
     >
       {children}

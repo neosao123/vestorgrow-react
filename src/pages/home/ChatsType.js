@@ -35,6 +35,7 @@ function ChatsType() {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [showSentMsg, setShowSentMsg] = useState(false);
   const [atTop, setAtTop] = useState(false)
+  const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
   useEffect(() => {
     if (isAuthentiCated && window.location.pathname.includes("groupinvite") && params?.id) {
       sendInvitation();
@@ -76,8 +77,8 @@ function ChatsType() {
                 <GlobalMessage setPremiumChat={setPremiumChat} setMediaFiles={setMediaFiles} />
               </div>
             )}
-            <div className={`tab-pane ${activeChat === 1 ? "active" : ""}`} style={{ height: "100%"}}>
-              <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} atTop={atTop} setAtTop={setAtTop} />
+            <div className={`tab-pane ${activeChat === 1 ? "active" : ""}`} style={{ height: "100%" }}>
+              <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} atTop={atTop} setAtTop={setAtTop} setShowGroupInfo={setShowGroupInfo} />
             </div>
             <div className={`tab-pane ${activeChat === 2 ? "active" : ""}`} >
               <GroupChat

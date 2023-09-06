@@ -324,7 +324,7 @@ export default function ChatMessage({
                       : mUser?.user_name
                     : "Vestorgrow user")}
                   {
-                    getMessageData?.groupChat && getMessageData?.chatName
+                    getMessageData?.groupChat && getMessageData?.chatName && getMessageData?.chatName?.length > 15 ? getMessageData?.chatName?.slice(0, 15) + "..." : getMessageData?.chatName
                   }
                 </span>{" "}
                 {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}

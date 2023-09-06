@@ -27,6 +27,7 @@ function Header() {
   const [showFollowReq, setShowFollowReq] = useState(false);
   const [addClassPara, setAddClassPara] = useState(false);
   const [addClassfull, setAddClassFull] = useState(false);
+  const [updateChatList, setUpdateChatList] = globalCtx.UpdateChat;
 
   useEffect(() => {
     getNotificationList();
@@ -41,8 +42,8 @@ function Header() {
   const getNotificationList = async () => {
     try {
       let resp = await notificationServ.notificationList({});
-      if (resp.data) {
-        setNotificationList([...resp.data]);
+      if (resp?.data) {
+        setNotificationList([...resp?.data]);
       }
     } catch (err) {
       console.log(err);
@@ -52,8 +53,8 @@ function Header() {
   const getFollowReq = async () => {
     try {
       let resp = await followServ.listFollowReq({});
-      if (resp.data) {
-        setFollowReq([...resp.data]);
+      if (resp?.data) {
+        setFollowReq([...resp?.data]);
       }
     } catch (err) {
       console.log(err);
@@ -210,9 +211,10 @@ function Header() {
       };
       await chatServ.joinGroup(obj).then((resp) => {
         if (resp.message) {
-          setActiveChat(2);
+          // setActiveChat(2);
           setGroupJoinedByNoti(groupId);
           deleteNotification(id);
+          setUpdateChatList(!updateChatList);
         }
       });
     } catch (err) {
@@ -299,12 +301,12 @@ function Header() {
                       <div
                         className="notifyHeading d-flex notifyHeading-customSize notifyHeading-customfr-mobile"
                         onClick={handleShowFollowReqList}
-                        
+
                       >
                         <img className="arrow" src="/images/icons/left-arrow.svg" alt="" />
                         <h4 className="w-100 mb-0">Follow requests</h4>
                       </div>
-                      <div className="dropdownGroup dropdownGroupCustom overflowScrollStop" style={{backgroundColor:"green"}} >
+                      <div className="dropdownGroup dropdownGroupCustom overflowScrollStop" style={{ backgroundColor: "green" }} >
                         {followReq.map((item, idx) => {
                           return (
                             <div key={idx}>

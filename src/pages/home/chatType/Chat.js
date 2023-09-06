@@ -36,7 +36,7 @@ const chatServ = new ChatService()
 let socket;
 // let chatCompare = [];
 
-export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, setShowCreateGroup }) {
+export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, setShowCreateGroup, setShowGroupInfo }) {
   const navigate = useNavigate();
   const params = useParams();
   const globalCtx = useContext(GlobalContext);
@@ -70,13 +70,13 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   const [personalUnreadCount, setPersonalUnreadCount] = useState(0)
   const [groupUnreadCount, setGroupUnreadCount] = useState(0);
   const [activeGroupList, setActiveGroupList] = useState([]);
-
-  console.log("chatlist:", chatList)
+  const [updateChatList, setUpdateChatList] = globalCtx.UpdateChat;
+  const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
 
   useEffect(() => {
     getChatList();
     setShowMsg(false);
-  }, [unreadCount, groupChat]);
+  }, [unreadCount, groupChat, updateChatList]);
 
   useEffect(() => {
     if (groupChat && searchText !== "") {
@@ -525,6 +525,19 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                   <RiArrowDropDownLine style={{ fontSize: "30px", marginLeft: "px" }} />
                                 </div>
                                 <ul className="dropdown-menu dropdown-menu-end" style={{ zIndex: 999 }}>
+                                  <li>
+                                    <a
+                                      className="dropdown-item"
+                                      href="javascript:void(0);"
+                                      onClick={() => {
+                                        setShowGroupInfo(true);
+                                        setGroupInfoId(item?._id)
+                                      }}
+                                    >
+                                      <img src="/images/icons/eye.svg" className="img-fluid me-2" alt="" />
+                                      <span style={{ fontSize: "18px" }}>View group info</span>
+                                    </a>
+                                  </li>
                                   {item?.isGroupChat === true && <li
                                     onClick={
                                       (e) => {
@@ -534,7 +547,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                         setTimeout(() => {
                                           // document.getElementsByClassName("dropdown-menu-customGroupChat").remov
                                           setCopiedText("");
-                                        }, 1000);
+                                        }, 3000);
                                       }
                                     }
                                   >
@@ -559,7 +572,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                       <span style={{ fontSize: "18px", marginLeft: "5px" }}>Mark as read</span>
                                     </button>
                                   </li>
-                                  {item?.isGroupChat &&
+                                  {item?.isGroupChat && item?.createdBy !== user?._id &&
                                     <li onClick={() => {
                                       handleLeaveGroup(item?._id)
                                     }} >
