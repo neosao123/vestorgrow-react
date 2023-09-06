@@ -431,7 +431,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
           </div>
           {isloading ? (<div className="spinner-border text-primary" style={{ margin: "130px" }} role="status">
             <span className="visually-hidden">Loading...</span>
-          </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh" }}>
+          </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh", }}>
             <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >
               {chatList?.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
@@ -461,7 +461,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                   }
                 });
                 return (
-                  <div className="feedUserChat" key={"feed-chat-" + idx} >
+                  <div className="feedUserChat" key={"feed-chat-" + idx}>
                     <Link
                       className="userFeedLink"
                     >
@@ -481,12 +481,8 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                             className="mb-0 FeedUserChatName-userName"
                             style={{ fontSize: "16px" }}
                             title={oUser?.user_name ? oUser?.user_name : "Vestorgrow user"}
-                            // title={"Gangaram"}
-                            // onClick={(e) => handleNavigate(e, "/userprofile/" + oUser?._id)}
                             onClick={(e) => {
                               if (
-                                // e.target.classList.contains("image-fluid-custom-message") ||
-                                // e.target.classList.contains("FeedUserChatName-userName") ||
                                 e.target.classList.contains("img-fluid")
                               ) {
                                 e.preventDefault();
@@ -507,22 +503,21 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                   localStorage.setItem("messageboxstate", JSON.stringify(newArr))
                                   setMessageBoxState(newArr)
                                 }
-                                //console.log("ITEM:", item)
                                 getMessage(item?._id, oUser, item?.users, chatName, chatLogo, groupChat);
                                 setShowMsg(true);
                               }
                             }}
                           >
                             {item?.isGroupChat === false && (oUser?.user_name
-                              ? oUser?.user_name?.length > 10
-                                ? oUser?.user_name?.slice(0, 10) + "..."
+                              ? oUser?.user_name?.length > 12
+                                ? oUser?.user_name?.slice(0, 12) + "..."
                                 : oUser?.user_name
                               : "Vestorgrow user")}
                             {
-                              item?.isGroupChat && (item?.chatName?.length > 10 ? item?.chatName?.slice(0, 10) + "..." : item?.chatName)
+                              item?.isGroupChat && (item?.chatName?.length > 12 ? item?.chatName?.slice(0, 12) + "..." : item?.chatName)
                             }
                           </h6>
-                          {groupChat && presentInGroup && <div style={{ fontSize: "16px" }}>
+                          {groupChat && presentInGroup && <div style={{ fontSize: "16px", marginLeft: "20px" }}>
                             <ChatMsgTimeStamp dateTime={latestMsgList[item?._id]?.createdAt} onlyTime={false} />
                             <span>
                               <div className="btn-group">

@@ -6,8 +6,8 @@ const ChatMsgTimeStamp = (props) => {
     if (props.onlyTime) {
         stamp = moment(props.dateTime).format("HH:mm");
     } else {
-        const now = moment(new Date()).format("MM/DD/yyyy");
-        const msgDate = moment(props.dateTime).format("MM/DD/yyyy"); 
+        const now = moment(new Date()).format("MM/DD/YY");
+        const msgDate = moment(props.dateTime).format("MM/DD/YY"); 
         var d1 = new Date(msgDate);
         var d2 = new Date(now);
         var diffDays = parseInt((d2 - d1) / (1000 * 60 * 60 * 24), 10); 
@@ -16,7 +16,7 @@ const ChatMsgTimeStamp = (props) => {
         } else if (diffDays === 1) {
             stamp = "Yesterday";
         } else {
-            stamp = moment(props.dateTime).format("MMM DD yy");
+            stamp = moment(props.dateTime).format("MMM DD YY");
         }
     }
     return <span>{stamp}</span>;
