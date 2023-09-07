@@ -38,14 +38,14 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
 
   const submitImage = async (fileImage) => {
     try {
+      console.log("fileImage:", fileImage)
       const formData = new FormData();
       formData.append("_id", user._id);
       formData.append("profile_img", fileImage);
-      const resp = await userServ.editProfile(formData);
+      const resp = await userServ.editProfilePicture(formData);
       if (resp?.data) {
-        console.log("RESPONSE:", resp?.data)
-        setUser(resp.data.result);
-        localStorage.setItem("user", JSON.stringify(resp.data.result));
+        setUser(resp.data.data);
+        localStorage.setItem("user", JSON.stringify(resp.data.data));
         onClose();
       }
     } catch (error) {
@@ -59,10 +59,10 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
       const formData = new FormData();
       formData.append("_id", user._id);
       formData.append("profile_img", "");
-      const resp = await userServ.editProfile(formData);
+      const resp = await userServ.editProfilePicture(formData);
       if (resp.data) {
-        setUser(resp.data.result);
-        localStorage.setItem("user", JSON.stringify(resp.data.result));
+        setUser(resp.data.data);
+        localStorage.setItem("user", JSON.stringify(resp.data.data));
         onClose();
       }
     } catch (error) {

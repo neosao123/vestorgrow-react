@@ -45,10 +45,10 @@ export default function EditCoverImage({ file, onClose, onComplete }) {
       const formData = new FormData();
       formData.append("_id", user._id);
       formData.append("cover_img", fileImage);
-      const resp = await userServ.editProfile(formData);
+      const resp = await userServ.editCoverPicture(formData);
       if (resp.data) {
-        setUser(resp.data.result);
-        localStorage.setItem("user", JSON.stringify(resp.data.result));
+        setUser(resp.data.data);
+        localStorage.setItem("user", JSON.stringify(resp.data.data));
         onComplete(fileImage);
       }
     } catch (error) {
@@ -62,10 +62,10 @@ export default function EditCoverImage({ file, onClose, onComplete }) {
       const formData = new FormData();
       formData.append("_id", user._id);
       formData.append("cover_img", "");
-      const resp = await userServ.editProfile(formData);
+      const resp = await userServ.editCoverPicture(formData);
       if (resp.data) {
-        setUser(resp.data.result);
-        localStorage.setItem("user", JSON.stringify(resp.data.result));
+        setUser(resp.data.data);
+        localStorage.setItem("user", JSON.stringify(resp.data.data));
         onClose();
       }
     } catch (error) {
