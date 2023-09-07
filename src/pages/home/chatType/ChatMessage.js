@@ -311,7 +311,7 @@ export default function ChatMessage({
             }}
           >
 
-            <div className="userProfileImg" onClick={() => { handleNavigate("/userprofile/" + mUser?._id) }}>
+            <div className="userProfileImg" onClick={() => { if (getMessageData?.groupChat === false) { handleNavigate("/userprofile/" + mUser?._id) } }}>
               <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} style={{ width: "32px", borderRadius: "50%" }} />
               {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
             </div>
