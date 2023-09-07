@@ -2,8 +2,6 @@ import util from "../util/util";
 import axios from "axios";
 export default class UserService {
   signup(signupObj) {
-    console.log(signupObj)
-
     return util
       .sendApiRequest("/user", "POST", true, signupObj)
       .then(
@@ -229,6 +227,8 @@ export default class UserService {
       });
   }
   async editProfile(signupObj) {
+    console.log("SIGNUPOBJ:", signupObj)
+    alert()
     const token = localStorage.getItem("token") ? localStorage.getItem("token") : "no-token";
     const config = {
       headers: {

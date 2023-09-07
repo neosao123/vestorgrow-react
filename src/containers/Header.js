@@ -9,6 +9,7 @@ import SearchBar from "./SearchBar";
 import moment from "moment";
 import ChatService from "../services/chatService";
 import Tooltip from "../shared/Tooltip";
+import Logo from "../assets/images/logo-2.svg"
 
 const serv = new UserService();
 const chatServ = new ChatService();
@@ -253,14 +254,13 @@ function Header() {
   };
 
   return (
-    // <>    <header className="w-100 clearfix topHeader sticky-top" >
     <>
       {" "}
       <header className="w-100 clearfix topHeader sticky-top-header-custom" id="topHeader">
-        <div className="topHeaderInner d-flex align-items-center topHeaderInner-custom">
-          <div className="mobileLogo d-block d-xl-none mobileLogoCustom">
+        <div className="topHeaderInner d-flex align-items-center topHeaderInner-custom" >
+          <div className="mobileLogo d-block  mobileLogoCustom" >
             <Link to="/">
-              <img src="/images/logo-2.svg" alt="logo" className="img-fluid" />
+              <img src={Logo} alt="logo" />
             </Link>
           </div>
           <div className="topHeaderLeftSec d-md-block">

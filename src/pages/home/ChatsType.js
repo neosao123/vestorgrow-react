@@ -35,7 +35,7 @@ function ChatsType() {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [showSentMsg, setShowSentMsg] = useState(false);
   const [atTop, setAtTop] = useState(false)
-  const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
+  
   useEffect(() => {
     if (isAuthentiCated && window.location.pathname.includes("groupinvite") && params?.id) {
       sendInvitation();
