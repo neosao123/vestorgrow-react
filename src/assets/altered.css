@@ -2388,7 +2388,7 @@
   border: 1px solid #d1d1d1;
   border-radius: 20px;
   margin: 0 auto;
-  margin-top: 2px;
+  /* margin-top: 2px; */
   box-shadow: none;
   border: none;
 }
@@ -3258,6 +3258,7 @@ body.modal-custom-bg-scrollStop {
 
 .messageLink-CustomColor {
   color: #fff;
+  /* color: blue; */
 }
 
 .modal-bdrop-CustomZ-index {

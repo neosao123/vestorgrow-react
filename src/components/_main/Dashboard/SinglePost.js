@@ -87,8 +87,6 @@ const SinglePost = ({ ...props }) => {
         setIsHidden(item?.isHidden)
     }, [])
 
-    // console.log("ishidden:", isHidden)
-
     const getPost = async () => {
         try {
             let resp = await discoverServ.getPost(item?._id);

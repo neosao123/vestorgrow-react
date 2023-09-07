@@ -22,7 +22,7 @@ export default function Setting() {
         <MembershipPlans />
       ) : (
         <div>
-          <div className="settingSide_tab settingSide_tab_custom">
+          <div className="settingSide_tab settingSide_tab_custom" >
             <ul className="nav d-block list-unstyled">
               <li className="nav-item">
                 <Link
@@ -68,7 +68,7 @@ export default function Setting() {
               </li>
             </ul>
           </div>
-          <div className="setting_page main_container d-flex">
+          <div className="setting_page main_container d-flex" style={{marginTop:"20px"}}>
             <div className="setting_contant" style={{ height: (page === "billing" || page === "block") ? "800px" : "auto" }}>
               <div className="tab-content">
                 {(page === undefined || page === "account") && <AccouctSetting />}

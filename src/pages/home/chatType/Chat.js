@@ -237,14 +237,14 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     setisLoading(false)
   };
 
-  const getMessage = async (id, oUser, users, chatName, chatLogo, groupChat) => {
+  const getMessage = async (id, oUser, users, chatName, chatLogo, groupChat, colors) => {
     if (getMessageData.findIndex((i) => i.id === id) === -1) {
       if (getMessageData?.length > 4) {
         let msgData = getMessageData;
         msgData.shift();
-        setGetMessageData([...msgData, { id, oUser, users, chatName, chatLogo, groupChat }]);
+        setGetMessageData([...msgData, { id, oUser, users, chatName, chatLogo, groupChat, colors }]);
       } else {
-        setGetMessageData([...getMessageData, { id, oUser, users, chatName, chatLogo, groupChat }]);
+        setGetMessageData([...getMessageData, { id, oUser, users, chatName, chatLogo, groupChat, colors }]);
       }
     }
 
@@ -433,6 +433,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
             <span className="visually-hidden">Loading...</span>
           </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh", }}>
             <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >
+              {console.log("cHATLIST:", chatList)}
               {chatList?.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
                 time = `${time[0]} ${time[1].slice(0, 1)}`;
@@ -443,12 +444,14 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                 let isPrivateChat;
                 let presentInGroup = false;
                 let requested;
+                let colors;
                 if (item?.isGroupChat === true) {
                   chatName = item?.chatName;
                   chatLogo = item?.chatLogo;
                   groupChat = item?.isGroupChat;
                   isPrivateChat = item?.isPrivate;
                   requested = item?.requested
+                  colors = item?.colour
                   item?.users?.map((el) => {
                     if (el._id === user._id) {
                       presentInGroup = true
@@ -503,18 +506,18 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                   localStorage.setItem("messageboxstate", JSON.stringify(newArr))
                                   setMessageBoxState(newArr)
                                 }
-                                getMessage(item?._id, oUser, item?.users, chatName, chatLogo, groupChat);
+                                getMessage(item?._id, oUser, item?.users, chatName, chatLogo, groupChat, colors);
                                 setShowMsg(true);
                               }
                             }}
                           >
                             {item?.isGroupChat === false && (oUser?.user_name
-                              ? oUser?.user_name?.length > 12
-                                ? oUser?.user_name?.slice(0, 12) + "..."
+                              ? oUser?.user_name?.length > 10
+                                ? oUser?.user_name?.slice(0, 10) + "..."
                                 : oUser?.user_name
                               : "Vestorgrow user")}
                             {
-                              item?.isGroupChat && (item?.chatName?.length > 12 ? item?.chatName?.slice(0, 12) + "..." : item?.chatName)
+                              item?.isGroupChat && (item?.chatName?.length > 10 ? item?.chatName?.slice(0, 10) + "..." : item?.chatName)
                             }
                           </h6>
                           {groupChat && presentInGroup && <div style={{ fontSize: "16px", marginLeft: "20px" }}>
@@ -717,6 +720,8 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
         {getMessageData.map((item, i) => {
           return (
             <ChatMessage
+              chatusers={item?.users}
+              colors={item?.colors}
               index={i}
               chatId={item.id}
               socket={socket}

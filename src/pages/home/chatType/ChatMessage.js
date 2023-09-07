@@ -32,7 +32,9 @@ export default function ChatMessage({
   setMediaFiles,
   isOnline,
   index,
-  item
+  item,
+  chatusers,
+  colors
 }) {
   let chatCompare = chatId;
   const navigate = useNavigate();
@@ -64,10 +66,6 @@ export default function ChatMessage({
   // const [chatLogo, setChatLogo] = useState(null)
   // const [groupChat, setgroupChat] = useState(false)
 
-
-  // useEffect(()=>{
-
-  // })
 
   useEffect(() => {
     socket.on("messageRecieved", (newMessage) => {
@@ -387,6 +385,7 @@ export default function ChatMessage({
                   </div>
                 </div>
               </div>
+              {console.log("MESSAGELIST:", messageList)}
               {messageList?.map((item, idx) => {
                 let itemDate = moment(item.createdAt).format("DD MMMM YYYY");
                 let showDate = false;
@@ -513,8 +512,8 @@ export default function ChatMessage({
                                       }}
                                     >
                                       <span> {item?.sender?._id !== user?._id &&
-                                        <span style={{ color: `${!getMessageData?.groupChat && "#00808B"}`, marginRight: "0.3rem" }}>
-                                          {mUser?.user_name?.length <= 15 ? mUser?.user_name : mUser?.user_name.slice(0, 15) + "..."}</span>
+                                        <span style={{ color: `${!getMessageData?.groupChat ? "#00808B" : colors[chatusers?.findIndex(obj => obj._id === item?.sender?._id)]}`, marginRight: "0.3rem" }}>
+                                          {item?.sender?.user_name?.length <= 15 ? item?.sender?.user_name : item?.sender?.user_name.slice(0, 15) + "..."}</span>
                                       }{moment(item.createdAt).format("HH:mm")}
                                       </span>
                                       <span className="dropdown" >

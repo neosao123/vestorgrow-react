@@ -391,7 +391,9 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
             <span className="visually-hidden">Loading...</span>
           </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh" }}>
             <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >
+              {console.log("cHATLIST:", chatList)}
               {chatList?.length > 0 && chatList?.map((item, idx) => {
+
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
                 time = `${time[0]} ${time[1].slice(0, 1)}`;
                 let oUser;
