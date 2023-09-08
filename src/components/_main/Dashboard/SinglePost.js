@@ -25,7 +25,7 @@ const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jf
 
 
 const SinglePost = ({ ...props }) => {
-    const { getPostList, item, index, idx, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost } = props;
+    const { getPostList, item, index, idx, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost, handleUnFollowRequest } = props;
 
     const postServ = new PostService();
     const followerServ = new UserFollowerService();
@@ -174,10 +174,10 @@ const SinglePost = ({ ...props }) => {
         }
     };
 
-    const handleUnFollowRequest = async (id, userName) => {
-        setUnfollowUserData({ id: id, userName: userName });
-        setShowUnfollowPopup(true);
-    };
+    // const handleUnFollowRequest = async (id, userName) => {
+    //     setUnfollowUserData({ id: id, userName: userName });
+    //     setShowUnfollowPopup(true);
+    // };
 
     const updatePostAfterReaction = (mode, postId, data, uniqueReactions) => {
         if (mode === "inc") {
@@ -321,7 +321,7 @@ const SinglePost = ({ ...props }) => {
                                         </li>
                                         <li>
                                             <div
-                                                onClick={() => handleUnFollowRequest(item.createdBy._id, item.createdBy.user_name)}
+                                                onClick={() => handleUnFollowRequest()}
                                                 className="dropdown-item"
                                             >
                                                 <img src="/images/icons/add-user.svg" alt="add-user" className="img-fluid" />

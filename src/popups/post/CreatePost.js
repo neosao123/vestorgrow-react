@@ -126,7 +126,6 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
                     setIsSubmit(false);
                 }
             });
-            getposts()
         } catch (error) {
             onFail();
             console.log(error);
