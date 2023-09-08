@@ -145,7 +145,7 @@ const SinglePost = ({ ...props }) => {
         try {
             let resp = await postServ.unhidePost(id);
             if (resp.message) {
-                getPostList();
+                getPost();
             }
         } catch (err) {
             console.log(err);
@@ -213,7 +213,7 @@ const SinglePost = ({ ...props }) => {
                         src="/images/icons/hide-icon-white.svg"
                         alt="hide-icon-white"
                         className="img-fluid"
-                        onClick={() => unhidePost(id)}
+                        onClick={() => unhidePost(item?._id)}
                     />
                 </div>
                 <div className="postHiddenTxt">
@@ -221,7 +221,7 @@ const SinglePost = ({ ...props }) => {
                     <p>You won't see this post on your timeline</p>
                 </div>
                 <div className="postHiddenClose">
-                    <NavLink onClick={() => unhidePost(id)}>
+                    <NavLink onClick={() => unhidePost(item?._id)}>
                         <img src="/images/icons/close-white.svg" alt="close-white" className="img-fluid" />
                     </NavLink>
                 </div>
