@@ -485,30 +485,34 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                             style={{ fontSize: "16px" }}
                             title={oUser?.user_name ? oUser?.user_name : "Vestorgrow user"}
                             onClick={(e) => {
-                              if (
-                                e.target.classList.contains("img-fluid")
-                              ) {
-                                e.preventDefault();
-                              } else {
-                                let newArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
-                                let obj = {
-                                  chatId: item._id,
-                                  isExpanded: false,
-                                  isminimize: false,
-                                  index: idx
+                              let isPresentInArray = item?.users?.some(obj => obj._id === user?._id)
+                              if (isPresentInArray) {
+                                if (
+                                  e.target.classList.contains("img-fluid")
+                                ) {
+                                  e.preventDefault();
+                                } else {
+                                  let newArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+                                  let obj = {
+                                    chatId: item._id,
+                                    isExpanded: false,
+                                    isminimize: false,
+                                    index: idx
+                                  }
+                                  let isPresent;
+                                  if (newArr) {
+                                    isPresent = newArr.some(el => el.chatId === obj.chatId)
+                                  }
+                                  if (!isPresent) {
+                                    newArr.push(obj)
+                                    localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+                                    setMessageBoxState(newArr)
+                                  }
+                                  getMessage(item?._id, oUser, item?.users, chatName, chatLogo, groupChat, colors);
+                                  setShowMsg(true);
                                 }
-                                let isPresent;
-                                if (newArr) {
-                                  isPresent = newArr.some(el => el.chatId === obj.chatId)
-                                }
-                                if (!isPresent) {
-                                  newArr.push(obj)
-                                  localStorage.setItem("messageboxstate", JSON.stringify(newArr))
-                                  setMessageBoxState(newArr)
-                                }
-                                getMessage(item?._id, oUser, item?.users, chatName, chatLogo, groupChat, colors);
-                                setShowMsg(true);
                               }
+
                             }}
                           >
                             {item?.isGroupChat === false && (oUser?.user_name
