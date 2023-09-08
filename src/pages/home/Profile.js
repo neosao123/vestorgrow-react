@@ -35,7 +35,7 @@ function Profile() {
   return (
     <>
       <div className="leftColumn d-none d-sm-none d-md-block" style={{ marginTop: "20px", maxWidth: "1150px" }}>
-        <div style={{ position: "sticky", top: "98px" }}>
+        <div style={{ position: "sticky", top: "66px" }}>
           <ProfileCard handleClickFollowersCount={handleClickFollowersCount} />
           {/* <Suggested/> */}
           {

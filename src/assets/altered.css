@@ -3152,7 +3152,7 @@ body.modal-custom-bg-scrollStop {
 }
 
 .new-post_custom-divInner-top {
-  height: 32px;
+  /* height: 32px; */
   background-color: #eee;
 }
 

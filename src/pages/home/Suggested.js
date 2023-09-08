@@ -108,7 +108,7 @@ function Suggested() {
 
   return (
     <>
-      <div className="suggestionBox mb-3 " style={{ top: "98px", paddingBottom: "15px" }}>
+      <div className="suggestionBox mb-3 " style={{ top: "66px", paddingBottom: "15px" }}>
         <div className="suggestionHead">
           <span>Suggested for You</span>
           <span

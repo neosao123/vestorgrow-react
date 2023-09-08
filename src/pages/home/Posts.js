@@ -22,6 +22,7 @@ import CreatePost from "../../popups/post/CreatePost";
 import PostShareSuccess from "../../popups/post/PostSharedSuccess";
 import PostShareFail from "../../popups/post/PostSharedFail";
 import SharePostSelect from "../../popups/post/SharePostSelect";
+import UserService from "../../services/userBlockedService";
 
 const Posts = () => {
 
@@ -30,6 +31,7 @@ const Posts = () => {
   const blockedServ = new UserBlockedServ();
   const reportServ = new ReportService();
   const helperServ = new HelperFunctions();
+  const serv = new UserService()
   const globalCtx = useContext(GlobalContext);
   const [user, setUser] = globalCtx.user;
   const [createPostPopup, setCreatePostPopup] = globalCtx.createPostPopup;
@@ -63,6 +65,18 @@ const Posts = () => {
     start: 0,
     length: 20,
   });
+
+
+  const getUserData = async () => {
+    try {
+      let resp = await serv.getUser(user?._id);
+      if (resp.data) {
+        setUser({ ...resp.data });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleCreatePostPopup = () => {
     setCreatePostPopup(!createPostPopup);
@@ -169,6 +183,7 @@ const Posts = () => {
   const handleUnFollowRequest = async (id, userName) => {
     setUnfollowUserData({ id: id, userName: userName });
     setShowUnfollowPopup(true);
+    getUserData()
     getPostList()
   };
 
