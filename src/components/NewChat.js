@@ -118,7 +118,7 @@ const NewChat = ({ ...props }) => {
                     <h4>New Message</h4>
                 </div>
                 <div className="composeSearching border-top border-1" >
-                    <div className="compose_Searchbar">
+                    <div className="compose_Searchbar" >
                         <img src="/images/icons/search.svg" alt="search" className="img-fluid search_Icon" />
                         <Select
                             isMulti

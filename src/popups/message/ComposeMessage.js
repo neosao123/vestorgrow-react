@@ -7,6 +7,8 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import Select from "react-select";
 import SentMessage from "./SentMessage";
+import Max from "../../assets/images/maximize.svg"
+import Min from "../../assets/images/minimize.svg"
 const serv = new ChatService();
 const userFollowerServ = new UserFollowerService();
 export default function ComposeMessage({ onClose, onFinish, deskView }) {
@@ -328,14 +330,15 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
             <h4>New Message</h4>
             <div className="feedBoxHeadRight options">
               <a href="javascript:void(0);" onClick={() => setExpend(expend !== 0 ? 0 : 1)}>
-                <img src="/images/icons/expend.svg" alt="dots" className="img-fluid" />
+                {expend === 0 && <img src={Max} alt="dots" className="img-fluid" />}
+                {expend === 1 && <img src={Min} alt="dots" className="img-fluid" />}
               </a>
               <a href="javascript:void(0);" onClick={onClose}>
                 <img src="images/profile/cross-icon.svg" className="search_cross" />
               </a>
             </div>
           </div>
-          <div className="composeSearching" style={{ padding: "0rem 0.5rem 0.35rem 0.5rem"}}>
+          <div className="composeSearching" style={{ padding: "0rem 0.5rem 0.35rem 0.5rem" }}>
             <div className="compose_Searchbar compose_Searchbar-custom" style={{ paddingLeft: "10px", paddingTop: "0px", paddingBottom: "0px" }}>
               <Select
                 isMulti
@@ -362,7 +365,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
               />
             </div>
             {searchText && (
-              <div className="searchListFlow" style={{width:"100%",border:"1px solid red"}}>
+              <div className="searchListFlow" style={{ width: "100%", border: "1px solid red" }}>
                 <div className="search_dataList">
                   <div className="overflow_searchList followListsInner">
                     {userList.filter((i) => {
