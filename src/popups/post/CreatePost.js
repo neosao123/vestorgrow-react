@@ -40,7 +40,7 @@ function fetchUsers(query, callback) {
     }).then(callback);
 }
 
-export default function CreatePost({ onClose, onSuccess, onFail,getposts }) {
+export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
 
     const source = axios.CancelToken.source();
 
@@ -126,7 +126,7 @@ export default function CreatePost({ onClose, onSuccess, onFail,getposts }) {
                     setIsSubmit(false);
                 }
             });
-
+            getposts()
         } catch (error) {
             onFail();
             console.log(error);
