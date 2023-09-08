@@ -26,7 +26,7 @@ import Playeryoutube from "../../components/Playeryoutube";
 import OriginalPostCreator from "../../components/OriginalPostCreator";
 
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
-export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, changePostIdx }) {
+export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, changePostIdx, getPostList }) {
   const postServ = new PostService();
   const discoverServ = new DiscoverService();
   const followerServ = new UserFollowerService();
@@ -103,11 +103,8 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
   }
 
   const updatePostAfterReaction = (mode, postId, data) => {
-    if (mode === "inc") {
-      getPost();
-    } else {
-      getPost();
-    }
+    getPost()
+    getPostList()
   }
 
   const handleSharePost = async (postIdx, shareType) => {
@@ -461,7 +458,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
                           <div className="likeShareIcon">
                             <ul className="nav">
                               <li className="nav-item">
-                                <FBReactions postReaction={post?.reaction ?? null} postId={post?._id} updatePostAfterReaction={updatePostAfterReaction} />
+                                <FBReactions postReaction={post?.reaction ?? null} postId={post?._id} updatePostAfterReaction={updatePostAfterReaction} getPost={getPost} />
                               </li>
                               <li className="nav-item">
                                 <a

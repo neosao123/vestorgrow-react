@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import '../assets/fbreactionstyles.css';
-import PostService from "../services/postService"; 
+import PostService from "../services/postService";
 
 const FBReactions = ({ ...props }) => {
 
-    const { postId, postReaction, getPost} = props;
+    const { postId, postReaction, getPost, updatePostAfterReaction } = props;
 
     const likeImage = "/images/icons/thumbs-up.svg";
     const loveImage = "/images/icons/heart.svg";
@@ -38,7 +38,7 @@ const FBReactions = ({ ...props }) => {
             return [];
         }
     }
-    
+
 
     const addReaction = async (reaction) => {
         try {
@@ -56,15 +56,16 @@ const FBReactions = ({ ...props }) => {
                         setActiveReaction("Insightful");
                     }
 
-                    // const reactionOfPost = await postUniqueReactions();
-
+                    const reactionOfPost = await postUniqueReactions();
                     setTimeout(() => {
                         const data = resp.data;
                         getPost(postId)
-                        // updatePostAfterReaction("inc", postId, data, reactionOfPost);
+
                     }, 800);
                     setBtnCLicked(false);
+                    updatePostAfterReaction();
                 }
+
             }
         } catch (err) {
             console.log(err);
@@ -74,19 +75,15 @@ const FBReactions = ({ ...props }) => {
 
     const removeReaction = async (postId) => {
         try {
-            console.log("POSTID:",postId)
             let resp = await postServ.dislikePost(postId);
             if (resp.message) {
-
-                // const reactionOfPost = await postUniqueReactions();
-
                 setTimeout(() => {
-                    // updatePostAfterReaction("dec", postId, {}, reactionOfPost);
                     setReactionImage(noreactionImage);
                     setActiveReaction("Like");
                     getPost()
                 }, 800);
             }
+            updatePostAfterReaction()
         } catch (err) {
             console.log(err);
         }
@@ -98,7 +95,6 @@ const FBReactions = ({ ...props }) => {
 
     const handleLikeButton = (e) => {
         e.preventDefault();
-        console.log(postReaction)
         if (postReaction !== null && postReaction !== undefined) {
             removeReaction(postId);
         } else {

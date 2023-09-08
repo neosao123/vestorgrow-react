@@ -292,6 +292,7 @@ export default function Discover() {
                         slideLeft={postIdx > 0}
                         slideRight={postIdx < postList.length - 1}
                         changePostIdx={changePostIdx}
+                        getPostList={getPostList}
                     />
                 )}
         </div>
