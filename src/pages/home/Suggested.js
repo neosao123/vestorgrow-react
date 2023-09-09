@@ -9,6 +9,7 @@ import Loader from "../../components/Loader";
 import { useContext } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import UserService from "../../services/UserService";
+import { ToastContainer, toast } from 'react-toastify';
 
 const serv = new UserService()
 
@@ -33,7 +34,9 @@ function Suggested() {
     { key: 3, tab: "new", value: "New to VestorGrow" },
   ];
 
+
   useEffect(() => {
+    setLoading(true);
     getSuggestedHome();
     getSuggestedTab();
   }, [category, search]);
@@ -47,7 +50,7 @@ function Suggested() {
     }
   };
   const getSuggestedTab = async () => {
-    setLoading(true);
+    
     try {
       let res = await suggestedServ.suggestListTab(tabRequest);
       setsuggestedTab(res?.users);
@@ -96,12 +99,26 @@ function Suggested() {
     return user?.user_name.toString().toLowerCase().includes(search);
   });
 
+
   //for follow request
-  const handleFollowRequest = async (id) => {
+  const handleFollowRequest = async (id, name) => {
     try {
       let resp = await followerServ.sendFollowReq({ followingId: id });
-      getSuggestedHome()
-      getUserData()
+      if (resp.data) {
+        toast.success(`You are following ${name}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+        getSuggestedTab()
+        getSuggestedHome()
+        getUserData()
+      }
       return resp.data;
     } catch (err) { console.log("ERROR:", err) }
   };
@@ -161,7 +178,7 @@ function Suggested() {
                     <button
                       style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", marginTop: "5px", fontWeight: 600, fontSize: "16px", width: "100px", padding: "5px 15px", borderRadius: "20px" }}
                       onClick={() => {
-                        handleFollowRequest(user._id);
+                        handleFollowRequest(user._id, user?.user_name);
                       }}
                     >
                       Follow
@@ -281,7 +298,7 @@ function Suggested() {
                               <button
                                 className="follow"
                                 onClick={() => {
-                                  handleFollowRequest(user._id);
+                                  handleFollowRequest(user._id, user?.user_name);
                                 }}
                               >
                                 Follow

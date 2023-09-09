@@ -23,6 +23,7 @@ import PostShareSuccess from "../../popups/post/PostSharedSuccess";
 import PostShareFail from "../../popups/post/PostSharedFail";
 import SharePostSelect from "../../popups/post/SharePostSelect";
 import UserService from "../../services/userBlockedService";
+import PostCreateSuccess from "../../popups/post/PostCreatedSuccess";
 
 const Posts = () => {
 
@@ -258,7 +259,7 @@ const Posts = () => {
           }}
         />
       )}
-      {postSuccessPopup && <PostShareSuccess onClose={handlePostSuccessPopup} />}
+      {postSuccessPopup && <PostCreateSuccess onClose={handlePostSuccessPopup} />}
       {showOtherPostSharedPopup && (
         <OtherPostSharedSuccess onClose={() => setShowOtherPostSharedPopup(!showOtherPostSharedPopup)} />
       )}
