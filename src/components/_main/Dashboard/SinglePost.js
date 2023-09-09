@@ -85,7 +85,8 @@ const SinglePost = ({ ...props }) => {
         item.duration = moment.duration(moment(date).diff(moment(item.createdAt)))
         setMessage(item?.message)
         setIsHidden(item?.isHidden)
-    }, [])
+    }, [item])
+
 
     const getPost = async () => {
         try {
@@ -95,7 +96,7 @@ const SinglePost = ({ ...props }) => {
                 setLikes(resp?.data?.likeCount)
                 setProgile_img(resp?.data?.createdBy.profile_img)
                 setPostReaction(resp?.data?.postReactions)
-                setOriginalPostId(resp?.data.originalPostId)
+                setOriginalPostId(resp?.data?.originalPostId)
                 setReaction(resp?.data?.reaction)
                 item.duration = moment.duration(moment(date).diff(moment(resp?.data?.createdAt)));
                 setIsYouTubeURL(helperServ.extractYouTubeURL(resp.data.message));
@@ -230,11 +231,11 @@ const SinglePost = ({ ...props }) => {
     ) : (
         <div className="bgWhiteCard feedBox" key={idx}>
             <div className="feedBoxInner">
-                <OriginalPostCreator originalPostData={item.originalPostId} createdByUser={item.createdBy} createdAt={item.createdAt} />
+                <OriginalPostCreator originalPostData={item?.originalPostId} createdByUser={item.createdBy} createdAt={item?.createdAt} />
                 <div className="feedBoxHead d-flex align-items-center">
                     <div className="feedBoxHeadLeft">
                         <div className="feedBoxprofImg">
-                            <NavLink to={(item.createdBy !== null) ? "/userprofile/" + item.createdBy?._id : ""}>
+                            <NavLink to={(item.createdBy !== null) ? "/userprofile/" + item?.createdBy?._id : ""}>
                                 <ProfileImage url={profileImage} style={{ borderRadius: "30px" }} />
                             </NavLink>
                         </div>
@@ -281,7 +282,7 @@ const SinglePost = ({ ...props }) => {
                                 <li>
                                     <div className="dropdown-item"
                                         onClick={() =>
-                                            navigator.clipboard.writeText(encodeURI(window.location.origin + "/post/" + item._id))
+                                            navigator.clipboard.writeText(encodeURI(window.location.origin + "/post/" + item?._id))
                                         }
                                     >
                                         <img src="/images/icons/link.svg" alt="hide-icon" className="img-fluid" /> Copy
@@ -289,7 +290,7 @@ const SinglePost = ({ ...props }) => {
                                     </div>
                                 </li>
                                 <li>
-                                    <div onClick={() => hidePost(item._id)} className="dropdown-item"
+                                    <div onClick={() => hidePost(item?._id)} className="dropdown-item"
                                     >
                                         <img src="/images/icons/hide-icon.svg" alt="hide-icon" className="img-fluid" />
                                         Hide Post
@@ -297,7 +298,7 @@ const SinglePost = ({ ...props }) => {
                                 </li>
                                 {(item?.createdBy?._id === user._id) && (
                                     <li>
-                                        <div onClick={() => deletePost(id)} className="dropdown-item">
+                                        <div onClick={() => deletePost(item?._id)} className="dropdown-item">
                                             <img src="/images/icons/delete.svg" alt="hide-icon" className="img-fluid" />
                                             Delete
                                         </div>
@@ -307,9 +308,7 @@ const SinglePost = ({ ...props }) => {
                                     <>
                                         <li>
                                             <div onClick={() => {
-
-                                                console.log("id:", id);
-                                                handleReportRequest(id)
+                                                handleReportRequest(item?._id)
                                             }} className="dropdown-item">
                                                 <img
                                                     src="/images/icons/report-post.svg"
@@ -331,7 +330,7 @@ const SinglePost = ({ ...props }) => {
                                         <li>
                                             <a
                                                 href="javascript:void(0)"
-                                                onClick={() => blockUser(item.createdBy._id)}
+                                                onClick={() => blockUser(item?.createdBy?._id)}
                                                 className="dropdown-item"
                                             >
                                                 <i className="fa-solid fa-user-lock me-1"></i> Block
@@ -343,7 +342,7 @@ const SinglePost = ({ ...props }) => {
                             <div className="dropdown">
                                 <ul
                                     className={
-                                        "dropdown-menu opts dropdown-menuMore-custom" + (showShareTo === item._id ? " show" : "")
+                                        "dropdown-menu opts dropdown-menuMore-custom" + (showShareTo === item?._id ? " show" : "")
                                     }
                                     aria-labelledby="dropdownMenuShareTo"
                                     id="dropdownMenuShareTo"
@@ -367,7 +366,7 @@ const SinglePost = ({ ...props }) => {
                                     <li>
                                         <a
                                             className="dropdown-item dropdown-item-fbCustom"
-                                            href={facebookurl + encodeURI(window.location.origin + "/post/" + item._id)}
+                                            href={facebookurl + encodeURI(window.location.origin + "/post/" + item?._id)}
                                             target="_blank"
                                         >
                                             <img
@@ -381,7 +380,7 @@ const SinglePost = ({ ...props }) => {
                                     <li>
                                         <a
                                             className="dropdown-item"
-                                            href={twitterurl + encodeURI(window.location.origin + "/post/" + item._id)}
+                                            href={twitterurl + encodeURI(window.location.origin + "/post/" + item?._id)}
                                             target="_blank"
                                         >
                                             <img
@@ -440,7 +439,7 @@ const SinglePost = ({ ...props }) => {
                         )}
                     </div>
                 )}
-                {item.mediaFiles.length > 1 && (
+                {item?.mediaFiles?.length > 1 && (
                     <div className="multiplePost d-flex multiplePostimg-custom">
                         <div
                             className="multiplePostLeft"
@@ -649,7 +648,7 @@ const SinglePost = ({ ...props }) => {
                 <div className="likeShareIconCounter">
                     <ul className="nav nav-custom-like-count">
                         <li className="nav-item">
-                            {likes > 0 ? (
+                            {item?.likeCount > 0 ? (
                                 <div className={"d-flex align-items-center"} onClick={() => setShowUserLikedPost(item?._id)}>
                                     <div className="floating-reactions-container">
                                         {
@@ -661,8 +660,10 @@ const SinglePost = ({ ...props }) => {
                                         {
                                             postReactions?.includes("insight") && <span><img src="/images/icons/filled-insightfull.svg" alt="filled-insightfull" /></span>
                                         }
+                                        {
+                                            postReactions?.length > 0 && <span><img src="/images/icons/filled-insightfull.svg" alt="filled-insightfull" /></span>
+                                        }
                                     </div>
-                                    <span className="mx-2">{likes}</span>
                                 </div>
                             ) : (
                                 <NavLink
@@ -695,7 +696,7 @@ const SinglePost = ({ ...props }) => {
                     <ul className="nav">
                         <li className="nav-item">
                             {
-                                <FBReactions postId={id} postReaction={reaction} getPost={getPost} />
+                                <FBReactions postId={item?._id} postReaction={reaction} getPost={getPost} />
                             }
                         </li>
                         <li className="nav-item">

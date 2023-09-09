@@ -50,7 +50,7 @@ function Suggested() {
     }
   };
   const getSuggestedTab = async () => {
-    
+
     try {
       let res = await suggestedServ.suggestListTab(tabRequest);
       setsuggestedTab(res?.users);
@@ -89,6 +89,7 @@ function Suggested() {
       let resp = await serv.getUser(user?._id);
       if (resp.data) {
         setUser({ ...resp.data });
+        localStorage.setItem("user", JSON.stringify(resp.data))
       }
     } catch (err) {
       console.log(err);

@@ -73,6 +73,7 @@ const Posts = () => {
       let resp = await serv.getUser(user?._id);
       if (resp.data) {
         setUser({ ...resp.data });
+        localStorage.setItem("user", JSON.stringify(resp.data))
       }
     } catch (err) {
       console.log(err);
@@ -182,10 +183,13 @@ const Posts = () => {
   };
 
   const handleUnFollowRequest = async (id, userName) => {
-    setUnfollowUserData({ id: id, userName: userName });
+    setUnfollowUserData({ id: id, userName: userName })
     setShowUnfollowPopup(true);
-    getUserData()
-    getPostList()
+    setTimeout(() => {
+      getUserData()
+      getPostList()
+    }, 2000);
+
   };
 
   const handleReportRequest = async (postId) => {
@@ -277,7 +281,9 @@ const Posts = () => {
             setUnfollowUserData(null);
             setShowUnfollowPopup(false);
             getPostList();
+            getUserData()
           }}
+          // getUserData={getUserData}
           userData={unfollowUserData}
         />
       )}

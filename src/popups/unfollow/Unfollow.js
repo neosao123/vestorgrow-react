@@ -8,7 +8,9 @@ export default function Unfollow({ onClose, userData }) {
         .unfollowUser(userData.id)
         .then((resp) => {
           if (resp.message) {
+            // getUserData()
             onClose();
+
           }
         })
         .catch((err) => {

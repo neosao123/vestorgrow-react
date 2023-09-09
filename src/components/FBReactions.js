@@ -5,7 +5,7 @@ import PostService from "../services/postService";
 
 const FBReactions = ({ ...props }) => {
 
-    const { postId, postReaction, getPost, updatePostAfterReaction } = props;
+    const { postId, postReaction, getPost } = props;
 
     const likeImage = "/images/icons/thumbs-up.svg";
     const loveImage = "/images/icons/heart.svg";
@@ -60,10 +60,13 @@ const FBReactions = ({ ...props }) => {
                     setTimeout(() => {
                         const data = resp.data;
                         getPost(postId)
+                        // .then(() => {
+                        // updatePostAfterReaction();
+                        // })
 
                     }, 800);
                     setBtnCLicked(false);
-                    updatePostAfterReaction();
+
                 }
 
             }
@@ -83,7 +86,7 @@ const FBReactions = ({ ...props }) => {
                     getPost()
                 }, 800);
             }
-            updatePostAfterReaction()
+            // updatePostAfterReaction()
         } catch (err) {
             console.log(err);
         }
