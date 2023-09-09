@@ -249,7 +249,7 @@ const Posts = () => {
             handlePostSuccessPopup();
             // setSearch({ ...search, start: 0 });
             // setChange(prev=>!prev)
-            getPostList()
+            // getPostList()
           }}
           getposts={getPostList}
           onFail={() => {

@@ -718,7 +718,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               ? "chatBoxParent chatBoxParent-cust-five"
               : "chatBoxParent"
         }
-        style={{ position: "fixed", bottom: 0, right: "18.8em", zIndex: 9000, height: "auto", width: "auto" }}
+        style={{ position: "fixed", bottom: 0, right: "19.3em", zIndex: 9000, height: "auto", width: "auto" }}
 
       >
         {getMessageData.map((item, i) => {
