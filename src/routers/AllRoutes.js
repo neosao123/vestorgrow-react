@@ -36,7 +36,8 @@ import GroupChatMobile from "../pages/home/chatType/GroupChatMobile";
 import GroupInvite from "../pages/group/GroupInvite";
 import GroupSuggestion from "../pages/signup/GroupSuggestion";
 import LoginInactive from "../pages/login/LoginInactive";
-import LoadingData from "../pages/login/LoadingData"; 
+import LoadingData from "../pages/login/LoadingData";
+import Loginsteps from "../pages/steps/Loginsteps";
 
 function AllRoutes() {
   const serv = new UserService();
@@ -87,7 +88,7 @@ function AllRoutes() {
         <Route exact path="/setting/:page" element={<Setting />} />
         <Route exact path="/createpost" element={<CreatePostMobile />} />
         <Route exact path="/post/:id" element={<PostDetail />} />
-        <Route exact path="/message" element={<Message />} /> 
+        <Route exact path="/message" element={<Message />} />
         <Route exact path="/message/:id" element={<Message />} />
         <Route exact path="/message/show/:chat_id/:message_id" element={<Message />} />
         {/* <Route exact path="/globalmessage" element={<GlobalMessage />} /> */}
@@ -100,7 +101,8 @@ function AllRoutes() {
         <Route exact path="/groupsuggestion" element={<GroupSuggestion />} />
         <Route exact path="/groupinvite/:id" element={<GroupInvite />} />
         <Route exact path="/signin/inactive" element={<LoginInactive />} />
-        <Route exact path="/signin/active/:id" element={<LoadingData />} />
+        <Route exact path="/signin/active/:id" element={<Loginsteps />} />
+        <Route exact path="/signup/active/:id" element={<SignupProfile />} />
 
         <Route path="*" element={<Navigate to="/notfound" />} />
       </Routes>

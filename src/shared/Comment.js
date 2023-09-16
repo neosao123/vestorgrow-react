@@ -50,6 +50,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
   // const [showReplyList, setShowReplyList] = useState([])
   const [showNewReplyList, setShowNewReplyList] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [activeBtn, setActiveBtn] = useState(false);
   const [value, setValue] = useState("");
   const [searchText, setSearchText] = useState("");
   const [mentionedUserList, setMentionedUserList] = useState([]);
@@ -226,6 +227,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
   };
 
   const onSubmit = async (values) => {
+    setActiveBtn(true);
     setShowEmoji(false);
     values.postId = post._id;
     try {
@@ -247,7 +249,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
         setMessage({ ...message, content: "" });
         setShowEmoji(false);
       }
-      
+
     } catch (error) {
       console.log(error);
       setInitialValue({
@@ -256,6 +258,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
         createdBy: user._id,
       })
     }
+    setActiveBtn(false);
   };
 
   const formik = useFormik({
@@ -375,9 +378,13 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                 <div className="emojiBtn" id="emojiPickerComment-btn-id-Custom" onClick={() => setShowEmoji(!showEmoji)}>
                   <img src="/images/icons/emoji.png" alt="" className="img-fluid img-emoji-dummy" />
                 </div>
-                <button type="submit" className="btn sendPostbtn">
-                  <img src="/images/icons/send.svg" alt="like" className="img-fluid" />
-                </button>
+                {activeBtn ? (
+                  <i className="fa-solid fa-spinner"></i>
+                ) : (
+                  <button type="submit" className="btn sendPostbtn">
+                    <img src="/images/icons/send.svg" alt="like" className="img-fluid" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -422,16 +429,16 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                           <span>{moment(item?.createdAt).fromNow()}</span>
                         </div>
                         <div className="userReplyDots">
-                          <div className="commonDropDown dropdown">
+                          {item.createdBy?._id === user._id && <div className="commonDropDown dropdown">
                             <a data-bs-toggle="dropdown" href="javascript:void(0);">
                               <img src="/images/icons/dots.svg" alt="dots-white" className="img-fluid" />
                             </a>
                             <ul className="dropdown-menu">
-                              {user._id !== item?.createdBy._id && <li>
+                              {/* {user._id !== item?.createdBy._id && <li>
                                 <Link className="dropdown-item">
                                   Report
                                 </Link>
-                              </li>}
+                              </li>} */}
                               {item.createdBy?._id === user._id ? (
                                 <li>
                                   <Link className="dropdown-item" onClick={() => deleteComment(item?._id)}>
@@ -442,7 +449,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                 ""
                               )}
                             </ul>
-                          </div>
+                          </div>}
                         </div>
                       </div>
                     </div>
@@ -521,7 +528,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                           <span>{moment(reply?.createdAt).fromNow()}</span>
                                         </div>
                                         <div className="userReplyDots">
-                                          <div className="commonDropDown dropdown">
+                                          {reply.createdBy?._id === user._id && <div className="commonDropDown dropdown">
                                             <Link data-bs-toggle="dropdown">
                                               <img
                                                 src="/images/icons/dots.svg"
@@ -530,11 +537,11 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                               />
                                             </Link>
                                             <ul className="dropdown-menu">
-                                              <li>
+                                              {/* <li>
                                                 <Link className="dropdown-item">
                                                   Report
                                                 </Link>
-                                              </li>
+                                              </li> */}
                                               {reply.createdBy?._id === user._id ? (
                                                 <li onClick={() => deleteCommentReply(reply?._id)}>
                                                   <button type="button" className="dropdown-item">
@@ -545,7 +552,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                                 ""
                                               )}
                                             </ul>
-                                          </div>
+                                          </div>}
                                         </div>
                                       </div>
                                     </div>

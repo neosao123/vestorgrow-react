@@ -10,6 +10,8 @@ const LoadingData = () => {
     const [isAuthentiCated, setIsAuthentiCated] = globalCtx.auth;
     const [user, setUser] = globalCtx.user;
 
+
+
     const navigate = useNavigate();
     const location = useLocation();
     const [errorMsg, setErrorMsg] = useState("");
@@ -54,6 +56,7 @@ const LoadingData = () => {
     };
 
     useEffect(() => {
+        alert()
         setActivated();
     }, []);
 

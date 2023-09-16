@@ -138,8 +138,11 @@ export default function ChatMessage({
 
   const getMessage = async (id, oUser, users) => {
     setMUser(oUser);
-    setUsers([...users]);
-    socket.emit("joinChat", id);
+    if (users) {
+      setUsers([...users]);
+    }
+
+
     try {
       let obj = {
         filter: {
@@ -325,9 +328,9 @@ export default function ChatMessage({
                     getMessageData?.groupChat && getMessageData?.chatName && getMessageData?.chatName?.length > 15 ? getMessageData?.chatName?.slice(0, 15) + "..." : getMessageData?.chatName
                   }
                 </span>{" "}
-                {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
+                {mUser?.role?.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
               </h6>
-              <p>{isOnline.includes(mUser?._id) ? "Online" : "Offline"}</p>
+              <p>{isOnline?.includes(mUser?._id) ? "Online" : "Offline"}</p>
             </div>
             <div className="options">
               <div className="dropdown">
@@ -385,7 +388,6 @@ export default function ChatMessage({
                   </div>
                 </div>
               </div>
-              {console.log("MESSAGELIST:", messageList)}
               {messageList?.map((item, idx) => {
                 let itemDate = moment(item.createdAt).format("DD MMMM YYYY");
                 let showDate = false;

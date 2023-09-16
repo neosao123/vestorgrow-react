@@ -32,6 +32,7 @@ export const GlobalProvider = ({ children }) => {
   const [chatData, setChatData] = useState([])
   const [updateChatList, setUpdateChatList] = useState(false)
   const [groupInfoId, setGroupInfoId] = useState("")
+  const [loading, setLoading] = useState(false)
 
   return (
     <GlobalContext.Provider
@@ -60,7 +61,8 @@ export const GlobalProvider = ({ children }) => {
         ChatList: [chatList, setChatList],
         ChatDATA: [chatData, setChatData],
         UpdateChat: [updateChatList, setUpdateChatList],
-        groupInfoId: [groupInfoId, setGroupInfoId]
+        groupInfoId: [groupInfoId, setGroupInfoId],
+        Loading: [loading, setLoading]
       }}
     >
       {children}

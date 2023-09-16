@@ -3,9 +3,11 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import GroupImage from "../../shared/GroupImage";
 import GlobalContext from "../../context/GlobalContext";
 import ChatService from "../../services/chatService";
+import StepsService from "../../services/stepsService";
 
 const GroupSuggestion = () => {
   const serv = new ChatService();
+  const stepServ = new StepsService()
   const globalCtx = useContext(GlobalContext);
   const navigate = useNavigate();
   const [curUser, setCurUser] = useState();
@@ -54,6 +56,11 @@ const GroupSuggestion = () => {
           element.classList.add("btnColorBlack");
         }
       });
+      await serv.getUser(user._id)
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res.data))
+          setUser({ ...res.data })
+        })
     } catch (err) {
       console.log(err);
     }
@@ -71,8 +78,12 @@ const GroupSuggestion = () => {
     if (hasGroupInvite !== null && hasGroupInvite !== "") {
       localStorage.removeItem('group_invite');
       navigate(hasGroupInvite);
-    } else {      
-      navigate("/");
+    } else {
+      stepServ.updateGroupSuggestions(user._id)
+        .then((res) => {
+          navigate("/");
+        })
+
     }
   };
 

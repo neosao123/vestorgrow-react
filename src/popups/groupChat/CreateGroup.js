@@ -14,10 +14,11 @@ import Modal from 'react-bootstrap/Modal';
 const serv = new ChatService();
 
 const ValidateSchema = Yup.object().shape({
-  chatName: Yup.string().required("Required"),
+  chatName: Yup.string().required("Required").min(3, "Minimum 3 characters required"),
   chatLogo: Yup.string().required("Required"),
-  chatDesc: Yup.string().required("Required"),
-  chatRules: Yup.string().required("Required"),
+  chatDesc: Yup.string().required("Required").min(20, "Minimum 20 characters required"),
+  chatRules: Yup.string().required("Required").min(20, "Minimum 20 characters required"),
+  // chatKeyword: Yup.string().required("Required").length(3, "Minimum 3 keyword required")
   // isPrivate: Yup.string().required("Required"),
 });
 
@@ -185,7 +186,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                   <form onSubmit={formik.handleSubmit} >
                     <div className="groupMainDetail groupMainDetail-customPadding" >
                       <div style={{ position: "relative" }} className="mb-3">
-                        <div className="groupLogo2 m-3" >
+                        <div className="groupLogo2 m-3" style={{ display: "flex", justifyContent: "center", alignItems: "center", alignContent: "center", position: "relative" }}>
                           <GroupImage
                             url={
                               typeof formik.values.chatLogo == "string"
@@ -194,7 +195,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                             }
                           />
                           {formik.touched.chatLogo && formik.errors.chatLogo ? (
-                            <div className="valid_feedbackMsg">{formik.errors.chatLogo}</div>
+                            <div className="valid_feedbackMsg" style={{ position: "absolute" }}>{formik.errors.chatLogo}</div>
                           ) : null}
                         </div>
 
@@ -328,6 +329,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                       );
                                     })}
                                   </div>
+                                  {/* {formik.touched.chatKeyword && formik.errors.chatKeyword ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatKeyword}</div>
+                                  ) : null} */}
                                 </div>
                                 <div className="m-4 mb-sm-4 commonform d-flex align-items-center justify-content-between">
                                   <p className="privateLabel">Group type*</p>

@@ -23,6 +23,7 @@ import Select from "react-select";
 import ChatMsgTimeStamp from "../../components/ChatMsgTimeStamp";
 import "./message.css";
 import NewChat from "../../components/NewChat";
+import { toast } from "react-toastify";
 
 const Message = () => {
 
@@ -78,6 +79,7 @@ const Message = () => {
     };
 
     const getMessage = async (id, oUser, users) => {
+
         setMessage({
             content: "",
             file: "",

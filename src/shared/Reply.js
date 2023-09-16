@@ -40,29 +40,35 @@ export default function Reply({ postId, comment, getCommentList }) {
   const [value, setValue] = useState("");
   const [searchText, setSearchText] = useState("");
   const [inputPost, setInputPost] = useState("");
+  const [activeBtn, setActiveBtn] = useState(false);
 
   const sendReply = async (commentId) => {
-    setShowEmoji(false);
-    try {
-      const dirtyHtmlPostMessage = helperFunction.mentionedUserLinkGenerator(inputPost);
-      const mentionedUsers = helperFunction.idExtractor(inputPost);
-      let obj = {
-        commentId: commentId,
-        postId: postId,
-        createdBy: user._id,
-        reply: dirtyHtmlPostMessage,
-        mentionedUsers: mentionedUsers
-      };
-      const resp = await commentServ.sendCommentReply(obj);
-      if (resp.data) {
-        getCommentList();
-        setReply("");
-        setShowReplyList([...showReplyList, commentId]);
-      } else {
+    if (inputPost !== "") {
+      setShowEmoji(false);
+      setActiveBtn(true)
+      try {
+        const dirtyHtmlPostMessage = helperFunction.mentionedUserLinkGenerator(inputPost);
+        const mentionedUsers = helperFunction.idExtractor(inputPost);
+        let obj = {
+          commentId: commentId,
+          postId: postId,
+          createdBy: user._id,
+          reply: dirtyHtmlPostMessage,
+          mentionedUsers: mentionedUsers
+        };
+        const resp = await commentServ.sendCommentReply(obj);
+        if (resp.data) {
+          getCommentList();
+          setReply("");
+          setShowReplyList([...showReplyList, commentId]);
+        } else {
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+      setActiveBtn(false)
     }
+
   };
 
   const handleResize = () => {
@@ -170,9 +176,13 @@ export default function Reply({ postId, comment, getCommentList }) {
         <div className="emojiBtn" id="emojiPickerComment-btn-id-Custom" onClick={() => setShowEmoji(!showEmoji)}>
           <img src="/images/icons/emoji.png" alt="" className="img-fluid img-emoji-dummy" />
         </div>
-        <button type="button" className="btn sendPostbtn" onClick={() => sendReply(comment._id)}>
-          <img src="/images/icons/send.svg" alt="like" className="img-fluid" />
-        </button>
+        {activeBtn ? (
+          <i className="fa-solid fa-spinner"></i>
+        ) : (
+          <button onClick={() => sendReply(comment._id)} className="btn sendPostbtn">
+            <img src="/images/icons/send.svg" alt="like" className="img-fluid" />
+          </button>
+        )}
       </div>
     </div>
   );

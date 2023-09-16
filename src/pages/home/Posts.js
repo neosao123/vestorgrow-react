@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "linkify-plugin-mention";
 import GlobalContext from "../../context/GlobalContext";
 
@@ -22,8 +22,9 @@ import CreatePost from "../../popups/post/CreatePost";
 import PostShareSuccess from "../../popups/post/PostSharedSuccess";
 import PostShareFail from "../../popups/post/PostSharedFail";
 import SharePostSelect from "../../popups/post/SharePostSelect";
-import UserService from "../../services/userBlockedService";
+import UserService from "../../services/UserService";
 import PostCreateSuccess from "../../popups/post/PostCreatedSuccess";
+import DeletePostSuccess from "../../popups/post/DeletePostSuccess";
 
 const Posts = () => {
 
@@ -45,7 +46,7 @@ const Posts = () => {
   const [showMoreList, setShowMoreList] = useState([]);
   const [showShareTo, setShowShareTo] = useState(false);
   const [imageIdx, setImageIdx] = useState(0);
-  const [mediaFiles, setMediaFiles] = useState([]);
+  const [mediaFilesCarousel, setMediaFilesCarousel] = useState([]);
   const [showUnfollowPopup, setShowUnfollowPopup] = useState(false);
   const [showUserLikedPost, setShowUserLikedPost] = useState(false);
   const [showUserSharedPost, setShowUserSharedPost] = useState(false);
@@ -58,6 +59,7 @@ const Posts = () => {
   const [postCount, setPostCount] = useState(0);
   const [change, setChange] = useState(false)
   const [sharePostId, setSharePostId] = useState(null)
+  const [deleteSuccessPopup, setDeleteSuccessPopup] = useState(false)
 
   const [search, setSearch] = useState({
     filter: {
@@ -94,6 +96,11 @@ const Posts = () => {
     setPostFailPopup(!postFailPopup);
     setShowLoadingBar(false);
   };
+
+  const handleDeleteSuccessPopup = () => {
+    setDeleteSuccessPopup(!deleteSuccessPopup);
+    setShowLoadingBar(false);
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -232,11 +239,23 @@ const Posts = () => {
             </div>
           </div>
         </div>
-        {postList.length > 0 &&
-          postList.map((item, idx) => {
-            return <SinglePost index={idx} item={item} idx={idx} key={idx} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} />
-          })}
-      </div>
+        <div
+
+          // style={{
+          //   border:"1px solid blue",
+          //   position:"fixed",
+          //   width:"33em",
+          //   overflow:"auto",
+          //   height:"100%"
+          // }}
+
+        >
+          {postList.length > 0 &&
+            postList.map((item, idx) => {
+              return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} />
+            })}
+        </div>
+      </div >
       {showReportPopup && (
         <Report
           onClose={() => {
@@ -245,64 +264,80 @@ const Posts = () => {
           }}
           object={reportData}
         />
-      )}
-      {createPostPopup && (
-        <CreatePost
-          onClose={handleCreatePostPopup}
-          onSuccess={() => {
-            handleCreatePostPopup();
-            handlePostSuccessPopup();
-            // setSearch({ ...search, start: 0 });
-            // setChange(prev=>!prev)
-            // getPostList()
-          }}
-          getposts={getPostList}
-          onFail={() => {
-            handleCreatePostPopup();
-            handlePostFailPopup();
-          }}
-        />
-      )}
+      )
+      }
+      {
+        createPostPopup && (
+          <CreatePost
+            onClose={handleCreatePostPopup}
+            onSuccess={() => {
+              handleCreatePostPopup();
+              handlePostSuccessPopup();
+              // setSearch({ ...search, start: 0 });
+              // setChange(prev=>!prev)
+              // getPostList()
+            }}
+            getposts={getPostList}
+            onFail={() => {
+              handleCreatePostPopup();
+              handlePostFailPopup();
+            }}
+          />
+        )
+      }
+      {deleteSuccessPopup && <DeletePostSuccess onClose={handleDeleteSuccessPopup} />}
       {postSuccessPopup && <PostCreateSuccess onClose={handlePostSuccessPopup} />}
-      {showOtherPostSharedPopup && (
-        <OtherPostSharedSuccess onClose={() => setShowOtherPostSharedPopup(!showOtherPostSharedPopup)} />
-      )}
-      {showOtherPostFailedPopup && (
-        <OtherPostShareFail onClose={() => setShowOtherPostFailedPopup(!showOtherPostFailedPopup)} />
-      )}
+      {
+        showOtherPostSharedPopup && (
+          <OtherPostSharedSuccess onClose={() => setShowOtherPostSharedPopup(!showOtherPostSharedPopup)} />
+        )
+      }
+      {
+        showOtherPostFailedPopup && (
+          <OtherPostShareFail onClose={() => setShowOtherPostFailedPopup(!showOtherPostFailedPopup)} />
+        )
+      }
       {postFailPopup && <PostShareFail onClose={handlePostFailPopup} />}
       {showSharePost && <SharePostSelect onClose={() => setShowSharePost(!showSharePost)} postId={sharePostId} />}
-      {mediaFiles && mediaFiles.length > 0 && (
-        <ImageCarousel onClose={() => setMediaFiles(null)} mediaFiles={mediaFiles} imageIdx={imageIdx} />
-      )}
-      {showUnfollowPopup && (
-        <Unfollow
-          onClose={() => {
-            setUnfollowUserData(null);
-            setShowUnfollowPopup(false);
-            getPostList();
-            getUserData()
-          }}
-          // getUserData={getUserData}
-          userData={unfollowUserData}
-        />
-      )}
-      {showUserLikedPost && (
-        <UserLikedPost
-          onClose={() => {
-            setShowUserLikedPost(false);
-          }}
-          postId={showUserLikedPost}
-        />
-      )}
-      {showUserSharedPost && (
-        <UserSharedPost
-          onClose={() => {
-            setShowUserSharedPost(false);
-          }}
-          postId={showUserSharedPost}
-        />
-      )}
+      {
+        mediaFilesCarousel && mediaFilesCarousel.length > 0 && (
+          <ImageCarousel onClose={() => setMediaFilesCarousel(null)} mediaFiles={mediaFilesCarousel} imageIdx={imageIdx} />
+        )
+      }
+      {
+        showUnfollowPopup && (
+          <Unfollow
+            onClose={() => {
+              setUnfollowUserData(null);
+              setShowUnfollowPopup(false);
+              getPostList();
+              getUserData()
+            }}
+            // getUserData={getUserData}
+            userData={unfollowUserData}
+          />
+        )
+      }
+      {
+        showUserLikedPost && (
+          <UserLikedPost
+            onClose={() => {
+              setShowUserLikedPost(false);
+            }}
+            postId={showUserLikedPost}
+          />
+        )
+      }
+      {
+        showUserSharedPost && (
+          <UserSharedPost
+            onClose={() => {
+              setShowUserSharedPost(false);
+            }}
+            postId={showUserSharedPost}
+          />
+        )
+      }
     </>
   )
 }

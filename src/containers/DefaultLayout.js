@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { SideButtons } from "../components/SideButtons/SideButtons.js";
 import GlobalContext from "../context/GlobalContext";
 import ChatsType from "../pages/home/ChatsType";
+import Loader from "../components/Loader";
 
 
 function DefaultLayout({ children }) {
@@ -18,18 +19,23 @@ function DefaultLayout({ children }) {
   const [headerRequired, setHeaderRequired] = useState(true);
   const match = useMatch("/signin/active/:id");
   const match2 = useMatch("/signin/inactive");
+  const match3 = useMatch("/signup/active/:id")
   const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
   const [blockContent, setBlockContent] = useState(true);
+  const [loading, setLoading] = globalCtx.Loading
   const navigate = useNavigate()
-
+  const [user, setUser] = globalCtx.user;
 
   useEffect(() => {
     const isMatchingPath = !!match;
     const isMatchingPath2 = !!match2;
+    const isMatchingPath3 = !!match3;
 
     if (
       location.pathname === "/usersuggestion" ||
-      location.pathname === "/groupsuggestion"
+      location.pathname === "/groupsuggestion" ||
+      location.pathname === "/signup/active/:id"
+
     ) {
       setLayoutRequired(false);
       setBlockContent(true);
@@ -37,6 +43,10 @@ function DefaultLayout({ children }) {
       setLayoutRequired(false);
       setBlockContent(true);
     } else if (isMatchingPath2) {
+      setLayoutRequired(false);
+      setBlockContent(true);
+    }
+    else if (isMatchingPath3) {
       setLayoutRequired(false);
       setBlockContent(true);
     } else {
@@ -54,9 +64,24 @@ function DefaultLayout({ children }) {
     // objDiv.scrollTop = objDiv.scrollHeight;
     window.scrollTo(0, 0);
   }, [location.pathname]);
+  useEffect(() => {
+    if (user.ProfileUpdates === false) {
+      navigate(`/signup/active/${user.active_token
+        }`)
+    }
+    else if (user.UserSuggestions === false) {
+      navigate("/usersuggestion")
+    }
+    else if (user.groupSuggestion === false) {
+      navigate("/groupsuggestion")
+    }
+    else if (user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+      navigate("/")
+    }
+  }, [])
 
   if (blockContent) {
-    return (
+    return loading ? <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}><Loader /></div> : (
       <main className="clearfix ">
         <div className="themeContant" style={{ padding: "0" }}>
           {children}
@@ -73,11 +98,11 @@ function DefaultLayout({ children }) {
           pauseOnHover={false}
           theme="light"
         />
-        <ChatsType />
+        {(location.pathname === "/" || location.pathname === "/discover") && <ChatsType />}
       </main>
     );
   } else {
-    return (
+    return loading ? <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}><Loader /></div> : (
       <main className={"clearfix " + (headerRequired && " socialMediaTheme")}>
         {layoutRequired && <Sidebar />}
         <div
@@ -103,7 +128,7 @@ function DefaultLayout({ children }) {
         />
 
 
-        <ChatsType />
+        {(location.pathname === "/" || location.pathname === "/dashboard" || location.pathname === "/discover") && <ChatsType />}
 
       </main>
     );

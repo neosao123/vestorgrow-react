@@ -1,11 +1,30 @@
 import { useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../services/UserService";
 
 const serv = new UserService();
 function SignupInactiveLink() {
   const location = useLocation();
   const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate()
+
+
+  const handleLogOut = async () => {
+    try {
+      await serv.logout({})
+        .then((res) => {
+          if (res.data) {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.reload(true)
+          }
+        })
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
   const handleResendLink = async () => {
     try {
       const resp = await serv.signupActivationLink(location.state.email);
@@ -45,6 +64,9 @@ function SignupInactiveLink() {
             <a href="javasript:void(0);" className="btn btn-1" onClick={handleResendLink}>
               Resend Activation Link{" "}
             </a>
+          </div>
+          <div className="mt-3 text-center" style={{ border: "1px solid #00808b", width: "150px", borderRadius: "30px", margin: "auto", color: "#00808b", fontWeight: 600, fontSize: "18px", padding: "5px" }} onClick={handleLogOut}>
+            Log Out
           </div>
         </div>
       </div>

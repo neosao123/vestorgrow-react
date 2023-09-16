@@ -90,46 +90,48 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
     };
 
     const onSubmit = async (values) => {
-        try {
-            setIsSubmit(true);
-            const dirtyHtmlPostMessage = helperFunctions.mentionedUserLinkGenerator(inputPost);
-            const mentionedUsers = helperFunctions.idExtractor(inputPost);
-            //console.log("Dirty HTML =>", dirtyHtmlPostMessage, "Ids=>", mentionedUsers);
+        if (inputPost !== "" || values.mediaFiles) {
+            try {
+                setIsSubmit(true);
+                const dirtyHtmlPostMessage = helperFunctions.mentionedUserLinkGenerator(inputPost);
+                const mentionedUsers = helperFunctions.idExtractor(inputPost);
+                //console.log("Dirty HTML =>", dirtyHtmlPostMessage, "Ids=>", mentionedUsers);
 
-            const formData = new FormData();
-            formData.append("message", dirtyHtmlPostMessage);
-            formData.append("shareType", values.shareType);
-            formData.append("createdBy", user._id);
-            formData.append("mentionedUsers", mentionedUsers);
-            formData.append("postKeywords", values.postKeywords);
-            if (Array.isArray(values.mediaFiles)) {
-                values.mediaFiles.forEach((element) => {
-                    formData.append("mediaFiles", element);
+                const formData = new FormData();
+                formData.append("message", dirtyHtmlPostMessage);
+                formData.append("shareType", values.shareType);
+                formData.append("createdBy", user._id);
+                formData.append("mentionedUsers", mentionedUsers);
+                formData.append("postKeywords", values.postKeywords);
+                if (Array.isArray(values.mediaFiles)) {
+                    values.mediaFiles.forEach((element) => {
+                        formData.append("mediaFiles", element);
+                    });
+                }
+
+                await postServ.sendPost(formData).then((resp) => {
+                    if (resp.data) {
+                        onSuccess();
+                        setIsSubmit(false);
+                        getposts()
+                    } else {
+                        onFail();
+                        setIsSubmit(false);
+                    }
+                }).catch(error => {
+                    if (axios.isCancel(error)) {
+                        console.log('Request canceled:', error.message);
+                        setIsSubmit(false);
+                    } else {
+                        console.log('Error:', error.message);
+                        setIsSubmit(false);
+                    }
                 });
+            } catch (error) {
+                onFail();
+                console.log(error);
+                setIsSubmit(false);
             }
-
-            await postServ.sendPost(formData).then((resp) => {
-                if (resp.data) {
-                    onSuccess();
-                    setIsSubmit(false);
-                    getposts()
-                } else {
-                    onFail();
-                    setIsSubmit(false);
-                }
-            }).catch(error => {
-                if (axios.isCancel(error)) {
-                    console.log('Request canceled:', error.message);
-                    setIsSubmit(false);
-                } else {
-                    console.log('Error:', error.message);
-                    setIsSubmit(false);
-                }
-            });
-        } catch (error) {
-            onFail();
-            console.log(error);
-            setIsSubmit(false);
         }
 
     };
@@ -303,14 +305,16 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
                                                                 type="button"
                                                                 id="button-addon2"
                                                                 onClick={(e) => {
-                                                                    formik.setFieldValue("postKeywords", [...formik.values.postKeywords, tempKeyword]);
-                                                                    setTempKeyword("");
+                                                                    if (tempKeyword !== "") {
+                                                                        formik.setFieldValue("postKeywords", [...formik.values.postKeywords, tempKeyword]);
+                                                                        setTempKeyword("");
+                                                                    }
                                                                 }}
                                                             >
                                                                 <i className="fa fa-plus-circle"></i>
                                                             </button>
                                                         </div>
-                                                        <div className="post-keyword-container d-flex">
+                                                        <div className="post-keyword-container d-flex flex-wrap gap-2">
                                                             {
                                                                 formik.values.postKeywords.map((item, idx) => {
                                                                     return (

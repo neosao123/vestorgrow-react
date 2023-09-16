@@ -57,6 +57,13 @@ export default class PostService {
             throw err;
         }
     }
+    async getPostDetails(obj) {
+        try {
+            return await util.sendApiRequest("/post/singlepost", "POST", true, obj);
+        } catch (err) {
+            throw err;
+        }
+    }
     async deletePost(id) {
         try {
             return await util.sendApiRequest("/post/" + id, "DELETE", true);
@@ -133,7 +140,7 @@ export default class PostService {
         }
     }
     async getPostUniqueReactions(data) {
-        try { 
+        try {
             return await util.sendApiRequest("/postlike/posts/reactions", "Post", true, data);
         } catch (err) {
             throw err;

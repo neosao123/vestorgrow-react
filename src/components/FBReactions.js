@@ -5,7 +5,7 @@ import PostService from "../services/postService";
 
 const FBReactions = ({ ...props }) => {
 
-    const { postId, postReaction, getPost } = props;
+    const { postId, postReaction, getPost, updatePostAfterReaction } = props;
 
     const likeImage = "/images/icons/thumbs-up.svg";
     const loveImage = "/images/icons/heart.svg";
@@ -63,6 +63,7 @@ const FBReactions = ({ ...props }) => {
                         // .then(() => {
                         // updatePostAfterReaction();
                         // })
+                        updatePostAfterReaction()
 
                     }, 800);
                     setBtnCLicked(false);

@@ -255,7 +255,7 @@ function Suggested() {
                 {
                   filteredSuggested?.map((user) => {
                     return (
-                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" style={{minWidth:"300px"}}>
                         <div className="profileBox">
                           <Link to={"/userprofile/" + user?._id}>
                             <div className="profile-image">

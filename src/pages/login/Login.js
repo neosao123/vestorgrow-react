@@ -4,6 +4,7 @@ import UserService from "../../services/UserService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GlobalContext from "../../context/GlobalContext";
+import Loader from "../../components/Loader";
 
 const serv = new UserService();
 
@@ -25,37 +26,60 @@ function Login() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values) => {
+    setLoading(true)
     let obj = { ...values };
     try {
       const resp = await serv.login(obj);
       if (resp?.token) {
         const loginUser = resp.data;
         setIsAuthentiCated(true);
+        localStorage.setItem("user", JSON.stringify(resp.data))
         setUser(resp.data);
         if (loginUser.accountVerified === true) {
           var hasGroupInvite = localStorage.getItem("group_invite");
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
             localStorage.removeItem('group_invite');
+            setLoading(false)
             navigate(hasGroupInvite);
           } else {
-            navigate("/");
+            setLoading(false)
+            if (resp.data.ProfileUpdates === false) {
+              navigate(`/signup/active/${resp.data._id}`)
+            }
+            else if (resp.data.UserSuggestions === false) {
+              navigate("/usersuggestion")
+            }
+            else if (resp.data.groupSuggestion === false) {
+              navigate("/groupsuggestion")
+            }
+            else if (resp.data.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+              navigate("/")
+            }
+
           }
         } else {
           const resp = await serv.signinActivationLink(loginUser.email);
           if (resp?.result) {
+            setLoading(false)
             navigate("/signin/inactive", { state: { email: loginUser.email } });
+
           } else {
+            setLoading(false)
             setErrorMsg(resp.error);
           }
         }
       } else if (resp.message) {
+        setLoading(false)
         setShowOtp(true);
       } else {
+        setLoading(false)
         setErrorMsg(resp);
       }
     } catch (err) {
+      setLoading(false)
       err = JSON.parse(err.message);
       setErrorMsg(err.err);
     }
@@ -77,7 +101,19 @@ function Login() {
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
             navigate(hasGroupInvite);
           } else {
-            navigate("/");
+            if (user.ProfileUpdates === false) {
+              navigate(`/signup/active/${user.active_token
+                }`)
+            }
+            else if (user.UserSuggestions === false) {
+              navigate("/usersuggestion")
+            }
+            else if (user.groupSuggestion === false) {
+              navigate("/groupsuggestion")
+            }
+            else if (user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+              navigate("/")
+            }
           }
         } else {
           const resp = await serv.signinActivationLink(loginUser.email);
@@ -110,7 +146,7 @@ function Login() {
     enableReinitialize: true,
   });
 
-  return (
+  return loading ? <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}><Loader /></div> : (
     <main className="w-100 clearfix socialMediaTheme">
       {/* login page Start*/}
       <div className="loginpage d-flex">

@@ -57,8 +57,8 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   const [dropdownId, setDropdownId] = useState(null)
   const dropdownRef = useRef(null)
   const [showChat, setShowChat] = globalCtx.ChatBoxVisibily;
-  const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
   const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
+  const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
   const [isloading, setisLoading] = globalCtx.isLoading;
   const [unreadCount, setUnreadCount] = globalCtx.UnReadCount;
   const [latestMsgList, setLatestMsgList] = globalCtx.LatestmsgList;
@@ -496,7 +496,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                     chatId: item._id,
                                     isExpanded: false,
                                     isminimize: false,
-                                    index: idx
+                                    // index: idx
                                   }
                                   let isPresent;
                                   if (newArr) {
@@ -761,6 +761,8 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               setShowSentMsg();
             }}
             deskView={showComposeMsgDkst}
+            getMessage={getMessage}
+            setShowMsg={setShowMsg}
           />
         )}
         {/* {showSentMsg && <SentMessage onClose={() => setShowSentMsg(!showSentMsg)} />} */}

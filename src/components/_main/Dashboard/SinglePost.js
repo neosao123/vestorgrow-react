@@ -25,7 +25,7 @@ const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jf
 
 
 const SinglePost = ({ ...props }) => {
-    const { getPostList, item, index, idx, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost, handleUnFollowRequest } = props;
+    const { getPostList, item, index, idx, deleteSuccessPopup, setDeleteSuccessPopup, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost, handleUnFollowRequest, setMediaFilesCarousel, setImageIdx } = props;
 
     const postServ = new PostService();
     const followerServ = new UserFollowerService();
@@ -44,8 +44,6 @@ const SinglePost = ({ ...props }) => {
     const [postList, setPostList] = useState([]);
     const [showMoreList, setShowMoreList] = useState([]);
     const [showShareTo, setShowShareTo] = useState(false);
-    const [imageIdx, setImageIdx] = useState(0);
-    const [mediaFiles, setMediaFiles] = useState([]);
     const [showUnfollowPopup, setShowUnfollowPopup] = useState(false);
     const [showUserLikedPost, setShowUserLikedPost] = useState(false);
     const [showUserSharedPost, setShowUserSharedPost] = useState(false);
@@ -159,7 +157,8 @@ const SinglePost = ({ ...props }) => {
             if (resp.message) {
                 setTimeout(() => {
                     setChange(!change);
-                    getPostList();
+                    getPostList()
+                    setDeleteSuccessPopup(!deleteSuccessPopup)
                 }, 1000);
             }
         } catch (err) {
@@ -414,7 +413,7 @@ const SinglePost = ({ ...props }) => {
                     <div
                         className="postImg postImgSingle"
                         onClick={() => {
-                            setMediaFiles([...item.mediaFiles]);
+                            setMediaFilesCarousel([...item.mediaFiles]);
                             setImageIdx(0);
                         }}
                     >
@@ -444,7 +443,7 @@ const SinglePost = ({ ...props }) => {
                         <div
                             className="multiplePostLeft"
                             onClick={() => {
-                                setMediaFiles([...item.mediaFiles]);
+                                setMediaFilesCarousel([...item.mediaFiles]);
                                 setImageIdx(0);
                             }}
                         >
@@ -478,7 +477,7 @@ const SinglePost = ({ ...props }) => {
                                     <div
                                         className="multiplePostimg multiplePostimg-custom"
                                         onClick={() => {
-                                            setMediaFiles([...item.mediaFiles]);
+                                            setMediaFilesCarousel([...item.mediaFiles]);
                                             setImageIdx(1);
                                         }}
                                     >
@@ -509,7 +508,7 @@ const SinglePost = ({ ...props }) => {
                                     <div
                                         className="multiplePostimg multiplePostimg-custom"
                                         onClick={() => {
-                                            setMediaFiles([...item.mediaFiles]);
+                                            setMediaFilesCarousel([...item.mediaFiles]);
                                             setImageIdx(2);
                                         }}
                                     >
@@ -546,7 +545,7 @@ const SinglePost = ({ ...props }) => {
                                 <>
                                     <div
                                         onClick={() => {
-                                            setMediaFiles([...item.mediaFiles]);
+                                            setMediaFilesCarousel([...item.mediaFiles]);
                                             setImageIdx(1);
                                         }}
                                     >
@@ -648,7 +647,7 @@ const SinglePost = ({ ...props }) => {
                 <div className="likeShareIconCounter">
                     <ul className="nav nav-custom-like-count">
                         <li className="nav-item">
-                            {item?.likeCount > 0 ? (
+                            {likes > 0 ? (
                                 <div className={"d-flex align-items-center"} onClick={() => setShowUserLikedPost(item?._id)}>
                                     <div className="floating-reactions-container">
                                         {
@@ -660,10 +659,8 @@ const SinglePost = ({ ...props }) => {
                                         {
                                             postReactions?.includes("insight") && <span><img src="/images/icons/filled-insightfull.svg" alt="filled-insightfull" /></span>
                                         }
-                                        {
-                                            postReactions?.length > 0 && <span><img src="/images/icons/filled-insightfull.svg" alt="filled-insightfull" /></span>
-                                        }
                                     </div>
+                                    <span style={{ marginLeft: "5px" }}>{likes}</span>
                                 </div>
                             ) : (
                                 <NavLink
@@ -696,7 +693,7 @@ const SinglePost = ({ ...props }) => {
                     <ul className="nav">
                         <li className="nav-item">
                             {
-                                <FBReactions postId={item?._id} postReaction={reaction} getPost={getPost} />
+                                <FBReactions postId={item?._id} postReaction={reaction} getPost={getPost} updatePostAfterReaction={updatePostAfterReaction} />
                             }
                         </li>
                         <li className="nav-item">

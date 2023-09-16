@@ -9,9 +9,10 @@ import Select from "react-select";
 import SentMessage from "./SentMessage";
 import Max from "../../assets/images/maximize.svg"
 import Min from "../../assets/images/minimize.svg"
+import { toast } from "react-toastify";
 const serv = new ChatService();
 const userFollowerServ = new UserFollowerService();
-export default function ComposeMessage({ onClose, onFinish, deskView }) {
+export default function ComposeMessage({ onClose, onFinish, deskView, getMessage, setShowMsg }) {
   const globalCtx = useContext(GlobalContext);
   const [user, setUser] = globalCtx.user;
   const [userList, setUserList] = useState([]);
@@ -28,6 +29,8 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
   });
   const [chatId, setCaId] = useState("")
   const [activeBtn, setActiveBtn] = useState("")
+  const [getMessageData, setGetMessageData] = globalCtx.getMessageData;
+  const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
 
 
   useEffect(() => {
@@ -51,6 +54,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
     }
   };
 
+
   const handleCompUserList = (item, type) => {
     if (type === "add") {
       setCompUserList([...compUserList, item]);
@@ -59,6 +63,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
       setCompUserList([]);
     }
   };
+
 
   const sendMsg = async () => {
     try {
@@ -89,11 +94,53 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
     // setUserList([]);
   };
 
+
+
+  //this is main message send function
   const sendMessage = async () => {
+    if ((message.content === "" || message.content === undefined || message.content === null) && compUserList.length < 1) {
+      toast.info(`Plese select users and write your message message in input.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return
+    }
+    else if (message.content === "" || message.content === undefined || message.content === null) {
+      toast.info(`Please write your message in input.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return
+    }
+    else if (compUserList.length < 1) {
+      toast.info(`Please select users.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return
+    }
     try {
+      // file: message.file,
       let obj = {
         content: message.content,
-        // file: message.file,
         users: compUserList,
       };
       // const formData = new FormData();
@@ -110,6 +157,26 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
       // }
       await serv.composeMsg(obj).then((resp) => {
         if (resp.data) {
+          let oUser = compUserList[compUserList.length - 1];
+          let users = resp.data.users;
+          let newArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+          let obj = {
+            chatId: resp.data.chat,
+            isExpanded: false,
+            isminimize: false,
+            // index: idx
+          }
+          let isPresent;
+          if (newArr) {
+            isPresent = newArr.some(el => el.chatId === obj.chatId)
+          }
+          if (!isPresent) {
+            newArr.push(obj)
+            localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+            setMessageBoxState(newArr)
+          }
+          getMessage(resp.data.chat, oUser, users)
+          setShowMsg(true)
           onFinish();
         }
       });
@@ -166,6 +233,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
     }
     return false;
   };
+
 
   return (
     <>

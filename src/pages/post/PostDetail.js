@@ -449,7 +449,7 @@ export default function PostDetail() {
                               <img src="/images/icons/share.svg" alt="share" className="img-fluid" /> <span>Share</span>
                             </a>
                             <ul className="dropdown-menu dropdown-menu-customPaddingPost">
-                              <li>
+                              {/* <li>
                                 <a
                                   className="dropdown-item"
                                   href="javascript:void(0);"
@@ -462,7 +462,7 @@ export default function PostDetail() {
                                   />{" "}
                                   Share to feed
                                 </a>
-                              </li>
+                              </li> */}
                               <li>
                                 <a
                                   className="dropdown-item"

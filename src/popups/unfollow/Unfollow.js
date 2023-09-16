@@ -1,6 +1,6 @@
 import GlobalContext from "../../context/GlobalContext";
 import UserFollowerService from "../../services/userFollowerService";
-export default function Unfollow({ onClose, userData }) {
+export default function Unfollow({ onClose, userData,  }) {
   const userFollowerServ = new UserFollowerService();
   const unfollowUser = async () => {
     try {
@@ -8,9 +8,8 @@ export default function Unfollow({ onClose, userData }) {
         .unfollowUser(userData.id)
         .then((resp) => {
           if (resp.message) {
-            // getUserData()
             onClose();
-
+            
           }
         })
         .catch((err) => {

@@ -83,20 +83,21 @@ function Header() {
       console.log(err);
     }
   };
-  const handleLogout = async () => {
+  const handleLogOut = async () => {
     try {
-      let resp = await serv.logout({});
-      if (resp) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        navigate("/login");
-        window.location.reload(true);
-      }
+      await serv.logout({})
+        .then((res) => {
+          if (res.data) {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.reload(true)
+          }
+        })
     } catch (error) {
       console.log(error);
     }
-    // localStorage.clear();
-  };
+
+  }
   const handleShowNotification = () => {
     setShowNotification(!showNotification);
   };
@@ -256,7 +257,7 @@ function Header() {
   return (
     <>
       {" "}
-      <header className="w-100 clearfix topHeader sticky-top-header-custom" id="topHeader" style={{paddingLeft:"10px",paddingRight:"10px",zIndex:999}}>
+      <header className="w-100 clearfix topHeader sticky-top-header-custom" id="topHeader" style={{ paddingLeft: "10px", paddingRight: "10px", zIndex: 999 }}>
         <div className="topHeaderInner d-flex align-items-center topHeaderInner-custom" >
           <div className="mobileLogo d-block  mobileLogoCustom" >
             <Link to="/">
@@ -306,7 +307,7 @@ function Header() {
                         <img className="arrow" src="/images/icons/left-arrow.svg" alt="" />
                         <h4 className="w-100 mb-0">Follow requests</h4>
                       </div>
-                      <div className="dropdownGroup dropdownGroupCustom overflowScrollStop" style={{ backgroundColor: "green" }} >
+                      <div className="dropdownGroup dropdownGroupCustom overflowScrollStop">
                         {followReq.map((item, idx) => {
                           return (
                             <div key={idx}>
@@ -622,7 +623,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" onClick={handleLogout}>
+                    <Link className="dropdown-item" onClick={handleLogOut}>
                       Logout
                     </Link>
                   </li>

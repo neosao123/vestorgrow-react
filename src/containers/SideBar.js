@@ -18,17 +18,17 @@ function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      let resp = await serv.logout({});
-      if (resp) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        navigate("/login");
-        window.location.reload(true);
-      }
+      await serv.logout({})
+        .then((res) => {
+          if (res.data) {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.reload(true)
+          }
+        })
     } catch (error) {
       console.log(error);
     }
-    // localStorage.clear();
   };
 
   useEffect(() => {
@@ -116,7 +116,7 @@ function Sidebar() {
             </Link>
           </div>
           <div className="themeMenu themeMenuCustom">
-            <ul className="nav flex-column"> 
+            <ul className="nav flex-column">
               <li className={"nav-item " + (selectedNavIcon === "/" ? " active" : "")} onClick={handleClickHome}>
                 <Link className={"nav-link" + (selectedNav === "/" ? " active" : "")} to="/">
                   <div className="sideMenu">
@@ -303,7 +303,7 @@ function Sidebar() {
             </ul>
           </div>
           <div className="themeLogOut themeLogOutCustom ">
-            <a className="nav-link themeLogOutLink" href="#" onClick={handleLogout}>
+            <a className="nav-link themeLogOutLink" onClick={handleLogout}>
               <div className="sideMenu">
                 <div className="menuIcon">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">

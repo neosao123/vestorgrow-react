@@ -347,4 +347,14 @@ export default class ChatService {
       })
   }
 
+  getPersonalChatByMembers(payload) {
+    return util.sendApiRequest("/chat/find/members/chat", "POST", true, payload)
+      .then((res) => {
+        return res
+      })
+      .then((err) => {
+        throw err;
+      })
+  }
+
 }

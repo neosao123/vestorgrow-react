@@ -52,49 +52,6 @@ function UserSuggestion() {
     }
   }
 
-  const handleFollowReq = async (id) => {
-    try {
-      if (reqPrivateId.find((i) => i === id) === undefined && reqPublicId.find((i) => i === id) === undefined) {
-        let followingIdUser = await serv.getUser(id);
-        let resp = await followServ.sendFollowReq({
-          followingId: id,
-        });
-        if (followingIdUser.data.setting.private) {
-          setReqPrivateId((oldId) => [...oldId, resp.data.followingId]);
-        } else if (!followingIdUser.data.setting.private) {
-          setReqPublicId((oldId) => [...oldId, resp.data.followingId]);
-        }
-        setCurUser(resp.data.userId);
-      } else if (reqPrivateId.find((i) => i === id) !== undefined) {
-        let res = await followServ.deleteFollowReq({
-          userId: curUser,
-          followingId: id,
-        });
-        setReqPrivateId((oldId) => [...oldId.filter((i) => i !== res.result.followingId)]);
-      } else if (reqPublicId.find((i) => i === id) !== undefined) {
-        let res = await followServ.unfollowUser(id);
-        // let resp = await followServ.deleteFollowReq({
-        //   userId: curUser,
-        //   followingId: id,
-        // });
-        setReqPublicId((oldId) => [...oldId.filter((i) => i !== id)]);
-      }
-      // if (resp.data) {
-      //   setUserList(userList.filter((i) => i._id !== id));
-      // }
-      await serv.getUser(user._id)
-        .then((res) => {
-          localStorage.setItem("user", JSON.stringify(res.data))
-          setUser({ ...res.data })
-        })
-
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-
-
   // const handleFollowReq = async (id) => {
   //   try {
   //     if (reqPrivateId.find((i) => i === id) === undefined && reqPublicId.find((i) => i === id) === undefined) {
@@ -107,7 +64,6 @@ function UserSuggestion() {
   //       } else if (!followingIdUser.data.setting.private) {
   //         setReqPublicId((oldId) => [...oldId, resp.data.followingId]);
   //       }
-
   //       setCurUser(resp.data.userId);
   //     } else if (reqPrivateId.find((i) => i === id) !== undefined) {
   //       let res = await followServ.deleteFollowReq({
@@ -126,10 +82,51 @@ function UserSuggestion() {
   //     // if (resp.data) {
   //     //   setUserList(userList.filter((i) => i._id !== id));
   //     // }
+  //     // await serv.getUser(user._id)
+  //     //   .then((res) => {
+  //     //     localStorage.setItem("user", JSON.stringify(res.data))
+  //     //     setUser({ ...res.data })
+  //     //   })
+
   //   } catch (err) {
   //     console.log(err);
   //   }
   // };
+  const handleFollowReq = async (id) => {
+    try {
+      if (reqPrivateId.find((i) => i === id) === undefined && reqPublicId.find((i) => i === id) === undefined) {
+        let followingIdUser = await serv.getUser(id);
+        let resp = await followServ.sendFollowReq({
+          followingId: id,
+        });
+        if (followingIdUser.data.setting.private) {
+          setReqPrivateId((oldId) => [...oldId, resp.data.followingId]);
+        } else if (!followingIdUser.data.setting.private) {
+          setReqPublicId((oldId) => [...oldId, resp.data.followingId]);
+        }
+
+        setCurUser(resp.data.userId);
+      } else if (reqPrivateId.find((i) => i === id) !== undefined) {
+        let res = await followServ.deleteFollowReq({
+          userId: curUser,
+          followingId: id,
+        });
+        setReqPrivateId((oldId) => [...oldId.filter((i) => i !== res.result.followingId)]);
+      } else if (reqPublicId.find((i) => i === id) !== undefined) {
+        let res = await followServ.unfollowUser(id);
+        // let resp = await followServ.deleteFollowReq({
+        //   userId: curUser,
+        //   followingId: id,
+        // });
+        setReqPublicId((oldId) => [...oldId.filter((i) => i !== id)]);
+      }
+      // if (resp.data) {
+      //   setUserList(userList.filter((i) => i._id !== id));
+      // }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 
 
@@ -206,8 +203,7 @@ function UserSuggestion() {
             <div className="allViews followBtndiv">
             </div>
             <div className="skipBTn">
-              <NavLink className="editComm_btn" to={`/signup/active/${user.active_token
-}`}>
+              <NavLink className="editComm_btn" to={"/signup/inactive"}>
                 Back
               </NavLink>
             </div>
