@@ -87,11 +87,9 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     }
   }, [searchText])
 
-
   const handleGetUnReadCount = useCallback((data) => {
     getUnreadCount()
   }, []);
-
 
   const getUnreadCount = async () => {
     try {
@@ -125,7 +123,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   useEffect(() => {
     getUnreadCount()
   }, [chatList])
-  // console.log("count:", personalUnreadCount, groupUnreadCount)
 
   useEffect(() => {
     socket = io(process.env.REACT_APP_API_BASEURL, {
@@ -204,7 +201,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     }
   };
 
-
   const getChatList = async () => {
 
     try {
@@ -231,7 +227,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
         }
       });
     } catch (err) {
-      //console.log(err);
+      console.log(err);
       setisLoading(false)
     }
     setisLoading(false)
@@ -294,7 +290,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     };
   }, []);
 
-
   const handleDeleteChat = async (id) => {
     await chatServ.deleteChat(id)
       .then((res) => {
@@ -343,7 +338,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     }
   };
 
-
   const handleMarkAsRead = (chat) => {
     let obj = {
       chat,
@@ -352,8 +346,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     socket.emit("markAsRead", obj)
     getChatList()
   }
-
-
 
   const handleJoinGroup = async (groupId) => {
     try {
@@ -395,32 +387,42 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     }
   };
 
-
-
   return (
     <>
       <div className="feedChatUser" style={{ width: "18em", height: "100%", width: '100%', paddingTop: "10px" }} >
-        <div className="chatBoxGroupBottom"  >
-          <div style={{ textAlign: "center", display: "flex", alignItems: "Center", justifyContent: "center" }} onClick={() => setAtTop(prev => !prev)}>
-            {atTop && <h6 style={{ color: "#08808b" }} >Collapse <span><PiCaretDownBold color="#08808b" fontSize={"20px"} /></span></h6>}
-            {
-              !atTop && <h6 style={{ color: "#08808b" }} >Collapse <span><PiCaretUpBold color="#08808b" fontSize={"20px"} /></span></h6>
-            }
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ width: "50%", padding: "5px", borderBottom: `${groupChat ? "4px solid #00808b" : "none"}`, display: "flex", justifyContent: "center", alignItems: "center" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }} onClick={handleGroupChat} >Group Chat<span style={{ position: "absolute", backgroundColor: "red", color: "white", borderRadius: "50%", fontSize: "8px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", width: "20px", left: -20, top: -10 }} >{groupUnreadCount}</span></span></div>
-            <div style={{ width: "50%", padding: "10px", borderBottom: `${!groupChat ? "4px solid #00808b" : "none"}` }} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span style={{ fontWeight: "600", marginLeft: "5px", position: "relative" }} >Messages<span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "20px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", borderRadius: "50%", left: -20, top: -10 }} >{personalUnreadCount}</span></span></div>
-          </div>
+        <div className="chatBoxGroupBottom" >
+          {atTop && <div style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #d1d1d1" }}>
+            <div style={{ width: "45%", padding: "5px", borderBottom: `${groupChat ? "4px solid #00808b" : "4px solid white"}`, display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }} onClick={handleGroupChat} >Group Chat<span style={{ position: "absolute", backgroundColor: "red", color: "white", borderRadius: "50%", fontSize: "8px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", width: "20px", left: -20, top: -10 }} >{groupUnreadCount}</span></span></div>
+            <div style={{ width: "45%", padding: "10px", borderBottom: `${!groupChat ? "4px solid #00808b" : "4px solid white"}`, cursor: "pointer" }} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span style={{ fontWeight: "600", marginLeft: "5px", position: "relative" }} >Messages<span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "20px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", borderRadius: "50%", left: -20, top: -10 }} >{personalUnreadCount}</span></span></div>
+            <div style={{ textAlign: "center", display: "flex", alignItems: "Center", justifyContent: "center", paddingRight: "10px" }} onClick={() => setAtTop(prev => !prev)}>
+              {atTop && <h6 style={{ color: "#08808b" }} > <span><PiCaretDownBold color="#08808b" fontSize={"20px"} /></span></h6>}
+              {
+                !atTop && <h6 style={{ color: "#08808b" }} > <span><PiCaretUpBold color="#08808b" fontSize={"20px"} /></span></h6>
+              }
+            </div>
+          </div>}
+          {!atTop && <div style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #d1d1d1" }}>
+            <div style={{ display: "flex", width: "80%" }}>
+              <div style={{ width: "30%", padding: "10px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }} onClick={handleGroupChat} ><span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "20px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", borderRadius: "50%", left: -20, top: -20 }} >{groupUnreadCount}</span></span></div>
+              <div style={{ width: "30%", padding: "10px", cursor: "pointer" }} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span style={{ fontWeight: "600", marginLeft: "5px", position: "relative" }} ><span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "20px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", borderRadius: "50%", left: -20, top: -10 }} >{personalUnreadCount}</span></span></div>
+            </div>
+            <div style={{ textAlign: "center", display: "flex", alignItems: "Center", justifyContent: "center", paddingRight: "5px", cursor: "pointer" }} onClick={() => setAtTop(prev => !prev)}>
+              {atTop && <h6 style={{ color: "#08808b" }} > <span><PiCaretDownBold color="#08808b" fontSize={"20px"} /></span></h6>}
+              {
+                !atTop && <h6 style={{ color: "#08808b" }} > <span><PiCaretUpBold color="#08808b" fontSize={"20px"} /></span></h6>
+              }
+            </div>
+          </div>}
           <div className="feedChatHeading d-flex d-flex-Custom " style={{ marginTop: "10px", marginBottom: "10px" }} >
-            <div className="input-container" style={{ backgroundColor: "#E7E7E7", margin: "0px 20px", marginBottom: "15px" }}>
+            <div className="input-container" style={{ backgroundColor: "#E7E7E7", margin: "0px 15px", marginBottom: "15px", border: "none", width: "100%" }}>
               <i className="fas fa-search" style={{ paddingLeft: "10px" }}></i>
               <input onChange={(e) => {
                 setTimeout(() => {
                   setSearchText(e.target.value)
                 }, 350);
-              }} className="input-field" type="text" placeholder={`${groupChat ? "Search Groups" : "Search Chats"}`} style={{ border: "none", backgroundColor: "#E7E7E7" }} />
+              }} className="input-field" type="text" placeholder={`${groupChat ? "Search Groups" : "Search Chats"}`} style={{ border: "none", backgroundColor: "#E7E7E7", width: "80%", height: "30px" }} />
             </div>
-            <div className="messageChatLeftHeadIcon" style={{ marginBottom: "10px", marginLeft: "-10px" }}>
+            <div className="messageChatLeftHeadIcon" style={{ marginBottom: "10px" }}>
               {!groupChat && <div onClick={showComposeMsgHandler} >
                 <img src={PersonalChatCreate} />
               </div>}
@@ -431,8 +433,8 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
           </div>
           {isloading ? (<div className="spinner-border text-primary" style={{ margin: "130px" }} role="status">
             <span className="visually-hidden">Loading...</span>
-          </div>) : (<div className="feedChatUserMsgGroup" style={{ width: "18em", paddingBottom: "10px", height: "85vh", }}>
-            <div className="allFeedUser allFeedUserCustom" style={{ height: "80%" }} >
+          </div>) : (<div className="feedChatUserMsgGroup" style={{ paddingBottom: "10px", height: "85vh", marginTop: "-15px" }}>
+            <div className="allFeedUser allFeedUserCustom" style={{ height: "90%", width: "100%" }} >
               {chatList?.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");
                 time = `${time[0]} ${time[1].slice(0, 1)}`;
@@ -470,9 +472,10 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                       <div
                         className="FeedUserChatProfile"
                         onClick={(e) => handleNavigate(e, "/userprofile/" + oUser?._id)}
+                        style={{ width: "44px", height: "44px" }}
                       >
-                        <div className="userProfileImg">
-                          <ProfileImage url={isGroupChat ? item?.chatLogo : oUser?.profile_img} />
+                        <div className="userProfileImg" style={{ width: "44px", height: "44px" }}>
+                          <ProfileImage url={isGroupChat ? item?.chatLogo : oUser?.profile_img} style={{ height: "44px", width: "44px", borderRadius: "50%" }} />
                           {isOnline.includes(oUser?._id) && <span className="msgOnline" />}
                           {/* <img src="/images/img/profile-image2.png" alt="profile-img" className="img-fluid" /> */}
                         </div>
@@ -682,7 +685,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                             groupChat && !presentInGroup && <div >
                               {isPrivateChat && <button style={{ color: "white", borderRadius: "20px", padding: "5px 10px", backgroundColor: "#00808b", border: "none" }} onClick={() => {
                                 handleSendRequest(item?._id)
-                              }} >{requested ? "Requsted" : "Request"}</button>}
+                              }} >{requested ? "Requested" : "Request"}</button>}
                               {!isPrivateChat && <button style={{ color: "white", borderRadius: "20px", padding: "5px 10px", backgroundColor: "#00808b", border: "none" }} onClick={() => handleJoinGroup(item?._id)} >{activeGroupList.includes(`${item?._id}`) ? "Joined" : "Join"}</button>}
                             </div>
                           }
@@ -758,7 +761,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               setShowComposeMsgDkst(false);
               setShowComposeMsg(!showComposeMsg);
               // setShowSentMsg(!showSentMsg);
-              setShowSentMsg();
+              // setShowSentMsg();
             }}
             deskView={showComposeMsgDkst}
             getMessage={getMessage}

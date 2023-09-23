@@ -112,9 +112,12 @@ export default class PostService {
             throw err;
         }
     }
-    async sharePost(data) {
+    async sharePost(postid) {
+        let obj = {
+            postId: postid
+        }
         try {
-            return await util.sendApiRequest("/post/share", "POST", true, data);
+            return await util.sendApiRequest("/post/share", "POST", true, obj);
         } catch (err) {
             throw err;
         }

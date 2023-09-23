@@ -13,8 +13,8 @@ import AccountVerificationFailed from "./AccountVerificationFailed";
 const serv = new UserService();
 
 const ValidateSchema = Yup.object({
-  first_name: Yup.string().required("First Name is a required field").min(2, "Minimum two characters required.").notOneOf(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '<', ',', '>', '.', '?', '/', '{', '}', '[', ']', '|'], 'Invalid first name.'),
-  last_name: Yup.string().required("Last Name is a required field").min(2, "Minimum two characters required.").notOneOf(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '<', ',', '>', '.', '?', '/', '{', '}', '[', ']', '|'], 'Invalid first name.'),
+  first_name: Yup.string().required("First Name is a required field").min(2, "Minimum 2 characters required.").matches(/^[A-Za-z]+$/, 'Only alphabetic characters are allowed in the name').max(20, "Maximum 20 characters are allowed"),
+  last_name: Yup.string().required("Last Name is a required field").min(2, "Minimum 2 characters required.").matches(/^[A-Za-z]+$/, 'Only alphabetic characters are allowed in the name').max(20, "Maximum 20 characters are allowed"),
   profile_img: Yup.string(),
 });
 

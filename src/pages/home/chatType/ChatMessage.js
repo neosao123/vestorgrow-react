@@ -164,15 +164,19 @@ export default function ChatMessage({
       console.log(err);
     }
   };
+
   const handleDelete = (id) => {
     setShowDeleteMsgPopup(id);
   };
+
   const handleDeleteChat = (id) => {
     setShowDeleteChatPopup(id);
   };
+
   const handleBlockUser = (id) => {
     setShowBlockUserPopup(id);
   };
+
   const sendMessage = async () => {
     setActiveBtn(true);
     setShowEmoji(false);
@@ -227,9 +231,11 @@ export default function ChatMessage({
       sendMessage();
     }
   };
+
   const handleNavigate = (url) => {
     navigate(url);
   };
+
   const handleMaximize = (currChatId) => {
 
     let existingArr = JSON.parse(localStorage.getItem("messageboxstate"));
@@ -500,8 +506,6 @@ export default function ChatMessage({
                                     </SecureLink>
                                   )}
                                 >
-                                  {/* */}
-                                  {/* EDEDED */}
                                   {item.content && <p
                                     className="whiteSpace text-break"
                                     style={{ color: `${item.sender?._id === user?._id ? "#ffffff" : "#282828"}`, fontSize: "16px" }}
@@ -676,7 +680,6 @@ export default function ChatMessage({
           transition={{ duration: 1 }}
         >
           <div style={{ zIndex: 300, width: "60px", margin: "0.5rem" }} onClick={() => {
-            // setMinimize(false)
             let existingArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
             existingArr.forEach((el) => {
               if (el.chatId === chatCompare) {
@@ -729,9 +732,6 @@ export default function ChatMessage({
           />
         )
       }
-      {/* {mediaFiles && mediaFiles.length > 0 && (
-        <ImageCarousel onClose={() => setMediaFiles(null)} mediaFiles={mediaFiles} imageIdx={imageIdx} />
-      )} */}
     </>
   );
 }

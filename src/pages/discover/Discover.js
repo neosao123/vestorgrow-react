@@ -10,6 +10,7 @@ import YoutubeThumbnail from "../../components/YoutubeThumbnail";
 import Playeryoutube from "../../components/Playeryoutube";
 import "./discover.css"
 import ProfilePreview from "../../components/ProfilePreview";
+import Loader from "../../components/Loader";
 
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 const isVideo = ["mp4"];
@@ -24,6 +25,7 @@ export default function Discover() {
     const [showPostId, setShowPostId] = useState("");
     const [postIdx, setPostIdx] = useState();
     const [showUserLikedPost, setShowUserLikedPost] = useState(false);
+    const [Loading, setLoading] = useState(false)
 
     const getTags = async () => {
         try {
@@ -35,9 +37,11 @@ export default function Discover() {
         } catch (err) {
             console.log(err);
         }
+        setLoading(false)
     };
 
     const getPostList = async (sortBy) => {
+        setLoading(true)
         const obj = { filter: {} };
         obj.filter.is_active = true;
         obj.filter.searchText = searchText;
@@ -54,6 +58,7 @@ export default function Discover() {
         } catch (err) {
             console.log(err);
         }
+
     };
 
     const handleSorting = (sortType) => {
@@ -121,12 +126,12 @@ export default function Discover() {
         getTags();
     }, [searchText]);
 
-    return (
+    return  (
         <div className="socialContantInner d-flex flex-column">
             <div className="socialContant socialContentCustom">
                 <div className="discoveryHeading discoveryHeading-mobile">
-                    Discover the latest and trending insights within <span className="vestColor">VestorGrow</span>
-                </div>
+                    Discover the latest and trending insights within < span className="vestColor" > VestorGrow</span >
+                </div >
                 <div className="mostRecent">
                     <div className="dropdown">
                         <a type="button" className="btn btn-1" data-bs-toggle="dropdown">
@@ -172,7 +177,7 @@ export default function Discover() {
                                 const fullName = item.createdBy.first_name + " " + item.createdBy.last_name;
                                 const user_name = item.createdBy.user_name ?? fullName;
                                 const postReactions = item.postReactions ?? [];
-                                const youtubeUrl = helperServ.extractYouTubeURL(item.message);
+                                const youtubeUrl = helperServ.extractYouTubeURL(item?.message);
                                 const clientAvatar = item.createdBy?.profile_img !== "" ? item.createdBy?.profile_img : "/images/profile/default-profile.png";
                                 return (
                                     <div
@@ -199,7 +204,6 @@ export default function Discover() {
                                                             <VideoImageThumbnail
                                                                 videoUrl={item.mediaFiles[0]}
                                                                 alt="video"
-
                                                             />
                                                             <div className="video-overlay">
                                                                 <i className="fa-solid fa-film"></i>
@@ -249,7 +253,7 @@ export default function Discover() {
                                                     <span className="grid-user-name">
                                                         {user_name.length > 12 ? (user_name.slice(0, 12) + "...") : user_name}
                                                     </span>
-                                                    <div className="grid-likes">
+                                                    <div className="grid-likes" style={{ cursor: "pointer" }}>
                                                         {item.likeCount > 0 ? (
                                                             <div className={"d-flex align-items-center"} onClick={() => setShowUserLikedPost(item?._id)}>
                                                                 <div className="floating-reactions-container">
@@ -275,7 +279,8 @@ export default function Discover() {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <p className="grid-text-content" dangerouslySetInnerHTML={{ __html: postMessage }} />
+                                                {postMessage.length < 40 ? (<p className="grid-text-content" dangerouslySetInnerHTML={{ __html: postMessage }} />) : (<p className="grid-text-content" dangerouslySetInnerHTML={{ __html: postMessage.slice(0, 37) + "..." }} />)}
+
                                             </div>
                                         </div>
                                     </div>
@@ -283,7 +288,7 @@ export default function Discover() {
                             })}
                     </div>
                 </div>
-            </div>
+            </div >
             {
                 showPostId && (
                     <DiscoverPost
@@ -292,9 +297,10 @@ export default function Discover() {
                         slideLeft={postIdx > 0}
                         slideRight={postIdx < postList.length - 1}
                         changePostIdx={changePostIdx}
-                        getPostList={getPostList}
+                        // getPostList={getPostList}
                     />
-                )}
-        </div>
+                )
+            }
+        </div >
     );
 }

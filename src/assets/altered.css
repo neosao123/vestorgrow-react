@@ -200,7 +200,7 @@
   color: #465d61;
 }
 
-.profileform_btn > button {
+.profileform_btn>button {
   padding: 0px 30px !important;
   line-height: 32px;
   font-size: var(--s16);
@@ -795,7 +795,7 @@
 .socialContantInner {
   /* gap: 20px; */
 }
- 
+
 .userRepliedCommentCustom {
   background-color: #f5f5f5;
 }
@@ -1216,7 +1216,7 @@
   color: rgb(112, 112, 112);
 }
 
-.chatBoxHead > a {
+.chatBoxHead>a {
   width: 36px;
 }
 
@@ -1268,6 +1268,12 @@
 .msgSection {
   padding: 12px;
   height: 334px !important;
+  overflow: auto;
+}
+
+.msgSection1 {
+  padding: 12px;
+  height: 319px !important;
   overflow: auto;
 }
 
@@ -1946,6 +1952,7 @@
   left: 0;
   right: 0;
   z-index: 1;
+  border-bottom: 0.5px solid #d1d1d1;
 }
 
 .notificationBadgeCustom {
@@ -2352,7 +2359,7 @@
   padding: 0px !important;
 }
 
-.profileform_btn > a.btnColor-dlt-custom {
+.profileform_btn>a.btnColor-dlt-custom {
   padding: 0px 0px !important;
 }
 
@@ -2405,8 +2412,8 @@
 }
 
 .chatBoxHead_Custom img {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 .search_dataList {
@@ -3513,7 +3520,7 @@ body.modal-custom-bg-scrollStop {
   @media (min-width: 1024px) {
     .leftColumn {
       /* padding-left: 35px; */
-      padding-top: 32px;
+      padding-top: 44px;
     }
   }
 
@@ -4533,6 +4540,7 @@ body.modal-custom-bg-scrollStop {
 }
 
 @media only screen and (min-width: 600px) {
+
   .discover-post-heading_custom,
   .new-message-heading_custom {
     display: none;
@@ -5457,4 +5465,3 @@ div.form-input {
   border-width: 0;
   box-shadow: none;
 }
-

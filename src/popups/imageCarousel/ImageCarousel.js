@@ -8,7 +8,10 @@ export default function ImageCarousel({ onClose, mediaFiles, imageIdx }) {
   const [mediaFile, setMediaFile] = useState(mediaFiles);
   return (
     <>
-      <div className="modal modal-custom_Zindex" style={{ display: "block" }}>
+      <div className="modal modal-custom_Zindex" style={{
+        display: "block",
+        marginTop:"40px"
+      }}>
         <div className="vertical-alignment-helper position-relative-class">
           {/* <div className="closeBtnPositionCustom">
             <button type="button" className="btn-close btn-close-inner-custom" onClick={onClose} />

@@ -54,7 +54,6 @@ export default function ComposeMessage({ onClose, onFinish, deskView, getMessage
     }
   };
 
-
   const handleCompUserList = (item, type) => {
     if (type === "add") {
       setCompUserList([...compUserList, item]);
@@ -93,8 +92,6 @@ export default function ComposeMessage({ onClose, onFinish, deskView, getMessage
     });
     // setUserList([]);
   };
-
-
 
   //this is main message send function
   const sendMessage = async () => {
@@ -396,7 +393,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView, getMessage
         <div className={`chatBox chatBoxCustom position-relative ${expend == 1 ? "chatBoxLarge" : ""}`}>
           <div className="chatBoxHead position-relative chatBoxHead_Custom">
             <h4>New Message</h4>
-            <div className="feedBoxHeadRight options">
+            <div className="feedBoxHeadRight options" style={{ marginTop: "-10px" }}>
               <a href="javascript:void(0);" onClick={() => setExpend(expend !== 0 ? 0 : 1)}>
                 {expend === 0 && <img src={Max} alt="dots" className="img-fluid" />}
                 {expend === 1 && <img src={Min} alt="dots" className="img-fluid" />}
@@ -408,6 +405,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView, getMessage
           </div>
           <div className="composeSearching" style={{ padding: "0rem 0.5rem 0.35rem 0.5rem" }}>
             <div className="compose_Searchbar compose_Searchbar-custom" style={{ paddingLeft: "10px", paddingTop: "0px", paddingBottom: "0px" }}>
+              <i className="fas fa-search" style={{ paddingLeft: "10px",paddingTop:"15px" }}></i>
               <Select
                 isMulti
                 isClearable={false}
@@ -430,6 +428,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView, getMessage
                   IndicatorSeparator: () => null,
                   DropdownIndicator: () => null,
                 }}
+                placeholder="Type a name"
               />
             </div>
             {searchText && (
@@ -480,7 +479,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView, getMessage
             )}
           </div>
           <div
-            className={`messagess msgSection allFeedUser overflowScrollStop ${expend === 1 ? "msgSectionLarge-message" : "msgSectionLarge-message-sm"
+            className={`messagess msgSection1 allFeedUser overflowScrollStop ${expend === 1 ? "msgSectionLarge-message" : "msgSectionLarge-message-sm"
               }`}
             id={`messagess`}
           ></div>

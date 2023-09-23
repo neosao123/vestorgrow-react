@@ -246,18 +246,22 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
         updatePost();
         setShowCommentPostList([...showCommentPostList, obj.postId]);
         formik.values.comment = "";
+        setValue("")
         setMessage({ ...message, content: "" });
         setShowEmoji(false);
+
       }
 
     } catch (error) {
       console.log(error);
+      setValue("")
       setInitialValue({
         comment: "",
         postId: post._id,
         createdBy: user._id,
       })
     }
+    formik.values.comment = "";
     setActiveBtn(false);
   };
 

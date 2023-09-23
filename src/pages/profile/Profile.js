@@ -289,7 +289,7 @@ const Profile = () => {
     return (
         <div>
             <div className="socialContant profileContent main_container">
-                <div className="myProfile_sec"> 
+                <div className="myProfile_sec">
                     <div className="about_profile">
                         <div
                             className="profileCoverPic mx-0"
@@ -507,9 +507,11 @@ const Profile = () => {
                     <div className={activeTab === "posts" ? "tab-pane active" : "tab-pane"} id="posts">
                         <div className="row mt-3">
                             {
-                                postList && postList.map((item, idx) => {
+                                postList.length > 0 && postList.map((item, idx) => {
+
                                     const postReactions = item.postReactions ?? [];
-                                    const youtubeUrl = helperServ.extractYouTubeURL(item.message);
+                                    const youtubeUrl = helperServ.extractYouTubeURL(item?.message);
+
                                     return (
                                         <div key={idx} className="col-sm-4 col-lg-4 dynamic-width-custom">
                                             <div className="bgWhiteCard feedBox post_box">
@@ -517,7 +519,7 @@ const Profile = () => {
                                                     <div className="feedBoxHead d-flex align-items-center">
                                                         <div className="feedBoxHeadLeft">
                                                             <div className="feedBoxHeadName">
-                                                                <h4 dangerouslySetInnerHTML={{ __html: item.message }} />
+                                                                <h4 dangerouslySetInnerHTML={{ __html: item?.message }} />
                                                                 <p>
                                                                     <span>{moment(item.createdAt).format("DD MMM YYYY")}</span>
                                                                     <i className="fa fa-circle" aria-hidden="true" />
@@ -565,7 +567,7 @@ const Profile = () => {
                                                     {item?.mediaFiles.length > 0 ? (
                                                         <div
                                                             className="postImg mx_minus postImg-custom-profile"
-                                                            onClick={() => handlePostPopup(item._id, idx)}
+                                                            onClick={() => handlePostPopup(item?._id, idx)}
                                                         >
                                                             {
                                                                 isImage.includes(item?.mediaFiles[0].split(".").pop()) ? (
@@ -606,7 +608,7 @@ const Profile = () => {
                                                     </div>
                                                     <div className="likeShareIconCounter">
                                                         <ul className="nav">
-                                                            <li className="nav-item">
+                                                            <li className="nav-item" style={{ cursor: "pointer" }}>
                                                                 {
                                                                     item.likeCount > 0 ? (
                                                                         <div className={"d-flex align-items-center"} onClick={() => setShowUserLikedPost(item._id)}>

@@ -7,9 +7,9 @@ import ProfileImage from "../../shared/ProfileImage";
 import EditCoverImage from "./EditCoverImage";
 import EditProfileImage from "./EditProfileImage";
 const ValidateSchema = Yup.object().shape({
-  user_name: Yup.string().required("Required"),
-  title: Yup.string().required("Required"),
-  location: Yup.string().required("Required"),
+  user_name: Yup.string().required("Required").matches(/^\S*$/, 'Username cannot contain spaces').min(2, "Minimum 2 characters required.").max(20, "Maximum 20 characters are allowed"),
+  title: Yup.string(),
+  location: Yup.string(),
   // cover_img: Yup.string().required("Required"),
   // profile_img: Yup.string().required("Required"),
 });
@@ -296,7 +296,7 @@ export default function EditProfile({ onClose, onSuccess, onFail }) {
       </div>
       {/* <div className="modal-backdrop show"></div> */}
       {showEditCoverImg && (
-        <div className="show modal-backdrop-custom-zindex-bg">
+        <div className="show modal-backdrop-custom-zindex-bg" style={{ position: "sticky" }}>
           <EditCoverImage
             file={showEditCoverImg}
             onClose={() => setShowEditCoverImg(null)}
@@ -305,7 +305,7 @@ export default function EditProfile({ onClose, onSuccess, onFail }) {
         </div>
       )}
       {showEditProfileImg && (
-        <div className="show modal-backdrop-custom-zindex-bg">
+        <div className="show modal-backdrop-custom-zindex-bg" style={{ position: "sticky" }}>
           <EditProfileImage
             file={showEditProfileImg}
             onClose={() => setShowEditProfileImg(null)}

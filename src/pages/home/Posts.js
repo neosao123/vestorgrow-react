@@ -25,6 +25,11 @@ import SharePostSelect from "../../popups/post/SharePostSelect";
 import UserService from "../../services/UserService";
 import PostCreateSuccess from "../../popups/post/PostCreatedSuccess";
 import DeletePostSuccess from "../../popups/post/DeletePostSuccess";
+import { wrap } from "framer-motion";
+import "./posts.css"
+import PostReportSuccess from "../../popups/post/ReportPostSuccess";
+import BlockUserSuccess from "../../popups/post/BlockUserSuccess";
+
 
 const Posts = () => {
 
@@ -60,6 +65,9 @@ const Posts = () => {
   const [change, setChange] = useState(false)
   const [sharePostId, setSharePostId] = useState(null)
   const [deleteSuccessPopup, setDeleteSuccessPopup] = useState(false)
+  const [showReportSuccess, setShowReportSuccess] = useState(false)
+  const [blockUserSuccess, setBlockUserSuccess] = useState(false)
+
 
   const [search, setSearch] = useState({
     filter: {
@@ -154,31 +162,32 @@ const Posts = () => {
   const handleSharePost = async (postIdx, shareType) => {
     // console.log("SHARETOFEED:", postIdx, shareType)
     // console.log(postList)
-    let post = postList[postIdx];
+    // let post = postList[postIdx];
     // console.log(post)
-    if (!post.originalPostId) {
-      post.originalPostId = post._id;
-      post.parentPostId = post._id;
-    } else {
-      post.parentPostId = post._id;
-    }
-    post.shareType = shareType;
-    if (shareType === "Selected") {
-      setDataForSharePost(post);
-      setShowSharePost(true);
-    } else {
-      try {
-        let resp = await postServ.sharePost(post);
-        if (resp.data) {
-          getPostList();
-          setShowOtherPostSharedPopup(!showOtherPostSharedPopup);
-        } else {
-          setShowOtherPostFailedPopup(!showOtherPostFailedPopup);
-        }
-      } catch (err) {
-        console.log(err);
+    // if (!post.originalPostId) {
+    //   post.originalPostId = post._id;
+    //   post.parentPostId = post._id;
+    // } else {
+    //   post.parentPostId = post._id;
+    // }
+    // post.shareType = shareType;
+    // if (shareType === "Selected") {
+    //   setDataForSharePost(post);
+    //   setShowSharePost(true);
+    // }
+    // else {
+    try {
+      let resp = await postServ.sharePost(postIdx);
+      if (resp.data) {
+        getPostList();
+        setShowOtherPostSharedPopup(!showOtherPostSharedPopup);
+      } else {
+        setShowOtherPostFailedPopup(!showOtherPostFailedPopup);
       }
+    } catch (err) {
+      console.log(err);
     }
+    // }
   };
 
   const handleShowComment = (id) => {
@@ -200,7 +209,6 @@ const Posts = () => {
   };
 
   const handleReportRequest = async (postId) => {
-    console.log(postId)
     let obj = {
       postId: postId,
       userId: user._id,
@@ -214,7 +222,7 @@ const Posts = () => {
   return (
     <>
       <div className="middleColumn">
-        <div className="new-post_custom-div sticky-top-custom" style={{ marginTop: "35px", marginBottom: "25px" }}>
+        <div className="new-post_custom-div sticky-top-custom post_container" style={{ marginTop: "35px" }}>
           <div className="new-post_custom-divInner-top"></div>
           <div className="new-post_custom-divInner">
             <div className="bgWhiteCard addPhotoVideoPost d-none d-md-block sticky-top-custom">
@@ -239,21 +247,13 @@ const Posts = () => {
             </div>
           </div>
         </div>
-        <div
-
-          // style={{
-          //   border:"1px solid blue",
-          //   position:"fixed",
-          //   width:"33em",
-          //   overflow:"auto",
-          //   height:"100%"
-          // }}
-
-        >
+        <div className="single_post_container" style={{ borderRadius: "15px" }}>
           {postList.length > 0 &&
             postList.map((item, idx) => {
-              return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} />
+              return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} setBlockUserSuccess={setBlockUserSuccess} setShowUserLikedPost={setShowUserLikedPost} setShowUserSharedPost={setShowUserSharedPost} />
             })}
+          <div style={{ padding: "10px" }}>
+          </div>
         </div>
       </div >
       {showReportPopup && (
@@ -261,6 +261,7 @@ const Posts = () => {
           onClose={() => {
             setReportData(null);
             setShowReportPopup(false);
+            setShowReportSuccess(true)
           }}
           object={reportData}
         />
@@ -337,6 +338,14 @@ const Posts = () => {
             postId={showUserSharedPost}
           />
         )
+      }
+      {
+        showReportSuccess && (<PostReportSuccess onClose={() => {
+          setShowReportSuccess(false)
+        }} />)
+      }
+      {
+        blockUserSuccess && (<BlockUserSuccess onClose={() => { setBlockUserSuccess(false) }} />)
       }
     </>
   )

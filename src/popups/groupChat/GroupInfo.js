@@ -89,7 +89,7 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
                     />
                   </div>
                   <div className="followesNav groupInfo groupInfo-headingCustom">
-                    <h4 className="mb-0">Group Infromation</h4>
+                    <h4 className="mb-0">Group Information</h4>
                     {groupDetail?.createdBy?._id == user._id ? (
                       <button className="joinedButton">Created</button>
                     ) : (

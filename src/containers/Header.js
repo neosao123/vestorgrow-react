@@ -61,6 +61,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const getFollowingStatus = async (id) => {
     try {
       let resp = await followServ.isFollowing({ followingId: id });
@@ -72,6 +73,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const deleteNotification = async (id) => {
     try {
       let resp = await notificationServ.deleteNotification(id);
@@ -83,6 +85,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleLogOut = async () => {
     try {
       await serv.logout({})
@@ -91,6 +94,8 @@ function Header() {
             localStorage.removeItem("user");
             localStorage.removeItem("token");
             window.location.reload(true)
+            // navigate("/login")
+
           }
         })
     } catch (error) {
@@ -98,12 +103,15 @@ function Header() {
     }
 
   }
+
   const handleShowNotification = () => {
     setShowNotification(!showNotification);
   };
+
   const handleShowFollowReqList = () => {
     setShowFollowReq(!showFollowReq);
   };
+
   const handleRejectReq = async (id) => {
     try {
       let resp = await followServ.rejectFollowReq(id);
@@ -126,6 +134,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleAcceptReq = async (id) => {
     try {
       let obj = { followingId: id };
@@ -155,6 +164,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleFollowRequest = async (id) => {
     try {
       let resp = await followServ.sendFollowReq({ followingId: id });
@@ -174,6 +184,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleUnFollowRequest = async (id) => {
     // setUnfollowUserData({ id: params.id, userName: user.user_name })
     // setShowUnfollowPopup(true)
@@ -195,6 +206,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const getUserData = async () => {
     try {
       let resp = await serv.getUser(user?._id);
@@ -205,6 +217,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleJoinGroup = async (groupId, id, user_id) => {
     try {
       let obj = {
@@ -223,6 +236,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const deleteInvitation = async (groupId, id) => {
     try {
       let obj = {
@@ -415,7 +429,7 @@ function Header() {
                           // onClick={setShowNotification(false)}
                           />
                         </div>
-                        <h4 className="mb-0">Notifcations</h4>
+                        <h4 className="mb-0">Notifications</h4>
                       </div>
                       <div className="dropdownGroup h-100 overflowScrollStop">
                         <Link className="dropdown-item" onClick={handleShowFollowReqList}>

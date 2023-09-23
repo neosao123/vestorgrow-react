@@ -18,8 +18,12 @@ const ValidateSchema = Yup.object().shape({
   chatLogo: Yup.string().required("Required"),
   chatDesc: Yup.string().required("Required").min(20, "Minimum 20 characters required"),
   chatRules: Yup.string().required("Required").min(20, "Minimum 20 characters required"),
-  // chatKeyword: Yup.string().required("Required").length(3, "Minimum 3 keyword required")
-  // isPrivate: Yup.string().required("Required"),
+  chatKeyword: Yup.array().min(3, 'At least 3 item is required')
+    .of(
+      Yup.string()
+        .min(2, "Minimun 2 characters required.")
+        .max(20, "Maximum 20 characters are allowed.")
+    )
 });
 
 export default function CreateGroup({ onClose, onFinish, groupId }) {
@@ -292,11 +296,12 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                       type="button"
                                       className={
                                         "add-key-design ms-2 " +
-                                        (tempKeyword !== "" && formik.values.chatKeyword.length < 3
+                                        (tempKeyword !== "" && tempKeyword.length < 20
                                           ? "active"
                                           : "disabled")
                                       }
                                       disabled={!(tempKeyword !== "" && formik.values.chatKeyword.length < 3)}
+
                                       onClick={(e) => {
                                         formik.setFieldValue("chatKeyword", [...formik.values.chatKeyword, tempKeyword]);
                                         setTempKeyword("");
@@ -309,6 +314,10 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                       />
                                     </button>
                                   </div>
+                                  {formik.touched.chatKeyword && formik.errors.chatKeyword ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatKeyword}</div>
+                                  ) : null}
+                                  {tempKeyword.length > 20 && <div className="valid_feedbackMsg">Minimum 20 characters allowed.</div>}
                                   <div className="keyWord mt-3 d-flex">
                                     {formik.values.chatKeyword.map((item, idx) => {
                                       return (

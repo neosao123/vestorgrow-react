@@ -64,6 +64,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
     }
     getPost();
   }, [postId]);
+
   const getFollowStatus = async (id) => {
     try {
       let resp = await followerServ.isFollowing({ followingId: id });
@@ -74,6 +75,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       console.log(err);
     }
   };
+
   const getPost = async () => {
     try {
       let resp = await discoverServ.getPost(postId);
@@ -87,6 +89,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       console.log(err);
     }
   };
+
   const dislikePost = async (postId) => {
     try {
       let resp = await postServ.dislikePost(postId);
@@ -132,6 +135,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       }
     }
   };
+
   const likePost = async (postId) => {
     try {
       let resp = await postServ.likePost({ postId: postId });
@@ -142,6 +146,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       console.log(err);
     }
   };
+
   const handleShowComment = (id) => {
     if (showCommentPostList.includes(id)) {
       setShowCommentPostList(showCommentPostList.filter((i) => i !== id));
@@ -150,6 +155,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
     }
     setShowCommentDirect((prevState) => !prevState);
   };
+  
   const handleFollowRequest = async (userId) => {
     try {
       let resp = await followerServ.sendFollowReq({ followingId: userId });
@@ -481,7 +487,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
                                     <span>Share</span>
                                   </a>
                                   <ul className="dropdown-menu dropdown-menu-customPaddingPost">
-                                    <li>
+                                    {(user?._id !== post?.createdBy._id) && <li>
                                       <a
                                         className="dropdown-item"
                                         href="javascript:void(0);"
@@ -494,7 +500,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
                                         />
                                         Share to feed
                                       </a>
-                                    </li>
+                                    </li>}
                                     <li>
                                       <a
                                         className="dropdown-item"

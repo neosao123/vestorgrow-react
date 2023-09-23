@@ -26,6 +26,8 @@ function DefaultLayout({ children }) {
   const navigate = useNavigate()
   const [user, setUser] = globalCtx.user;
 
+
+
   useEffect(() => {
     const isMatchingPath = !!match;
     const isMatchingPath2 = !!match2;
@@ -82,7 +84,7 @@ function DefaultLayout({ children }) {
 
   if (blockContent) {
     return loading ? <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}><Loader /></div> : (
-      <main className="clearfix ">
+      <main className="clearfix" id={`${(location === "/" || location === "/dashboard")?"scrollbarhide":""}`}>
         <div className="themeContant" style={{ padding: "0" }}>
           {children}
         </div>

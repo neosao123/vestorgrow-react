@@ -126,7 +126,7 @@ function Suggested() {
 
   return (
     <>
-      <div className="suggestionBox mb-3 " style={{ top: "66px", paddingBottom: "15px" }}>
+      <div className="suggestionBox mb-3 " style={{ top: "66px" }}>
         <div className="suggestionHead">
           <span>Suggested for You</span>
           <span
@@ -138,15 +138,14 @@ function Suggested() {
             See All
           </span>
         </div>
-        <div style={{ backgroundColor: "#d1d1d1", height: "1px", width: "100%", }}></div>
         <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
-          {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user) => {
+          {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user, i) => {
             return (
-              <div style={{ display: "flex", gap: "15px", borderBottom: "1px solid #d1d1d1", width: "100%", paddingTop: "5px", paddingLeft: "10px" }}>
+              <div style={{ display: "flex", gap: "15px", borderTop: "1px solid #d1d1d1", width: "100%", padding: "5px 10px 5px 10px" }}>
                 <div style={{ display: "flex", paddingLeft: "5px" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
-                      style={{ height: "50px", width: "50px", marginTop: "10px", borderRadius: "50%" }}
+                      style={{ height: "48px", width: "48px", marginTop: "15px", borderRadius: "50%" }}
                       src={
                         user?.profile_img
                           ? user.profile_img
@@ -157,15 +156,15 @@ function Suggested() {
                     />
                   </Link>
                 </div>
-                <div style={{ width: "80%", padding: "15px 0px", paddingLeft: "5px", display: "flex", flexDirection: "column", gap: "1px" }}>
+                <div style={{ width: "80%", padding: "15px 0px", paddingLeft: "5px", display: "flex", flexDirection: "column", gap: "2px" }}>
                   <span style={{ fontSize: "16px", fontWeight: "600", color: "#0B1E1C" }} >{user?.user_name?.length > 15
                     ? user?.user_name?.slice(0, 15) + "..."
                     : user.user_name}
                   </span>
-                  <span style={{ fontSize: "14px", fontWeight: 400, color: "#465D61" }} >
+                  <span style={{ fontSize: "14px", color: "#465D61" }} >
                     {user?.title ? (
-                      user?.title?.length > 24 ? (
-                        user?.title?.slice(0, 24) + "..."
+                      user?.title?.length > 25 ? (
+                        user?.title?.slice(0, 22) + "..."
                       ) : (
                         user.title
                       )
@@ -177,7 +176,7 @@ function Suggested() {
                     <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}>Following</button>
                   ) : user.isFollowing === "notfollowing" ? (
                     <button
-                      style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", marginTop: "5px", fontWeight: 600, fontSize: "16px", width: "100px", padding: "5px 15px", borderRadius: "20px" }}
+                      style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", marginTop: "5px", fontWeight: 600, fontSize: "14px", width: "84px",height:"34px", padding: "5px 15px", borderRadius: "20px" }}
                       onClick={() => {
                         handleFollowRequest(user._id, user?.user_name);
                       }}
@@ -185,7 +184,7 @@ function Suggested() {
                       Follow
                     </button>
                   ) : (
-                    <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}>Requested</button>
+                    <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "14px", width: "84px",height:"34px", padding: "8px 15px", borderRadius: "20px" }}>Requested</button>
                   )}
                 </div>
               </div>
@@ -255,7 +254,7 @@ function Suggested() {
                 {
                   filteredSuggested?.map((user) => {
                     return (
-                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" style={{minWidth:"300px"}}>
+                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" style={{ minWidth: "300px" }}>
                         <div className="profileBox">
                           <Link to={"/userprofile/" + user?._id}>
                             <div className="profile-image">
@@ -275,8 +274,8 @@ function Suggested() {
                                   : user.user_name}
                               </span>
                               <span className="title">
-                                {user?.title !== "" ? user?.title?.length > 18
-                                  ? user?.title?.slice(0, 18) + "..."
+                                {user?.title !== "" ? user?.title?.length > 27
+                                  ? user?.title?.slice(0, 24) + "..."
                                   : user.title : ""}
                               </span>
                               <span className="followers">

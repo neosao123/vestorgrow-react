@@ -25,7 +25,7 @@ const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jf
 
 
 const SinglePost = ({ ...props }) => {
-    const { getPostList, item, index, idx, deleteSuccessPopup, setDeleteSuccessPopup, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost, handleUnFollowRequest, setMediaFilesCarousel, setImageIdx } = props;
+    const { setShowUserSharedPost, setShowUserLikedPost, getPostList, item, index, idx, deleteSuccessPopup, setDeleteSuccessPopup, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost, handleUnFollowRequest, setMediaFilesCarousel, setImageIdx, setBlockUserSuccess } = props;
 
     const postServ = new PostService();
     const followerServ = new UserFollowerService();
@@ -45,8 +45,8 @@ const SinglePost = ({ ...props }) => {
     const [showMoreList, setShowMoreList] = useState([]);
     const [showShareTo, setShowShareTo] = useState(false);
     const [showUnfollowPopup, setShowUnfollowPopup] = useState(false);
-    const [showUserLikedPost, setShowUserLikedPost] = useState(false);
-    const [showUserSharedPost, setShowUserSharedPost] = useState(false);
+    // const [showUserLikedPost, setShowUserLikedPost] = useState(false);
+    // const [showUserSharedPost, setShowUserSharedPost] = useState(false);
     const [unfollowUserData, setUnfollowUserData] = useState(null);
     const [showReportPopup, setShowReportPopup] = useState(false);
     const [showLoadingBar, setShowLoadingBar] = useState(false);
@@ -119,6 +119,7 @@ const SinglePost = ({ ...props }) => {
             };
             let resp = await blockedServ.sendBlockReq(obj);
             if (resp.data) {
+                setBlockUserSuccess(true)
                 getPostList();
             }
         } catch (err) {
@@ -206,7 +207,7 @@ const SinglePost = ({ ...props }) => {
     document.body.addEventListener("click", () => setShowShareTo(false), true);
 
     return isHidden ? (
-        <div className="bgDarkCard postHidden d-none d-md-block">
+        <div className="bgDarkCard postHidden d-none d-md-block" style={{ minHeight: "100px" }}>
             <div className="postHiddenInner d-flex align-items-center">
                 <div className="hideIconWhite">
                     <img
@@ -338,7 +339,7 @@ const SinglePost = ({ ...props }) => {
                                     </>
                                 )}
                             </ul>
-                            <div className="dropdown">
+                            <div className="dropdown" style={{ marginLeft: "-150px" }}>
                                 <ul
                                     className={
                                         "dropdown-menu opts dropdown-menuMore-custom" + (showShareTo === item?._id ? " show" : "")
@@ -665,6 +666,9 @@ const SinglePost = ({ ...props }) => {
                             ) : (
                                 <NavLink
                                     className="nav-link"
+                                    onClick={() => {
+                                        setShowUserLikedPost(item._id)
+                                    }}
                                 >
                                     <img src="/images/icons/no-reaction.svg" alt="like" className="img-fluid" style={{ width: "24px", height: "24px", marginRight: "5px" }} />
                                     <span>{likes}</span>
@@ -720,7 +724,7 @@ const SinglePost = ({ ...props }) => {
                                         <a
                                             href="javascript:void(0)"
                                             className="dropdown-item"
-                                            onClick={() => handleSharePost(index, "Friends")}
+                                            onClick={() => handleSharePost(item._id, "Friends")}
                                         >
                                             <img
                                                 src="/images/icons/share-to-feed.svg"
@@ -735,7 +739,7 @@ const SinglePost = ({ ...props }) => {
                                             href="javascript:void(0)"
                                             className="dropdown-item"
                                             // onClick={() => handleSharePost(idx, "Selected")}
-                                            onClick={() => { setShowSharePost(true); setSharePostId(id) }}
+                                            onClick={() => { setShowSharePost(true); setSharePostId(item?._id) }}
                                         >
                                             <img
                                                 src="/images/icons/share-to-friends.svg"

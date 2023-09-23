@@ -17,6 +17,7 @@ function SignupInactiveLink() {
             localStorage.removeItem("user");
             localStorage.removeItem("token");
             window.location.reload(true)
+            // navigate("/login")
           }
         })
     } catch (error) {

@@ -35,7 +35,8 @@ function ChatsType() {
   const [mediaFiles, setMediaFiles] = useState([]);
   const [showSentMsg, setShowSentMsg] = useState(false);
   const [atTop, setAtTop] = useState(false)
-  
+  const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
+
   useEffect(() => {
     if (isAuthentiCated && window.location.pathname.includes("groupinvite") && params?.id) {
       sendInvitation();
@@ -61,16 +62,16 @@ function ChatsType() {
 
 
   const windowScale = window.devicePixelRatio
-  var bottom = "82.5vh"
+  var bottom = "88vh"
 
   if (windowScale === 1) {
-    bottom = "86vh"
+    bottom = "90.8vh"
   }
 
   return (
     <>
       <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: `${atTop ? "4.4em" : bottom}` }} >
-        <div className="feedChatContent" style={{ height: "92%", width: "18.6em", borderRadius: "15px 15px 0 0", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} >
+        <div className="feedChatContent" style={{ height: "92%", width: "18.6em", borderRadius: "12px 12px 0 0", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} >
           <div className="tab-content">
             {(user.role.includes("admin") || user.role.includes("userPaid")) && (
               <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`}>
@@ -126,7 +127,7 @@ function ChatsType() {
             setShowGroupInfo(false);
             setShowCreateGroup(id);
           }}
-          groupId={showGroupInfo}
+          groupId={groupInfoId}
         />
       )}
       {showDeleteGroup && (

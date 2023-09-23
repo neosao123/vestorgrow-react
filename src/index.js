@@ -7,7 +7,7 @@ import "./assets/reset.css";
 import "./assets/main.css";
 import "./assets/altered.css";
 import "./assets/responsive.css";
-
+import "./index.css"
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

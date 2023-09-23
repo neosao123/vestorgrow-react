@@ -21,6 +21,7 @@ function ResetPassword() {
     newPassword: "",
     verifyPassword: "",
   });
+
   const resendOtp = async () => {
     let obj = {
       email: location.state.email,
@@ -36,6 +37,7 @@ function ResetPassword() {
       setErrorMsg(err.err);
     }
   };
+
   const onSubmit = async (values) => {
     let obj = { ...values };
     obj.email = location.state.email;
@@ -55,9 +57,11 @@ function ResetPassword() {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   const handleShowPasswordVeri = () => {
     setShowPasswordVeri(!showPasswordVeri);
   };
+
   const formik = useFormik({
     initialValues: loginObj,
     validateOnBlur: true,
@@ -65,6 +69,7 @@ function ResetPassword() {
     validationSchema: ValidateSchema,
     enableReinitialize: true,
   });
+  
   return (
     <main className="w-100 clearfix socialMediaTheme">
       {/* login page Start*/}

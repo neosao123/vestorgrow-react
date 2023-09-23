@@ -146,8 +146,8 @@ function Login() {
     enableReinitialize: true,
   });
 
-  return loading ? <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}><Loader /></div> : (
-    <main className="w-100 clearfix socialMediaTheme">
+  return loading ? <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", maxHeight: "100vh" }}><Loader /></div> : (
+    <main className="w-100 clearfix socialMediaTheme" style={{height:"100vh"}}>
       {/* login page Start*/}
       <div className="loginpage d-flex">
         <div className="loginForm_left loginForm_left_flex">
