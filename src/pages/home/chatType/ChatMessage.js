@@ -86,7 +86,6 @@ export default function ChatMessage({
         // do nothing
       } else {
         setMessageList([...messageList, newMessage]);
-
       }
     });
   });
@@ -141,8 +140,6 @@ export default function ChatMessage({
     if (users) {
       setUsers([...users]);
     }
-
-
     try {
       let obj = {
         filter: {
@@ -153,8 +150,6 @@ export default function ChatMessage({
         if (resp.data) {
           setMessageList([...resp.data]);
         }
-
-
         var objDiv = document.getElementById(`messagess${chatId}`);
         if (objDiv) {
           objDiv.scrollTop = objDiv.scrollHeight;
@@ -226,8 +221,9 @@ export default function ChatMessage({
   };
 
   let date = moment(Date()).format("DD MMMM YYYY");
-  const handleKeypress = (e) => {
-    if (e.keyCode === 13) {
+
+  const handleKeypress = (evt) => {
+    if (evt.keyCode === 13 && !evt.shiftKey) {
       sendMessage();
     }
   };
@@ -239,7 +235,6 @@ export default function ChatMessage({
   const handleMaximize = (currChatId) => {
 
     let existingArr = JSON.parse(localStorage.getItem("messageboxstate"));
-
 
     // console.log(currChatId, existingArr)
     if (expend) {
@@ -275,10 +270,6 @@ export default function ChatMessage({
     }
 
   }
-
-
-
-
 
   return (
     <>
@@ -412,7 +403,7 @@ export default function ChatMessage({
                       <div
                         className={
                           "messgage-sectionCustom left-section " +
-                          (item?.sender?._id == user?._id ? "right-section" : "")
+                          (item?.sender?._id === user?._id ? "right-section" : "")
                         }
                       >
                         <div className="chatprofileImg">
@@ -435,6 +426,7 @@ export default function ChatMessage({
                                       <a
                                         className="dropdown-item"
                                         href="javascript:void(0);"
+
                                         onClick={() => navigator.clipboard.writeText(item.content)}
                                       >
                                         Copy
@@ -459,7 +451,6 @@ export default function ChatMessage({
                           <div className="position-relative messgage-sectionCustom">
                             <div className="msgContentHead">
                               <div className={`msgContent h-100 ${expend ? "msgContentLarge" : ""}`}>
-
                                 {item.file?.length > 0 && (
                                   <div className="chatGallery d-flex align-items-center">
                                     <div className="groupGallery" >
@@ -468,12 +459,9 @@ export default function ChatMessage({
                                           "chatGalleryInner d-flex flex-wrap " +
                                           (item.sender?._id === user?._id && "flex-row-reverse")
                                         }
-
                                       >
-
                                         {item.file.map((i, idx) => {
                                           return (
-
                                             <div
                                               className="galleryImage"
                                               onClick={() => {
@@ -507,10 +495,10 @@ export default function ChatMessage({
                                   )}
                                 >
                                   {item.content && <p
-                                    className="whiteSpace text-break"
+                                    className="whiteSpace text-break mb-0"
                                     style={{ color: `${item.sender?._id === user?._id ? "#ffffff" : "#282828"}`, fontSize: "16px" }}
                                   >
-                                    <span
+                                    <div
                                       style={{
                                         fontSize: "12px",
                                         display: "flex",
@@ -524,7 +512,7 @@ export default function ChatMessage({
                                       </span>
                                       <span className="dropdown" >
                                         <a href="javascript:void(0);" data-bs-toggle="dropdown">
-                                          {item?.sender?._id !== user?._id && <RiArrowDropDownLine style={{ fontSize: "14px", color: `${item.sender?._id !== user?._id ? "#282828" : "#ffffff"}` }} />}
+                                          {item?.sender?._id !== user?._id && <RiArrowDropDownLine style={{ fontSize: "20px", color: `${item.sender?._id !== user?._id ? "#282828" : "#ffffff"}` }} />}
                                         </a>
                                         <ul className="dropdown-menu">
                                           <li>
@@ -547,9 +535,10 @@ export default function ChatMessage({
                                           </li>
                                         </ul>
                                       </span>
-                                    </span>
-                                    <br />
-                                    {item.content}
+                                    </div>
+                                    <div>
+                                      {item.content}
+                                    </div>
                                   </p>}
                                 </Linkify>
                               </div>
@@ -609,7 +598,7 @@ export default function ChatMessage({
             >
               <textarea
                 className="form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser"
-                rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "1" : "1"}
+                rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "2" : "3"}
                 type="text"
                 // style={{height:"unset"}}
                 placeholder="Type your message..."

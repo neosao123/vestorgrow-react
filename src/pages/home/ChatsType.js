@@ -13,8 +13,6 @@ import ImageCarousel from "../../popups/imageCarousel/ImageCarousel";
 import SentMessage from "../../popups/message/SentMessage";
 import Suggested from "./Suggested";
 
-
-
 function ChatsType() {
   const params = useParams();
   const globalCtx = useContext(GlobalContext);

@@ -392,8 +392,22 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
       <div className="feedChatUser" style={{ width: "18em", height: "100%", width: '100%', paddingTop: "10px" }} >
         <div className="chatBoxGroupBottom" >
           {atTop && <div style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #d1d1d1" }}>
-            <div style={{ width: "45%", padding: "5px", borderBottom: `${groupChat ? "4px solid #00808b" : "4px solid white"}`, display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }} onClick={handleGroupChat} >Group Chat<span style={{ position: "absolute", backgroundColor: "red", color: "white", borderRadius: "50%", fontSize: "8px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", width: "20px", left: -20, top: -10 }} >{groupUnreadCount}</span></span></div>
-            <div style={{ width: "45%", padding: "10px", borderBottom: `${!groupChat ? "4px solid #00808b" : "4px solid white"}`, cursor: "pointer" }} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span style={{ fontWeight: "600", marginLeft: "5px", position: "relative" }} >Messages<span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "20px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", borderRadius: "50%", left: -20, top: -10 }} >{personalUnreadCount}</span></span></div>
+            <div style={{ width: "45%", padding: "5px", borderBottom: `${groupChat ? "4px solid #00808b" : "4px solid white"}`, display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
+              <img style={{ color: "black", width: "1.2rem" }} src={groupImage} alt="Group Chat Icon" />
+              <span
+                style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }}
+                onClick={handleGroupChat} >
+                Group Chat
+                <span style={{ position: "absolute", backgroundColor: "red", color: "white", borderRadius: "50%", fontSize: "8px", height: "18px", display: "flex", justifyContent: "center", alignItems: "center", width: "18px", left: -20, top: -10 }} >{groupUnreadCount}</span>
+              </span>
+            </div>
+            <div style={{ width: "45%", padding: "10px", borderBottom: `${!groupChat ? "4px solid #00808b" : "4px solid white"}`, cursor: "pointer" }} onClick={handlePersonalChat} >
+              <img style={{ color: "black", width: "1.2rem" }} src={PersonalChatImage} alt="Personal Chat Icon" />
+              <span style={{ fontWeight: "600", marginLeft: "5px", position: "relative" }} >
+                Messages
+                <span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "18px", height: "18px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", left: -20, top: -10 }} >{personalUnreadCount}</span>
+              </span>
+            </div>
             <div style={{ textAlign: "center", display: "flex", alignItems: "Center", justifyContent: "center", paddingRight: "10px" }} onClick={() => setAtTop(prev => !prev)}>
               {atTop && <h6 style={{ color: "#08808b" }} > <span><PiCaretDownBold color="#08808b" fontSize={"20px"} /></span></h6>}
               {
@@ -402,9 +416,17 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
             </div>
           </div>}
           {!atTop && <div style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid #d1d1d1" }}>
-            <div style={{ display: "flex", width: "80%" }}>
-              <div style={{ width: "30%", padding: "10px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} ><img style={{ color: "black" }} src={groupImage} /><span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }} onClick={handleGroupChat} ><span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "20px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", borderRadius: "50%", left: -20, top: -20 }} >{groupUnreadCount}</span></span></div>
-              <div style={{ width: "30%", padding: "10px", cursor: "pointer" }} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span style={{ fontWeight: "600", marginLeft: "5px", position: "relative" }} ><span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "20px", height: "20px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", borderRadius: "50%", left: -20, top: -10 }} >{personalUnreadCount}</span></span></div>
+            <div style={{ display: "flex", width: "90%" }}>
+              <div style={{ padding: "10px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} >
+                <img style={{ color: "black", width: "1.3rem" }} src={groupImage} alt="Group Chat Icon" />
+                <span style={{ fontWeight: "600", marginLeft: "5px", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }} onClick={handleGroupChat} >
+                  <span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "18px", height: "18px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", left: -20, top: -20 }} >{groupUnreadCount}</span></span>
+              </div>
+              <div style={{ padding: "10px", cursor: "pointer" }} onClick={handlePersonalChat} >
+                <img style={{ color: "black", width: "1.3rem" }} src={PersonalChatImage} alt="Personal Chat Icon" />
+                <span style={{ fontWeight: "600", marginLeft: "5px", position: "relative" }} >
+                  <span style={{ position: "absolute", backgroundColor: "red", color: "white", width: "18px", height: "18px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "50%", fontSize: "8px", left: -20, top: -10 }} >{personalUnreadCount}</span></span>
+              </div>
             </div>
             <div style={{ textAlign: "center", display: "flex", alignItems: "Center", justifyContent: "center", paddingRight: "5px", cursor: "pointer" }} onClick={() => setAtTop(prev => !prev)}>
               {atTop && <h6 style={{ color: "#08808b" }} > <span><PiCaretDownBold color="#08808b" fontSize={"20px"} /></span></h6>}
