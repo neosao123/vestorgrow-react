@@ -271,7 +271,7 @@ function Header() {
   return (
     <>
       {" "}
-      <header className="w-100 clearfix topHeader sticky-top-header-custom" id="topHeader" style={{ paddingLeft: "10px", paddingRight: "10px", zIndex: 999 }}>
+      <header className="w-100 clearfix topHeader sticky-top-header-custom" id="topHeader" style={{ paddingLeft: "10px", paddingRight: "30px", zIndex: 999 }}>
         <div className="topHeaderInner d-flex align-items-center topHeaderInner-custom" >
           <div className="mobileLogo d-block  mobileLogoCustom" >
             <Link to="/">

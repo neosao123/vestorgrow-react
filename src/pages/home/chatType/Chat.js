@@ -401,7 +401,6 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                 </span>
               </span>
             </div>
-
             <div className={`${!groupChat ? "active-chattype" : "inactive-chattype"} personale-chat`} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span className="personale-chat-span" >
               Messages
               <span className="personale-chat-span-span" style={{ left: -20, top: -10 }} >
@@ -409,7 +408,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               </span>
             </span>
             </div>
-            <div className="picaret" onClick={() => setAtTop(prev => !prev)}>
+            <div className="picaret picaret-left" onClick={() => setAtTop(prev => !prev)}>
               {atTop && <h6> <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
 
               {

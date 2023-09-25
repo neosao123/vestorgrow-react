@@ -126,7 +126,7 @@ export default function Discover() {
         getTags();
     }, [searchText]);
 
-    return  (
+    return (
         <div className="socialContantInner d-flex flex-column">
             <div className="socialContant socialContentCustom">
                 <div className="discoveryHeading discoveryHeading-mobile">
@@ -279,7 +279,8 @@ export default function Discover() {
                                                         )}
                                                     </div>
                                                 </div>
-                                                {postMessage.length < 40 ? (<p className="grid-text-content" dangerouslySetInnerHTML={{ __html: postMessage }} />) : (<p className="grid-text-content" dangerouslySetInnerHTML={{ __html: postMessage.slice(0, 37) + "..." }} />)}
+                                                {/* <div style={{ border: "1px solid red", width: "100%" }}></div> */}
+                                                <p className="grid-text-content" dangerouslySetInnerHTML={{ __html: postMessage }} />
 
                                             </div>
                                         </div>
@@ -297,7 +298,7 @@ export default function Discover() {
                         slideLeft={postIdx > 0}
                         slideRight={postIdx < postList.length - 1}
                         changePostIdx={changePostIdx}
-                        // getPostList={getPostList}
+                    // getPostList={getPostList}
                     />
                 )
             }

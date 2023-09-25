@@ -222,6 +222,8 @@
    overflow: hidden;
    text-overflow: ellipsis;
    width: 350px;
+   width: 100%;
+
  }
 
 

@@ -80,7 +80,7 @@
 }
 
 .group-chat {
-    width: 45% !important;
+    width: 44% !important;
     padding: 5px !important;
     display: flex !important;
     justify-content: center !important;
@@ -117,7 +117,7 @@
 }
 
 .personale-chat {
-    width: 45%;
+    width: 44%;
     padding: 10px;
     cursor: pointer
 }
@@ -308,4 +308,8 @@
 .div-time-stamp {
     font-size: 16px !important;
     margin-left: 20px !important;
+}
+
+.picaret-left {
+    margin-left: -4px;
 }
