@@ -14,8 +14,6 @@ import SentMessage from "../../popups/message/SentMessage";
 import Suggested from "./Suggested";
 import "./chattype.css"
 
-
-
 function ChatsType() {
   const params = useParams();
   const globalCtx = useContext(GlobalContext);

@@ -411,6 +411,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
             </div>
             <div className="picaret" onClick={() => setAtTop(prev => !prev)}>
               {atTop && <h6> <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
+
               {
                 !atTop && <h6> <span><PiCaretUpBold className="PiCaret-style" /></span></h6>
               }
