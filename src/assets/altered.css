@@ -1206,7 +1206,7 @@
   /* height: 80px; */
   border-bottom: 0.5px solid #d1d1d1;
   display: flex;
-  padding: 12px;
+  padding: 12px 12px 0px 12px;
   gap: 12px;
 }
 
@@ -3265,6 +3265,10 @@ body.modal-custom-bg-scrollStop {
 
 .messageLink-CustomColor {
   color: #fff;
+  /* color: blue; */
+}
+.messageLink-CustomColor1{
+  color: black;
   /* color: blue; */
 }
 
