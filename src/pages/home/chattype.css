@@ -1,0 +1,10 @@
+.chattype-h {
+    height: 100% !important;
+}
+
+.feedChatContent {
+    height: 92% !important;
+    width: 18.6em !important;
+    border-radius: 12px 12px 0 0 !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+}

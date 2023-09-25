@@ -12,6 +12,7 @@ import GroupChat from "./chatType/GroupChat";
 import ImageCarousel from "../../popups/imageCarousel/ImageCarousel";
 import SentMessage from "../../popups/message/SentMessage";
 import Suggested from "./Suggested";
+import "./chattype.css"
 
 function ChatsType() {
   const params = useParams();
@@ -69,14 +70,14 @@ function ChatsType() {
   return (
     <>
       <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: `${atTop ? "4.4em" : bottom}` }} >
-        <div className="feedChatContent" style={{ height: "92%", width: "18.6em", borderRadius: "12px 12px 0 0", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} >
+        <div className="feedChatContent"  >
           <div className="tab-content">
             {(user.role.includes("admin") || user.role.includes("userPaid")) && (
               <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`}>
                 <GlobalMessage setPremiumChat={setPremiumChat} setMediaFiles={setMediaFiles} />
               </div>
             )}
-            <div className={`tab-pane ${activeChat === 1 ? "active" : ""}`} style={{ height: "100%" }}>
+            <div className={`tab-pane ${activeChat === 1 ? "active" : ""} chattype-h`} >
               <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} atTop={atTop} setAtTop={setAtTop} setShowGroupInfo={setShowGroupInfo} />
             </div>
             <div className={`tab-pane ${activeChat === 2 ? "active" : ""}`} >

@@ -18,6 +18,7 @@ import { RiArrowDropDownLine } from "react-icons/ri"
 import { motion } from 'framer-motion';
 import maxIcon from "../../../assets/images/maximize.svg"
 import minIcon from "../../../assets/images/minimize.svg"
+import "./chatmessage.css"
 const serv = new ChatService();
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 export default function ChatMessage({
@@ -488,14 +489,16 @@ export default function ChatMessage({
                                       href={decoratedHref}
                                       key={key}
                                       target="_self"
-                                      className="messageLink-CustomColor"
+                                      className={(item?.sender?._id == user?._id ? "messageLink-CustomColor":"messageLink-CustomColor1")}
                                     >
                                       {decoratedText}
                                     </SecureLink>
                                   )}
                                 >
                                   {item.content && <p
-                                    className="whiteSpace text-break mb-0"
+
+                                    className="whiteSpace text-break msg-height"
+
                                     style={{ color: `${item.sender?._id === user?._id ? "#ffffff" : "#282828"}`, fontSize: "16px" }}
                                   >
                                     <div

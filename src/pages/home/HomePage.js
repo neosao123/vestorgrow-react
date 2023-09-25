@@ -17,7 +17,7 @@ function HomePageOld() {
   }, [])
 
   return (
-    <div className="socialContant socialContant_custom main_container pb-0 fixed-container" style={{ overflowY: "auto" }}>
+    <div className="socialContant socialContant_custom main_container pb-0 fixed-container" >
       <div className="socialContantInner">
         <Profile />
         <Posts />
