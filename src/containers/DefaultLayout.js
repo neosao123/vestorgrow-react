@@ -84,7 +84,7 @@ function DefaultLayout({ children }) {
 
   if (blockContent) {
     return loading ? <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}><Loader /></div> : (
-      <main className="clearfix" id={`${(location === "/" || location === "/dashboard")?"scrollbarhide":""}`}>
+      <main className="clearfix" id={`${(location === "/" || location === "/dashboard") ? "scrollbarhide" : ""}`}>
         <div className="themeContant" style={{ padding: "0" }}>
           {children}
         </div>

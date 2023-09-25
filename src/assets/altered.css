@@ -1273,7 +1273,7 @@
 
 .msgSection1 {
   padding: 12px;
-  height: 319px !important;
+  height: 310px !important;
   overflow: auto;
 }
 
@@ -1710,6 +1710,7 @@
 
 .asd {
   width: 100%;
+  max-width: 85%;
 }
 
 .asd textarea {
@@ -2377,6 +2378,7 @@
   margin: 0;
   /* border-top: 1px solid #d1d1d1; */
   border-bottom: none;
+  margin-top: 9px;
 }
 
 .compose_Searchbar-custom input {

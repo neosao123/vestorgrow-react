@@ -484,7 +484,7 @@ const Profile = () => {
                                                                     <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btnColor1 btnFollow`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}

@@ -141,7 +141,7 @@ function Suggested() {
         <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
           {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user, i) => {
             return (
-              <div style={{ display: "flex", gap: "15px", borderTop: "1px solid #d1d1d1", width: "100%", padding: "5px 10px 5px 10px" }}>
+              <div style={{ display: "flex", gap: "15px", borderTop: "0.5px solid #ebeaea", width: "100%", padding: "5px 10px 5px 10px" }}>
                 <div style={{ display: "flex", paddingLeft: "5px" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
@@ -175,16 +175,26 @@ function Suggested() {
                   {user.isFollowing === "following" ? (
                     <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "16px", width: "100px", padding: "8px 15px", borderRadius: "20px" }}>Following</button>
                   ) : user.isFollowing === "notfollowing" ? (
+                    // <button
+                    //   style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", marginTop: "5px", fontWeight: 600, fontSize: "14px", width: "84px",height:"34px", padding: "5px 15px", borderRadius: "20px" }}
+                    //   onClick={() => {
+                    //     handleFollowRequest(user._id, user?.user_name);
+                    //   }}
+                    // >
+                    //   Follow
+                    // </button>
                     <button
-                      style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", marginTop: "5px", fontWeight: 600, fontSize: "14px", width: "84px",height:"34px", padding: "5px 15px", borderRadius: "20px" }}
+                      style={{ color: "#0d1b1d", backgroundColor: "#fff", border: "1px solid #b1b1b1", marginTop: "5px", fontWeight: 600, fontSize: "14px", width: "84px", height: "34px", padding: "5px 15px", borderRadius: "20px" }}
+
                       onClick={() => {
                         handleFollowRequest(user._id, user?.user_name);
                       }}
+                      className="follow_btn"
                     >
                       Follow
                     </button>
                   ) : (
-                    <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "14px", width: "84px",height:"34px", padding: "8px 15px", borderRadius: "20px" }}>Requested</button>
+                    <button style={{ color: "#ffffff", backgroundColor: "#00808b", border: "none", fontWeight: 600, fontSize: "14px", width: "84px", height: "34px", padding: "8px 15px", borderRadius: "20px" }}>Requested</button>
                   )}
                 </div>
               </div>
@@ -296,7 +306,7 @@ function Suggested() {
                               <button className="follow">Requested</button>
                             ) : (
                               <button
-                                className="follow"
+                                className="see_all_follow_btn"
                                 onClick={() => {
                                   handleFollowRequest(user._id, user?.user_name);
                                 }}

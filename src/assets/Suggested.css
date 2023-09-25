@@ -1,9 +1,10 @@
-body{
+body {
   margin-top: 32px;
   top: 98px;
 }
+
 .suggestionBox {
-  position: sticky; 
+  position: sticky;
   /* height: ; */
   background: #fff;
   border-radius: 15px;
@@ -52,14 +53,14 @@ body{
   /* margin-top: 10px; */
 }
 
-.suggestionBody .profileBox button { 
+.suggestionBody .profileBox button {
   background: #00808b;
   border-radius: 50px;
   outline: 0;
   border: 0;
   font-weight: 500;
   color: #fff;
-  padding:5px 20px;
+  padding: 5px 20px;
 }
 
 .suggestionBody .profileBox a {
@@ -130,8 +131,7 @@ body{
   color: #465d61;
 }
 
-.button-header button:nth-child(1),
-.button-header button:nth-child(2) {
+.button-header button:nth-child(1) .button-header button:nth-child(2) {
   border-right: 2px solid #d1d1d1;
 }
 
@@ -250,7 +250,7 @@ body{
   .suggestionBox .profileBox {
     width: 30%;
     /* height: 120px; */
-    /* height: "auto"; */
+    /* height: auto; */
     padding-bottom: 20px;
   }
 
@@ -291,6 +291,7 @@ body{
   .modal-header {
     flex-direction: column;
   }
+
   .suggestInputGroup {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
@@ -300,4 +301,41 @@ body{
 
 .hscroll::-webkit-scrollbar {
   height: 5px;
+}
+
+
+.follow_btn {
+  color: #0d1b1d !important;
+  background-color: #fff !important;
+  border: 1px solid #b1b1b1 !important;
+  margin-top: 5px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  width: 84px !important;
+  height: 34px !important;
+  padding: 5px 15px !important;
+  border-radius: 15px !important;
+}
+
+.follow_btn:hover {
+  /* box-shadow: inset 30em 0 #00808b !important; */
+  border: 1px solid #00808b !important;
+  transition: all 0.6s ease-out !important;
+  cursor: pointer !important;
+  background-color: #ebf5f2 !important;
+
+}
+
+.see_all_follow_btn {
+
+  color: #0d1b1d !important;
+  background-color: #fff !important;
+  border: 1px solid #b1b1b1 !important;
+}
+
+.see_all_follow_btn:hover {
+  border: 1px solid #00808b !important;
+  transition: all 0.6s ease-out !important;
+  cursor: pointer !important;
+  background-color: #ebf5f2 !important;
 }
