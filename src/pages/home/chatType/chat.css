@@ -60,6 +60,12 @@
     border-bottom: 1px solid #d1d1d1 !important;
 }
 
+.chatBoxGroupBottom2 {
+    display: flex !important;
+    justify-content: center !important;
+    border-bottom: 1px solid #ffffff !important;
+}
+
 .active-chattype {
     border-bottom: 4px solid #00808b !important
 }

@@ -258,10 +258,11 @@ const Message = () => {
 
     return (
         <>
-            <div className="socialContant chatsocialContant main_container pb-0" style={{ position: "fixed", left: "100px", right: 0 }}>
+            <div className="socialContant chatsocialContant main_container pb-0" style={{ position: "fixed", left: "100px", right: 0, top: 0 }}>
                 <div className="messageChatBox">
                     <div
                         className={"messageChatLeft messageChatLeftCustom d-md-block " + (chatBlock ? "d-sm-none d-none" : "d-sm-block d-block")}
+                        style={{ borderTopLeftRadius: "15px", borderBottomLeftRadius: "15px" }}
                     >
                         <div className="messageLeftHeader">
                             <div className="messageHeading">
@@ -341,6 +342,7 @@ const Message = () => {
                     </div>
                     <div
                         className={"messageChatRight messageChatRightCustom position-relative d-md-block " + (chatBlock ? "d-sm-flex d-flex" : "d-sm-none d-none")}
+                        style={{ borderTopRightRadius: "15px", borderBottomRightRadius: "15px" }}
                     >
                         {showMessage === "new" ?
                             (

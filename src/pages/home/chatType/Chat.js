@@ -417,7 +417,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               }
             </div>
           </div>}
-          {!atTop && <div className="chatBoxGroupBottom1">
+          {!atTop && <div className="chatBoxGroupBottom2">
             <div className="chatbox-header">
               <div className="chatbox-header-down">
                 <img style={{ color: "black" }} src={groupImage} />
@@ -442,7 +442,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               }
             </div>
           </div>}
-          <div className="feedChatHeading d-flex d-flex-Custom "  >
+          <div className={`feedChatHeading ${!atTop ? "d-none" : "d-flex"} d-flex-Custom`}>
             <div className="input-container" >
               <i className="fas fa-search search-icon" ></i>
               <input onChange={(e) => {
@@ -462,7 +462,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
           </div>
           {isloading ? (<div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
-          </div>) : (<div className="feedChatUserMsgGroup" style={{ marginTop: "-15px" }}>
+          </div>) : (<div className="feedChatUserMsgGroup" style={{ marginTop: "-15px", display: `${!atTop ? "none" : ""}` }}>
             <div className="allFeedUser allFeedUserCustom">
               {chatList?.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");

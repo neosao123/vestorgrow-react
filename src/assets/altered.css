@@ -1273,7 +1273,7 @@
 
 .msgSection1 {
   padding: 12px;
-  height: 310px !important;
+  height: 305px !important;
   overflow: auto;
 }
 
@@ -2378,7 +2378,7 @@
   margin: 0;
   /* border-top: 1px solid #d1d1d1; */
   border-bottom: none;
-  margin-top: 9px;
+  margin-top: 9px !important;
 }
 
 .compose_Searchbar-custom input {
@@ -3269,7 +3269,8 @@ body.modal-custom-bg-scrollStop {
   color: #fff;
   /* color: blue; */
 }
-.messageLink-CustomColor1{
+
+.messageLink-CustomColor1 {
   color: black;
   /* color: blue; */
 }

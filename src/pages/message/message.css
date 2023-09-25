@@ -91,3 +91,20 @@
 .allMsgUserInner {
   border-bottom: 1px solid #e3e2e2;
 }
+
+.message-box-main {
+  position: fixed !important;
+  left: 100px !important;
+  right: 0 !important;
+  top: 30px
+}
+
+.messageChatleft {
+  border-top-left-radius: "15px" !important;
+  border-bottom-left-radius: "15px" !important;
+}
+
+.messageChatright {
+  border-top-right-radius: "15px" !important;
+  border-bottom-right-radius: "15px" !important;
+}
