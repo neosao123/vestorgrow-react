@@ -465,7 +465,7 @@ const Profile = () => {
                             </div>
                             <div className="col-sm-12 col-md-5 col-lg-4">
                                 <div className="card border-0">
-                                    <div className="card-body">
+                                    <div className="card-body" id="card_body" >
                                         <div className="suggested-header">
                                             <h6 className="card-title">Suggested for you</h6>
                                             <div className="see-all-link" onClick={() => setShowSuggestedProfiles(!showSuggestedProfiles)}>See All</div>

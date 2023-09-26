@@ -38,6 +38,7 @@ import GroupSuggestion from "../pages/signup/GroupSuggestion";
 import LoginInactive from "../pages/login/LoginInactive";
 import LoadingData from "../pages/login/LoadingData";
 import Loginsteps from "../pages/steps/Loginsteps";
+import News from "../pages/News/News";
 
 function AllRoutes() {
   const serv = new UserService();
@@ -96,15 +97,16 @@ function AllRoutes() {
         <Route exact path="/groupmessage" element={<GroupChatMobile />} />
         <Route exact path="/notfound" element={<NotFound />} />
         <Route exact path="/payment" element={<StripeContainer />} />
-
         <Route exact path="/usersuggestion" element={<UserSuggestion />} />
         <Route exact path="/groupsuggestion" element={<GroupSuggestion />} />
         <Route exact path="/groupinvite/:id" element={<GroupInvite />} />
         <Route exact path="/signin/inactive" element={<LoginInactive />} />
         <Route exact path="/signin/active/:id" element={<Loginsteps />} />
         <Route exact path="/signup/active/:id" element={<SignupProfile />} />
+        <Route exact path="/news" element={<News />} />
 
         <Route path="*" element={<Navigate to="/notfound" />} />
+
       </Routes>
     </DefaultLayout>
   ) : (

@@ -31,6 +31,7 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
       console.log(err);
     }
   };
+
   const handleJoinGroup = async (groupInfoId) => {
     try {
       let obj = {
@@ -45,6 +46,7 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
       console.log(err);
     }
   };
+
   const handleSendInvitation = async (invitedUser) => {
     try {
       let obj = {
@@ -60,6 +62,7 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
       console.log(err);
     }
   };
+  
   const handleDeleteChat = async () => {
     setShowDeleteGroup({ _id: groupDetail?._id, chatName: groupDetail.chatName });
     try {

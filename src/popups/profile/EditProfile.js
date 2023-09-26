@@ -26,6 +26,7 @@ export default function EditProfile({ onClose, onSuccess, onFail }) {
     cover_img: user.cover_img || "",
     profile_img: user.profile_img || "",
   });
+  
   useEffect(() => {
     setInitialValue({
       ...initialValue,

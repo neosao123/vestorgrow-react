@@ -36,6 +36,11 @@
 #about .card-body,
 #groups .card-body {
   padding: 1rem 1.5rem;
+
+}
+
+.card #card_body {
+  padding: 1rem 0rem;
 }
 
 #about .abt-title {
@@ -93,7 +98,7 @@
 }
 
 .pfrx-sgx-bx {
-  padding: 1rem 0;
+  padding: 1rem 1.5rem;
   margin-bottom: 0.5rem;
   border-bottom: 1px solid #d1d1d1;
   display: flex;
