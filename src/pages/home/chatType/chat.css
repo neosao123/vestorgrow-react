@@ -117,8 +117,8 @@
 }
 
 .personale-chat {
-    width: 44%;
-    padding: 10px;
+    width: 40%;
+    padding: 5px;
     cursor: pointer
 }
 
@@ -311,5 +311,9 @@
 }
 
 .picaret-left {
-    margin-left: -4px;
+    margin-left: 8px !important;
+}
+
+.picaret-bottom {
+    margin-right: -15px;
 }

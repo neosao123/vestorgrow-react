@@ -284,7 +284,7 @@ export default function ChatMessage({
         }}
         transition={{ duration: 0.3 }}
       >
-        <div className={`chatBox chatBoxCustom position-relative  ${expend ? "chatBoxLarge" : ""}`} style={{ border: "1px solid white", borderRadius: "15px 15px 5px 5px" }} >
+        <div className={`chatBox chatBoxCustom position-relative chatbox_top  ${expend ? "chatBoxLarge" : ""}`} >
           <div
             className="chatBoxHead position-relative"
             onClick={(e) => {
@@ -347,8 +347,8 @@ export default function ChatMessage({
                 </div>
               </div>
               <span onClick={() => handleMaximize(chatCompare)}>
-                {!expend && <img src={maxIcon} style={{ width: "24px", height: "24px" }} alt="dots" className="img-fluid" />}
-                {expend && <img src={minIcon} style={{ width: "24px", height: "24px" }} alt="dots" className="img-fluid" />}
+                {!expend && <img src={maxIcon} alt="dots" className="img-fluid icon_size" />}
+                {expend && <img src={minIcon} alt="dots" className="img-fluid icon_size" />}
               </span>
               <span onClick={onClose}>
                 <img style={{ width: "24px", height: "24px" }} src="images/profile/cross-icon.svg" className="search_cross" alt="" />
@@ -489,7 +489,7 @@ export default function ChatMessage({
                                       href={decoratedHref}
                                       key={key}
                                       target="_self"
-                                      className={(item?.sender?._id == user?._id ? "messageLink-CustomColor":"messageLink-CustomColor1")}
+                                      className={(item?.sender?._id == user?._id ? "messageLink-CustomColor" : "messageLink-CustomColor1")}
                                     >
                                       {decoratedText}
                                     </SecureLink>
@@ -600,19 +600,17 @@ export default function ChatMessage({
               style={{ backgroundColor: "white" }}
             >
               <textarea
-                className="form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser"
+                className={`form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser ${expend ? "chatmessagebox_textarea1" : "chatmessagebox_textarea2"}`}
                 rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "2" : "3"}
                 type="text"
-                // style={{height:"unset"}}
                 placeholder="Type your message..."
                 onChange={(e) => setMessage({ ...message, content: e.target.value })}
                 onKeyDown={handleKeypress}
 
                 value={message.content}
-                style={{ height: "unset", borderRadius: `${expend ? "30px" : "25px"}`, paddingRight: `${expend ? "25px" : "20px"}`, paddingLeft: `${expend ? "25px" : "20px"}`, paddingTop: `${expend ? "12px" : "8px"}`, paddingBottom: `${expend ? "12px" : "8px"}`, width: "100%", marginBottom: "5px", fontSize: `${expend ? "20px" : "18px"}`, resize: "none" }}
               />
-              <div style={{ backgroundColor: "white", display: "flex", position: "relative" }}>
-                <span className="input-group-text file-upload gray-color-custom" style={{ backgroundColor: "white" }} >
+              <div className="chat_message_box_div">
+                <span className="input-group-text file-upload gray-color-custom emoji_span_color">
                   <a href="javascript:void(0);">
                     <label htmlFor={`imagess${chatId}`}>
                       {/* <img src="/images/icons/img-upload.svg" width={expend && "25px"} alt="file-upload" className="img-fluid" /> */}
@@ -631,12 +629,12 @@ export default function ChatMessage({
                     </label>
                   </a>
                 </span>
-                <span className="input-group-text gray-color-custom emoji" id="emojiPickerChat-btn-id-custom" style={{ backgroundColor: "white" }} >
+                <span className="input-group-text gray-color-custom emoji emoji_span_color" id="emojiPickerChat-btn-id-custom" >
                   <a href="javascript:void(0);" onClick={() => setShowEmoji(!showEmoji)}>
                     <img src="/images/icons/smile.svg" width={expend && "25px"} className="img-fluid" alt="smile-emoji" />
                   </a>
                 </span>
-                <div className="sendBtn sendBtnCustom message-btn-resize-custom" style={{ position: "absolute", right: 0 }}>
+                <div className="sendBtn sendBtnCustom message-btn-resize-custom send_btn" >
                   <button type="button" onClick={sendMessage} className="btn p-0" disabled={activeBtn}>
                     {activeBtn ? (
                       <i className="fa-solid fa-spinner"></i>
@@ -671,7 +669,7 @@ export default function ChatMessage({
           }}
           transition={{ duration: 1 }}
         >
-          <div style={{ zIndex: 300, width: "60px", margin: "0.5rem" }} onClick={() => {
+          <div className="profile_img_main_div" onClick={() => {
             let existingArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
             existingArr.forEach((el) => {
               if (el.chatId === chatCompare) {
@@ -681,7 +679,7 @@ export default function ChatMessage({
             localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
             setMessageBoxState(existingArr)
           }}>
-            <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} style={{ width: "60px", borderRadius: "50%" }} />
+            <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} className="profile_img" />
           </div>
         </motion.div>
       )

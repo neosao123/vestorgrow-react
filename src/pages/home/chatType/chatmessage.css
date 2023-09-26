@@ -1,3 +1,65 @@
-.msg-height{
+.msg-height {
     margin-bottom: -0.5rem;
+}
+
+.send_btn {
+    position: absolute !important;
+    right: 0 !important;
+}
+
+.profile_img {
+    width: 60px !important;
+    border-radius: 50% !important;
+}
+
+.profile_img_main_div {
+    z-index: 300 !important;
+    width: 60px !important;
+    margin: 0.5rem !important;
+}
+
+.emoji_span_color {
+    background-color: white
+}
+
+.chat_message_box_div {
+    background-color: white !important;
+    display: flex !important;
+    position: relative !important;
+}
+
+.chatmessagebox_textarea1 {
+    height: unset !important;
+    border-radius: 30px !important;
+    padding-right: 25px !important;
+    padding-left: 25px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    width: 100% !important;
+    margin-bottom: 5px !important;
+    font-size: 20px !important;
+    resize: none !important;
+}
+
+.chatmessagebox_textarea2 {
+    height: unset !important;
+    border-radius: 25px !important;
+    padding-right: 20px !important;
+    padding-left: 20px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    width: 100% !important;
+    margin-bottom: 5px !important;
+    font-size: 18px !important;
+    resize: none !important;
+}
+
+.chatbox_top {
+    border: 1px solid white !important;
+    border-radius: 15px 15px 5px 5px !important;
+}
+
+.icon_size {
+    width: 24px;
+    height: 24px;
 }

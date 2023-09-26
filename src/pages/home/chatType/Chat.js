@@ -408,7 +408,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               </span>
             </span>
             </div>
-            <div className="picaret picaret-left" style={{ marginLeft: "5px" }} onClick={() => setAtTop(prev => !prev)}>
+            <div className="picaret picaret-left"  onClick={() => setAtTop(prev => !prev)}>
               {atTop && <h6> <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
 
               {
@@ -434,7 +434,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               </div>
             </div>
 
-            <div className="picaret" onClick={() => setAtTop(prev => !prev)}>
+            <div className="picaret picaret-bottom" onClick={() => setAtTop(prev => !prev)}>
               {atTop && <h6  > <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
               {
                 !atTop && <h6  > <span><PiCaretUpBold className="PiCaret-style" /></span></h6>

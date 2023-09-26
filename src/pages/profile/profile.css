@@ -101,13 +101,12 @@
 }
 
 .btnFollow {
-  /* background: #00808b; */
   border-radius: 50px;
   outline: 0;
   border: 0;
   font-weight: 500;
   color: #fff;
-  padding: 8px 20px;
+  padding: 5px 20px;
 }
 
 .btnColor1 {

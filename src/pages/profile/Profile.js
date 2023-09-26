@@ -480,8 +480,7 @@ const Profile = () => {
                                                                 <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
                                                                 <div className="ms-3">
                                                                     <div style={{ fontWeight: "600" }}>{suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}</div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
                                                                             className={`btn btnColor1 btnFollow`}
