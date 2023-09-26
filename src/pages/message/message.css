@@ -99,12 +99,3 @@
   top: 30px
 }
 
-.messageChatleft {
-  border-top-left-radius: "15px" !important;
-  border-bottom-left-radius: "15px" !important;
-}
-
-.messageChatright {
-  border-top-right-radius: "15px" !important;
-  border-bottom-right-radius: "15px" !important;
-}

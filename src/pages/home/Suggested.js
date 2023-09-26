@@ -306,7 +306,7 @@ function Suggested() {
                               <button className="follow">Requested</button>
                             ) : (
                               <button
-                                className="see_all_follow_btn"
+                                className="follow"
                                 onClick={() => {
                                   handleFollowRequest(user._id, user?.user_name);
                                 }}

@@ -262,7 +262,7 @@ const Message = () => {
                 <div className="messageChatBox">
                     <div
                         className={"messageChatLeft messageChatLeftCustom d-md-block " + (chatBlock ? "d-sm-none d-none" : "d-sm-block d-block")}
-                        style={{ borderTopLeftRadius: "15px", borderBottomLeftRadius: "15px" }}
+                        style={{ borderTopLeftRadius: "15px" }}
                     >
                         <div className="messageLeftHeader">
                             <div className="messageHeading">
@@ -342,7 +342,7 @@ const Message = () => {
                     </div>
                     <div
                         className={"messageChatRight messageChatRightCustom position-relative d-md-block " + (chatBlock ? "d-sm-flex d-flex" : "d-sm-none d-none")}
-                        style={{ borderTopRightRadius: "15px", borderBottomRightRadius: "15px" }}
+                        style={{ borderTopRightRadius: "15px"}}
                     >
                         {showMessage === "new" ?
                             (
@@ -661,6 +661,7 @@ const Message = () => {
                                                     value={message.content}
                                                     onKeyDown={handleKeypress}
                                                     placeholder="Write your message..."
+
                                                 />
                                                 <input
                                                     style={{ display: "none" }}
@@ -674,7 +675,6 @@ const Message = () => {
                                                         event.target.value = null;
                                                     }}
                                                 />
-
                                                 <span
                                                     className="input-group-text bg-white emoji emoji-picker-customMobile"
                                                     id="emojiPicker-btn-id-Custom"
@@ -690,6 +690,8 @@ const Message = () => {
                                                         </label>
                                                     </a>
                                                 </span>
+
+
                                             </div>
                                         </div>
                                         <div className="sendBtn">
