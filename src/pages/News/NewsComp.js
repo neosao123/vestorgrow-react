@@ -1,9 +1,16 @@
 import React from 'react'
 import "./news.css"
+import { useNavigate } from 'react-router-dom'
 
-const NewsComp = () => {
+const NewsComp = ({ id }) => {
+  const navigate = useNavigate()
+
+  const handleNavigate = (id) => {
+    navigate(`/news/${id}`)
+  }
+
   return (
-    <div className='grid_item'>
+    <div className='grid_item' onClick={() => { handleNavigate(id) }}>
       <img src='https://kchanews.com/wp-content/uploads/2014/09/bigstock-Breaking-News-Screen-36237841.jpg' className='img_news' />
       <div>
         <span>

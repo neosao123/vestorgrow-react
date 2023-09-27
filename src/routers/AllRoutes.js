@@ -39,6 +39,7 @@ import LoginInactive from "../pages/login/LoginInactive";
 import LoadingData from "../pages/login/LoadingData";
 import Loginsteps from "../pages/steps/Loginsteps";
 import News from "../pages/News/News";
+import SingleNews from "../pages/News/SingleNews";
 
 function AllRoutes() {
   const serv = new UserService();
@@ -104,6 +105,7 @@ function AllRoutes() {
         <Route exact path="/signin/active/:id" element={<Loginsteps />} />
         <Route exact path="/signup/active/:id" element={<SignupProfile />} />
         <Route exact path="/news" element={<News />} />
+        <Route exact path="/news/:id" element={<SingleNews />} />
 
         <Route path="*" element={<Navigate to="/notfound" />} />
 

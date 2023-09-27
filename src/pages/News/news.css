@@ -150,6 +150,29 @@
     color: #00808b;
 }
 
+.owl-prev {
+    display: none;
+}
+
+.owl-next {
+    height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* bottom: 0; */
+    font-size: 200px;
+    margin-top: -8px;
+    /* display: none; */
+}
+
+.item {
+    padding: 0px 15px;
+}
+
+.owl-nav {
+    font-size: 30px;
+}
+
 @media screen and (max-width:1200px) {
     .new_box {
         left: 0;
