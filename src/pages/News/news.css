@@ -1,10 +1,3 @@
-@font-face {
-    font-family: 'Gilroy';
-    src: url("../../../public/fonts/gilroy/Gilroy-Bold.ttf");
-    font-weight: normal;
-    font-style: normal;
-}
-
 .new_box {
     width: calc(100%-5.625rem);
     position: fixed;
@@ -36,14 +29,18 @@
 .tabs_box {
     display: flex;
     margin-top: 1.375rem;
+    overflow: hidden;
+    position: relative;
 }
 
 .news_tabs {
     height: 30px;
     display: flex;
     padding: 0px 5px;
-    gap: 10px;
+    gap: 5px;
     overflow: hidden;
+    width: 99%;
+    transition: transform 0.5s ease;
 }
 
 .news_tabs_text {
@@ -52,6 +49,7 @@
     padding: 3px 20px;
     color: #585858;
     font-weight: 600;
+    flex: 0 0 auto;
 }
 
 .active_tab {
