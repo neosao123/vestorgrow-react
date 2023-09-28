@@ -282,15 +282,10 @@ const UserProfile = () => {
                         <div className="user_data">
                             <div className="user_profileTxt user_profileTxt-custom-flex">
                                 <h4 className="mb-1">
-                                    {user?.user_name.length > 27 ? user?.user_name.slice(0, 27) + "..." : user?.user_name}
+                                    {user?.user_name.length > 24 ? user?.user_name.slice(0, 27) + "..." : user?.user_name}
                                     {user?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="green-tick" /> : ""}
                                 </h4>
-                                <p className="txtOne mb-0">
-                                    {user?.first_name} {user?.last_name}
-                                </p>
-                                <p className="txtOne mb-0">
-                                    {user?.title?.length > 400 ? user?.title?.slice(0, 400) + "..." : user?.title}
-                                </p>
+                                <div>{user?.title !== undefined ? user?.title.length > 27 ? user?.title.slice(0, 27) + "..." : user?.title : "Vestorgrow User"}</div>
                                 <p className="txtTwo mb-0">
                                     <img src="/images/profile/location.svg" alt="loaction-img" />
                                     {user?.location}
@@ -315,7 +310,7 @@ const UserProfile = () => {
                                     Requested
                                 </Link>
                             ) : (
-                                <Link onClick={handleFollowRequest} className="btn btnColor">
+                                <Link onClick={handleFollowRequest} className="btn btnColor follow_btn">
                                     Follow
                                 </Link>
                             )}
@@ -359,13 +354,13 @@ const UserProfile = () => {
                                 <div className="card border-0">
                                     <div className="card-body">
                                         <h6 className="card-section-title">About</h6>
-                                        <div className="row">
+                                        <div className="row about_profile">
                                             <div className="col-12 mb-3">
                                                 <div className="abt-title">Bio</div>
                                                 <p dangerouslySetInnerHTML={{ __html: user?.bio }} />
                                             </div>
                                             <div className="col-12 mb-4">
-                                                <div className="abt-title">Investment Interests</div>
+                                                {user?.investmentInterests.length > 0 && <div className="abt-title">Investment Interests</div>}
                                                 <div className="keyWord mt-3 d-flex">
                                                     {
                                                         user?.investmentInterests && user?.investmentInterests.map((item, idx) => {
@@ -407,11 +402,11 @@ const UserProfile = () => {
                                                                             {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
                                                                         </NavLink>
                                                                     </div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    {/* <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div> */}
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btn_color_userprofile btnFollow_userprofile`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}
@@ -615,11 +610,11 @@ const UserProfile = () => {
                                                                             {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
                                                                         </NavLink>
                                                                     </div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    {/* <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div> */}
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btn_color_userprofile btnFollow`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}

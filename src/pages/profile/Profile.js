@@ -383,7 +383,7 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="page_link">
+                    <div className="page_link ">
                         <ul className="nav nav-pills">
                             <li className="nav-item">
                                 <div className={activeTab === "about" ? "nav-link active" : "nav-link"} onClick={() => {
@@ -429,7 +429,7 @@ const Profile = () => {
                                             ) : (
                                                 <>
                                                     <h6 className="card-section-title">About</h6>
-                                                    <div className="row">
+                                                    <div className="row about_profile">
                                                         <div className="col-12 mb-3">
                                                             <div className="abt-title">Bio</div>
                                                             <p dangerouslySetInnerHTML={{ __html: user.bio }} />
@@ -480,7 +480,7 @@ const Profile = () => {
                                                                 <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
                                                                 <div className="ms-3">
                                                                     <div style={{ fontWeight: "600" }}>{suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
                                                                             className={`btn btnColor1 btnFollow`}
@@ -695,11 +695,11 @@ const Profile = () => {
                                                                             {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
                                                                         </NavLink>
                                                                     </div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    {/* <div >{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div> */}
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btnColor1 btnFollow`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}
