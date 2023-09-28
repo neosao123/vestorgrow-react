@@ -70,6 +70,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
   const [personalUnreadCount, setPersonalUnreadCount] = useState(0)
   const [groupUnreadCount, setGroupUnreadCount] = useState(0);
   const [activeGroupList, setActiveGroupList] = useState([]);
+  const [requestedGroups, setRequestedGroups] = useState([])
   const [updateChatList, setUpdateChatList] = globalCtx.UpdateChat;
   const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
 
@@ -374,12 +375,13 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
       };
       await serv.userInvitation(obj).then((resp) => {
         if (resp.message) {
+          setRequestedGroups([...requestedGroups, groupId])
           // setActiveGroupList([...activeGroupList, groupId]);
-          setTimeout(() => {
-            getChatList();
-            // getInvitationList();
-            // setActiveGroupList([]);
-          }, 2000);
+          // setTimeout(() => {
+          //   getChatList();
+          //   // getInvitationList();
+          //   // setActiveGroupList([]);
+          // }, 2000);
         }
       });
     } catch (err) {
@@ -408,7 +410,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               </span>
             </span>
             </div>
-            <div className="picaret picaret-left"  onClick={() => setAtTop(prev => !prev)}>
+            <div className="picaret picaret-left" onClick={() => setAtTop(prev => !prev)}>
               {atTop && <h6> <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
 
               {
@@ -514,34 +516,40 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                             style={{ fontSize: "16px" }}
                             title={oUser?.user_name ? oUser?.user_name : "Vestorgrow user"}
                             onClick={(e) => {
-                              let isPresentInArray = item?.users?.some(obj => obj._id === user?._id)
-                              if (isPresentInArray) {
-                                if (
-                                  e.target.classList.contains("img-fluid")
-                                ) {
-                                  e.preventDefault();
-                                } else {
-                                  let newArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
-                                  let obj = {
-                                    chatId: item._id,
-                                    isExpanded: false,
-                                    isminimize: false,
-                                    // index: idx
+                              if (groupChat === true && presentInGroup === false) {
+                                e.preventDefault()
+                                setShowGroupInfo(true);
+                                setGroupInfoId(item?._id)
+                              }
+                              else {
+                                let isPresentInArray = item?.users?.some(obj => obj._id === user?._id)
+                                if (isPresentInArray) {
+                                  if (
+                                    e.target.classList.contains("img-fluid")
+                                  ) {
+                                    e.preventDefault();
+                                  } else {
+                                    let newArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+                                    let obj = {
+                                      chatId: item._id,
+                                      isExpanded: false,
+                                      isminimize: false,
+                                      // index: idx
+                                    }
+                                    let isPresent;
+                                    if (newArr) {
+                                      isPresent = newArr.some(el => el.chatId === obj.chatId)
+                                    }
+                                    if (!isPresent) {
+                                      newArr.push(obj)
+                                      localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+                                      setMessageBoxState(newArr)
+                                    }
+                                    getMessage(item?._id, oUser, item?.users, chatName, chatLogo, groupChat, colors);
+                                    setShowMsg(true);
                                   }
-                                  let isPresent;
-                                  if (newArr) {
-                                    isPresent = newArr.some(el => el.chatId === obj.chatId)
-                                  }
-                                  if (!isPresent) {
-                                    newArr.push(obj)
-                                    localStorage.setItem("messageboxstate", JSON.stringify(newArr))
-                                    setMessageBoxState(newArr)
-                                  }
-                                  getMessage(item?._id, oUser, item?.users, chatName, chatLogo, groupChat, colors);
-                                  setShowMsg(true);
                                 }
                               }
-
                             }}
                           >
                             {item?.isGroupChat === false && (oUser?.user_name
@@ -565,7 +573,8 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                                     <a
                                       className="dropdown-item"
                                       href="javascript:void(0);"
-                                      onClick={() => {
+                                      onClick={(e) => {
+                                        e.preventDefault()
                                         setShowGroupInfo(true);
                                         setGroupInfoId(item?._id)
                                       }}
@@ -712,8 +721,8 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                             groupChat && !presentInGroup && <div >
                               {isPrivateChat && <button className="req-btn" onClick={() => {
                                 handleSendRequest(item?._id)
-                              }} >{requested ? "Requested" : "Request"}</button>}
-                              {!isPrivateChat && <button className="join-btn" onClick={() => handleJoinGroup(item?._id)} >{activeGroupList.includes(`${item?._id}`) ? "Joined" : "Join"}</button>}
+                              }} >{requestedGroups?.includes(`${item?._id}`) ? "Requested" : "Request"}</button>}
+                              {!isPrivateChat && <button className="join-btn" onClick={() => handleJoinGroup(item?._id)} >{activeGroupList?.includes(`${item?._id}`) ? "Joined" : "Join"}</button>}
                             </div>
                           }
 

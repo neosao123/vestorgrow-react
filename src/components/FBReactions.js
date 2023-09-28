@@ -105,6 +105,7 @@ const FBReactions = ({ ...props }) => {
             //just open the popup
             setBtnCLicked(true);
         }
+        updatePostAfterReaction()
     }
 
     const handleMouseLeave = (e) => {

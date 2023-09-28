@@ -80,7 +80,7 @@
 }
 
 .group-chat {
-    width: 44% !important;
+    width: 45% !important;
     padding: 5px !important;
     display: flex !important;
     justify-content: center !important;
@@ -153,6 +153,11 @@
 .chatbox-header {
     display: flex !important;
     width: 80% !important;
+}
+
+.req-btn,
+.join-btn {
+    font-size: 14px !important;
 }
 
 .chatbox-header-down {

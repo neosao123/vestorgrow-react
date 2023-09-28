@@ -170,7 +170,7 @@ export default function Discover() {
                             );
                         })}
                     </div>
-                    <div className="grid">
+                    <div className="grid_discover">
                         {filteredPosts &&
                             filteredPosts.map((item, idx) => {
                                 const postMessage = item.message.replace(/<\/?a[^>]*>/g, "");
@@ -298,7 +298,7 @@ export default function Discover() {
                         slideLeft={postIdx > 0}
                         slideRight={postIdx < postList.length - 1}
                         changePostIdx={changePostIdx}
-                    // getPostList={getPostList}
+                        getPostList={getPostList}
                     />
                 )
             }

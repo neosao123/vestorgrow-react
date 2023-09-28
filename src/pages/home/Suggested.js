@@ -141,7 +141,7 @@ function Suggested() {
         <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
           {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user, i) => {
             return (
-              <div style={{ display: "flex", gap: "15px", borderTop: "0.5px solid #ebeaea", width: "100%", padding: "5px 10px 5px 10px" }}>
+              <div className={i == 0 ? `profile_box1` : `profile_box`}>
                 <div style={{ display: "flex", paddingLeft: "5px" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
@@ -214,11 +214,11 @@ function Suggested() {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="modal_div">
           <h1 className="modal-title fs-5" id="exampleModalLabel">
             Suggestions
           </h1>
-          <div className="suggestInputGroup">
+          <div className="suggestInputGroup modal_header">
             <img
               src="/images/icons/search.svg"
               alt="search-icon"
@@ -250,7 +250,7 @@ function Suggested() {
         </div>
         <Modal.Body>
           <div
-            className="suggestionModalBody"
+            className="suggestionModalBody overflow_suggestionbox" id="suggestion_box_list"
           >
             {loading ? (
               // Display loader while loading is true
@@ -260,11 +260,11 @@ function Suggested() {
             ) : filteredSuggested?.length === 0 ? (
               "No users Found"
             ) : (
-              <div className="row wd-100">
+              <div className="row wd-100 " >
                 {
                   filteredSuggested?.map((user) => {
                     return (
-                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4" style={{ minWidth: "300px" }}>
+                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 min_width suggestionboxes"  >
                         <div className="profileBox">
                           <Link to={"/userprofile/" + user?._id}>
                             <div className="profile-image">
@@ -284,9 +284,9 @@ function Suggested() {
                                   : user.user_name}
                               </span>
                               <span className="title">
-                                {user?.title !== "" ? user?.title?.length > 27
+                                {user?.title !== undefined ? user?.title?.length > 27
                                   ? user?.title?.slice(0, 24) + "..."
-                                  : user.title : ""}
+                                  : user.title : "Vestorgrow User"}
                               </span>
                               <span className="followers">
                                 {user.followers} Followers

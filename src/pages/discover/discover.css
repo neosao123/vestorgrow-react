@@ -93,10 +93,10 @@
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
  }
 
- .grid {
+ .grid_discover {
    display: grid;
    grid-template-columns: repeat(3, 1fr);
-   grid-gap: 10px;
+   grid-gap: 10px !important;
    max-width: 1150px;
    justify-content: center;
    align-items: center;
@@ -228,7 +228,7 @@
 
 
  @media (min-width: 768px) and (max-width: 991px) {
-   .grid {
+   .grid_discover {
      grid-template-columns: repeat(2, 1fr);
      justify-content: center;
    }
@@ -244,14 +244,14 @@
  }
 
  @media (min-width: 481px) and (max-width: 767px) {
-   .grid {
+   .grid_discover {
      grid-template-columns: repeat(2, 1fr);
      justify-content: center;
    }
  }
 
  @media (max-width: 480px) {
-   .grid {
+   .grid_discover {
      grid-template-columns: 1fr;
      justify-content: center;
      max-width: 100%;

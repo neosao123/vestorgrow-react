@@ -125,3 +125,6 @@
   cursor: pointer !important;
   background-color: #ebf5f2 !important;
 }
+.edit_btn_gap{
+  margin-left: 10px;
+}

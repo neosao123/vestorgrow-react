@@ -435,7 +435,7 @@ const Profile = () => {
                                                             <p dangerouslySetInnerHTML={{ __html: user.bio }} />
                                                         </div>
                                                         <div className="col-12 mb-4">
-                                                            <div className="abt-title">Investment Interests</div>
+                                                            {user?.investmentInterests.length > 0 && <div className="abt-title">Investment Interests</div>}
                                                             <div className="investment-keywords">
                                                                 {user?.investmentInterests && user?.investmentInterests.map((item, idx) => {
                                                                     return (
@@ -453,7 +453,7 @@ const Profile = () => {
                                                         <div className="col-12 text-center">
                                                             <div className="editComm_btn editComm_btnCustom" onClick={handleEditAbout}>
                                                                 <img src="/images/profile/editIcon.svg" alt="edit-icon" />
-                                                                <span>Edit About</span>
+                                                                <span className="edit_btn_gap">Edit About</span>
                                                             </div>
                                                         </div>
                                                     </div>

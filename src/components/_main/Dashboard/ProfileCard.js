@@ -56,7 +56,7 @@ const ProfileCard = ({ ...props }) => {
                 <p className="txtOne mb-0">
                     {user?.first_name} {user?.last_name}
                 </p>
-                <p className="txtOne mb-0 overflow-hidden word-wrapCustom">{user?.title}</p>
+                <p className="txtOne mb-0 overflow-hidden word-wrapCustom">{user?.title !== undefined ? user?.title : "Vestorgrow User"}</p>
                 <p className="txtTwo mb-0">{user?.location}</p>
             </div>
             <div className="userFollowerCounter">
