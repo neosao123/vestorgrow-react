@@ -430,10 +430,10 @@ const Profile = () => {
                                                 <>
                                                     <h6 className="card-section-title">About</h6>
                                                     <div className="row about_profile">
-                                                        <div className="col-12 mb-3">
+                                                        {user?.bio && <div className="col-12 mb-3">
                                                             <div className="abt-title">Bio</div>
                                                             <p dangerouslySetInnerHTML={{ __html: user.bio }} />
-                                                        </div>
+                                                        </div>}
                                                         <div className="col-12 mb-4">
                                                             {user?.investmentInterests.length > 0 && <div className="abt-title">Investment Interests</div>}
                                                             <div className="investment-keywords">
@@ -446,10 +446,10 @@ const Profile = () => {
                                                                 })}
                                                             </div>
                                                         </div>
-                                                        <div className="col-12 mb-4">
+                                                        {user?.websiteUrl && <div className="col-12 mb-4">
                                                             <img src="/images/icons/globe.svg" alt="globe" className="me-2" />
                                                             <span dangerouslySetInnerHTML={{ __html: user.websiteUrl }} />
-                                                        </div>
+                                                        </div>}
                                                         <div className="col-12 text-center">
                                                             <div className="editComm_btn editComm_btnCustom" onClick={handleEditAbout}>
                                                                 <img src="/images/profile/editIcon.svg" alt="edit-icon" />

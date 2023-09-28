@@ -112,7 +112,7 @@
 }
 
 .suggestion_title {
-  margin-bottom: 5px !important;
+  margin-bottom: 8px !important;
 }
 
 .btnFollow {
@@ -122,6 +122,11 @@
   font-weight: 500;
   color: #fff;
   padding: 5px 20px;
+}
+
+.suggestion_box_info {
+  display: flex;
+  gap: 2;
 }
 
 .btnColor1 {
