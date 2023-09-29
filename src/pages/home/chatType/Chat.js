@@ -443,7 +443,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
               }
             </div>
           </div>}
-          <div className={`feedChatHeading ${!atTop ? "d-none" : "d-flex"} d-flex-Custom`}>
+          <div className={`feedChatHeading ${atTop ? "d-flex" : "d-none"} d-flex-Custom`}>
             <div className="input-container" >
               <i className="fas fa-search search-icon" ></i>
               <input onChange={(e) => {
@@ -463,7 +463,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
           </div>
           {isloading ? (<div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
-          </div>) : (<div className="feedChatUserMsgGroup" style={{ marginTop: "-15px", display: `${!atTop ? "none" : ""}` }}>
+          </div>) : (<div className="feedChatUserMsgGroup" style={{ marginTop: "-15px", display: `${atTop ? "flex" : "none"}` }}>
             <div className="allFeedUser allFeedUserCustom">
               {chatList?.length > 0 && chatList?.map((item, idx) => {
                 let time = moment(item?.updatedAt).fromNow(true).split(" ");

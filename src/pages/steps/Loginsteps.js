@@ -30,7 +30,6 @@ function LoginSteps() {
         let token = pathName[pathName.length - 1];
         serv.updateAccountActivated(token)
             .then((res) => {
-                console.log("RES:", res)
                 if (res.status === true) {
                     setVerificationSuccessPopup(!verificationSuccessPopup)
                     if (user.ProfileUpdates === false) {

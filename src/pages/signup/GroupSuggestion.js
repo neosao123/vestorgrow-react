@@ -15,7 +15,7 @@ const GroupSuggestion = () => {
   const [chatGroupList, setChatGroupList] = useState([]);
   const [reqPrivateId, setReqPrivateId] = useState([]);
   const [reqPublicId, setReqPublicId] = useState([]);
-
+  const [showToolTip, setShowToolTip] = globalCtx.showToolTip;
   const getGroups = async () => {
     let response = await serv.getSuggestedGroups({
       "filter": {
@@ -81,6 +81,7 @@ const GroupSuggestion = () => {
     } else {
       stepServ.updateGroupSuggestions(user._id)
         .then((res) => {
+          setShowToolTip(1)
           navigate("/");
         })
 
