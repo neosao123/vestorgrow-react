@@ -165,9 +165,7 @@ function AllSuggestions({ showModal, closeSuggestionModal }) {
                                                                                     : user.user_name}
                                                                             </span>
                                                                             <span className="title">
-                                                                                {user?.title !== "" ? user?.title?.length > 18
-                                                                                    ? user?.title?.slice(0, 18) + "..."
-                                                                                    : user.title : ""}
+                                                                                {user?.title ? user?.title?.length > 22 ? user?.title?.slice(0, 22) + "..." : user?.title : "Vestorgrow User"}
                                                                             </span>
                                                                             <span className="followers">
                                                                                 {user.followers} Followers

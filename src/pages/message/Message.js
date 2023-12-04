@@ -185,7 +185,7 @@ const Message = () => {
             },
         };
         if (filterText) {
-            obj.filter.userName = filterText;
+            obj.filter.search = filterText;
         }
         try {
             await serv.listAllChat(obj).then((resp) => {
@@ -247,14 +247,19 @@ const Message = () => {
     }
 
     let date = moment(Date()).format("DD MMMM YYYY");
+    useEffect(() => {
+        setTimeout(() => {
+            getChatList();
+        }, 200);
+    }, [filterText])
 
     useEffect(() => {
         getFollowerList();
-        getChatList();
         socket.emit("setup", user);
         socket.on("connected", () => setSocketConnected(true));
         setShowMessage("new");
-    }, [filterText]);
+    }, []);
+
 
     return (
         <>
@@ -342,7 +347,7 @@ const Message = () => {
                     </div>
                     <div
                         className={"messageChatRight messageChatRightCustom position-relative d-md-block " + (chatBlock ? "d-sm-flex d-flex" : "d-sm-none d-none")}
-                        style={{ borderTopRightRadius: "15px"}}
+                        style={{ borderTopRightRadius: "15px" }}
                     >
                         {showMessage === "new" ?
                             (

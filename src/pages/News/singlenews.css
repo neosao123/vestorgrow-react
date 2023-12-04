@@ -249,7 +249,7 @@
 }
 
 
-@media screen and (max-width:1200px) {
+@media screen and  (max-width:1200px) {
     .single_news_main_box {
         left: 0;
     }

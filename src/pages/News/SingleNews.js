@@ -39,7 +39,11 @@ const SingleNews = () => {
 
                         Curabitur dignissim sem gravida sem convallis vestibulum. In hac habitasse platea dictumst. Mauris tincidunt ex id ligula bibendum, congue ultrices erat facilisis. Vestibulum eleifend vitae arcu at aliquam. Donec fringilla hendrerit augue, vitae porttitor neque hendrerit quis. Mauris dictum lacus nec justo convallis, vel efficitur turpis congue. Pellentesque sollicitudin vitae lorem a hendrerit.
 
-                        Morbi ac iaculis mauris, a hendrerit dui. Donec ac turpis orci. Pellentesque pharetra, augue ut blandit ultrices, nulla lectus dignissim purus, eget lobortis sapien nulla nec ligula. Sed id viverra nulla, ut condimentum sapien.
+                        Morbi ac iaculis mauris, a hendrerit dui. Donec ac turpis orci. Pellentesque pharetra, augue ut blandit ultrices, nulla lectus dignissim purus, eget lobortis sapien nulla nec ligula. Sed id viverra nulla, ut condimentum sapien.jkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+                        fddddddddddddddddddddddd
+                        dffffffffffffffffffff
+                        dffffffffffffffffffffdff
+                        dffffffff
                     </div>
                     <div style={{ border: "1px solid red", marginLeft: "20px", marginRight: "20px", marginTop: "20px", padding: "50px 20px" }}>Comments section</div>
                     <div className='showmore_btn'>

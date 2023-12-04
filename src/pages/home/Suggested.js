@@ -138,11 +138,11 @@ function Suggested() {
             See All
           </span>
         </div>
-        <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column" }}>
+        <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column", paddingLeft: "15px", paddingRight: "15px" }}>
           {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user, i) => {
             return (
               <div className={i == 0 ? `profile_box1` : `profile_box`}>
-                <div style={{ display: "flex", paddingLeft: "5px" }} >
+                <div style={{ display: "flex"}} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
                       style={{ height: "48px", width: "48px", marginTop: "15px", borderRadius: "50%" }}

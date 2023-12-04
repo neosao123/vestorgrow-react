@@ -48,7 +48,7 @@ function Profile() {
             </div> 
             */
           }
-          <div className="todayNews">
+          {/* <div className="todayNews">
             <div className="todayNewsInner">
               <div className="todayNewsHead">
                 <h4>VestorGrow News</h4>
@@ -59,7 +59,7 @@ function Profile() {
                 Coming Soon...
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {showUserList && <FollowerFollowingList type={showUserList} onClose={() => setShowUserList(null)} />}

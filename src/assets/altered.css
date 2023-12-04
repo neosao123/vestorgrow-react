@@ -3716,6 +3716,8 @@ body.modal-custom-bg-scrollStop {
   .dynamic-width-custom {
     width: 100%;
     /* --bs-gutter-x: 0; */
+    max-height: 460px;
+    min-height: 460px;
   }
 }
 

@@ -72,7 +72,7 @@ function ChatsType() {
       <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: `${atTop ? "4.4em" : bottom}` }} >
         <div className="feedChatContent" style={{ height: "auto" }} >
           <div className="tab-content">
-            {(user.role.includes("admin") || user.role.includes("userPaid")) && (
+            {(user?.role?.includes("admin") || user?.role?.includes("userPaid")) && (
               <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`}>
                 <GlobalMessage setPremiumChat={setPremiumChat} setMediaFiles={setMediaFiles} />
               </div>

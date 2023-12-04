@@ -59,7 +59,7 @@ export default function GroupChat({
   const [message, setMessage] = useState({
     content: "",
     file: "",
-    sender: user._id,
+    sender: user?._id,
   });
   // const [getMessageData, setGetMessageData] = useState([]);
   // const [showCreateGroup, setShowCreateGroup] = useState(false);

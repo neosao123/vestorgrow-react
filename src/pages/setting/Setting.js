@@ -32,11 +32,11 @@ export default function Setting() {
                   Account
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/setting/billing" className={`nav-link ${page === "billing" && "active"}`}>
                   Account Billing
                 </Link>
-              </li>
+              </li> */}
               {/* <li className="nav-item">
                             <a className="nav-link" data-bs-toggle="tab" href="#notificationSetting">Notification</a>
                         </li> */}
@@ -72,7 +72,7 @@ export default function Setting() {
             <div className="setting_contant" style={{ height: (page === "billing" || page === "block") ? "800px" : "auto" }}>
               <div className="tab-content">
                 {(page === undefined || page === "account") && <AccouctSetting />}
-                {page === "billing" && <BillingSetting />}
+                {/* {page === "billing" && <BillingSetting />} */}
                 {page === "notification" && <NotificationSetting />}
                 {page === "block" && <BlockAccountSetting />}
                 {page === "payment" && <PaymentSetting />}

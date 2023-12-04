@@ -360,10 +360,10 @@ const Profile = () => {
                                 <p className="txtOne mb-0">
                                     {user?.title?.length > 400 ? user?.title?.slice(0, 400) + "..." : user?.title}
                                 </p>
-                                <p className="txtTwo mb-0">
+                                {user?.location && <p className="txtTwo mb-0">
                                     <img src="/images/profile/location.svg" alt="location-tag" />
                                     {user?.location}
-                                </p>
+                                </p>}
                             </div>
                             <div className="followers d-flex" style={{ color: "#06897E", fontWeight: "600" }}>
                                 <div onClick={() => setShowUserList("follower")} >
@@ -417,7 +417,7 @@ const Profile = () => {
                                     <div className="card-body">
                                         {showEditAbout === true ?
                                             (
-                                                <>
+                                                <div style={{ paddingRight: "24px", paddingLeft: "24px" }}>
                                                     <div>
                                                         <h6 className="card-section-title">
                                                             <span className="me-2">Edit About</span>
@@ -425,17 +425,17 @@ const Profile = () => {
                                                         </h6>
                                                     </div>
                                                     <EditAbout onClose={() => setShowEditAbout(false)} />
-                                                </>
+                                                </div>
                                             ) : (
-                                                <>
+                                                <div style={{ paddingLeft: "24px", paddingRight: "24px" }}>
                                                     <h6 className="card-section-title">About</h6>
                                                     <div className="row about_profile">
                                                         {user?.bio && <div className="col-12 mb-3">
                                                             <div className="abt-title">Bio</div>
                                                             <p dangerouslySetInnerHTML={{ __html: user.bio }} />
                                                         </div>}
-                                                        <div className="col-12 mb-4">
-                                                            {user?.investmentInterests.length > 0 && <div className="abt-title">Investment Interests</div>}
+                                                        {user?.investmentInterests?.length > 0 && <div className="col-12 mb-4">
+                                                            <div className="abt-title">Investment Interests</div>
                                                             <div className="investment-keywords">
                                                                 {user?.investmentInterests && user?.investmentInterests.map((item, idx) => {
                                                                     return (
@@ -445,7 +445,7 @@ const Profile = () => {
                                                                     );
                                                                 })}
                                                             </div>
-                                                        </div>
+                                                        </div>}
                                                         {user?.websiteUrl && <div className="col-12 mb-4">
                                                             <img src="/images/icons/globe.svg" alt="globe" className="me-2" />
                                                             <span dangerouslySetInnerHTML={{ __html: user.websiteUrl }} />
@@ -457,7 +457,7 @@ const Profile = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </>
+                                                </div>
                                             )
                                         }
                                     </div>
@@ -470,9 +470,9 @@ const Profile = () => {
                                             <h6 className="card-title">Suggested for you</h6>
                                             <div className="see-all-link" onClick={() => setShowSuggestedProfiles(!showSuggestedProfiles)}>See All</div>
                                         </div>
-                                        <div>
+                                        <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
                                             {
-                                                suggestedUsers && suggestedUsers.map((suggestedUser, index) => {
+                                                suggestedUsers && suggestedUsers?.map((suggestedUser, index) => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;
                                                     if (index < 5) {
                                                         return (
@@ -512,8 +512,8 @@ const Profile = () => {
                                     const youtubeUrl = helperServ.extractYouTubeURL(item?.message);
 
                                     return (
-                                        <div key={idx} className="col-sm-4 col-lg-4 dynamic-width-custom">
-                                            <div className="bgWhiteCard feedBox post_box">
+                                        <div key={idx} className="col-sm-4 col-lg-4 dynamic-width-custom mb-2">
+                                            <div className="bgWhiteCard feedBox post_box" style={{ maxHeight: "460px", minHeight: "460px" }}>
                                                 <div className="feedBoxInner">
                                                     <div className="feedBoxHead d-flex align-items-center">
                                                         <div className="feedBoxHeadLeft">
@@ -681,7 +681,7 @@ const Profile = () => {
                                             <h6 className="card-title">Suggested for you</h6>
                                             <div className="see-all-link" onClick={() => setShowSuggestedProfiles(!showSuggestedProfiles)}>See All</div>
                                         </div>
-                                        <div>
+                                        <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
                                             {
                                                 suggestedUsers && suggestedUsers.map((suggestedUser, index) => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;

@@ -48,15 +48,15 @@
     gap: 15px !important;
     border-top: 0.5px solid #ebeaea !important;
     width: 100% !important;
-    padding: 5px 10px 5px 10px !important;
+    padding: 5px 0px !important;
 }
 
 .profile_box1 {
     display: flex !important;
     gap: 15px !important;
-    border-top: 1px solid #d0cfcf !important;
+    /* border-top: 1px solid #d0cfcf !important; */
     width: 100% !important;
-    padding: 5px 10px 5px 10px !important;
+    padding: 5px 0px !important;
 }
 
 .suggestionboxes {

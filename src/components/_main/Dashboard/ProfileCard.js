@@ -50,7 +50,7 @@ const ProfileCard = ({ ...props }) => {
                 <NavLink to={"/userprofile/" + user?._id}>
                     <h4 className="mb-0" title={user?.user_name}>
                         {user?.user_name.length > 20 ? user?.user_name.slice(0, 20) + "..." : user?.user_name}
-                        {user.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="" /> : ""}{" "}
+                        {user?.role?.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="" /> : ""}{" "}
                     </h4>
                 </NavLink>
                 <p className="txtOne mb-0">
@@ -62,13 +62,13 @@ const ProfileCard = ({ ...props }) => {
             <div className="userFollowerCounter">
                 <Link onClick={() => handleClickFollowersCount("follower")} className="userFollowers">
                     <div className="userFollowersInner">
-                        <h6>{user.followers}</h6>
+                        <h6>{user?.followers}</h6>
                         <span>Followers</span>
                     </div>
                 </Link>
                 <Link onClick={() => handleClickFollowersCount("following")} className="userFollowing">
                     <div className="userFollowingInner">
-                        <h6>{user.following}</h6>
+                        <h6>{user?.following}</h6>
                         <span>Following</span>
                     </div>
                 </Link>
