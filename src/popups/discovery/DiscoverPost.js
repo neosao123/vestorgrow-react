@@ -155,7 +155,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
     }
     setShowCommentDirect((prevState) => !prevState);
   };
-  
+
   const handleFollowRequest = async (userId) => {
     try {
       let resp = await followerServ.sendFollowReq({ followingId: userId });

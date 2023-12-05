@@ -2,6 +2,7 @@ import util from "../util/util";
 import axios from "axios";
 export default class DiscoverService {
   async postList(data) {
+    console.log("DATA1:", data)
     try {
       const category = Object.keys(data).reduce((object, key) => {
         if (data[key] !== "") {
@@ -9,6 +10,7 @@ export default class DiscoverService {
         }
         return object;
       }, {});
+      console.log("CATEGORY1:", category)
       return await util.sendApiRequest("/discover/list", "POST", true, category);
     } catch (err) {
       throw err;

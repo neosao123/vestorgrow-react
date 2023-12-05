@@ -11,6 +11,7 @@ import Playeryoutube from "../../components/Playeryoutube";
 import "./discover.css"
 import ProfilePreview from "../../components/ProfilePreview";
 import Loader from "../../components/Loader";
+import VideoThumbnailComp from "./VideoThumbnail"
 
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 const isVideo = ["mp4"];
@@ -45,6 +46,7 @@ export default function Discover() {
         const obj = { filter: {} };
         obj.filter.is_active = true;
         obj.filter.searchText = searchText;
+        obj.filter.category = category;
         if (sortBy) {
             obj.sortBy = sortBy;
         } else {
@@ -122,9 +124,12 @@ export default function Discover() {
     }
 
     useEffect(() => {
+        console.log("CATEGORY:", category)
         getPostList();
         getTags();
-    }, [searchText]);
+    }, [searchText, category]);
+
+    const handleThumbanail = () => { }
 
     return (
         <div className="socialContantInner d-flex flex-column">
@@ -159,9 +164,9 @@ export default function Discover() {
                                     <button
                                         key={items._id}
                                         className={
-                                            category === items.keyword ? "active-category" : ""
+                                            category === items.keyword.toLowerCase() ? "active-category" : ""
                                         }
-                                        onClick={() => handleClick(items.keyword)}
+                                        onClick={() => handleClick(items.keyword.toLowerCase())}
                                         style={{ textTransform: "capitalize" }}
                                     >
                                         {items.keyword}
@@ -201,10 +206,14 @@ export default function Discover() {
                                                         ></div>
                                                     ) : (
                                                         <div className="grid-video">
-                                                            <VideoImageThumbnail
+                                                            {/* <VideoImageThumbnail
                                                                 videoUrl={item.mediaFiles[0]}
+                                                                thumbnailHandler={(thumbnail) => console.log(thumbnail)}
                                                                 alt="video"
-                                                            />
+                                                            /> */}
+
+                                                            <VideoThumbnailComp videoURL={item?.mediaFiles[0]} />
+
                                                             <div className="video-overlay">
                                                                 <i className="fa-solid fa-film"></i>
                                                             </div>

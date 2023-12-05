@@ -343,7 +343,7 @@ export default function ChatMessage({
                   localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
                   setMessageBoxState(existingArr)
                 }}>
-                  <AiOutlineMinus style={{ color: "black", width: "24px", height: "24px" }} />
+                  <AiOutlineMinus style={{ color: "black"}} className="icon_size" />
                 </div>
               </div>
               <span onClick={() => handleMaximize(chatCompare)}>
@@ -351,7 +351,7 @@ export default function ChatMessage({
                 {expend && <img src={minIcon} alt="dots" className="img-fluid icon_size" />}
               </span>
               <span onClick={onClose}>
-                <img style={{ width: "24px", height: "24px" }} src="images/profile/cross-icon.svg" className="search_cross" alt="" />
+                <img  src="images/profile/cross-icon.svg" className="search_cross icon_size" alt="" />
               </span>
             </div>
           </div>
