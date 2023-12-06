@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import UserService from "../../services/UserService";
 import moment from "moment";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const ValidateSchema = Yup.object().shape({
   user_name: Yup.string().required("Required"),
@@ -11,6 +13,8 @@ const ValidateSchema = Yup.object().shape({
   last_name: Yup.string().required("Required"),
   email: Yup.string().required("Required"),
   date_of_birth: Yup.string(),
+});
+const ValidateSchema1 = Yup.object().shape({
   password: Yup.string(),
   verifyPassword: Yup.string().when("password", {
     is: (password) => password,
@@ -20,7 +24,11 @@ const ValidateSchema = Yup.object().shape({
     is: (password) => password,
     then: Yup.string().required("new password is required"),
   }),
-});
+})
+
+const ValidateSchema2 = Yup.object().shape({
+  otp: Yup.string().required("otp required")
+})
 
 export default function AccouctSetting() {
   const userServ = new UserService();
@@ -28,16 +36,26 @@ export default function AccouctSetting() {
   const [user, setUser] = globalCtx.user;
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg1, setErrorMsg1] = useState("");
+  const [successMsg1, setSuccessMsg1] = useState("");
+  const [OTP, setOtp] = useState("");
   const [initialValue, setInitialValue] = useState({
     user_name: user.user_name || "",
     first_name: user.first_name || "",
     last_name: user.last_name || "",
     email: user.email || "",
-    date_of_birth: moment(user.date_of_birth).format("YYYY-MM-DD") || "",
+    date_of_birth: moment(user.date_of_birth).format("YYYY-MM-DD") || ""
+  });
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [initialValue1, setInitialValue1] = useState({
     password: "",
     verifyPassword: "",
     newPassword: "",
-  });
+  })
 
   const onSubmit = async (values) => {
     setErrorMsg("");
@@ -71,6 +89,59 @@ export default function AccouctSetting() {
     validationSchema: ValidateSchema,
     enableReinitialize: true,
   });
+
+  const onSubmit1 = async (values) => {
+    try {
+      const obj = {
+        email: formik.values.email,
+        username: formik.values.user_name
+      }
+      const resp = await userServ.passUpdateotp(obj);
+      if (resp?.result === true) {
+        handleShow();
+      }
+    } catch (err) {
+      setErrorMsg1(err.response.data.err);
+      console.log(err);
+    }
+  }
+
+  const formik1 = useFormik({
+    initialValues: initialValue1,
+    validateOnBlur: true,
+    onSubmit: onSubmit1,
+    validationSchema: ValidateSchema1,
+    enableReinitialize: true
+  });
+
+  const handleSubmit = async () => {
+    try {
+      let obj = {
+        email: formik.values.email,
+        password: formik1.values.password,
+        username: formik.values.user_name,
+        newPassword: formik1.values.newPassword,
+        verifyPassword: formik1.values.verifyPassword,
+        otp: OTP
+      }
+
+      await userServ.updatePassword(obj)
+        .then((res) => {
+          setSuccessMsg1(res.message)
+          handleClose()
+        })
+        .catch((err) => { handleClose(); console.log(err) })
+    } catch (error) {
+      handleClose();
+      setErrorMsg1(error.message)
+      console.log(error);
+    }
+  }
+
+
+
+
+
   return (
     <>
       <div className="tab-pane active">
@@ -190,79 +261,248 @@ export default function AccouctSetting() {
                     <div className="valid_feedbackMsg">{formik.errors.date_of_birth}</div>
                   ) : null}
                 </div>
-              </div>
-              <div className="customGroup">
-                <div className="commonform commonform_custom-password">
-                  <label className="form-label">Password</label>
-                  {/* <input type="password" className="form-control mb_20" id="userpass" placeholder="Enter current password" />
-                                    <input type="password" className="form-control mb_20" id="usernewpass" placeholder="Enter new password" />
-                                    <input type="password" className="form-control" placeholder="Retype new password" /> */}
-                  <div className="password-setting-field">
-                    <input
-                      type="password"
-                      className={
-                        "form-control mb_20" + (formik.touched.password && formik.errors.password ? " is-invalid" : "")
-                      }
-                      id="userpass"
-                      placeholder="Enter current password"
-                      name="password"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.password}
-                    />
-                    {formik.touched.password && formik.errors.password ? (
-                      <div className="valid_feedbackMsg">{formik.errors.password}</div>
-                    ) : null}
-                    <input
-                      type="password"
-                      className={
-                        "form-control mb_20" +
-                        (formik.touched.newPassword && formik.errors.newPassword ? " is-invalid" : "")
-                      }
-                      id="usernewpass"
-                      placeholder="Enter new password"
-                      name="newPassword"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.newPassword}
-                    />
-                    {formik.touched.newPassword && formik.errors.newPassword ? (
-                      <div className="valid_feedbackMsg">{formik.errors.newPassword}</div>
-                    ) : null}
-                    <input
-                      type="password"
-                      className={
-                        "form-control mb_20" +
-                        (formik.touched.verifyPassword && formik.errors.verifyPassword ? " is-invalid" : "")
-                      }
-                      id="Retype new password"
-                      placeholder="Retype new password"
-                      name="verifyPassword"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.verifyPassword}
-                    />
-                    {formik.touched.verifyPassword && formik.errors.verifyPassword ? (
-                      <div className="valid_feedbackMsg">{formik.errors.verifyPassword}</div>
-                    ) : null}
-                  </div>
+                {errorMsg && <div className="valid_feedbackMsg text-center">{errorMsg}</div>}
+                {successMsg && <div className="valid_feedbackMsg valid_feedbackMsgCustom text-center">{successMsg}</div>}
+                <div className=" profileform_btn pt-4 pt-lg-5 pb-4 settingsaveBtn">
+                  {/* <a href="javascript:void(0)" className="editComm_btn me-3">
+                    {" "}
+                    Cancel
+                  </a> */}
+                  <button href="javascript:void(0);" type="submit" className="btn btnColor">
+                    Save changes
+                  </button>
                 </div>
               </div>
-              {errorMsg && <div className="valid_feedbackMsg text-center">{errorMsg}</div>}
-              {successMsg && <div className="valid_feedbackMsg valid_feedbackMsgCustom text-center">{successMsg}</div>}
-              <div className=" profileform_btn pt-4 pt-lg-5 pb-4 settingsaveBtn">
-                <a href="javascript:void(0)" className="editComm_btn me-3">
-                  {" "}
-                  Cancel
-                </a>
-                <button href="javascript:void(0);" type="submit" className="btn btnColor">
-                  Save changes
-                </button>
+            </form>
+            <form onSubmit={formik1.handleSubmit}>
+              <div className="customGroup1">
+                <div className="mb-3 mb-sm-4 commonform commonform_custom">
+                  <label htmlFor="Old_password" className="form-label">Old Password</label>
+                  <input
+                    type="password"
+                    className={
+                      "form-control mb_20" + (formik1.touched.password && formik1.errors.password ? " is-invalid" : "")
+                    }
+                    id="userpass"
+                    placeholder="Enter current password"
+                    name="password"
+                    onChange={formik1.handleChange}
+                    onBlur={formik1.handleBlur}
+                    value={formik1.values.password}
+                  />
+                  {formik1.touched.password && formik1.errors.password ? (
+                    <div className="valid_feedbackMsg">{formik1.errors.password}</div>
+                  ) : null}
+                </div>
+                <div className="mb-3 mb-sm-4 commonform commonform_custom">
+                  <label htmlFor="New_password" className="form-label">New Password</label>
+                  <input
+                    type="password"
+                    className={
+                      "form-control mb_20" +
+                      (formik1.touched.newPassword && formik1.errors.newPassword ? " is-invalid" : "")
+                    }
+                    id="usernewpass"
+                    placeholder="Enter new password"
+                    name="newPassword"
+                    onChange={formik1.handleChange}
+                    onBlur={formik1.handleBlur}
+                    value={formik1.values.newPassword}
+                  />
+                  {formik1.touched.newPassword && formik1.errors.newPassword ? (
+                    <div className="valid_feedbackMsg">{formik1.errors.newPassword}</div>
+                  ) : null}
+                </div>
+                <div className="mb-3 mb-sm-4 commonform commonform_custom">
+                  <label htmlFor="confirm_password" className="form-label">Confirm Password</label>
+                  <input
+                    type="password"
+                    className={
+                      "form-control mb_20" +
+                      (formik1.touched.verifyPassword && formik1.errors.verifyPassword ? " is-invalid" : "")
+                    }
+                    id="Retype new password"
+                    placeholder="Retype new password"
+                    name="verifyPassword"
+                    onChange={formik1.handleChange}
+                    onBlur={formik1.handleBlur}
+                    value={formik1.values.verifyPassword}
+                  />
+                  {formik1.touched.verifyPassword && formik1.errors.verifyPassword ? (
+                    <div className="valid_feedbackMsg">{formik1.errors.verifyPassword}</div>
+                  ) : null}
+                </div>
+                {/* {otpInput && <div className="mb-3 mb-sm-4 commonform commonform_custom">
+                  <label htmlFor="otp" className="form-label">OTP</label>
+                  <input
+                    type="text"
+                    className={
+                      "form-control mb_20" +
+                      (formik1.touched.verifyPassword && formik1.errors.verifyPassword ? " is-invalid" : "")
+                    }
+                    id="Enter OTP"
+                    placeholder="Enter OTP"
+                    name="otp"
+                    onChange={formik1.handleChange}
+                    onBlur={formik1.handleBlur}
+                    value={formik1.values.verifyPassword}
+                  />
+                  {formik1.touched.verifyPassword && formik1.errors.verifyPassword ? (
+                    <div className="valid_feedbackMsg">{formik1.errors.verifyPassword}</div>
+                  ) : null}
+                </div>} */}
+                {errorMsg1 && <div className="valid_feedbackMsg text-center">{errorMsg1}</div>}
+                {successMsg1 && <div className="valid_feedbackMsg valid_feedbackMsgCustom text-center">{successMsg1}</div>}
+                <div className=" profileform_btn pt-4 pt-lg-5 pb-4 settingsaveBtn">
+                  {/* <a href="javascript:void(0)" className="editComm_btn me-3">
+                    {" "}
+                    Cancel
+                  </a> */}
+                  <button href="javascript:void(0);" type="submit" className="btn btnColor">
+                    Change password
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>OTP Verification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input onChange={(e) => setOtp(e.target.value)} placeholder="Enter OTP" style={{ width: "100%", fontSize: "18px" }} className="px-2 py-1" />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
+
+
+
+
+{/* <div className="customGroup">
+                <div className="commonform commonform_custom-password">
+                  <label className="form-label">Password</label>
+                  {/* <input type="password" className="form-control mb_20" id="userpass" placeholder="Enter current password" />
+                                    <input type="password" className="form-control mb_20" id="usernewpass" placeholder="Enter new password" />
+                                    <input type="password" className="form-control" placeholder="Retype new password" /> */}
+//   <div className="password-setting-field">
+//     <input
+//       type="password"
+//       className={
+//         "form-control mb_20" + (formik.touched.password && formik.errors.password ? " is-invalid" : "")
+//       }
+//       id="userpass"
+//       placeholder="Enter current password"
+//       name="password"
+//       onChange={formik.handleChange}
+//       onBlur={formik.handleBlur}
+//       value={formik.values.password}
+//     />
+//     {formik.touched.password && formik.errors.password ? (
+//       <div className="valid_feedbackMsg">{formik.errors.password}</div>
+//     ) : null}
+//     <input
+//       type="password"
+//       className={
+//         "form-control mb_20" +
+//         (formik.touched.newPassword && formik.errors.newPassword ? " is-invalid" : "")
+//       }
+//       id="usernewpass"
+//       placeholder="Enter new password"
+//       name="newPassword"
+//       onChange={formik.handleChange}
+//       onBlur={formik.handleBlur}
+//       value={formik.values.newPassword}
+//     />
+//     {formik.touched.newPassword && formik.errors.newPassword ? (
+//       <div className="valid_feedbackMsg">{formik.errors.newPassword}</div>
+//     ) : null}
+//     <input
+//       type="password"
+//       className={
+//         "form-control mb_20" +
+//         (formik.touched.verifyPassword && formik.errors.verifyPassword ? " is-invalid" : "")
+//       }
+//       id="Retype new password"
+//       placeholder="Retype new password"
+//       name="verifyPassword"
+//       onChange={formik.handleChange}
+//       onBlur={formik.handleBlur}
+//       value={formik.values.verifyPassword}
+//     />
+//     {formik.touched.verifyPassword && formik.errors.verifyPassword ? (
+//       <div className="valid_feedbackMsg">{formik.errors.verifyPassword}</div>
+//     ) : null}
+//   </div>
+// </div>
+// </div> */}
+
+
+
+
+{/* <div className="commonform commonform_custom-password">
+                  <label className="form-label">Old Password</label>
+                  {/* <input type="password" className="form-control mb_20" id="userpass" placeholder="Enter current password" />
+                                    <input type="password" className="form-control mb_20" id="usernewpass" placeholder="Enter new password" />
+                                    <input type="password" className="form-control" placeholder="Retype new password" /> */}
+// <div className="password-setting-field">
+//   <input
+//     type="password"
+//     className={
+//       "form-control mb_20" + (formik1.touched.password && formik1.errors.password ? " is-invalid" : "")
+//     }
+//     id="userpass"
+//     placeholder="Enter current password"
+//     name="password"
+//     onChange={formik1.handleChange}
+//     onBlur={formik1.handleBlur}
+//     value={formik1.values.password}
+//   />
+//   {formik1.touched.password && formik1.errors.password ? (
+//     <div className="valid_feedbackMsg">{formik1.errors.password}</div>
+//   ) : null}
+//   <input
+//       type="password"
+//       className={
+//         "form-control mb_20" +
+//         (formik1.touched.newPassword && formik1.errors.newPassword ? " is-invalid" : "")
+//       }
+//       id="usernewpass"
+//       placeholder="Enter new password"
+//       name="newPassword"
+//       onChange={formik1.handleChange}
+//       onBlur={formik1.handleBlur}
+//       value={formik1.values.newPassword}
+//     />
+//     {formik1.touched.newPassword && formik1.errors.newPassword ? (
+//       <div className="valid_feedbackMsg">{formik1.errors.newPassword}</div>
+//     ) : null}
+//     <input
+//       type="password"
+//       className={
+//         "form-control mb_20" +
+//         (formik1.touched.verifyPassword && formik1.errors.verifyPassword ? " is-invalid" : "")
+//       }
+//       id="Retype new password"
+//       placeholder="Retype new password"
+//       name="verifyPassword"
+//       onChange={formik1.handleChange}
+//       onBlur={formik1.handleBlur}
+//       value={formik1.values.verifyPassword}
+//     />
+//     {formik1.touched.verifyPassword && formik1.errors.verifyPassword ? (
+//       <div className="valid_feedbackMsg">{formik1.errors.verifyPassword}</div>
+//     ) : null}
+//   </div>
+// </div> */}

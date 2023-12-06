@@ -373,4 +373,24 @@ export default class UserService {
         throw err;
       });
   }
+  async passUpdateotp(payload) {
+    return util
+      .sendApiRequest("/user/updatepassword/otp", "POST", true, payload)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        throw err;
+      })
+  }
+
+  async updatePassword(payload) {
+    return util.sendApiRequest("/user/updatepassword/password", "POST", true, payload)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        throw err
+      })
+  }
 }

@@ -206,17 +206,17 @@ export default function Discover() {
                                                         ></div>
                                                     ) : (
                                                         <div className="grid-video">
-                                                            {/* <VideoImageThumbnail
+                                                            <VideoImageThumbnail
                                                                 videoUrl={item.mediaFiles[0]}
                                                                 thumbnailHandler={(thumbnail) => console.log(thumbnail)}
                                                                 alt="video"
-                                                            /> */}
+                                                            />
 
-                                                            <VideoThumbnailComp videoURL={item?.mediaFiles[0]} />
+                                                            {/* <VideoThumbnailComp videoURL={item?.mediaFiles[0]} /> */}
 
-                                                            <div className="video-overlay">
-                                                                <i className="fa-solid fa-film"></i>
-                                                            </div>
+                                                            {/* <div className="video-overlay"> */}
+                                                                {/* <i className="fa-solid fa-film"></i> */}
+                                                            {/* </div> */}
                                                             {isVideo.includes(item.mediaFiles[0].split(".").pop()) && (
                                                                 <></>
                                                             )}

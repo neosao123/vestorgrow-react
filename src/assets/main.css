@@ -3963,6 +3963,11 @@ div#image-cropper-result img {
   border-bottom: 1px solid #d1d1d1;
 }
 
+.customGroup1 {
+  padding: 32px 0;
+  /* border-bottom: 1px solid #d1d1d1; */
+}
+
 .customGroup .commonform {
   max-width: 480px;
 }

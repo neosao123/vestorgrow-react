@@ -24,7 +24,7 @@ const VideoThumbnailComp = () => {
     <div>
       <video
         ref={videoRef}
-        // controls
+        // controls 
         width="400"
         onLoadedMetadata={() => captureThumbnail()}
       >
