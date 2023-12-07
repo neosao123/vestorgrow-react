@@ -15,19 +15,18 @@ const ValidateSchema = Yup.object().shape({
   date_of_birth: Yup.string(),
 });
 const ValidateSchema1 = Yup.object().shape({
-  password: Yup.string(),
-  verifyPassword: Yup.string().when("password", {
+  password: Yup.string().required("password is required.").min(6, "minimum 6 characters required."),
+  verifyPassword: Yup.string().required("verify password is required").notOneOf([Yup.ref('password')], 'New Password must not be the same as the verify password').min(6, "minimum 6 characters required.").when("password", {
     is: (password) => password,
-    then: Yup.string().required("verify password is required"),
+    then: Yup.string().oneOf(
+      [Yup.ref('newPassword')],
+      'New password must be equal to verify password.'
+    ),
   }),
-  newPassword: Yup.string().when("password", {
+  newPassword: Yup.string().required("new password is required").notOneOf([Yup.ref('password')], 'New Password must not be the same as the new password').min(6, "minimum 6 characters required.").when("password", {
     is: (password) => password,
-    then: Yup.string().required("new password is required"),
+    then: Yup.string(),
   }),
-})
-
-const ValidateSchema2 = Yup.object().shape({
-  otp: Yup.string().required("otp required")
 })
 
 export default function AccouctSetting() {
@@ -133,8 +132,7 @@ export default function AccouctSetting() {
         .catch((err) => { handleClose(); console.log(err) })
     } catch (error) {
       handleClose();
-      setErrorMsg1(error.message)
-      console.log(error);
+      setErrorMsg1(error.err)
     }
   }
 
@@ -277,7 +275,7 @@ export default function AccouctSetting() {
             <form onSubmit={formik1.handleSubmit}>
               <div className="customGroup1">
                 <div className="mb-3 mb-sm-4 commonform commonform_custom">
-                  <label htmlFor="Old_password" className="form-label">Old Password</label>
+                  <label htmlFor="Old_password" className="form-label">Current Password</label>
                   <input
                     type="password"
                     className={
@@ -372,13 +370,13 @@ export default function AccouctSetting() {
           <Modal.Title>OTP Verification</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input onChange={(e) => setOtp(e.target.value)} placeholder="Enter OTP" style={{ width: "100%", fontSize: "18px" }} className="px-2 py-1" />
+          <input onChange={(e) => setOtp(e.target.value)} placeholder="Enter OTP" style={{ width: "100%", fontSize: "18px", borderRadius: "5px" }} className="px-2 py-1" />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose} style={{ borderRadius: "10px" }}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="#00808b" style={{ backgroundColor: "#00808b", color: "white", borderRadius: "10px" }} onClick={handleSubmit}>
             Submit
           </Button>
         </Modal.Footer>

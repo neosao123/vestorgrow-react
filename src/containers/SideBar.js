@@ -119,7 +119,7 @@ function Sidebar() {
           </div>
           <div className="themeMenu themeMenuCustom">
             <ul className="nav flex-column">
-              <li className={"nav-item " + (selectedNavIcon === "/news" ? " active" : "")}>
+              {/* <li className={"nav-item " + (selectedNavIcon === "/news" ? " active" : "")}>
                 <Link className={"nav-link" + (selectedNav === "/news" ? " active" : "")} to="/news">
                   <div className="sideMenu">
                     <div className="menuIcon">
@@ -136,7 +136,7 @@ function Sidebar() {
                   </div>
                 </Link>
                 <div className="activeBar"></div>
-              </li>
+              </li> */}
               <li className={"nav-item " + (selectedNavIcon === "/" ? " active" : "")} onClick={handleClickHome}>
                 <Link className={"nav-link" + (selectedNav === "/" ? " active" : "")} to="/">
                   <div className="sideMenu">
