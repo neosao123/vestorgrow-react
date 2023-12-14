@@ -17,6 +17,9 @@ import UserFollowerService from "../../services/userFollowerService";
 import HelperFunctions from "../../services/helperFunctions";
 import axios from "axios";
 import { toast } from "react-toastify";
+import "./postcategory.css"
+import Form from 'react-bootstrap/Form';
+import "./radiocustomstyle.css"
 
 const serv = new UserService();
 const userFollowerServ = new UserFollowerService();
@@ -25,6 +28,7 @@ const helperFunctions = new HelperFunctions();
 const ValidateSchema = Yup.object().shape({
     // message: Yup.string().required("Required"),
     shareType: Yup.string().required("Required"),
+    category: Yup.string().required("Category is required.")
 });
 
 function fetchUsers(query, callback) {
@@ -63,7 +67,8 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
         message: "",
         mediaFiles: "",
         shareType: "Friends",
-        postKeywords: []
+        postKeywords: [],
+        category: "financial"
     });
 
     useEffect(() => {
@@ -104,6 +109,7 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
                 formData.append("createdBy", user._id);
                 formData.append("mentionedUsers", mentionedUsers);
                 formData.append("postKeywords", values.postKeywords);
+                formData.append("category", values.category);
                 if (Array.isArray(values.mediaFiles)) {
                     values.mediaFiles.forEach((element) => {
                         formData.append("mediaFiles", element);
@@ -189,6 +195,7 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
         }
     };
 
+
     const CustomSuggestion = ({ suggestion, ...props }) => (
         <div {...props} style={{ padding: "5px", display: "flex", alignItems: "center" }}>
             <img src={props.img !== "" ? props.img : "/images/user.png"} alt={props.display} style={{ width: "32px", height: "32px", borderRadius: "16px", marginRight: "5px" }} />
@@ -198,6 +205,7 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
             </div>
         </div>
     );
+
 
     return (
         <>
@@ -292,6 +300,31 @@ export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
                                                                     appendSpaceOnAdd={true}
                                                                 />
                                                             </MentionsInput>
+                                                        </div>
+                                                    </div>
+                                                    <div style={{ display: "flex", alignItems: "center", gap: "25px", marginTop: "10px", marginBottom: "5px" }}>
+                                                        <div className="post_category">Category:</div>
+                                                        <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+                                                            <Form.Check
+                                                                inline
+                                                                label="Financial"
+                                                                value="financial"
+                                                                name="category"
+                                                                type="radio"
+                                                                checked={formik.values.category === "financial"}
+                                                                onChange={formik.handleChange}
+                                                                onBlur={formik.handleBlur}
+                                                            />
+                                                            <Form.Check
+                                                                inline
+                                                                label="Mental"
+                                                                value="mental"
+                                                                name="category"
+                                                                checked={formik.values.category === "mental"}
+                                                                type="radio"
+                                                                onChange={formik.handleChange}
+                                                                onBlur={formik.handleBlur}
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div className="post-tag-parent">

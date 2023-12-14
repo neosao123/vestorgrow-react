@@ -10,6 +10,7 @@ import { SideButtons } from "../components/SideButtons/SideButtons.js";
 import GlobalContext from "../context/GlobalContext";
 import ChatsType from "../pages/home/ChatsType";
 import Loader from "../components/Loader";
+import ChatSidebar from "../components/SideBar/ChatSidebar.js";
 
 
 function DefaultLayout({ children }) {
@@ -25,6 +26,7 @@ function DefaultLayout({ children }) {
   const [loading, setLoading] = globalCtx.Loading
   const navigate = useNavigate()
   const [user, setUser] = globalCtx.user;
+  const [shotChatlist, setShowChatList] = globalCtx.showChatList;
 
 
 
@@ -128,6 +130,8 @@ function DefaultLayout({ children }) {
           pauseOnHover={false}
           theme="light"
         />
+
+        {!shotChatlist && < ChatSidebar />}
 
 
         {(location.pathname === "/" || location.pathname === "/dashboard" || location.pathname === "/discover") && <ChatsType />}

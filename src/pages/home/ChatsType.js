@@ -33,8 +33,8 @@ function ChatsType() {
   const [groupChatRerender, setGroupChatRerender] = useState(false);
   const [mediaFiles, setMediaFiles] = useState([]);
   const [showSentMsg, setShowSentMsg] = useState(false);
-  const [atTop, setAtTop] = useState(false)
   const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
+  const [shotChatlist, setShowChatList] = globalCtx.showChatList;
 
   useEffect(() => {
     if (isAuthentiCated && window.location.pathname.includes("groupinvite") && params?.id) {
@@ -69,8 +69,8 @@ function ChatsType() {
 
   return (
     <>
-      <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: `${atTop ? "4.4em" : bottom}` }} >
-        <div className="feedChatContent" style={{ height: "auto" }} >
+      <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: "4.3em", bottom: 0 }} >
+        <div className={`${shotChatlist ? "feedChatContent" : "feedChatContent1"}`} style={{ height: "auto" }} >
           <div className="tab-content">
             {(user?.role?.includes("admin") || user?.role?.includes("userPaid")) && (
               <div className={`tab-pane ${activeChat === 0 ? "active" : ""}`}>
@@ -78,7 +78,7 @@ function ChatsType() {
               </div>
             )}
             <div className={`tab-pane ${activeChat === 1 ? "active" : ""} chattype-h`} >
-              <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} atTop={atTop} setAtTop={setAtTop} setShowGroupInfo={setShowGroupInfo} />
+              <Chat setMediaFiles={setMediaFiles} setShowSentMsg={showSentMsgPopup} setShowCreateGroup={setShowCreateGroup} setShowGroupInfo={setShowGroupInfo} />
             </div>
             <div className={`tab-pane ${activeChat === 2 ? "active" : ""}`} >
               <GroupChat

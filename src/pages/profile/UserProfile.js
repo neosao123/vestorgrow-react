@@ -351,8 +351,8 @@ const UserProfile = () => {
                     <div className={activeTab === "about" ? "tab-pane active" : "tab-pane"} id="about">
                         <div className="row g-2">
                             <div className="col-sm-12 col-md-7 col-lg-8">
-                                <div className="card border-0">
-                                    <div className="card-body">
+                                <div className="card border-0" style={{ border: "1px solid red" }}>
+                                    <div className="card-body" style={{ marginLeft: "24px", marginRight: "24px" }}>
                                         <h6 className="card-section-title">About</h6>
                                         <div className="row about_profile">
                                             {user?.bio && <div className="col-12 mb-3">
@@ -360,7 +360,7 @@ const UserProfile = () => {
                                                 <p dangerouslySetInnerHTML={{ __html: user?.bio }} />
                                             </div>}
                                             <div className="col-12 mb-4">
-                                                {user?.investmentInterests.length > 0 && <div className="abt-title">Investment Interests</div>}
+                                                {user?.investmentInterests.length > 0 && <div className="abt-title">Personal Development Interests</div>}
                                                 <div className="keyWord mt-3 d-flex">
                                                     {
                                                         user?.investmentInterests && user?.investmentInterests.map((item, idx) => {
@@ -394,7 +394,7 @@ const UserProfile = () => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;
                                                     if (index < 5) {
                                                         return (
-                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx">
+                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx" style={{ marginLeft: "20px", marginRight: "20px" }}>
                                                                 <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
                                                                 <div className="ms-3">
                                                                     <div style={{ fontWeight: "600" }}>
@@ -434,8 +434,8 @@ const UserProfile = () => {
                                     const postReactions = item.postReactions ?? [];
                                     const youtubeUrl = helperServ.extractYouTubeURL(item.message);
                                     return (
-                                        <div className="col-sm-4 col-lg-4 dynamic-width-custom">
-                                            <div className="bgWhiteCard feedBox post_box">
+                                        <div className="col-sm-4 col-lg-4 dynamic-width-custom profile_post_padding">
+                                            <div className="bgWhiteCard feedBox post_box" style={{ maxHeight: "97.5%", minHeight: "97.5%" }}>
                                                 <div className="feedBoxInner">
                                                     <div className="feedBoxHead d-flex align-items-center">
                                                         <div className="feedBoxHeadLeft">
@@ -521,7 +521,8 @@ const UserProfile = () => {
                                                         </div>
                                                     )}
                                                     <div className="postTxt" onClick={() => handlePostPopup(item._id, idx)}>
-                                                        <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />
+                                                        {item?.message && <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />}
+                                                        {!item?.message && <p className="mb-0 postcontent postcontent-custom"><br /></p>}
                                                     </div>
                                                     <div className="likeShareIconCounter">
                                                         <ul className="nav align-items-center">
@@ -578,7 +579,7 @@ const UserProfile = () => {
                     <div className={activeTab === "groups" ? "tab-pane active" : "tab-pane"} id="groups">
                         <div className="row g-2">
                             <div className="col-sm-12 col-md-7 col-lg-8">
-                                <div className="card border-0">
+                                <div className="card border-0" style={{ paddingLeft: "24px", paddingRight: "24px" }}>
                                     <div className="card-body">
                                         <h6 className="card-section-title">Groups</h6>
                                         <div>
@@ -602,7 +603,7 @@ const UserProfile = () => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;
                                                     if (index < 5) {
                                                         return (
-                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx">
+                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx" style={{ marginLeft: "20px", marginRight: "20px" }}>
                                                                 <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
                                                                 <div className="ms-3">
                                                                     <div style={{ fontWeight: "600" }}>

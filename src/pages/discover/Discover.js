@@ -12,6 +12,7 @@ import "./discover.css"
 import ProfilePreview from "../../components/ProfilePreview";
 import Loader from "../../components/Loader";
 import VideoThumbnailComp from "./VideoThumbnail"
+import { Spinner } from "react-bootstrap";
 
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 const isVideo = ["mp4"];
@@ -21,16 +22,23 @@ export default function Discover() {
     const globalCtx = useContext(GlobalContext);
     const [searchText, setSearchText] = globalCtx.searchText;
     const [items, setItems] = useState([{ _id: "1", keyword: "all" }]);
-    const [postList, setPostList] = useState(null);
+    const [postList, setPostList] = useState([]);
     const [sortType, setSortType] = useState("Most Recent");
     const [showPostId, setShowPostId] = useState("");
     const [postIdx, setPostIdx] = useState();
     const [showUserLikedPost, setShowUserLikedPost] = useState(false);
-    const [Loading, setLoading] = useState(false)
+    const [Loading, setLoading] = useState(false);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [activeLink, setActiveLink] = useState("show_all")
 
     const getTags = async () => {
         try {
-            let resp = await discoverServ.getPopularTags();
+            let obj = {
+                category: activeLink
+            }
+            let resp = await discoverServ.getPopularTags(obj);
             if (resp.message === "Keywords Found") {
                 const items = resp.result.data.map((item) => item);
                 setItems([{ _id: "1", keyword: "all" }, ...items]);
@@ -47,17 +55,22 @@ export default function Discover() {
         obj.filter.is_active = true;
         obj.filter.searchText = searchText;
         obj.filter.category = category;
+        obj.filter.maincategory = activeLink;
         if (sortBy) {
             obj.sortBy = sortBy;
         } else {
             obj.sortBy = { createdAt: "desc" };
         }
         try {
-            let resp = await discoverServ.postList(obj);
+            let resp = await discoverServ.postList(obj, page);
             if (resp.data) {
-                setPostList(resp.data);
+                setPostList(prev => [...prev, ...resp.data]);
+                setTotal(resp.total);
+                setTotalPages(resp.totalPages);
+                setLoading(false);
             }
         } catch (err) {
+            setLoading(false);
             console.log(err);
         }
 
@@ -124,18 +137,18 @@ export default function Discover() {
     }
 
     useEffect(() => {
-        console.log("CATEGORY:", category)
         getPostList();
         getTags();
-    }, [searchText, category]);
+    }, [searchText, category, page, activeLink]);
 
-    const handleThumbanail = () => { }
+
+
 
     return (
         <div className="socialContantInner d-flex flex-column">
             <div className="socialContant socialContentCustom">
                 <div className="discoveryHeading discoveryHeading-mobile">
-                    Discover the latest and trending insights within < span className="vestColor" > VestorGrow</span >
+                    Discover the latest and trending insights within< span className="vestColor" > VestorGrow</span >
                 </div >
                 <div className="mostRecent">
                     <div className="dropdown">
@@ -156,6 +169,13 @@ export default function Discover() {
                         </ul>
                     </div>
                 </div>
+                <div className="category_div">
+                    <div className="main_div_category">
+                        <Link className={`${activeLink}` === "show_all" ? "main_category_btn1" : "main_category_btn"} onClick={() => { setPage(1); setPostList([]); setActiveLink("show_all"); setCategory("all") }}>Show All</Link>
+                        <Link className={`${activeLink}` === "financial" ? "main_category_btn1" : "main_category_btn"} onClick={() => { setPage(1); setPostList([]); setActiveLink("financial"); setCategory("all") }}>Financial</Link>
+                        <Link className={`${activeLink}` === "mental" ? "main_category_btn1" : "main_category_btn"} onClick={() => { setPage(1); setPostList([]); setActiveLink("mental"); setCategory("all") }}>Mental</Link>
+                    </div>
+                </div>
                 <div className="dis">
                     <div className="category-btn">
                         {items.map((items) => {
@@ -166,7 +186,7 @@ export default function Discover() {
                                         className={
                                             category === items.keyword.toLowerCase() ? "active-category" : ""
                                         }
-                                        onClick={() => handleClick(items.keyword.toLowerCase())}
+                                        onClick={() => { setPage(1); setPostList([]); handleClick(items.keyword.toLowerCase()) }}
                                         style={{ textTransform: "capitalize" }}
                                     >
                                         {items.keyword}
@@ -175,7 +195,7 @@ export default function Discover() {
                             );
                         })}
                     </div>
-                    <div className="grid_discover">
+                    {Loading ? (<div style={{ display: "flex", justifyContent: "center" }}><Spinner animation="border" variant="primary" /></div>) : (<div className="grid_discover">
                         {filteredPosts &&
                             filteredPosts.map((item, idx) => {
                                 const postMessage = item.message.replace(/<\/?a[^>]*>/g, "");
@@ -206,17 +226,17 @@ export default function Discover() {
                                                         ></div>
                                                     ) : (
                                                         <div className="grid-video">
-                                                            <VideoImageThumbnail
+                                                            {/* <VideoImageThumbnail
                                                                 videoUrl={item.mediaFiles[0]}
                                                                 thumbnailHandler={(thumbnail) => console.log(thumbnail)}
                                                                 alt="video"
-                                                            />
+                                                            /> */}
 
-                                                            {/* <VideoThumbnailComp videoURL={item?.mediaFiles[0]} /> */}
+                                                            <VideoThumbnailComp videoURL={item?.mediaFiles[0]} />
 
-                                                            {/* <div className="video-overlay"> */}
-                                                                {/* <i className="fa-solid fa-film"></i> */}
-                                                            {/* </div> */}
+                                                            <div className="video-overlay">
+                                                                <i className="fa-solid fa-film"></i>
+                                                            </div>
                                                             {isVideo.includes(item.mediaFiles[0].split(".").pop()) && (
                                                                 <></>
                                                             )}
@@ -296,7 +316,11 @@ export default function Discover() {
                                     </div>
                                 );
                             })}
+                    </div>)}
+                    {!Loading && +page < +totalPages && <div className="my-4" style={{ display: "flex", justifyContent: "center" }}>
+                        <button onClick={() => setPage(page => page + 1)} className="px-3 py-1 text-white border border-none" style={{ borderRadius: "20px", backgroundColor: "#00728b" }}>Load More</button>
                     </div>
+                    }
                 </div>
             </div >
             {

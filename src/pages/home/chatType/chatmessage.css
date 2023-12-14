@@ -37,7 +37,8 @@
     padding-bottom: 12px !important;
     width: 100% !important;
     margin-bottom: 5px !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
+    margin-bottom: 10px;
     resize: none !important;
 }
 
@@ -50,7 +51,7 @@
     padding-bottom: 8px !important;
     width: 100% !important;
     margin-bottom: 5px !important;
-    font-size: 18px !important;
+    /* font-size: 18px !important; */
     resize: none !important;
 }
 
@@ -62,4 +63,16 @@
 .icon_size {
     width: 20px !important;
     height: 20px !important;
+}
+
+.chabox_height_textarea_expand {
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: 38em!;
+}
+
+.chabox_height_textarea {
+    display: flex !important;
+    flex-direction: column !important;
+    maxheight: 28.875em !important;
 }

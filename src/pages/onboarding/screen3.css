@@ -1,0 +1,167 @@
+.main_div {
+    padding: 0px 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 52px;
+}
+
+.text_div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.create_account_text {
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 63px;
+    margin-top: 0px !important;
+
+}
+
+.create_account_description {
+    text-align: center;
+    line-height: 22px;
+    font-size: 16px;
+}
+
+.back_btn_screen3 {
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    line-height: 19px !important;
+    margin-top: 5px !important;
+    margin-left: -100px !important;
+}
+
+.otp_div {
+    margin-top: 6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.otp_input_div {
+    max-width: 30em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.otp_input_box {
+    width: 20%;
+    height: 60px;
+    border: 1px solid #D1D1D1;
+    border-radius: 40px;
+}
+
+.input_div {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.create_account_description {
+    text-align: center;
+    font-weight: 500;
+    line-height: 22px;
+    font-size: 16px;
+}
+
+.description_email {
+    color: #00808B;
+}
+
+.otp_text_resend_otp {
+    text-align: center;
+}
+
+.email_text {
+    margin-top: -15px;
+    color: #00808B;
+}
+
+.otp_text_resend_otp {
+    margin-top: 10px;
+}
+
+.code {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #0D1B1D;
+}
+
+.text_code_color {
+    color: #00808B;
+}
+
+.signup_emailorphone {
+    gap: 32px;
+    width: 30em;
+    height: 3.25em;
+    border-radius: 25px;
+    background-color: #00808B;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+
+.opt_div {
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.next_btn {
+    max-width: 30em;
+    width: 100%;
+}
+
+.chage_details_btn {
+    gap: 32px;
+    width: 30em;
+    height: 3.25em;
+    border-radius: 25px;
+    background-color: #ffffff;
+    color: #00808B;
+    border: 1px solid #00808B;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    max-width: 30em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width : 768px) {
+    .text_div {
+        flex-direction: column;
+    }
+
+    .create_account_text {
+        font-size: 40px;
+
+    }
+
+    .otp_div{
+        margin-top: 1em;
+    }
+
+    .back_btn_screen3 {
+        margin-left: 0px !important;
+    }
+}

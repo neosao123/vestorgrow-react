@@ -40,6 +40,13 @@ import LoadingData from "../pages/login/LoadingData";
 import Loginsteps from "../pages/steps/Loginsteps";
 import News from "../pages/News/News";
 import SingleNews from "../pages/News/SingleNews";
+import Screen1 from "../pages/onboarding/Screen1";
+import Screen2 from "../pages/onboarding/Screen2";
+import Screen3 from "../pages/onboarding/Screen3";
+import Screen4 from "../pages/onboarding/Screen4";
+import Screen5 from "../pages/onboarding/Screen5";
+import Screen6 from "../pages/onboarding/Screen6";
+import Describe from "../pages/onboarding/Describe";
 
 function AllRoutes() {
   const serv = new UserService();
@@ -114,6 +121,13 @@ function AllRoutes() {
   ) : (
     <DefaultLayoutWithoutLogin>
       <Routes>
+        <Route exact path="/screen1" element={<Screen1 />} />
+        <Route exact path="/screen2" element={<Screen2 />} />
+        <Route exact path="/screen3" element={<Screen3 />} />
+        <Route exact path="/screen4" element={<Screen4 />} />
+        <Route exact path="/screen5" element={<Screen5 />} />
+        <Route exact path="/screen6" element={<Screen6 />} />
+        <Route exact path="/describe" element={<Describe />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signup/inactive" element={<SignupInactiveLink />} />

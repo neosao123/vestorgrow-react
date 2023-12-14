@@ -418,3 +418,15 @@ body {
     margin-left: 25%;
   }
 }
+
+
+
+.--toastify-icon-color-success {
+  color: #007a8b;
+  background-color: #007a8b;
+}
+
+.--toast-bg {
+  color: #007a8b;
+  background-color: #007a8b;
+}

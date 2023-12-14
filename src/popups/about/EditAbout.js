@@ -118,7 +118,7 @@ export default function EditAbout({ onClose }) {
                         </div>
                         <div className="mb-3 mb-sm-4 commonform">
                             <label htmlFor="invtInt" className="form-label">
-                                Investment Interests
+                            Personal Development Interests
                             </label>
                             <div className="d-flex align-items-center">
                                 <input

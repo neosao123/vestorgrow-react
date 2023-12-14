@@ -36,7 +36,7 @@ const chatServ = new ChatService()
 let socket;
 // let chatCompare = [];
 
-export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, setShowCreateGroup, setShowGroupInfo }) {
+export default function Chat({ setMediaFiles, setShowSentMsg, setShowCreateGroup, setShowGroupInfo }) {
     const navigate = useNavigate();
     const params = useParams();
     const globalCtx = useContext(GlobalContext);
@@ -73,6 +73,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
     const [requestedGroups, setRequestedGroups] = useState([])
     const [updateChatList, setUpdateChatList] = globalCtx.UpdateChat;
     const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
+    const [shotChatlist, setShowChatList] = globalCtx.showChatList;
 
     useEffect(() => {
         getChatList();
@@ -393,7 +394,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
         <>
             <div className="feedChatUser">
                 <div className="chatBoxGroupBottom" >
-                    {atTop && <div className="chatBoxGroupBottom1">
+                    {shotChatlist && <div className="chatBoxGroupBottom1">
                         <div className={`${groupChat ? "active-chattype" : "inactive-chattype"} group-chat`} >
                             <img src={groupImage} />
                             <span className="group-chat-span" onClick={handleGroupChat} >
@@ -410,15 +411,15 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                             </span>
                         </span>
                         </div>
-                        <div className="picaret picaret-left" onClick={() => setAtTop(prev => !prev)}>
-                            {atTop && <h6> <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
+                        <div className="picaret picaret-left" onClick={() => setShowChatList(prev => !prev)}>
+                            {shotChatlist && <h6> <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
 
                             {
-                                !atTop && <h6> <span><PiCaretUpBold className="PiCaret-style" /></span></h6>
+                                !shotChatlist && <h6> <span><PiCaretUpBold className="PiCaret-style" /></span></h6>
                             }
                         </div>
                     </div>}
-                    {!atTop && <div className="chatBoxGroupBottom2">
+                    {!shotChatlist && <div className="chatBoxGroupBottom2">
                         <div className="chatbox-header">
                             <div className="chatbox-header-down">
                                 <img style={{ color: "black" }} src={groupImage} />
@@ -436,14 +437,14 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                             </div>
                         </div>
 
-                        <div className="picaret picaret-bottom" onClick={() => setAtTop(prev => !prev)}>
-                            {atTop && <h6  > <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
+                        <div className="picaret picaret-bottom" onClick={() => setShowChatList(prev => !prev)}>
+                            {shotChatlist && <h6  > <span><PiCaretDownBold className="PiCaret-style" /></span></h6>}
                             {
-                                !atTop && <h6  > <span><PiCaretUpBold className="PiCaret-style" /></span></h6>
+                                !shotChatlist && <h6  > <span><PiCaretUpBold className="PiCaret-style" /></span></h6>
                             }
                         </div>
                     </div>}
-                    <div className={`feedChatHeading ${!atTop ? "d-none" : "d-flex"} d-flex-Custom`}>
+                    <div className={`feedChatHeading ${!shotChatlist ? "d-none" : "d-flex"} d-flex-Custom`}>
                         <div className="input-container" >
                             <i className="fas fa-search search-icon" ></i>
                             <input onChange={(e) => {
@@ -463,7 +464,7 @@ export default function Chat({ atTop, setAtTop, setMediaFiles, setShowSentMsg, s
                     </div>
                     {isloading ? (<div className="spinner-border text-primary" role="status">
                         <span className="visually-hidden">Loading...</span>
-                    </div>) : (<div className="feedChatUserMsgGroup" style={{ marginTop: "-15px", display: `${!atTop ? "none" : ""}` }}>
+                    </div>) : (<div className="feedChatUserMsgGroup" style={{ marginTop: "-15px", display: `${!shotChatlist ? "none" : ""}` }}>
                         <div className="allFeedUser allFeedUserCustom">
                             {chatList?.length > 0 && chatList?.map((item, idx) => {
                                 let time = moment(item?.updatedAt).fromNow(true).split(" ");

@@ -32,7 +32,11 @@ export const GlobalProvider = ({ children }) => {
   const [chatData, setChatData] = useState([])
   const [updateChatList, setUpdateChatList] = useState(false)
   const [groupInfoId, setGroupInfoId] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [shotChatlist, setShowChatList] = useState(false);
+  const [groupChat, setgroupChat] = useState(false);
+  const [personalUnreadCount, setPersonalUnreadCount] = useState(0)
+  const [groupUnreadCount, setGroupUnreadCount] = useState(0);
 
   return (
     <GlobalContext.Provider
@@ -62,7 +66,11 @@ export const GlobalProvider = ({ children }) => {
         ChatDATA: [chatData, setChatData],
         UpdateChat: [updateChatList, setUpdateChatList],
         groupInfoId: [groupInfoId, setGroupInfoId],
-        Loading: [loading, setLoading]
+        Loading: [loading, setLoading],
+        showChatList: [shotChatlist, setShowChatList],
+        isThisGroupChat: [groupChat, setgroupChat],
+        unreadGroupCount: [groupUnreadCount, setGroupUnreadCount],
+        unreadPersonalCount: [personalUnreadCount, setPersonalUnreadCount],
       }}
     >
       {children}

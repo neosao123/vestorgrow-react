@@ -51,3 +51,8 @@
   /* padding-left: 24px !important; */
   /* padding-right: 24px !important; */
 }
+
+.profile_post_padding {
+  padding-right: 0.35rem !important;
+  padding-left: 0.35rem !important;
+}

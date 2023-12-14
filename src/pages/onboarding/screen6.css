@@ -1,0 +1,36 @@
+.main_div{
+    height: auto !important;
+}
+.signup_form {
+    max-width: 30em;
+    width: 100%;
+    height: 28.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.formcontrol1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image_input {
+    border: 1px dashed #00808b;
+    width: 102px;
+    height: 102px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.avatar_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 40px;
+    color: #00808B;
+    border: 1px solid red;
+}

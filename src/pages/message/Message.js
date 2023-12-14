@@ -248,9 +248,7 @@ const Message = () => {
 
     let date = moment(Date()).format("DD MMMM YYYY");
     useEffect(() => {
-        setTimeout(() => {
-            getChatList();
-        }, 200);
+        getChatList();
     }, [filterText])
 
     useEffect(() => {

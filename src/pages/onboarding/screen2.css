@@ -1,0 +1,128 @@
+.main_div {
+    padding: 0px 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.create_account_text {
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 52px;
+    line-height: 63px;
+
+}
+
+.signupformdiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.signup_form {
+    width: 30em;
+    height: 28.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.label {
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 600;
+    color: #0D1B1D;
+}
+
+.form_input {
+    width: 100%;
+    height: 48px;
+    border-radius: 50px;
+    padding: 12px 20px;
+    border: 1px solid #D1D1D1;
+}
+
+.formcontrol {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.formcontrol_text {
+    text-align: center;
+    color: #465D61;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.formcontrol_checkbox {
+    width: 100%;
+    display: flex;
+}
+
+.signupcheckbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 50% !important;
+    cursor: pointer;
+    border: 1px solid #0D1B1D;
+    margin-top: 3px;
+}
+
+.signupcheckbox_text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    margin-left: 5px;
+}
+
+.signup_emailorphone {
+    gap: 32px;
+    width: 100% !important;
+    height: 3.25em;
+    border-radius: 25px;
+    background-color: #00808B;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+
+.checkbox_term {
+    color: #00808B;
+}
+
+
+.checkbox-round {
+    width: 1em;
+    height: 1em;
+    border-radius: 50% !important;
+    cursor: pointer;
+    border: 1px solid #0D1B1D;
+    vertical-align: middle;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+
+.checkbox-round:checked {
+    background-color: #00808B;
+    border: 2px solid #0D1B1D;
+}
+
+
+
+
+
+@media (max-width : 768px) {
+    .signup_form {
+        padding: 20px;
+    }
+}

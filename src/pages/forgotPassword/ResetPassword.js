@@ -43,6 +43,7 @@ function ResetPassword() {
     obj.email = location.state.email;
     try {
       const resp = await serv.resetPassword(obj);
+      console.log("RESP:", resp)
       if (resp?.result) {
         navigate("/login");
       } else {
@@ -69,7 +70,7 @@ function ResetPassword() {
     validationSchema: ValidateSchema,
     enableReinitialize: true,
   });
-  
+
   return (
     <main className="w-100 clearfix socialMediaTheme">
       {/* login page Start*/}

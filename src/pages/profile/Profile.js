@@ -435,7 +435,7 @@ const Profile = () => {
                                                             <p dangerouslySetInnerHTML={{ __html: user.bio }} />
                                                         </div>}
                                                         {user?.investmentInterests?.length > 0 && <div className="col-12 mb-4">
-                                                            <div className="abt-title">Investment Interests</div>
+                                                            <div className="abt-title">Personal Development Interests</div>
                                                             <div className="investment-keywords">
                                                                 {user?.investmentInterests && user?.investmentInterests.map((item, idx) => {
                                                                     return (
@@ -479,7 +479,9 @@ const Profile = () => {
                                                             <div key={"abt-sgu-" + index} className="pfrx-sgx-bx">
                                                                 <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
                                                                 <div className="ms-3">
-                                                                    <div style={{ fontWeight: "600" }}>{suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}</div>
+                                                                    <NavLink to={"/userprofile/" + suggestedUser._id} style={{ color: "#000000", fontSize: "1.0rem", fontWeight: "600" }}>
+                                                                        {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
+                                                                    </NavLink>
                                                                     <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
@@ -512,8 +514,8 @@ const Profile = () => {
                                     const youtubeUrl = helperServ.extractYouTubeURL(item?.message);
 
                                     return (
-                                        <div key={idx} className="col-sm-4 col-lg-4 dynamic-width-custom mb-2">
-                                            <div className="bgWhiteCard feedBox post_box" style={{ maxHeight: "460px", minHeight: "460px" }}>
+                                        <div key={idx} className="col-sm-4 col-lg-4 dynamic-width-custom mb-2 profile_post_padding">
+                                            <div className="bgWhiteCard feedBox post_box" style={{ maxHeight: "99.5%", minHeight: "99.5%" }}>
                                                 <div className="feedBoxInner">
                                                     <div className="feedBoxHead d-flex align-items-center">
                                                         <div className="feedBoxHeadLeft">
@@ -603,7 +605,8 @@ const Profile = () => {
                                                         </div>
                                                     )}
                                                     <div className="postTxt" onClick={() => handlePostPopup(item._id, idx)}>
-                                                        <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />
+                                                        {item?.message && <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />}
+                                                        {!item?.message && <p><br/></p>}
                                                     </div>
                                                     <div className="likeShareIconCounter">
                                                         <ul className="nav">
@@ -662,8 +665,8 @@ const Profile = () => {
                     </div>
                     <div className={activeTab === "groups" ? "tab-pane active" : "tab-pane"} id="groups">
                         <div className="row g-2">
-                            <div className="col-sm-12 col-md-8 col-lg-8">
-                                <div className="card border-0">
+                            <div className="col-sm-12 col-md-8 col-lg-8" >
+                                <div className="card border-0" style={{ paddingLeft: "24px", paddingRight: "24px" }}>
                                     <div className="card-body">
                                         <h6 className="card-section-title">Groups</h6>
                                         <div>

@@ -1,0 +1,146 @@
+.skip_btn {
+    gap: 32px;
+    width: 30em;
+    height: 3.25em;
+    border-radius: 25px;
+    background-color: #ffffff;
+    color: #00808B;
+    border: 1px solid #00808B;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    max-width: 30em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.main_div {
+    padding: 0px 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 52px;
+}
+
+.text_div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.back_btn_screen5 {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 5px;
+    margin-left: -100px;
+}
+
+.create_account_text {
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 63px;
+    margin-top: 0px !important;
+
+}
+
+.create_account_description {
+    text-align: center;
+    font-weight: 500;
+    line-height: 22px;
+    font-size: 16px;
+}
+
+.signupformdiv {
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.signup_form {
+    max-width: 30em;
+    width: 100%;
+    height: 28.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.formcontrol {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.label {
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 600;
+    color: #0D1B1D;
+}
+
+.form_input {
+    width: 100%;
+    height: 48px;
+    border-radius: 50px;
+    padding: 12px 20px;
+    border: 1px solid #D1D1D1;
+}
+
+.opt_div {
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.signup_emailorphone {
+    gap: 32px;
+    width: 30em;
+    height: 3.25em;
+    border-radius: 25px;
+    background-color: #00808B;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+
+.next_btn {
+    max-width: 30em;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+@media (max-width : 768px) {
+    .text_div {
+        flex-direction: column;
+    }
+
+    .back_btn_screen5 {
+        margin-left: 0px;
+    }
+
+    .signup_form {
+        padding: 20px;
+    }
+
+    .create_account_text {
+        font-size: 40px;
+
+    }
+}

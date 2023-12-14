@@ -1,0 +1,13 @@
+.custom-control-input:checked~.custom-control-label::before {
+    background-color: #00808b;
+    border-color: #00808B;
+}
+
+.custom-control-input:checked~.custom-control-label {
+    color: #00808b;
+}
+
+.form-check-input:checked {
+    border-color: #00808B;
+    background-color: #00808B;
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from "react";
+import TextareaAutosize from 'react-textarea-autosize';
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -21,6 +22,7 @@ import minIcon from "../../../assets/images/minimize.svg"
 import "./chatmessage.css"
 const serv = new ChatService();
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
+
 export default function ChatMessage({
   chatId,
   socket,
@@ -54,6 +56,8 @@ export default function ChatMessage({
   const [minimize, setMinimize] = useState(false);
   const [expanded, setExpanded] = globalCtx.expandedArray;
   const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
+  const [row, setRow] = useState(1);
+  const [maxRow, setMaxRow] = useState(4);
 
   // const [mediaFiles, setMediaFiles] = useState([]);
   const [expend, setExpend] = useState(false); //0 for normal 1 for expend 2 for minimize
@@ -219,6 +223,7 @@ export default function ChatMessage({
       });
     }
     setActiveBtn(false);
+    setRow(1);
   };
 
   let date = moment(Date()).format("DD MMMM YYYY");
@@ -270,6 +275,19 @@ export default function ChatMessage({
       }
     }
 
+  }
+
+  const handleChangeMessage = (e) => {
+    if (message.content.length < 28) {
+      setRow(1)
+    }
+    else if (message.content.length < 56) {
+      setRow(2)
+    }
+    else {
+      setRow(3)
+    }
+    setMessage({ ...message, content: e.target.value })
   }
 
   return (
@@ -343,7 +361,7 @@ export default function ChatMessage({
                   localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
                   setMessageBoxState(existingArr)
                 }}>
-                  <AiOutlineMinus style={{ color: "black"}} className="icon_size" />
+                  <AiOutlineMinus style={{ color: "black" }} className="icon_size" />
                 </div>
               </div>
               <span onClick={() => handleMaximize(chatCompare)}>
@@ -351,7 +369,7 @@ export default function ChatMessage({
                 {expend && <img src={minIcon} alt="dots" className="img-fluid icon_size" />}
               </span>
               <span onClick={onClose}>
-                <img  src="images/profile/cross-icon.svg" className="search_cross icon_size" alt="" />
+                <img src="images/profile/cross-icon.svg" className="search_cross icon_size" alt="" />
               </span>
             </div>
           </div>
@@ -599,14 +617,24 @@ export default function ChatMessage({
               id="emojiPickerChat-id-custom"
               style={{ backgroundColor: "white" }}
             >
-              <textarea
+              {/* <textarea
                 className={`form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser ${expend ? "chatmessagebox_textarea1" : "chatmessagebox_textarea2"}`}
-                rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "2" : "3"}
+                rows={row.toString()}
                 type="text"
                 placeholder="Type your message..."
-                onChange={(e) => setMessage({ ...message, content: e.target.value })}
+                onChange={(e) => handleChangeMessage(e)}
                 onKeyDown={handleKeypress}
+                style={{ resize: "none", overflowY: "hidden" }}
 
+                value={message.content}
+              /> */}
+              <TextareaAutosize
+                className={`form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser ${expend ? "chatmessagebox_textarea1" : "chatmessagebox_textarea2"}`}
+                placeholder="Type your message..."
+                type="text"
+                onKeyDown={handleKeypress}
+                onChange={(e) => handleChangeMessage(e)}
+                maxRows={2}
                 value={message.content}
               />
               <div className="chat_message_box_div">

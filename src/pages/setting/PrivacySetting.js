@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import UserService from "../../services/UserService";
+import { FaMobileAlt } from "react-icons/fa";
+import { FaDesktop } from "react-icons/fa";
+const moment = require("moment");
 const userServ = new UserService();
 export default function PrivacySetting() {
   const globalCtx = useContext(GlobalContext);
@@ -230,7 +233,7 @@ export default function PrivacySetting() {
                   <div className="otherUser">
                     <div className="followOtherUser">
                       <div className="followOtherUserPic">
-                        <img src="/images/profile/black_image.png" alt="search" className="img-fluid" />
+                        {item.deviceType === "Desktop" ? <FaDesktop fontSize={"35px"} /> : <FaMobileAlt fontSize={"35px"} />}
                       </div>
                       <div className="followOtherUserName">
                         <h5 className="mb-0">{`${item.device}, ${item?.deviceType} ${item.os}`}</h5>
@@ -240,7 +243,7 @@ export default function PrivacySetting() {
                       </div>
                     </div>
                     <div className="followBtndiv">
-                      {item.isLogin ? (
+                      {/* {item.isLogin ? (
                         <a href="javasript:void(0);" className="btn active_now">
                           Active Now
                         </a>
@@ -248,7 +251,12 @@ export default function PrivacySetting() {
                         <a href="javasript:void(0);" className="btn logout">
                           Logout
                         </a>
-                      )}
+                      )} */}
+                      {
+                        idx === 0 ? (<a href="javasript:void(0);" className="btn active_now">
+                          Active Now
+                        </a>) : (<p>{moment(item?.updatedAt).format("DD MMM YY HH:MM A")}</p>)
+                      }
                     </div>
                   </div>
                 );

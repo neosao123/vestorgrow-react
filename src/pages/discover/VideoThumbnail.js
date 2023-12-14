@@ -1,9 +1,19 @@
 import React, { useRef, useState } from 'react';
 import VideoThumbnail from 'react-video-thumbnail';
+import "./discover.css"
+import { Spinner } from 'react-bootstrap';
 
-const VideoThumbnailComp = () => {
+const VideoThumbnailComp = ({ videoURL }) => {
   const videoRef = useRef(null);
   const [thumbnail, setThumbnail] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
+  const handleLoadedData = () => {
+    setLoading(false);
+  }
+  console.log("LOADING:", loading)
+
 
   const captureThumbnail = () => {
     const videoElement = videoRef.current;
@@ -22,21 +32,31 @@ const VideoThumbnailComp = () => {
 
   return (
     <div>
+      {loading && <div className='mt-2' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Spinner animation='border' />
+      </div>}
       <video
         ref={videoRef}
         // controls 
-        width="400"
+        id="video_post"
         onLoadedMetadata={() => captureThumbnail()}
+        onLoadedData={handleLoadedData}
       >
-        <source src="your-video.mp4" type="video/mp4" />
+        <source src={videoURL} type="video/mp4" />
       </video>
 
-      {thumbnail && (
-        <div>
-          <h2>Thumbnail</h2>
-          <img src={thumbnail} alt="Video Thumbnail" />
-        </div>
-      )}
+      {/* {thumbnail && (
+        <div
+          className="grid-image"
+          style={{
+            backgroundImage: `url(${thumbnail})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            border:"1px solid red"
+          }}
+        ></div>
+      )} */}
     </div>
   );
 };

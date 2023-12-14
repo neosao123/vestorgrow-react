@@ -15,18 +15,28 @@ const ValidateSchema = Yup.object().shape({
   date_of_birth: Yup.string(),
 });
 const ValidateSchema1 = Yup.object().shape({
-  password: Yup.string().required("password is required.").min(6, "minimum 6 characters required."),
-  verifyPassword: Yup.string().required("verify password is required").notOneOf([Yup.ref('password')], 'New Password must not be the same as the verify password').min(6, "minimum 6 characters required.").when("password", {
+  password: Yup.string().required("Password is required.").min(8, "Minimum 8 characters required.").max(20, "Maximum 20 characters allowed."),
+  verifyPassword: Yup.string().required("Confirm password is required").min(8, "Minimum 8 characters required.").max(20, "Maximum 20 characters allowed.").notOneOf([Yup.ref('password')], 'Confirm password must not be the same as the current password').matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+    'Password must contain at least one lowercase letter, one uppercase letter, one symbol, and one number'
+  ).when("password", {
     is: (password) => password,
     then: Yup.string().oneOf(
       [Yup.ref('newPassword')],
       'New password must be equal to verify password.'
     ),
   }),
-  newPassword: Yup.string().required("new password is required").notOneOf([Yup.ref('password')], 'New Password must not be the same as the new password').min(6, "minimum 6 characters required.").when("password", {
+  newPassword: Yup.string().required("New password is required").min(8, "Minimum 8 characters required.").max(20, "Maximum 20 characters allowed.").notOneOf([Yup.ref('password')], 'New password must not be the same as the current password').matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+    'Password must contain at least one lowercase letter, one uppercase letter, one symbol, and one number'
+  ).when("password", {
     is: (password) => password,
     then: Yup.string(),
   }),
+})
+
+const validateSchema2 = Yup.object().shape({
+  otp: Yup.string().required("OTP is required.").length(6, "Invalid OTP")
 })
 
 export default function AccouctSetting() {
@@ -46,15 +56,21 @@ export default function AccouctSetting() {
     date_of_birth: moment(user.date_of_birth).format("YYYY-MM-DD") || ""
   });
   const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   const [initialValue1, setInitialValue1] = useState({
     password: "",
     verifyPassword: "",
     newPassword: "",
   })
+
+  const [inititalValue2, setInitialValue2] = useState({ otp: "" })
+
+  const handleClose = () => {
+    setShow(false);
+    formik2.resetForm();
+    formik1.resetForm();
+    formik.resetForm();
+  };
+  const handleShow = () => setShow(true);
 
   const onSubmit = async (values) => {
     setErrorMsg("");
@@ -113,7 +129,7 @@ export default function AccouctSetting() {
     enableReinitialize: true
   });
 
-  const handleSubmit = async () => {
+  const onSubmit2 = async () => {
     try {
       let obj = {
         email: formik.values.email,
@@ -121,20 +137,35 @@ export default function AccouctSetting() {
         username: formik.values.user_name,
         newPassword: formik1.values.newPassword,
         verifyPassword: formik1.values.verifyPassword,
-        otp: OTP
+        otp: formik2.values.otp
       }
 
       await userServ.updatePassword(obj)
         .then((res) => {
           setSuccessMsg1(res.message)
           handleClose()
+          formik2.resetForm();
+          formik1.resetForm();
+          formik.resetForm();
         })
         .catch((err) => { handleClose(); console.log(err) })
     } catch (error) {
       handleClose();
+      formik2.resetForm();
+      formik1.resetForm();
+      formik.resetForm();
       setErrorMsg1(error.err)
     }
   }
+
+
+  const formik2 = useFormik({
+    initialValues: inititalValue2,
+    validateOnBlur: true,
+    onSubmit: onSubmit2,
+    validationSchema: validateSchema2,
+    enableReinitialize: true
+  })
 
 
 
@@ -261,7 +292,7 @@ export default function AccouctSetting() {
                 </div>
                 {errorMsg && <div className="valid_feedbackMsg text-center">{errorMsg}</div>}
                 {successMsg && <div className="valid_feedbackMsg valid_feedbackMsgCustom text-center">{successMsg}</div>}
-                <div className=" profileform_btn pt-4 pt-lg-5 pb-4 settingsaveBtn">
+                <div className=" profileform_btn pt-1 pt-lg-1 pb-1 settingsaveBtn">
                   {/* <a href="javascript:void(0)" className="editComm_btn me-3">
                     {" "}
                     Cancel
@@ -330,28 +361,9 @@ export default function AccouctSetting() {
                     <div className="valid_feedbackMsg">{formik1.errors.verifyPassword}</div>
                   ) : null}
                 </div>
-                {/* {otpInput && <div className="mb-3 mb-sm-4 commonform commonform_custom">
-                  <label htmlFor="otp" className="form-label">OTP</label>
-                  <input
-                    type="text"
-                    className={
-                      "form-control mb_20" +
-                      (formik1.touched.verifyPassword && formik1.errors.verifyPassword ? " is-invalid" : "")
-                    }
-                    id="Enter OTP"
-                    placeholder="Enter OTP"
-                    name="otp"
-                    onChange={formik1.handleChange}
-                    onBlur={formik1.handleBlur}
-                    value={formik1.values.verifyPassword}
-                  />
-                  {formik1.touched.verifyPassword && formik1.errors.verifyPassword ? (
-                    <div className="valid_feedbackMsg">{formik1.errors.verifyPassword}</div>
-                  ) : null}
-                </div>} */}
                 {errorMsg1 && <div className="valid_feedbackMsg text-center">{errorMsg1}</div>}
                 {successMsg1 && <div className="valid_feedbackMsg valid_feedbackMsgCustom text-center">{successMsg1}</div>}
-                <div className=" profileform_btn pt-4 pt-lg-5 pb-4 settingsaveBtn">
+                <div className=" profileform_btn pt-1 pt-lg-1 pb-1 settingsaveBtn">
                   {/* <a href="javascript:void(0)" className="editComm_btn me-3">
                     {" "}
                     Cancel
@@ -366,20 +378,34 @@ export default function AccouctSetting() {
         </div>
       </div>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>OTP Verification</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input onChange={(e) => setOtp(e.target.value)} placeholder="Enter OTP" style={{ width: "100%", fontSize: "18px", borderRadius: "5px" }} className="px-2 py-1" />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} style={{ borderRadius: "10px" }}>
-            Close
-          </Button>
-          <Button variant="#00808b" style={{ backgroundColor: "#00808b", color: "white", borderRadius: "10px" }} onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Modal.Footer>
+        <form onSubmit={formik2.handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>OTP Verification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <input
+              placeholder="Enter OTP"
+              style={{ width: "100%", fontSize: "18px", borderRadius: "5px" }}
+              className="px-2 py-1"
+              name="otp"
+              type="number"
+              onChange={formik2.handleChange}
+              onBlur={formik2.handleBlur}
+              value={formik2.values.otp}
+            />
+            {formik2.touched.otp && formik2.errors.otp ? (
+              <div className="valid_feedbackMsg">{formik2.errors.otp}</div>
+            ) : null}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose} style={{ borderRadius: "10px" }}>
+              Close
+            </Button>
+            <Button type="submit" variant="#00808b" style={{ backgroundColor: "#00808b", color: "white", borderRadius: "10px" }}>
+              Submit
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
     </>
   );
