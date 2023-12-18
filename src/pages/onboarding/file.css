@@ -15,7 +15,7 @@
     cursor: pointer;
     border-radius: 50%;
     z-index: 1;
-    
+
 }
 
 .file-label {
@@ -31,7 +31,7 @@
     /* Adjust icon width as needed */
     height: 30px;
     /* Adjust icon height as needed */
-    background: url('../../assets/images/logo-2.svg') no-repeat;
+    background: url('../../assets/images/camera_logo.svg') no-repeat;
     /* Replace with the path to your camera icon */
     background-size: cover;
     display: inline-block;

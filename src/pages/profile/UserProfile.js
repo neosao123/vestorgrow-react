@@ -268,12 +268,13 @@ const UserProfile = () => {
                                     ? { backgroundImage: `url(${user?.cover_img})` }
                                     : { backgroundImage: "url(/images/profile/image_cover_profile.png)" }
                             }
-                        ></div>
-                        <div className="profilePic position-relative">
-                            <div className="prf-img-container">
-                                <img className="prf-img" src={user?.profile_img !== "" ? user?.profile_img : "/images/profile/default-profile.png"} alt={user?.user_name} />
-                                <div className="middle" onClick={handleShowEnlarge}>
-                                    <div className="text"><i className="fa fa-external-link fa-2x text-primary"></i></div>
+                        >
+                            <div className="profilePic position-relative">
+                                <div className="prf-img-container" style={{ backgroundColor: "gray", borderRadius: "50%" }}>
+                                    <img className="prf-img" src={user?.profile_img !== "" ? user?.profile_img : "/images/profile/default-profile.png"} alt={user?.user_name} width={"90%"} height={"90%"}/>
+                                    <div className="middle" onClick={handleShowEnlarge}>
+                                        <div className="text"><i className="fa fa-external-link fa-2x text-primary"></i></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,33 @@
+.password_input_box {
+    position: relative;
+}
+
+.eye_icon {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+input[type="password"].mb_20 {
+    margin-bottom: 0px !important;
+}
+
+/* CSS to hide up and down arrows for number input */
+.no-spinners {
+    -moz-appearance: textfield;
+    /* Firefox */
+}
+
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Optional: You can add additional styling for the input if needed */
+.no-spinners {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}

@@ -270,7 +270,7 @@ function Login() {
             </div>
             <div className="loginPara text-center mt-3">
               <p>
-                <a href="javascript:void(0)" className="join" onClick={() => navigate("/signup")}>
+                <a href="javascript:void(0)" className="join" onClick={() => navigate("/screen1")}>
                   <span className="underline_span-text">Join</span>
                 </a>{" "}
                 to unlock the best of VestorGrow.

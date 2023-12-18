@@ -98,7 +98,8 @@ const Screen2 = () => {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.terms_and_condition}
-                        /> <span className='signupcheckbox_text'> By signing up, you agree to the <span className='checkbox_term'> Terms of Service</span></span>
+                        />
+                        <span className='signupcheckbox_text'> By signing up, you agree to the <span className='checkbox_term'> Terms of Service</span></span>
                     </div>
                     {formik.touched.terms_and_condition && formik.errors.terms_and_condition ? <div>
                         {<div className='valid_feedbackMsg'>{formik.errors.terms_and_condition}</div>}

@@ -1,3 +1,57 @@
-.slick-slider{
-    max-width: 40em;
+/* DynamicSlider.css */
+.slider-container {
+    width: 80%;
+    margin: auto;
+}
+
+.slick-slider {
+    height: 400px;
+}
+
+.custom-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    height: 300px !important;
+    max-width: 98% !important;
+    /* margin: auto !important; */
+    margin-left: 1px !important;
+}
+
+.custom-slide1 {
+    background-color: #ffcccb;
+    height: 100% !important;
+    margin: auto !important;
+    /* Custom background color for Slide 1 */
+}
+
+.custom-slide2 {
+    background-color: #b3e0ff;
+    /* Custom background color for Slide 2 */
+}
+
+.custom-slide3 {
+    background-color: #c2f0c2;
+    /* Custom background color for Slide 3 */
+}
+
+
+/* DynamicSlider.css */
+.custom-arrow {
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.custom-prev {
+    /* Add styles for the previous arrow */
+}
+
+.custom-next {
+    /* Add styles for the next arrow */
 }

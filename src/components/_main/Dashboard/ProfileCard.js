@@ -4,6 +4,7 @@ import ProfileImage from "../../../shared/ProfileImage";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import FollowerFollowingList from "../../../popups/followerFollowingList/FollowerFollowingList";
 import UserService from "../../../services/UserService";
+import "./profilecard.css"
 
 
 
@@ -36,12 +37,24 @@ const ProfileCard = ({ ...props }) => {
         <div className="aboutUserBox d-none d-md-block mb-3">
             {
                 user?.cover_img ? (
-                    <div className="profileCoverPic" style={{ backgroundImage: `url(${user.cover_img})` }} />
+                    <div className="profileCoverPic" style={{ backgroundImage: `url(${user.cover_img})` }} >
+                        <div className="profilePic profilePic-custom dash_profile_pic">
+                            <NavLink to={"/userprofile/" + user?._id}>
+                                <ProfileImage url={user?.profile_img} style={user?.profile_img ? { width: "80px", height: "80px", borderRadius: "40px" } : { borderRadius: "30px" }} />
+                            </NavLink>
+                        </div>
+                    </div>
                 ) : (
-                    <div className="profileCoverPic" style={{ backgroundImage: `url(./images/profile/image_cover_profile.png)` }} />
+                    <div className="profileCoverPic" style={{ backgroundImage: `url(./images/profile/image_cover_profile.png)` }} >
+                        <div className="profilePic profilePic-custom dash_profile_pic">
+                            <NavLink to={"/userprofile/" + user?._id}>
+                                <ProfileImage url={user?.profile_img} style={user?.profile_img ? { width: "80px", height: "80px", borderRadius: "40px" } : { borderRadius: "30px" }} />
+                            </NavLink>
+                        </div>
+                    </div>
                 )
             }
-            <div className="profilePic profilePic-custom">
+            <div className="profilePic profilePic-custom" style={{ visibility: "hidden" }}>
                 <NavLink to={"/userprofile/" + user?._id}>
                     <ProfileImage url={user?.profile_img} />
                 </NavLink>

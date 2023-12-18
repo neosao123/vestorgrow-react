@@ -3,6 +3,7 @@ import "./screen1.css"
 import OnboardingHeader from './OnboardingHeader'
 import { GoPerson } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
+import GoogleLogo from "../../assets/images/google_icon.svg"
 
 const Screen1 = () => {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Screen1 = () => {
                     <div className='border_div_line' ></div>
                 </div>
                 <button className='signup_gmail_btn'>
-                    Continue with Google
+                    <img src={GoogleLogo} alt="logo" />{"  "}Continue with Google
                 </button>
                 <p className='redirect_login_text'>Already have an account? <span className='redirect_login_text_singin' onClick={() => navigate("/login")}>Sign in</span></p>
             </div>

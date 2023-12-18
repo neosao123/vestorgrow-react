@@ -3523,8 +3523,8 @@ s .multiplePostRight .multiplePostimg {
 }
 
 .about_profile .profilePic>img {
-  width: 148px;
-  height: 148px;
+  width: 120px;
+  height: 120px;
 }
 
 .about_profile {
@@ -3534,11 +3534,12 @@ s .multiplePostRight .multiplePostimg {
 .about_profile .profilePic {
   text-align: left;
   width: fit-content;
-  margin-left: 0;
+  /* margin-left: 0; */
+  margin: auto;
   top: unset;
-  left: 40px;
-  position: absolute !important;
-  bottom: -70px;
+  /* left: 40px; */
+  /* position: absolute !important; */
+  bottom: -90px;
 }
 
 .edit_btn {
@@ -3560,7 +3561,7 @@ s .multiplePostRight .multiplePostimg {
 .edit_btnImg {
   position: absolute;
   cursor: pointer;
-  right: 0;
+  /* right: 35%; */
   bottom: 0;
 }
 
@@ -4755,12 +4756,12 @@ div#image-cropper-result img {
 }
 
 .profilePic {
-  top: -42px;
+  top: 20px;
 }
 
 .profilePic img {
-  width: 80px;
-  height: 80px;
+  width: 80px !important;
+  height: 80px !important;
 }
 
 .bgWhiteCard.todayNews {

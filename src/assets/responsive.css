@@ -249,7 +249,7 @@
   }
 
   .about_profile .profilePic {
-    bottom: -50px;
+    bottom: -78px;
   }
 
   .usercontentBox {
@@ -1789,8 +1789,8 @@
 
   .edit_profile .about_profile .profilePic,
   .about_profile .profilePic {
-    bottom: -30px;
-    left: 20px;
+    bottom: -37px !important;
+    /* left: 20px; */
   }
 
   .edit_btnImg img {

@@ -66,6 +66,7 @@ const Profile = () => {
 
     const [suggestedUsers, setSuggestedUsers] = useState([]);
     const [showSuggestedProfiles, setShowSuggestedProfiles] = useState(false);
+    const [mousehover, setMouserHover] = useState(false);
 
     const getPostList = async () => {
         const obj = { filter: {} };
@@ -286,6 +287,14 @@ const Profile = () => {
         getSuggestedUsers();
     }, []);
 
+    const handlemouseHover = () => {
+        setMouserHover(true);
+    }
+
+    const handlemouseOut = () => {
+        setMouserHover(false);
+    }
+
     return (
         <div>
             <div className="socialContant profileContent main_container">
@@ -295,10 +304,34 @@ const Profile = () => {
                             className="profileCoverPic mx-0"
                             style={
                                 user?.cover_img
-                                    ? { backgroundImage: `url(${user?.cover_img})` }
-                                    : { backgroundImage: "url(/images/profile/image_cover_profile.png)" }
+                                    ? { backgroundImage: `url(${user?.cover_img})`, backgroundColor: "grey", display: "flex" }
+                                    : { backgroundImage: "url(/images/profile/image_cover_profile.png)", backgroundColor: "grey" }
+
                             }
                         >
+                            <div className="profile_image_pic position-relative  image_div" style={{ borderRadius: "50%" }}
+                                onMouseOver={handlemouseHover}
+                                onMouseOut={handlemouseOut}
+                            >
+                                <div className={`profile_pic_image ${mousehover ? "profile_image_pic_actual1" : "profile_image_pic_actual"}`} style={{ zIndex: 1000 }} id="profile_image"
+                                >
+                                    <ProfileImage url={user?.profile_img} style={{ borderRadius: "80px" }} />
+                                </div>
+                                <div
+                                    className={`edit_btnImg edit_btnImg-customMobile ${mousehover ? "edit_image_btn1" : "edit_image_btn"}`}
+                                    onClick={() => setShowEditProfileImg(user?.profile_img)}
+                                    id="edit_button"
+
+                                >
+                                    <div style={{ margin: "auto" }}>
+                                        <a href="javascript:void(0)" >
+                                            <label htmlFor="profile_image">
+                                                <img src="/images/profile/Edit.svg" alt="Edit Icon" />
+                                            </label>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="edit_btn" onClick={() => setShowEditCoverImg(user?.cover_img)}>
                                 <a href="javascript:void(0)">
                                     <label htmlFor="cover_image">
@@ -307,7 +340,7 @@ const Profile = () => {
                                 </a>
                             </div>
                         </div>
-                        <div className="profilePic position-relative">
+                        {/* <div className="profilePic position-relative" style={{ border: "1px solid blue" }}>
                             <ProfileImage url={user?.profile_img} style={{ borderRadius: "80px" }} />
                             <div
                                 className="edit_btnImg edit_btnImg-customMobile"
@@ -319,7 +352,7 @@ const Profile = () => {
                                     </label>
                                 </a>
                             </div>
-                        </div>
+                        </div> */}
                         {!user?.cover_img && (
                             <input
                                 style={{ display: "none" }}
@@ -606,7 +639,7 @@ const Profile = () => {
                                                     )}
                                                     <div className="postTxt" onClick={() => handlePostPopup(item._id, idx)}>
                                                         {item?.message && <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />}
-                                                        {!item?.message && <p><br/></p>}
+                                                        {!item?.message && <p><br /></p>}
                                                     </div>
                                                     <div className="likeShareIconCounter">
                                                         <ul className="nav">

@@ -146,7 +146,7 @@ export default function Discover() {
 
     return (
         <div className="socialContantInner d-flex flex-column">
-            <div className="socialContant socialContentCustom">
+            <div className="socialContant socialContentCustom" style={{ width: "100%" }}>
                 <div className="discoveryHeading discoveryHeading-mobile">
                     Discover the latest and trending insights within< span className="vestColor" > VestorGrow</span >
                 </div >
@@ -176,8 +176,8 @@ export default function Discover() {
                         <Link className={`${activeLink}` === "mental" ? "main_category_btn1" : "main_category_btn"} onClick={() => { setPage(1); setPostList([]); setActiveLink("mental"); setCategory("all") }}>Mental</Link>
                     </div>
                 </div>
-                <div className="dis">
-                    <div className="category-btn">
+                <div className="dis" >
+                    <div className="category-btn" style={{ width: "100%" }}>
                         {items.map((items) => {
                             return (
                                 <>

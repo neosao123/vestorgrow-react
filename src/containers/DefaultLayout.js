@@ -131,7 +131,7 @@ function DefaultLayout({ children }) {
           theme="light"
         />
 
-        {!shotChatlist && < ChatSidebar />}
+        {!shotChatlist && (location.pathname === "/" || location.pathname === "/dashboard" || location.pathname === "/discover") && < ChatSidebar />}
 
 
         {(location.pathname === "/" || location.pathname === "/dashboard" || location.pathname === "/discover") && <ChatsType />}

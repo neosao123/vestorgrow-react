@@ -6,6 +6,10 @@ import UserService from "../../services/UserService";
 import moment from "moment";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
+import "./accountsetting.css"
+import { toast } from "react-toastify";
 
 const ValidateSchema = Yup.object().shape({
   user_name: Yup.string().required("Required"),
@@ -45,7 +49,6 @@ export default function AccouctSetting() {
   const [user, setUser] = globalCtx.user;
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg1, setErrorMsg1] = useState("");
   const [successMsg1, setSuccessMsg1] = useState("");
   const [OTP, setOtp] = useState("");
   const [initialValue, setInitialValue] = useState({
@@ -62,7 +65,10 @@ export default function AccouctSetting() {
     newPassword: "",
   })
 
-  const [inititalValue2, setInitialValue2] = useState({ otp: "" })
+  const [inititalValue2, setInitialValue2] = useState({ otp: "" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [shownewPassword, setShownewPassword] = useState(false);
+  const [showverifyPassword, setShowVerifyPassword] = useState(false);
 
   const handleClose = () => {
     setShow(false);
@@ -116,7 +122,7 @@ export default function AccouctSetting() {
         handleShow();
       }
     } catch (err) {
-      setErrorMsg1(err.response.data.err);
+      toast.error(err.response.data.err);
       console.log(err);
     }
   }
@@ -142,19 +148,23 @@ export default function AccouctSetting() {
 
       await userServ.updatePassword(obj)
         .then((res) => {
-          setSuccessMsg1(res.message)
-          handleClose()
-          formik2.resetForm();
-          formik1.resetForm();
-          formik.resetForm();
+          if (res.status === 300) {
+            toast.error(res.message)
+          } else {
+            toast.success("Password updated successfully.")
+            handleClose()
+            formik2.resetForm();
+            formik1.resetForm();
+            formik.resetForm();
+          }
         })
-        .catch((err) => { handleClose(); console.log(err) })
+        .catch((err) => { toast.error(err) })
     } catch (error) {
-      handleClose();
-      formik2.resetForm();
-      formik1.resetForm();
-      formik.resetForm();
-      setErrorMsg1(error.err)
+      toast.success(error.err, {
+        position: "top-center",
+        closeOnClick: true,
+        pauseOnHover: true
+      });
     }
   }
 
@@ -166,6 +176,11 @@ export default function AccouctSetting() {
     validationSchema: validateSchema2,
     enableReinitialize: true
   })
+
+  const handleResend = () => {
+    toast.info(`We have sent an OTP to your ${formik.values.email}; please check your inbox for the one-time password`)
+    onSubmit1();
+  }
 
 
 
@@ -307,62 +322,73 @@ export default function AccouctSetting() {
               <div className="customGroup1">
                 <div className="mb-3 mb-sm-4 commonform commonform_custom">
                   <label htmlFor="Old_password" className="form-label">Current Password</label>
-                  <input
-                    type="password"
-                    className={
-                      "form-control mb_20" + (formik1.touched.password && formik1.errors.password ? " is-invalid" : "")
-                    }
-                    id="userpass"
-                    placeholder="Enter current password"
-                    name="password"
-                    onChange={formik1.handleChange}
-                    onBlur={formik1.handleBlur}
-                    value={formik1.values.password}
-                  />
+                  <div className="password_input_box">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className={
+                        "form-control mb_20" + (formik1.touched.password && formik1.errors.password ? " is-invalid" : "")
+                      }
+                      id="userpass"
+                      placeholder=""
+                      name="password"
+                      onChange={formik1.handleChange}
+                      onBlur={formik1.handleBlur}
+                      value={formik1.values.password}
+                    />
+                    {showPassword && <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}><IoEyeOffOutline /></span>}
+                    {!showPassword && <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}><IoEyeOutline /></span>}
+                  </div>
+
                   {formik1.touched.password && formik1.errors.password ? (
                     <div className="valid_feedbackMsg">{formik1.errors.password}</div>
                   ) : null}
                 </div>
                 <div className="mb-3 mb-sm-4 commonform commonform_custom">
                   <label htmlFor="New_password" className="form-label">New Password</label>
-                  <input
-                    type="password"
-                    className={
-                      "form-control mb_20" +
-                      (formik1.touched.newPassword && formik1.errors.newPassword ? " is-invalid" : "")
-                    }
-                    id="usernewpass"
-                    placeholder="Enter new password"
-                    name="newPassword"
-                    onChange={formik1.handleChange}
-                    onBlur={formik1.handleBlur}
-                    value={formik1.values.newPassword}
-                  />
+                  <div className="password_input_box">
+                    <input
+                      type={shownewPassword ? "text" : "password"}
+                      className={
+                        "form-control mb_20" +
+                        (formik1.touched.newPassword && formik1.errors.newPassword ? " is-invalid" : "")
+                      }
+                      id="usernewpass"
+                      placeholder=""
+                      name="newPassword"
+                      onChange={formik1.handleChange}
+                      onBlur={formik1.handleBlur}
+                      value={formik1.values.newPassword}
+                    />
+                    {shownewPassword && <span className="eye_icon" onClick={() => setShownewPassword(!shownewPassword)}><IoEyeOffOutline /></span>}
+                    {!shownewPassword && <span className="eye_icon" onClick={() => setShownewPassword(!shownewPassword)}><IoEyeOutline /></span>}
+                  </div>
                   {formik1.touched.newPassword && formik1.errors.newPassword ? (
                     <div className="valid_feedbackMsg">{formik1.errors.newPassword}</div>
                   ) : null}
                 </div>
                 <div className="mb-3 mb-sm-4 commonform commonform_custom">
                   <label htmlFor="confirm_password" className="form-label">Confirm Password</label>
-                  <input
-                    type="password"
-                    className={
-                      "form-control mb_20" +
-                      (formik1.touched.verifyPassword && formik1.errors.verifyPassword ? " is-invalid" : "")
-                    }
-                    id="Retype new password"
-                    placeholder="Retype new password"
-                    name="verifyPassword"
-                    onChange={formik1.handleChange}
-                    onBlur={formik1.handleBlur}
-                    value={formik1.values.verifyPassword}
-                  />
+                  <div className="password_input_box">
+                    <input
+                      type={showverifyPassword ? "text" : "password"}
+                      className={
+                        "form-control mb_20" +
+                        (formik1.touched.verifyPassword && formik1.errors.verifyPassword ? " is-invalid" : "")
+                      }
+                      id="Retype new password"
+                      placeholder=""
+                      name="verifyPassword"
+                      onChange={formik1.handleChange}
+                      onBlur={formik1.handleBlur}
+                      value={formik1.values.verifyPassword}
+                    />
+                    {showverifyPassword && <span className="eye_icon" onClick={() => setShowVerifyPassword(!showverifyPassword)}><IoEyeOffOutline /></span>}
+                    {!showverifyPassword && <span className="eye_icon" onClick={() => setShowVerifyPassword(!showverifyPassword)}><IoEyeOutline /></span>}
+                  </div>
                   {formik1.touched.verifyPassword && formik1.errors.verifyPassword ? (
                     <div className="valid_feedbackMsg">{formik1.errors.verifyPassword}</div>
                   ) : null}
                 </div>
-                {errorMsg1 && <div className="valid_feedbackMsg text-center">{errorMsg1}</div>}
-                {successMsg1 && <div className="valid_feedbackMsg valid_feedbackMsgCustom text-center">{successMsg1}</div>}
                 <div className=" profileform_btn pt-1 pt-lg-1 pb-1 settingsaveBtn">
                   {/* <a href="javascript:void(0)" className="editComm_btn me-3">
                     {" "}
@@ -386,20 +412,20 @@ export default function AccouctSetting() {
             <input
               placeholder="Enter OTP"
               style={{ width: "100%", fontSize: "18px", borderRadius: "5px" }}
-              className="px-2 py-1"
               name="otp"
               type="number"
               onChange={formik2.handleChange}
               onBlur={formik2.handleBlur}
               value={formik2.values.otp}
+              className="px-2 py-1 no-spinners"
             />
             {formik2.touched.otp && formik2.errors.otp ? (
               <div className="valid_feedbackMsg">{formik2.errors.otp}</div>
             ) : null}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose} style={{ borderRadius: "10px" }}>
-              Close
+            <Button variant="secondary" style={{ borderRadius: "10px" }} onClick={handleResend}>
+              Resend
             </Button>
             <Button type="submit" variant="#00808b" style={{ backgroundColor: "#00808b", color: "white", borderRadius: "10px" }}>
               Submit

@@ -165,3 +165,64 @@
   /* padding-left: 24px !important; */
   /* padding-right: 24px !important; */
 }
+
+/* .profile_pic_image:hover {
+
+} */
+
+/* .edit_image_btn {
+  opacity: 0;
+}*/
+
+.edit_image_btn {
+  /* opacity: 0; */
+  display: none;
+}
+
+.edit_image_btn1 {
+  /* opacity: 1; */
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  margin: auto;
+}
+
+.profile_image_pic_actual {
+  opacity: 1;
+}
+
+.profile_image_pic_actual1 {
+  opacity: 0.3;
+}
+
+.image_div {
+  width: 140px !important;
+  height: 140px !important;
+  background-color: gray;
+  border-radius: 50%;
+}
+
+.profile_image_pic {
+  margin: auto;
+}
+
+@media (min-width: 427px) and (max-width: 1023px) {
+
+  .image_div {
+    width: 115px !important;
+    height: 115px !important;
+    background-color: gray;
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 426px) {
+
+  .image_div {
+    width: 100px !important;
+    height: 100px !important;
+    background-color: gray;
+    border-radius: 50%;
+  }
+}
