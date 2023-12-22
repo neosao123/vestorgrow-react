@@ -1,0 +1,41 @@
+.create_account_description {
+    max-width: 500px;
+    margin: auto;
+    width: 100%;
+}
+
+.subdiv {
+    border: 1px solid red;
+    max-width: 800px;
+    margin: auto;
+    margin-top: 30px;
+    width: 100%;
+    max-height: 60vh !important;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.btn_div {
+    margin: auto;
+}
+
+.next_btn {
+    gap: 32px;
+    width: 30em;
+    height: 3.25em;
+    border-radius: 25px;
+    background-color: #00808B;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+
+.grid_item{
+    max-height: 125px;
+    height: 100%;
+    min-height: 125px;
+}

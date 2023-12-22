@@ -36,7 +36,7 @@
     font-size: 16px;
 }
 
-.opt_div {
+.opt_div1 {
     padding: 0px 0px !important;
     display: flex;
     align-items: center;
@@ -69,15 +69,36 @@
     flex-direction: column;
     align-items: center;
     margin-top: 40px;
+    max-width: 30em;
+    width: 100%;
+    margin: auto;
+}
+
+.formcontrol {
+    max-width: 30em !important;
+    width: 100% !important;
+}
+
+.form_input {
+    width: 100% !important;
 }
 
 .signup_form {
-    max-width: 30em;
+    max-width: 30em !important;
     width: 100%;
     height: 28.5em;
     display: flex;
     flex-direction: column;
     gap: 25px;
+}
+
+.eye_div {
+    position: relative;
+}
+
+.eye_icon {
+    position: absolute;
+    margin-top: 25px;
 }
 
 @media (max-width : 768px) {
@@ -93,6 +114,7 @@
     .signup_form {
         padding: 20px;
     }
+
     .back_btn_screen4 {
         margin-left: 0px;
     }

@@ -31,18 +31,24 @@ function LoginSteps() {
         serv.updateAccountActivated(token)
             .then((res) => {
                 if (res.status === true) {
+                    console.log(res)
                     setVerificationSuccessPopup(!verificationSuccessPopup)
-                    if (user.ProfileUpdates === false) {
-                        navigate(`/signup/active/${token
-                            }`)
+                    if (user.usernameUpdate === false) {
+                        navigate("/add_username")
+                    }
+                    else if (user.profilepictureUpdate === false) {
+                        navigate("/profile_picture")
+                    }
+                    else if (user.bioUpdate === false) {
+                        navigate("/bio")
                     }
                     else if (user.UserSuggestions === false) {
-                        navigate("/usersuggestion")
+                        navigate("/usersuggestions1")
                     }
                     else if (user.groupSuggestion === false) {
-                        navigate("/groupsuggestion")
+                        navigate("/groupsuggestion1")
                     }
-                    else if (user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+                    else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
                         navigate("/")
                     }
                 }

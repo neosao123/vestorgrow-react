@@ -5,6 +5,7 @@
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
+    "@react-oauth/google": "^0.12.1",
     "@stripe/react-stripe-js": "^2.0.0",
     "@stripe/stripe-js": "^1.49.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -15,6 +16,7 @@
     "env-cmd": "^10.1.0",
     "formik": "^2.2.9",
     "framer-motion": "^10.16.1",
+    "jwt-decode": "^4.0.0",
     "linkify-plugin-mention": "^4.1.0",
     "moment": "^2.29.4",
     "ngx-autosize": "^2.0.4",

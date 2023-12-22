@@ -257,6 +257,16 @@ export default class ChatService {
         throw err;
       });
   }
+  tojoinGroup(payload) {
+    return util
+      .sendApiRequest("/chat/tojoingroup", "POST", true, payload)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
   deleteInvitation(payload) {
     return util
       .sendApiRequest("/chat/deleteinvitation", "POST", true, payload)

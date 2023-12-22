@@ -36,9 +36,11 @@ function DefaultLayout({ children }) {
     const isMatchingPath3 = !!match3;
 
     if (
-      location.pathname === "/usersuggestion" ||
-      location.pathname === "/groupsuggestion" ||
-      location.pathname === "/signup/active/:id"
+      location.pathname === "/add_username" ||
+      location.pathname === "/profile_picture" ||
+      location.pathname === "/bio" ||
+      location.pathname === "/usersuggestions1" ||
+      location.pathname === "/groupsuggestion1"
 
     ) {
       setLayoutRequired(false);
@@ -68,18 +70,35 @@ function DefaultLayout({ children }) {
     // objDiv.scrollTop = objDiv.scrollHeight;
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+
+  // <Route exact path="/add_username" element={<Screen5 />} />
+  //       <Route exact path="/update_profile" element={<Screen6 />} />
+  //       <Route exact path="/avatar" element={<Srceen7 />} />
+  //       <Route exact path="/profile_picture" element={<Screen8 />} />
+  //       <Route exact path="/bio" element={<Describe />} />
+  //       <Route exact path="/usersuggestions1" element={<UserSuggestion1 />} />
+  //       <Route exact path="/groupsuggestion1" element={<GroupSuggestion1 />} />
+
+
+
   useEffect(() => {
-    if (user.ProfileUpdates === false) {
-      navigate(`/signup/active/${user.active_token
-        }`)
+    if (user.usernameUpdate === false) {
+      navigate("/add_username")
+    }
+    else if (user.profilepictureUpdate === false) {
+      navigate("/profile_picture")
+    }
+    else if (user.bioUpdate === false) {
+      navigate("/bio")
     }
     else if (user.UserSuggestions === false) {
-      navigate("/usersuggestion")
+      navigate("/usersuggestions1")
     }
     else if (user.groupSuggestion === false) {
-      navigate("/groupsuggestion")
+      navigate("/groupsuggestion1")
     }
-    else if (user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+    else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
       navigate("/")
     }
   }, [])

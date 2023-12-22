@@ -1,14 +1,88 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import OnboardingHeader from './OnboardingHeader'
 import { FaAngleLeft } from 'react-icons/fa'
 import CameraInput from './cameraInput'
 import "./screen6.css"
 import "./file.css"
 import SimpleSlider from './AvatarSlider/slider'
-import { useState } from 'react'
+import { useState } from 'react';
+import GlobalContext from '../../context/GlobalContext'
+import { useEffect } from 'react'
+import EditProfileImage from "../../popups/profile/EditProfileImage";
+import { useNavigate } from 'react-router-dom'
+import OnboardingService from '../../services/onBoardingService'
+
+const sliderImages = [
+    {
+        text: "Cryptocurrency"
+    },
+    {
+        text: "Meditation"
+    },
+    {
+        text: "Commodities"
+    },
+    {
+        text: "Fitness"
+    },
+    {
+        text: "Art"
+    },
+    {
+        text: "Cars"
+    },
+    {
+        text: "Forex"
+    },
+    {
+        text: "Goal Setting"
+    },
+    {
+        text: "Healthy Food"
+    },
+    {
+        text: "Property"
+    },
+    {
+        text: "Watches"
+    },
+    {
+        text: "Wine"
+    },
+    {
+        text: "Self Help"
+    },
+    {
+        text: "Stocks Shares"
+    }
+];
 
 const Screen6 = () => {
-    const [EditprofileImg, setEditProfileImg] = useState(null);
+    const onBoardServ = new OnboardingService();
+    const globalCtx = useContext(GlobalContext);
+    const [editprofileImg, setEditProfileImg] = useState(null);
+    const [SliderHeaderTextIndex, setSliderHeaderTextIndex] = globalCtx.SliderHeaderTextIndex;
+    const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [slideHeader, setSliderHeader] = globalCtx.slideHeader;
+    const [currentSlide, setCurrentSlide] = globalCtx.currentSlide;
+    const navigate = useNavigate();
+
+
+    const handleSkip = () => {
+        let obj = {
+            profilepictureUpdate: true
+        }
+        onBoardServ.skioOnboarding(tempUser._id, obj)
+            .then((res) => {
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        navigate("/bio", { replace: true })
+    }
+
+
+
 
     return (
         <>
@@ -22,20 +96,20 @@ const Screen6 = () => {
                 </div>
                 <p className='create_account_description'>Upload your own photo or choose an avatar below? </p>
             </div>
-            <div className='signupformdiv'>
-                <form className='signup_form1' style={{ width: "30em" }}>
+            <div className=''>
+                <form className='signup_form1'>
                     <div className='formcontrol1'>
-                        <div className='image_input' onClick={() => setEditProfileImg("https://static.vecteezy.com/system/resources/previews/000/566/995/original/vector-person-icon.jpg")}>
+                        <div className='image_input' onClick={() => setEditProfileImg("http://localhost:3000/images/profile/default-profile.png")}>
                             <div
                                 type='file'
                                 id="fileInput"
                                 className="file-input"
                             />
-                            <div class="camera-icon"></div>
+                            <div className="camera-icon"></div>
                         </div>
                     </div>
                     <div className='avatar_div'>
-                        <h1>Cryptocurrency</h1>
+                        <h1>{sliderImages[currentSlide].text}</h1>
                         <div style={{ maxWidth: "30em", width: "100%" }}>
                             <SimpleSlider />
                         </div>
@@ -46,17 +120,20 @@ const Screen6 = () => {
                         </button>
                     </div>
                     <div className='opt_div'>
-                        <button className='skip_btn'>
+                        <button className='skip_btn mb-4' onClick={handleSkip}>
                             Skip
                         </button>
                     </div>
                 </form>
             </div>
-            {
-                EditprofileImg !== null && <EditprofileImg file={"https://static.vecteezy.com/system/resources/previews/000/566/995/original/vector-person-icon.jpg"} onClose={() => setEditProfileImg(null)} />
-            }
+
+            {editprofileImg !== null && <EditProfileImage
+                file={editprofileImg}
+                onClose={() => { setEditProfileImg(null) }}
+                onComplete={() => navigate("/profile_picture")}
+            />}
+
         </>
-        // /images/profile/default-profile.png
     )
 }
 

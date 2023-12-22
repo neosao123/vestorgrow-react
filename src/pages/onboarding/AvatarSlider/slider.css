@@ -14,13 +14,13 @@
     justify-content: center;
     background-color: #ddd;
     height: 300px !important;
-    max-width: 98% !important;
+    max-width: 99% !important;
     /* margin: auto !important; */
     margin-left: 1px !important;
 }
 
 .custom-slide1 {
-    background-color: #ffcccb;
+    background-color: transparent;
     height: 100% !important;
     margin: auto !important;
     /* Custom background color for Slide 1 */
@@ -48,10 +48,51 @@
     cursor: pointer;
 }
 
-.custom-prev {
-    /* Add styles for the previous arrow */
+.slider_height {
+    height: 100;
 }
 
-.custom-next {
-    /* Add styles for the next arrow */
+.slider_height {
+    height: 200px !important;
+}
+
+.image_height {
+    height: 150px !important;
+    width: 150px !important;
+}
+
+
+
+@media (max-width: 426px) {
+    .custom-prev {
+        /* Add styles for the previous arrow */
+        font-size: 10px !important;
+    }
+
+    .custom-next {
+        /* Add styles for the next arrow */
+        font-size: 10px !important;
+    }
+
+    .image_height {
+        height: 70px !important;
+        width: 60px !important;
+    }
+}
+
+@media (min-width: 427px) and (max-width: 1024px) {
+    .custom-prev {
+        /* Add styles for the previous arrow */
+        font-size: 15px !important;
+    }
+
+    .custom-next {
+        /* Add styles for the next arrow */
+        font-size: 15px !important;
+    }
+
+    .image_height {
+        height: 140px !important;
+        width: 140px !important;
+    }
 }

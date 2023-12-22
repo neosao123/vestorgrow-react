@@ -47,6 +47,12 @@ import Screen4 from "../pages/onboarding/Screen4";
 import Screen5 from "../pages/onboarding/Screen5";
 import Screen6 from "../pages/onboarding/Screen6";
 import Describe from "../pages/onboarding/Describe";
+import Srceen7 from "../pages/onboarding/Srceen7";
+import Screen8 from "../pages/onboarding/Screen8";
+import ChangeEmail from "../pages/onboarding/ChangeEmail";
+import UserSuggestion1 from "../pages/onboarding/userSuggestion1";
+import GroupSuggestion1 from "../pages/onboarding/groupSuggestion1";
+import Signup2 from "../pages/onboarding/Signup2";
 
 function AllRoutes() {
   const serv = new UserService();
@@ -114,6 +120,16 @@ function AllRoutes() {
         <Route exact path="/news" element={<News />} />
         <Route exact path="/news/:id" element={<SingleNews />} />
 
+
+        <Route exact path="/add_username" element={<Screen5 />} />
+        <Route exact path="/update_profile" element={<Screen6 />} />
+        <Route exact path="/avatar" element={<Srceen7 />} />
+        <Route exact path="/profile_picture" element={<Screen8 />} />
+        <Route exact path="/bio" element={<Describe />} />
+        <Route exact path="/usersuggestions1" element={<UserSuggestion1 />} />
+        <Route exact path="/groupsuggestion1" element={<GroupSuggestion1 />} />
+        
+
         <Route path="*" element={<Navigate to="/notfound" />} />
 
       </Routes>
@@ -121,15 +137,21 @@ function AllRoutes() {
   ) : (
     <DefaultLayoutWithoutLogin>
       <Routes>
-        <Route exact path="/screen1" element={<Screen1 />} />
-        <Route exact path="/screen2" element={<Screen2 />} />
-        <Route exact path="/screen3" element={<Screen3 />} />
-        <Route exact path="/screen4" element={<Screen4 />} />
-        <Route exact path="/screen5" element={<Screen5 />} />
-        <Route exact path="/screen6" element={<Screen6 />} />
-        <Route exact path="/describe" element={<Describe />} />
+        <Route exact path="/join" element={<Screen1 />} />
+        <Route exact path="/create_account" element={<Screen2 />} />
+        <Route exact path="/email_verification" element={<Screen3 />} />
+        <Route exact path="/update_password" element={<Screen4 />} />
+        <Route exact path="/add_username" element={<Screen5 />} />
+        <Route exact path="/update_profile" element={<Screen6 />} />
+        <Route exact path="/avatar" element={<Srceen7 />} />
+        <Route exact path="/profile_picture" element={<Screen8 />} />
+        <Route exact path="/bio" element={<Describe />} />
+        <Route exact path="/usersuggestions1" element={<UserSuggestion1 />} />
+        <Route exact path="/groupsuggestion1" element={<GroupSuggestion1 />} />
+        <Route exact path="/changeemail" element={<ChangeEmail />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
+        <Route exact path="/signup_auth" element={<Signup2 />} />
         <Route exact path="/signup/inactive" element={<SignupInactiveLink />} />
         <Route exact path="/signup/active/:id" element={<SignupProfile />} />
         <Route exact path="/forgotpassword" element={<ForgotPassword />} />

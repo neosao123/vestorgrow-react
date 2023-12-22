@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./screen2.css"
 import OnboardingHeader from './OnboardingHeader'
 import { GoPerson } from "react-icons/go";
@@ -6,27 +6,66 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from "yup";
+import GlobalContext from '../../context/GlobalContext';
+import OnboardingService from '../../services/onBoardingService';
+import { useEffect } from 'react';
+
 
 const validationSchema = Yup.object({
-    full_name: Yup.string().required("Fullname is required."),
+    full_name: Yup.string()
+        .required('Full name is required')
+        .matches(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'Invalid full name.')
+        .min(2, 'Full name should contain at least two characters'),
     email: Yup.string().required("Email is required.").email("Invalid email.").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email"),
     date_of_birth: Yup.string().required("Date of birth is required."),
-    terms_and_condition: Yup.boolean().oneOf([true], "You must agree to the term and conditions"),
+    terms_and_condition: Yup.boolean().oneOf([true], "You must agree to the terms and service."),
 })
 
 const Screen2 = () => {
+    const onBoardServ = new OnboardingService();
+    const globalCtx = useContext(GlobalContext);
+    const [userEmail, setUserEmail] = globalCtx.UserEmail;
+    const [tempUser, setTempUser] = globalCtx.tempUser;
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [emailPopup, setShowEmailPopup] = globalCtx.emailPopup;
     const [initialValue, setInitialValue] = useState({
         full_name: "",
         email: "",
         date_of_birth: "",
         terms_and_condition: false
+    });
 
-    })
 
-    const onSubmit = async () => {
+    const onSubmit = async (values) => {
+        let obj = {
+            email: values.email,
+            full_name: values.full_name,
+            date_of_birth: new Date(values.date_of_birth).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            })
+        }
+
+        await onBoardServ.signingUp(obj)
+            .then((res) => {
+                localStorage.setItem("user", JSON.stringify(res.user))
+                setTempUser(res.user);
+                setShowEmailPopup(true);
+                if (tempUser.isSocialLogin) {
+                    navigate("/update_password")
+                }
+                else {
+                    navigate("/email_verification", { replace: true })
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
 
     }
+
 
     const formik = useFormik({
         initialValues: initialValue,
@@ -48,7 +87,7 @@ const Screen2 = () => {
             <div className='signupformdiv'>
                 <form className='signup_form' onSubmit={formik.handleSubmit}>
                     <div className='formcontrol'>
-                        <label className='label'>Fullname*</label>
+                        <label className='label'>Full name*</label>
                         <input
                             className='form_input'
                             type='text'

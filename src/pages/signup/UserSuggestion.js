@@ -33,19 +33,18 @@ function UserSuggestion() {
 
   const handleUserSuggestion = async () => {
     try {
-      if (user.following > 0) {
         await stepServ.updateUserSuggestions(user._id)
           .then(async () => {
             const res = await serv.getUser(user._id)
             if (res.data) {
               localStorage.setItem("user", JSON.stringify(res.data))
               setUser({ ...res.data })
-              navigate("/groupsuggestion")
+              navigate("/groupsuggestion1")
             }
           })
 
 
-      }
+      
 
     } catch (err) {
       throw err
@@ -73,15 +72,8 @@ function UserSuggestion() {
         setReqPrivateId((oldId) => [...oldId.filter((i) => i !== res.result.followingId)]);
       } else if (reqPublicId.find((i) => i === id) !== undefined) {
         let res = await followServ.unfollowUser(id);
-        // let resp = await followServ.deleteFollowReq({
-        //   userId: curUser,
-        //   followingId: id,
-        // });
         setReqPublicId((oldId) => [...oldId.filter((i) => i !== id)]);
       }
-      // if (resp.data) {
-      //   setUserList(userList.filter((i) => i._id !== id));
-      // }
       await serv.getUser(user._id)
         .then((res) => {
           localStorage.setItem("user", JSON.stringify(res.data))
@@ -92,46 +84,6 @@ function UserSuggestion() {
       console.log(err);
     }
   };
-
-
-
-  // const handleFollowReq = async (id) => {
-  //   try {
-  //     if (reqPrivateId.find((i) => i === id) === undefined && reqPublicId.find((i) => i === id) === undefined) {
-  //       let followingIdUser = await serv.getUser(id);
-  //       let resp = await followServ.sendFollowReq({
-  //         followingId: id,
-  //       });
-  //       if (followingIdUser.data.setting.private) {
-  //         setReqPrivateId((oldId) => [...oldId, resp.data.followingId]);
-  //       } else if (!followingIdUser.data.setting.private) {
-  //         setReqPublicId((oldId) => [...oldId, resp.data.followingId]);
-  //       }
-
-  //       setCurUser(resp.data.userId);
-  //     } else if (reqPrivateId.find((i) => i === id) !== undefined) {
-  //       let res = await followServ.deleteFollowReq({
-  //         userId: curUser,
-  //         followingId: id,
-  //       });
-  //       setReqPrivateId((oldId) => [...oldId.filter((i) => i !== res.result.followingId)]);
-  //     } else if (reqPublicId.find((i) => i === id) !== undefined) {
-  //       let res = await followServ.unfollowUser(id);
-  //       // let resp = await followServ.deleteFollowReq({
-  //       //   userId: curUser,
-  //       //   followingId: id,
-  //       // });
-  //       setReqPublicId((oldId) => [...oldId.filter((i) => i !== id)]);
-  //     }
-  //     // if (resp.data) {
-  //     //   setUserList(userList.filter((i) => i._id !== id));
-  //     // }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-
 
 
   const handleRemoveUser = (id) => {

@@ -21,6 +21,26 @@ export default class UserFollowerService {
       });
   }
 
+  sendFollowtoReq(obj) {
+    return util
+      .sendApiRequest("/follow/reqtofollow", "POST", true, obj)
+      .then(
+        (response) => {
+          if (!response.error) {
+            return response;
+          } else {
+            return response;
+          }
+        },
+        (error) => {
+          throw new Error(error);
+        }
+      )
+      .catch((e) => {
+        throw e;
+      });
+  }
+
   acceptFollowReq(obj) {
     return util
       .sendApiRequest("/follow", "POST", true, obj)

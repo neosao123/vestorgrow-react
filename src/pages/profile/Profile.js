@@ -295,6 +295,10 @@ const Profile = () => {
         setMouserHover(false);
     }
 
+    const handleShowImage = (img) => {
+        setShowEditProfileImg(img)
+    }
+
     return (
         <div>
             <div className="socialContant profileContent main_container">
@@ -309,19 +313,18 @@ const Profile = () => {
 
                             }
                         >
-                            <div className="profile_image_pic position-relative  image_div" style={{ borderRadius: "50%" }}
+                            <div className="profile_image_pic position-relative profile_image_top_margin image_div" style={{ borderRadius: "50%" }}
                                 onMouseOver={handlemouseHover}
                                 onMouseOut={handlemouseOut}
                             >
-                                <div className={`profile_pic_image ${mousehover ? "profile_image_pic_actual1" : "profile_image_pic_actual"}`} style={{ zIndex: 1000 }} id="profile_image"
+                                <div className={`profile_pic_image profile_pic_image  ${mousehover ? "profile_image_pic_actual1" : "profile_image_pic_actual"}`} id="profile_image"
                                 >
-                                    <ProfileImage url={user?.profile_img} style={{ borderRadius: "80px" }} />
+                                    <ProfileImage url={user?.profile_img} style={{ height: "100%", width: "100%", borderRadius: "80px" }} />
                                 </div>
                                 <div
                                     className={`edit_btnImg edit_btnImg-customMobile ${mousehover ? "edit_image_btn1" : "edit_image_btn"}`}
-                                    onClick={() => setShowEditProfileImg(user?.profile_img)}
                                     id="edit_button"
-
+                                    onClick={() => handleShowImage(user.profile_img ? user.profile_img : "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg")}
                                 >
                                     <div style={{ margin: "auto" }}>
                                         <a href="javascript:void(0)" >
@@ -771,7 +774,6 @@ const Profile = () => {
                     onComplete={handleCoverImage}
                 />
             )}
-
             {showEditProfileImg && (
                 <EditProfileImage
                     file={showEditProfileImg}

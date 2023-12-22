@@ -10,17 +10,20 @@ import "./assets/responsive.css";
 import "./index.css"
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import MetaTag from "./components/MetaTag";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <GlobalProvider>
-      <HelmetProvider>
-        <MetaTag />
-        <App />
-      </HelmetProvider>
-    </GlobalProvider>
+    <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}>
+      <GlobalProvider>
+        <HelmetProvider>
+          <MetaTag />
+          <App />
+        </HelmetProvider>
+      </GlobalProvider>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );
 

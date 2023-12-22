@@ -5,18 +5,34 @@ import "./describe.css"
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
+import OnboardingService from '../../services/onBoardingService';
+import { useContext } from 'react';
+import GlobalContext from '../../context/GlobalContext';
 
 const validationSchema = Yup.object({
     bio: Yup.string().min(20, "Minimum 20 characters required.").max(160, "Maximum 160 characters allowed.")
 })
 
 const Describe = () => {
+    const onBoardServ = new OnboardingService();
+    const globalCtx = useContext(GlobalContext);
     const [initialValue, setInitialValue] = useState({ bio: "" });
+    const [tempUser, setTempUser] = globalCtx.tempUser;
     const navigate = useNavigate();
 
 
     const onSubmit = async (values) => {
-
+        let obj = {
+            id: tempUser._id,
+            bio: formik.values.bio
+        }
+        onBoardServ.updateBio(obj)
+            .then((res) => {
+                setTempUser(res.user);
+                localStorage.setItem("user", JSON.stringify(res.user));
+                navigate("/usersuggestions1")
+            })
+            .catch(error => console.log(error))
     }
 
     const formik = useFormik({
@@ -26,6 +42,20 @@ const Describe = () => {
         onSubmit,
         enableReinitialize: true
     })
+
+
+    const handleSkip = () => {
+        let obj = {
+            bioUpdate: true
+        }
+        onBoardServ.skioOnboarding(tempUser._id, obj)
+            .then((res) => {
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        navigate("/usersuggestions1", { replace: true })
+    }
 
     return (
         <div>
@@ -63,7 +93,7 @@ const Describe = () => {
                                 Next
                             </button>
                         </div>
-                        <div className='opt_div' onClick={() => navigate("/screen5")}>
+                        <div className='opt_div' onClick={handleSkip}>
                             <button className='skip_btn'>
                                 Skip
                             </button>

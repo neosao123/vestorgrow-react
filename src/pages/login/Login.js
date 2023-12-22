@@ -46,16 +46,23 @@ function Login() {
             navigate(hasGroupInvite);
           } else {
             setLoading(false)
-            if (resp.data.ProfileUpdates === false) {
-              navigate(`/signup/active/${resp.data._id}`)
+            if (user.usernameUpdate === false) {
+              navigate("/add_username")
             }
-            else if (resp.data.UserSuggestions === false) {
-              navigate("/usersuggestion")
+            else if (user.profilepictureUpdate === false) {
+              navigate("/profile_picture")
             }
-            else if (resp.data.groupSuggestion === false) {
-              navigate("/groupsuggestion")
+            else if (user.bioUpdate === false) {
+              navigate("/bio")
             }
-            else if (resp.data.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+            else if (user.UserSuggestions === false) {
+              alert("yes1")
+              navigate("/usersuggestions1")
+            }
+            else if (user.groupSuggestion === false) {
+              navigate("/groupsuggestion1")
+            }
+            else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
               navigate("/")
             }
 
@@ -101,17 +108,23 @@ function Login() {
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
             navigate(hasGroupInvite);
           } else {
-            if (user.ProfileUpdates === false) {
-              navigate(`/signup/active/${user.active_token
-                }`)
+            if (user.usernameUpdate === false) {
+              navigate("/add_username")
+            }
+            else if (user.profilepictureUpdate === false) {
+              navigate("/profile_picture")
+            }
+            else if (user.bioUpdate === false) {
+              navigate("/bio")
             }
             else if (user.UserSuggestions === false) {
-              navigate("/usersuggestion")
+              alert("yes")
+              navigate("/usersuggestions1")
             }
             else if (user.groupSuggestion === false) {
-              navigate("/groupsuggestion")
+              navigate("/groupsuggestion1")
             }
-            else if (user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+            else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
               navigate("/")
             }
           }
@@ -147,7 +160,7 @@ function Login() {
   });
 
   return loading ? <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", maxHeight: "100vh" }}><Loader /></div> : (
-    <main className="w-100 clearfix socialMediaTheme" style={{height:"100vh"}}>
+    <main className="w-100 clearfix socialMediaTheme" style={{ height: "100vh" }}>
       {/* login page Start*/}
       <div className="loginpage d-flex">
         <div className="loginForm_left loginForm_left_flex">
@@ -270,7 +283,7 @@ function Login() {
             </div>
             <div className="loginPara text-center mt-3">
               <p>
-                <a href="javascript:void(0)" className="join" onClick={() => navigate("/screen1")}>
+                <a href="javascript:void(0)" className="join" onClick={() => navigate("/join")}>
                   <span className="underline_span-text">Join</span>
                 </a>{" "}
                 to unlock the best of VestorGrow.

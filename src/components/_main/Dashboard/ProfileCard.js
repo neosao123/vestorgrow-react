@@ -38,15 +38,15 @@ const ProfileCard = ({ ...props }) => {
             {
                 user?.cover_img ? (
                     <div className="profileCoverPic" style={{ backgroundImage: `url(${user.cover_img})` }} >
-                        <div className="profilePic profilePic-custom dash_profile_pic">
+                        <div className="profilePic profilePic-custom dash_profile_pic profilePic_profile_card" style={{ margin: "auto" }}>
                             <NavLink to={"/userprofile/" + user?._id}>
-                                <ProfileImage url={user?.profile_img} style={user?.profile_img ? { width: "80px", height: "80px", borderRadius: "40px" } : { borderRadius: "30px" }} />
+                                <ProfileImage url={user?.profile_img} isAvatar={user?.isAvatar} style={user?.profile_img ? { width: "80px", height: "80px", borderRadius: "40px" } : { borderRadius: "30px" }} />
                             </NavLink>
                         </div>
                     </div>
                 ) : (
                     <div className="profileCoverPic" style={{ backgroundImage: `url(./images/profile/image_cover_profile.png)` }} >
-                        <div className="profilePic profilePic-custom dash_profile_pic">
+                        <div className="profilePic profilePic-custom dash_profile_pic" style={{ margin: "auto" }}>
                             <NavLink to={"/userprofile/" + user?._id}>
                                 <ProfileImage url={user?.profile_img} style={user?.profile_img ? { width: "80px", height: "80px", borderRadius: "40px" } : { borderRadius: "30px" }} />
                             </NavLink>
@@ -54,7 +54,7 @@ const ProfileCard = ({ ...props }) => {
                     </div>
                 )
             }
-            <div className="profilePic profilePic-custom" style={{ visibility: "hidden" }}>
+            <div className="profilePic profilePic-custom" style={{ visibility: "hidden", margin: "auto" }}>
                 <NavLink to={"/userprofile/" + user?._id}>
                     <ProfileImage url={user?.profile_img} />
                 </NavLink>
