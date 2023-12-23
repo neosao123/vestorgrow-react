@@ -171,7 +171,7 @@ const NewChat = ({ ...props }) => {
                                                         >
                                                             <div className="followOtherUser">
                                                                 <div className="followOtherUserPic">
-                                                                    <ProfileImage url={item.userId.profile_img} />
+                                                                    <ProfileImage url={item.userId.profile_img} style={user?.profile_img ? { width: "64px", borderRadius: "32px" } : { borderRadius: "30px" }} />
                                                                 </div>
                                                                 <div className="followOtherUserName">
                                                                     <h5 className="mb-0">{item.userId?.user_name}</h5>

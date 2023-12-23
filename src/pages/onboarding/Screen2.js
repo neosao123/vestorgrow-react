@@ -17,7 +17,7 @@ const validationSchema = Yup.object({
         .matches(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'Invalid full name.')
         .min(2, 'Full name should contain at least two characters'),
     email: Yup.string().required("Email is required.").email("Invalid email.").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email"),
-    date_of_birth: Yup.string().required("Date of birth is required."),
+    date_of_birth: Yup.date().required("Date of birth is required.").max(new Date(), 'Date must be less than today'),
     terms_and_condition: Yup.boolean().oneOf([true], "You must agree to the terms and service."),
 })
 
@@ -29,6 +29,7 @@ const Screen2 = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [emailPopup, setShowEmailPopup] = globalCtx.emailPopup;
+    const [emailError, setEmailError] = useState("");
     const [initialValue, setInitialValue] = useState({
         full_name: "",
         email: "",
@@ -38,6 +39,7 @@ const Screen2 = () => {
 
 
     const onSubmit = async (values) => {
+        setEmailError("")
         let obj = {
             email: values.email,
             full_name: values.full_name,
@@ -50,13 +52,14 @@ const Screen2 = () => {
 
         await onBoardServ.signingUp(obj)
             .then((res) => {
-                localStorage.setItem("user", JSON.stringify(res.user))
-                setTempUser(res.user);
-                setShowEmailPopup(true);
-                if (tempUser.isSocialLogin) {
-                    navigate("/update_password")
+                if (res.message === "This email is already registered.") {
+                    setEmailError(res.message)
                 }
                 else {
+                    setEmailError("")
+                    localStorage.setItem("user", JSON.stringify(res.user))
+                    setTempUser(res.user);
+                    setShowEmailPopup(true);
                     navigate("/email_verification", { replace: true })
                 }
             })
@@ -74,6 +77,10 @@ const Screen2 = () => {
         onSubmit,
         enableReinitialize: true
     })
+
+    useEffect(() => {
+        setEmailError("")
+    }, [formik.values.email])
 
     return (
         <>
@@ -113,6 +120,7 @@ const Screen2 = () => {
                         {formik.touched.email && formik.errors.email ? <div>
                             {<div className='valid_feedbackMsg'>{formik.errors.email}</div>}
                         </div> : null}
+                        {!formik.errors.email && emailError !== "" && <div className='valid_feedbackMsg'>{emailError}</div>}
                     </div>
                     <div className='formcontrol'>
                         <label className='label'>Date of birth*</label>

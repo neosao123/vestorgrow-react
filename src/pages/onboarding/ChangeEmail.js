@@ -10,6 +10,7 @@ import { useContext } from 'react'
 import OnboardingService from '../../services/onBoardingService';
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useEffect } from 'react'
 
 
 const validationSchema = Yup.object({
@@ -27,6 +28,7 @@ const ChangeEmail = () => {
     const [tempUser, setTempUser] = globalCtx.tempUser;
 
     const onSubmit = () => {
+        setError("")
         let obj = {
             id: tempUser._id,
             email: formik.values.email
@@ -55,6 +57,10 @@ const ChangeEmail = () => {
         enableReinitialize: true
     })
 
+    useEffect(() => {
+        setError("");
+    }, [formik.values.email])
+
     return (
         <>
             <div>
@@ -82,7 +88,7 @@ const ChangeEmail = () => {
                         {formik.touched.email && formik.errors.email ? <div>
                             {<div className='valid_feedbackMsg'>{formik.errors.email}</div>}
                         </div> : null}
-                        {error !== "" && <div className='valid_feedbackMsg'>{error}</div>}
+                        {!formik.errors.email && error !== "" && <div className='valid_feedbackMsg'>{error}</div>}
                     </div>
                     <div className='opt_div'>
                         <button className='signup_emailorphone next_btn' type='submit'>

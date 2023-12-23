@@ -37,7 +37,7 @@ function LoginSteps() {
                         navigate("/add_username")
                     }
                     else if (user.profilepictureUpdate === false) {
-                        navigate("/profile_picture")
+                        navigate("/update_profile")
                     }
                     else if (user.bioUpdate === false) {
                         navigate("/bio")

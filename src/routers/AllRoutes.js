@@ -87,51 +87,50 @@ function AllRoutes() {
   return isAuthentiCated ? (
     <DefaultLayout>
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/dashboard" element={<HomePage />} />
-        <Route exact path="/learning" element={<Learning />} />
-        <Route exact path="/learning/locked" element={<LearningLocked />} />
-        <Route exact path="/learning/lesson/:id" element={<Lesson />} />
-        <Route exact path="/learning/course/viewall" element={<CourseViewAll />} />
-        <Route exact path="/learning/material/:id" element={<Material />} />
-        <Route exact path="/learning/material/viewall" element={<MaterialViewAll />} />
-        <Route exact path="/learning/webinar/viewall" element={<WebinarViewAll />} />
-        <Route exact path="/discover" element={<Discover />} />
-        <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/userprofile/:id" element={<UserProfile />} />
-        <Route exact path="/setting" element={<Setting />} />
-        <Route exact path="/setting/:page" element={<Setting />} />
-        <Route exact path="/createpost" element={<CreatePostMobile />} />
-        <Route exact path="/post/:id" element={<PostDetail />} />
-        <Route exact path="/message" element={<Message />} />
-        <Route exact path="/message/:id" element={<Message />} />
-        <Route exact path="/message/show/:chat_id/:message_id" element={<Message />} />
-        {/* <Route exact path="/globalmessage" element={<GlobalMessage />} /> */}
-        <Route exact path="/globalmessage" element={<GlobalMessageMobile />} />
-        <Route exact path="/groupmessage" element={<GroupChatMobile />} />
-        <Route exact path="/notfound" element={<NotFound />} />
-        <Route exact path="/payment" element={<StripeContainer />} />
-        <Route exact path="/usersuggestion" element={<UserSuggestion />} />
-        <Route exact path="/groupsuggestion" element={<GroupSuggestion />} />
-        <Route exact path="/groupinvite/:id" element={<GroupInvite />} />
-        <Route exact path="/signin/inactive" element={<LoginInactive />} />
-        <Route exact path="/signin/active/:id" element={<Loginsteps />} />
-        <Route exact path="/signup/active/:id" element={<SignupProfile />} />
-        <Route exact path="/news" element={<News />} />
-        <Route exact path="/news/:id" element={<SingleNews />} />
+          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/dashboard" element={<HomePage />} />
+          <Route exact path="/learning" element={<Learning />} />
+          <Route exact path="/learning/locked" element={<LearningLocked />} />
+          <Route exact path="/learning/lesson/:id" element={<Lesson />} />
+          <Route exact path="/learning/course/viewall" element={<CourseViewAll />} />
+          <Route exact path="/learning/material/:id" element={<Material />} />
+          <Route exact path="/learning/material/viewall" element={<MaterialViewAll />} />
+          <Route exact path="/learning/webinar/viewall" element={<WebinarViewAll />} />
+          <Route exact path="/discover" element={<Discover />} />
+          <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/userprofile/:id" element={<UserProfile />} />
+          <Route exact path="/setting" element={<Setting />} />
+          <Route exact path="/setting/:page" element={<Setting />} />
+          <Route exact path="/createpost" element={<CreatePostMobile />} />
+          <Route exact path="/post/:id" element={<PostDetail />} />
+          <Route exact path="/message" element={<Message />} />
+          <Route exact path="/message/:id" element={<Message />} />
+          <Route exact path="/message/show/:chat_id/:message_id" element={<Message />} />
+          {/* <Route exact path="/globalmessage" element={<GlobalMessage />} /> */}
+          <Route exact path="/globalmessage" element={<GlobalMessageMobile />} />
+          <Route exact path="/groupmessage" element={<GroupChatMobile />} />
+          <Route exact path="/notfound" element={<NotFound />} />
+          <Route exact path="/payment" element={<StripeContainer />} />
+          <Route exact path="/usersuggestion" element={<UserSuggestion />} />
+          <Route exact path="/groupsuggestion" element={<GroupSuggestion />} />
+          <Route exact path="/groupinvite/:id" element={<GroupInvite />} />
+          <Route exact path="/signin/inactive" element={<LoginInactive />} />
+          <Route exact path="/signin/active/:id" element={<Loginsteps />} />
+          <Route exact path="/signup/active/:id" element={<SignupProfile />} />
+          <Route exact path="/news" element={<News />} />
+          <Route exact path="/news/:id" element={<SingleNews />} />
 
 
-        <Route exact path="/add_username" element={<Screen5 />} />
-        <Route exact path="/update_profile" element={<Screen6 />} />
-        <Route exact path="/avatar" element={<Srceen7 />} />
-        <Route exact path="/profile_picture" element={<Screen8 />} />
-        <Route exact path="/bio" element={<Describe />} />
-        <Route exact path="/usersuggestions1" element={<UserSuggestion1 />} />
-        <Route exact path="/groupsuggestion1" element={<GroupSuggestion1 />} />
-        
+          <Route exact path="/add_username" element={<Screen5 />} />
+          <Route exact path="/update_profile" element={<Screen6 />} />
+          <Route exact path="/avatar" element={<Srceen7 />} />
+          <Route exact path="/profile_picture" element={<Screen8 />} />
+          <Route exact path="/bio" element={<Describe />} />
+          <Route exact path="/usersuggestions1" element={<UserSuggestion1 />} />
+          <Route exact path="/groupsuggestion1" element={<GroupSuggestion1 />} />
 
-        <Route path="*" element={<Navigate to="/notfound" />} />
 
+          <Route path="*" element={<Navigate to="/notfound" />} />
       </Routes>
     </DefaultLayout>
   ) : (

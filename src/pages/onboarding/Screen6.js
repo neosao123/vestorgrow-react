@@ -63,6 +63,7 @@ const Screen6 = () => {
     const [editprofileImg, setEditProfileImg] = useState(null);
     const [SliderHeaderTextIndex, setSliderHeaderTextIndex] = globalCtx.SliderHeaderTextIndex;
     const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [user, setUser] = globalCtx.user;
     const [slideHeader, setSliderHeader] = globalCtx.slideHeader;
     const [currentSlide, setCurrentSlide] = globalCtx.currentSlide;
     const navigate = useNavigate();
@@ -79,6 +80,11 @@ const Screen6 = () => {
                 console.log(error)
             })
         navigate("/bio", { replace: true })
+    }
+
+    const handleUpload = () => {
+        setUser(tempUser);
+        setEditProfileImg("http://localhost:3000/images/profile/default-profile.png")
     }
 
 
@@ -99,7 +105,7 @@ const Screen6 = () => {
             <div className=''>
                 <form className='signup_form1'>
                     <div className='formcontrol1'>
-                        <div className='image_input' onClick={() => setEditProfileImg("http://localhost:3000/images/profile/default-profile.png")}>
+                        <div className='image_input' onClick={handleUpload}>
                             <div
                                 type='file'
                                 id="fileInput"

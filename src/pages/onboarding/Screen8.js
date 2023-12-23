@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import OnboardingHeader from './OnboardingHeader'
 import { FaAngleLeft } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import GlobalContext from '../../context/GlobalContext';
 
 const Screen8 = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const globalCtx = useContext(GlobalContext);
+    const [tempUser, setTempUser] = globalCtx.user;
 
     return (
         <>
@@ -20,11 +23,11 @@ const Screen8 = () => {
             </div>
             <div className='signupformdiv'>
                 <form className='signup_form1' style={{ width: "30em" }}>
-                    <div className='opt_div' style={{ maxWidth: "300px", width: "100%", margin: "auto" }}>
-                        <img width={"100%"} height={"100%"} src={"http://localhost:8000/uploads/images/17030671135153075.png"} alt="logo" />
+                    <div className='opt_div' style={{ maxWidth: "300px", width: "100%", margin: "auto", borderRadius: "50%" }}>
+                        <img width={"100%"} height={"100%"} src={tempUser.profile_img} alt="logo" />
                     </div>
                     <div className='opt_div'>
-                        <button className='signup_emailorphone next_btn' onClick={()=>navigate("/bio")}>
+                        <button className='signup_emailorphone next_btn' onClick={() => navigate("/bio")}>
                             Next
                         </button>
                     </div>

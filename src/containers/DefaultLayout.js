@@ -37,6 +37,9 @@ function DefaultLayout({ children }) {
 
     if (
       location.pathname === "/add_username" ||
+      location.pathname === "/update_profile" ||
+      location.pathname === "/avatar" ||
+      location.pathname === "/profile_picture" ||
       location.pathname === "/profile_picture" ||
       location.pathname === "/bio" ||
       location.pathname === "/usersuggestions1" ||
@@ -84,10 +87,10 @@ function DefaultLayout({ children }) {
 
   useEffect(() => {
     if (user.usernameUpdate === false) {
-      navigate("/add_username")
+      navigate("/add_username", { replace: true })
     }
     else if (user.profilepictureUpdate === false) {
-      navigate("/profile_picture")
+      navigate("/update_profile",{ replace: true })
     }
     else if (user.bioUpdate === false) {
       navigate("/bio")

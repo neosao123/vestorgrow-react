@@ -82,7 +82,7 @@ const Describe = () => {
                         />
                         <p className='bio_length'>{formik.values.bio.length}/160</p>
                         {formik.touched.bio && formik.errors.bio ? (
-                            <div className="valid_feedbackMsg">{formik.errors.bio}</div>
+                            <div className="valid_feedbackMsg" style={{ marginTop: "-5px" }}>{formik.errors.bio}</div>
                         ) : null}
                     </div>
                 </div>

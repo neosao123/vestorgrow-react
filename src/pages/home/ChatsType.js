@@ -69,7 +69,7 @@ function ChatsType() {
 
   return (
     <>
-      <div className="feedChatBox stickyChatBox" style={{ position: "fixed", right: 0, top: "4.3em", bottom: 0 }} >
+      <div className="feedChatBox stickyChatBox" style={{ right: 0, top: "4.3em", bottom: 0 }} >
         <div className={`${shotChatlist ? "feedChatContent" : "feedChatContent1"}`} style={{ height: "auto" }} >
           <div className="tab-content">
             {(user?.role?.includes("admin") || user?.role?.includes("userPaid")) && (

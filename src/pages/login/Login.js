@@ -50,20 +50,19 @@ function Login() {
               navigate("/add_username")
             }
             else if (user.profilepictureUpdate === false) {
-              navigate("/profile_picture")
+              navigate("/update_profile")
             }
             else if (user.bioUpdate === false) {
               navigate("/bio")
             }
             else if (user.UserSuggestions === false) {
-              alert("yes1")
               navigate("/usersuggestions1")
             }
             else if (user.groupSuggestion === false) {
               navigate("/groupsuggestion1")
             }
             else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
-              navigate("/")
+              navigate("/", { replace: true })
             }
 
           }
@@ -112,7 +111,7 @@ function Login() {
               navigate("/add_username")
             }
             else if (user.profilepictureUpdate === false) {
-              navigate("/profile_picture")
+              navigate("/update_profile")
             }
             else if (user.bioUpdate === false) {
               navigate("/bio")
@@ -243,7 +242,7 @@ function Login() {
                       ) : null}
                       <span className="showHidetoggle">
                         {!formik.errors.password ? (
-                          showPassword ? (
+                          !showPassword ? (
                             <img
                               src="/images/profile/show_pass.svg"
                               className="showLoginPass"

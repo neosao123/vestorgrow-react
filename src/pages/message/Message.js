@@ -360,7 +360,7 @@ const Message = () => {
                                             </div>
                                             <div className="userProfileInner" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
                                                 <div className="userProfileImg">
-                                                    <ProfileImage url={mUser?.profile_img} />
+                                                    <ProfileImage url={mUser?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                                     {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
                                                 </div>
                                                 <div className="userProfileTxt userProfileTxt-custom">
@@ -420,7 +420,7 @@ const Message = () => {
                                                 </div>
                                                 <div className="userProfileInner" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
                                                     <div className="userProfileImg">
-                                                        <ProfileImage url={mUser?.profile_img} />
+                                                        <ProfileImage url={mUser?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                                         {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
                                                     </div>
                                                     <div className="userProfileTxt userProfileTxt-custom">
@@ -500,7 +500,7 @@ const Message = () => {
                                                                 }
                                                             >
                                                                 <div className="leftSideProfile">
-                                                                    <ProfileImage url={item.sender?.profile_img} />
+                                                                    <ProfileImage url={item.sender?.profile_img}  style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                                                 </div>
                                                                 {item.deleted_for?.includes("all") || item.deleted_for?.includes(user?._id) ? (
                                                                     <div className="leftSideContant">

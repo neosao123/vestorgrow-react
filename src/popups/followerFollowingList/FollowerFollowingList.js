@@ -163,7 +163,7 @@ export default function FollowerFollowingList({ onClose, post, type }) {
                                   <div className="followOtherUser">
                                     <div className="followOtherUserPic">
                                       <Link to={"/userprofile/" + item.userId?._id}>
-                                        <ProfileImage url={item.userId?.profile_img} />
+                                        <ProfileImage url={item.userId?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                       </Link>
                                     </div>
                                     <div className="followOtherUserName">
@@ -204,7 +204,7 @@ export default function FollowerFollowingList({ onClose, post, type }) {
                                       >
                                         Requested
                                       </button>
-                                    ) : ( 
+                                    ) : (
                                       <button
                                         type="button"
                                         onClick={() => followUser(item.userId?._id)}
@@ -245,7 +245,7 @@ export default function FollowerFollowingList({ onClose, post, type }) {
                                     <div className="followOtherUser">
                                       <div className="followOtherUserPic">
                                         <Link to={"/userprofile/" + item.followingId?._id}>
-                                          <ProfileImage url={item.followingId?.profile_img} />
+                                          <ProfileImage url={item.followingId?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                         </Link>
                                       </div>
                                       <div className="followOtherUserName">
