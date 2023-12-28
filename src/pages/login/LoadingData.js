@@ -27,7 +27,7 @@ const LoadingData = () => {
                         setErrorMsg("");
                         localStorage.setItem("user", JSON.stringify(resp.data));
                         setUser(resp.data);
-                        navigate('/');
+                        navigate('/', { replace: true });
                     }, 3000);
                 } else {
                     setErrorMsg(resp.message);

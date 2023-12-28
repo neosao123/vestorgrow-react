@@ -183,7 +183,7 @@ const SimpleSlider = () => {
         localStorage.setItem("user", JSON.stringify(res.user));
         setTempUser(res.user);
         setUser(res.user);
-        navigate("/avatar");
+        navigate("/avatar", { replace: true });
       })
       .catch((error) => console.log(error));
 

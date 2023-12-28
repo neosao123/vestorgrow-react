@@ -34,22 +34,22 @@ function LoginSteps() {
                     console.log(res)
                     setVerificationSuccessPopup(!verificationSuccessPopup)
                     if (user.usernameUpdate === false) {
-                        navigate("/add_username")
+                        navigate("/add_username", { replace: true })
                     }
                     else if (user.profilepictureUpdate === false) {
-                        navigate("/update_profile")
+                        navigate("/update_profile", { replace: true })
                     }
                     else if (user.bioUpdate === false) {
-                        navigate("/bio")
+                        navigate("/bio", { replace: true })
                     }
                     else if (user.UserSuggestions === false) {
-                        navigate("/usersuggestions1")
+                        navigate("/usersuggestions1", { replace: true })
                     }
                     else if (user.groupSuggestion === false) {
-                        navigate("/groupsuggestion1")
+                        navigate("/groupsuggestion1", { replace: true })
                     }
                     else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
-                        navigate("/")
+                        navigate("/", { replace: true })
                     }
                 }
                 else {

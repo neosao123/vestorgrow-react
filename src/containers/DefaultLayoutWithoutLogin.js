@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { replace } from "formik";
 function DefaultLayoutWithoutLogin({ children }) {
   const location = useLocation();
   const [headerRequired, setHeaderRequired] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     if (location.pathname.includes("/post")) {
       setHeaderRequired(true);
@@ -58,10 +60,10 @@ function DefaultLayoutWithoutLogin({ children }) {
               <div className="topHeaderRightSec">
                 <div className="topHeaderRightInner d-flex align-items-center">
                   <div className="toggleIcon headIcon postBtn footerIcon">
-                    <Link to={"/"} className="postBtn btnColor">
+                    <Link onClick={() => navigate("/", { replace: true })} className="postBtn btnColor">
                       Login
                     </Link>
-                    <Link to={"/signup"} className="linkBtn">
+                    <Link onClick={() => navigate("/signup", { replace: true })} className="linkBtn">
                       Signup
                     </Link>
                   </div>

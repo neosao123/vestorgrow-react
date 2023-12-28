@@ -92,9 +92,12 @@ const GroupSuggestion1 = () => {
         } else {
             stepServ.updateGroupSuggestions(user._id)
                 .then((res) => {
+                    setUser(res.data);
+                    setUser1(res.data);
                     setShowToolTip(1)
                     navigate("/", { replace: true });
                 })
+                .catch(error => console.log(error))
 
         }
     };

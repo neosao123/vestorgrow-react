@@ -23,7 +23,7 @@ function DefaultLayout({ children }) {
   const match3 = useMatch("/signup/active/:id")
   const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
   const [blockContent, setBlockContent] = useState(true);
-  const [loading, setLoading] = globalCtx.Loading
+  const [loading, setLoading] = globalCtx.Loading;
   const navigate = useNavigate();
   const [user, setUser] = globalCtx.user;
   const [shotChatlist, setShowChatList] = globalCtx.showChatList;
@@ -88,24 +88,33 @@ function DefaultLayout({ children }) {
 
   useEffect(() => {
     if (user.usernameUpdate === false) {
+      setLoading(false)
       navigate("/add_username", { replace: true })
     }
-    else if (user.profilepictureUpdate === false) {
+    else if (user.profilepictureUpdate === false && user.usernameUpdate === true) {
+      setLoading(false)
       navigate("/update_profile", { replace: true })
     }
-    else if (user.bioUpdate === false) {
+    else if (user.bioUpdate === false && user.profilepictureUpdate === true && user.usernameUpdate === true && (location.pathname == "/avatar" || location.pathname == "/profile_picture")) {
+      setLoading(false);
+      navigate(location.pathname, { replace: true })
+    }
+    else if (user.bioUpdate === false && user.profilepictureUpdate === true && user.usernameUpdate === true) {
+      setLoading(false)
       navigate("/bio", { replace: true })
     }
-    else if (user.UserSuggestions === false) {
+    else if (user.UserSuggestions === false && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) {
+      setLoading(false)
       navigate("/usersuggestions1", { replace: true })
     }
-    else if (user.groupSuggestion === false) {
+    else if (user.groupSuggestion === false && user.UserSuggestions === true && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) {
+      setLoading(false)
       navigate("/groupsuggestion1", { replace: true })
     }
     else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
       navigate("/", { replace: true })
     }
-  }, [])
+  }, [location.pathname])
 
   if (blockContent) {
     return loading ? <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}><Loader /></div> : (

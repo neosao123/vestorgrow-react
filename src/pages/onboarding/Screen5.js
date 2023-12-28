@@ -39,7 +39,7 @@ const Screen5 = () => {
                     setTempUser(res.user)
                     setUser(res.user)
                     if (res.user.isSocialLogin) {
-                        navigate("/bio")
+                        navigate("/bio", { replace: true })
                     }
                     else {
                         navigate("/update_profile", { replace: true });

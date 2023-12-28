@@ -31,7 +31,7 @@ const Srceen7 = () => {
                         <img src={tempUser.profile_img} width={"100%"} alt="logo" />
                     </div>
                     <div className='opt_div'>
-                        <button className='signup_emailorphone next_btn' onClick={() => navigate("/bio")}>
+                        <button className='signup_emailorphone next_btn' onClick={() => navigate("/bio", { replace: true })}>
                             Next
                         </button>
                     </div>

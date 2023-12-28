@@ -18,35 +18,30 @@ const OnBoardingRoutes = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    console.log("CHildren:", children)
 
-    let path;
     if (user.usernameUpdate === false) {
         setLoading(false)
-        path = "/add_username"
-        // navigate("/add_username", { replace: true })
+        navigate("/add_username", { replace: true })
     }
     else if (user.profilepictureUpdate === false && user.usernameUpdate === true) {
         setLoading(false)
-        path = "/update_profile"
-        // navigate("/update_profile", { replace: true })
+        navigate("/update_profile", { replace: true })
     }
     else if (user.bioUpdate === false && user.profilepictureUpdate === true && user.usernameUpdate === true) {
         setLoading(false)
-        path = "/bio"
-        // navigate("/bio", { replace: true })
+        navigate("/bio", { replace: true })
     }
     else if (user.UserSuggestions === false && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) {
         setLoading(false)
-        path = "/usersuggestions1"
-        // navigate("/usersuggestions1", { replace: true })
+        navigate("/usersuggestions1", { replace: true })
     }
     else if (user.groupSuggestion === false && user.UserSuggestions === true && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) {
         setLoading(false)
-        path = "/groupsuggestion1"
-        // navigate("/groupsuggestion1", { replace: true })
+        navigate("/groupsuggestion1", { replace: true })
     }
-    return path !== "/add_username" && path !== "/groupsuggestion1" && path !== "/usersuggestions1" && path !== "/bio" && path !== "/update_profile" ? children : <Navigate to={path} replace={true} />
+    else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+        navigate("/", { replace: true })
+    }
 }
 
 export default OnBoardingRoutes

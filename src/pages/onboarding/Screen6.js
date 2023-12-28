@@ -136,7 +136,7 @@ const Screen6 = () => {
             {editprofileImg !== null && <EditProfileImage
                 file={editprofileImg}
                 onClose={() => { setEditProfileImg(null) }}
-                onComplete={() => navigate("/profile_picture")}
+                onComplete={() => navigate("/profile_picture", { replace: true })}
             />}
 
         </>

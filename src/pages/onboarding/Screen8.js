@@ -27,7 +27,7 @@ const Screen8 = () => {
                         <img width={"100%"} height={"100%"} src={tempUser.profile_img} alt="logo" />
                     </div>
                     <div className='opt_div'>
-                        <button className='signup_emailorphone next_btn' onClick={() => navigate("/bio")}>
+                        <button className='signup_emailorphone next_btn' onClick={() => navigate("/bio", { replace: true })}>
                             Next
                         </button>
                     </div>

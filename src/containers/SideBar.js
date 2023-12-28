@@ -24,7 +24,7 @@ function Sidebar() {
           if (res.data) {
             localStorage.removeItem("user");
             localStorage.removeItem("token");
-            window.location.reload(true)
+            window.location.href = "/login"
             // navigate("/login")
           }
         })

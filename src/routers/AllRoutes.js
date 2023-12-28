@@ -53,8 +53,6 @@ import ChangeEmail from "../pages/onboarding/ChangeEmail";
 import UserSuggestion1 from "../pages/onboarding/userSuggestion1";
 import GroupSuggestion1 from "../pages/onboarding/groupSuggestion1";
 import Signup2 from "../pages/onboarding/Signup2";
-import { replace } from "formik";
-import OnBoardingRoutes from "./OnBoardingRoutes";
 
 function AllRoutes() {
   const serv = new UserService();
