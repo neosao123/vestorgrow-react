@@ -28,10 +28,10 @@ const Srceen7 = () => {
             <div className='signupformdiv'>
                 <form className='signup_form1' style={{ width: "30em" }}>
                     <div className='opt_div' style={{ maxWidth: "250px", width: "100%", margin: "auto" }}>
-                        <img src={`/static/media/${tempUser.profile_img}`} width={"100%"} alt="logo" />
+                        <img src={tempUser.profile_img} width={"100%"} alt="logo" />
                     </div>
                     <div className='opt_div'>
-                        <button className='signup_emailorphone next_btn' onClick={() => navigate("/describe")}>
+                        <button className='signup_emailorphone next_btn' onClick={() => navigate("/bio")}>
                             Next
                         </button>
                     </div>

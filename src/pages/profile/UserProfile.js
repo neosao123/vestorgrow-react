@@ -269,17 +269,17 @@ const UserProfile = () => {
                                     : { backgroundImage: "url(/images/profile/image_cover_profile.png)" }
                             }
                         >
-                            <div className="profilePic position-relative">
-                                <div className="prf-img-container" style={{ backgroundColor: "gray", borderRadius: "50%" }}>
-                                    <img className="prf-img" src={user?.profile_img !== "" ? user?.profile_img : "/images/profile/default-profile.png"} alt={user?.user_name} width={"90%"} height={"90%"}/>
-                                    <div className="middle" onClick={handleShowEnlarge}>
-                                        <div className="text"><i className="fa fa-external-link fa-2x text-primary"></i></div>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <div className="profilePic position-relative">
+                        <div className="prf-img-container new_profile_pic" style={{ backgroundColor: "gray", borderRadius: "50%", marginLeft: "20px" }}>
+                            <img className="prf-img" src={user?.profile_img !== "" ? user?.profile_img : "/images/profile/default-profile.png"} alt={user?.user_name} width={"90%"} height={"90%"} />
+                            <div className="middle" onClick={handleShowEnlarge}>
+                                <div className="text"><i className="fa fa-external-link fa-2x text-primary"></i></div>
                             </div>
                         </div>
                     </div>
-                    <div className="usercontentBox d-flex align-items-end justify-content-between">
+                    <div className="usercontentBox d-flex align-items-end justify-content-between mt-0">
                         <div className="user_data">
                             <div className="user_profileTxt user_profileTxt-custom-flex">
                                 <h4 className="mb-1">

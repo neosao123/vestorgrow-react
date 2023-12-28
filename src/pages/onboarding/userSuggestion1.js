@@ -18,9 +18,7 @@ function UserSuggestion1() {
     const [reqPublicId, setReqPublicId] = useState([]);
     const [curUser, setCurUser] = useState();
     const [user, setUser] = globalCtx.tempUser;
-
-
-
+    const [user1, setUser1] = globalCtx.user;
 
     useEffect(() => {
         getUserList();
@@ -28,7 +26,6 @@ function UserSuggestion1() {
 
     const getUserList = async () => {
         let data = await serv.getMostFollowedUsers({ id: user._id });
-        console.log(data.data)
         setUserList(data.data.filter((usr) => usr._id !== user._id));
     };
 
@@ -42,6 +39,7 @@ function UserSuggestion1() {
                         if (res.data) {
                             localStorage.setItem("user", JSON.stringify(res.data))
                             setUser({ ...res.data })
+                            setUser1({ ...res.data })
                             navigate("/groupsuggestion1", { replace: true })
                         }
                     })
@@ -83,6 +81,7 @@ function UserSuggestion1() {
                 .then((res) => {
                     localStorage.setItem("user", JSON.stringify(res.data))
                     setUser({ ...res.data })
+                    setUser1({ ...res.data })
                 })
 
         } catch (err) {

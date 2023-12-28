@@ -18,6 +18,7 @@ const Screen3 = () => {
     const [userEmail, setUserEmail] = globalCtx.UserEmail;
     const [otp, setOtp] = globalCtx.emailverificationOTP;
     const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [user, setUser] = globalCtx.user;
     const [emailPopup, setShowEmailPopup] = globalCtx.emailPopup;
 
 
@@ -30,6 +31,7 @@ const Screen3 = () => {
             .then((res) => {
                 localStorage.setItem("user", JSON.stringify(res.user))
                 setTempUser(res.user);
+                setUser(res.user);
                 navigate("/update_password", { replace: true })
             })
             .catch(error => console.log(error))

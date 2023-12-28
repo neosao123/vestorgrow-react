@@ -1,9 +1,8 @@
-export default function ProfileImage({ url, style }) {
-  console.log("styles:", style)
+export default function ProfileImage({ url, style, isAvatar }) {
   return url && url !== "" ? (
     <img
       src={url}
-      // alt="image"
+      alt="image"
       className="img-fluid image-fluid-custom-message"
       style={style ? style : { borderRadius: "40px", width: "100%", height: "100%" }}
     />

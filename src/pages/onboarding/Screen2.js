@@ -9,13 +9,19 @@ import * as Yup from "yup";
 import GlobalContext from '../../context/GlobalContext';
 import OnboardingService from '../../services/onBoardingService';
 import { useEffect } from 'react';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const validationSchema = Yup.object({
-    full_name: Yup.string()
-        .required('Full name is required')
-        .matches(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'Invalid full name.')
-        .min(2, 'Full name should contain at least two characters'),
+    first_name: Yup.string()
+        .required('First name is required')
+        .matches(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'Invalid first name.')
+        .min(2, 'First name should contain at least two characters'),
+    last_name: Yup.string()
+        .required('Surname is required')
+        .matches(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'Invalid surname.')
+        .min(2, 'Surname should contain at least two characters'),
     email: Yup.string().required("Email is required.").email("Invalid email.").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email"),
     date_of_birth: Yup.date().required("Date of birth is required.").max(new Date(), 'Date must be less than today'),
     terms_and_condition: Yup.boolean().oneOf([true], "You must agree to the terms and service."),
@@ -26,12 +32,15 @@ const Screen2 = () => {
     const globalCtx = useContext(GlobalContext);
     const [userEmail, setUserEmail] = globalCtx.UserEmail;
     const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [user, setUser] = globalCtx.user;
+    const [date, setDate] = useState("");
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [emailPopup, setShowEmailPopup] = globalCtx.emailPopup;
     const [emailError, setEmailError] = useState("");
     const [initialValue, setInitialValue] = useState({
-        full_name: "",
+        first_name: "",
+        last_name: "",
         email: "",
         date_of_birth: "",
         terms_and_condition: false
@@ -42,7 +51,8 @@ const Screen2 = () => {
         setEmailError("")
         let obj = {
             email: values.email,
-            full_name: values.full_name,
+            first_name: values.first_name,
+            last_name: values.last_name,
             date_of_birth: new Date(values.date_of_birth).toLocaleDateString('en-US', {
                 month: 'long',
                 day: 'numeric',
@@ -59,6 +69,7 @@ const Screen2 = () => {
                     setEmailError("")
                     localStorage.setItem("user", JSON.stringify(res.user))
                     setTempUser(res.user);
+                    setUser(res.user);
                     setShowEmailPopup(true);
                     navigate("/email_verification", { replace: true })
                 }
@@ -82,6 +93,7 @@ const Screen2 = () => {
         setEmailError("")
     }, [formik.values.email])
 
+
     return (
         <>
             <div>
@@ -94,17 +106,31 @@ const Screen2 = () => {
             <div className='signupformdiv'>
                 <form className='signup_form' onSubmit={formik.handleSubmit}>
                     <div className='formcontrol'>
-                        <label className='label'>Full name*</label>
+                        <label className='label'>First name*</label>
                         <input
                             className='form_input'
                             type='text'
-                            name='full_name'
+                            name='first_name'
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            value={formik.values.full_name}
+                            value={formik.values.first_name}
                         />
-                        {formik.touched.full_name && formik.errors.full_name ? <div>
-                            {<div className='valid_feedbackMsg'>{formik.errors.full_name}</div>}
+                        {formik.touched.first_name && formik.errors.first_name ? <div>
+                            {<div className='valid_feedbackMsg'>{formik.errors.first_name}</div>}
+                        </div> : null}
+                    </div>
+                    <div className='formcontrol'>
+                        <label className='label'>Surname*</label>
+                        <input
+                            className='form_input'
+                            type='text'
+                            name='last_name'
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.last_name}
+                        />
+                        {formik.touched.last_name && formik.errors.last_name ? <div>
+                            {<div className='valid_feedbackMsg'>{formik.errors.last_name}</div>}
                         </div> : null}
                     </div>
                     <div className='formcontrol'>
@@ -124,14 +150,13 @@ const Screen2 = () => {
                     </div>
                     <div className='formcontrol'>
                         <label className='label'>Date of birth*</label>
-                        <input
+                        <DatePicker
                             className='form_input'
-                            type='date'
-                            placeholder=''
                             name="date_of_birth"
-                            onChange={formik.handleChange}
+                            selected={formik.values.date_of_birth}
+                            onChange={(date) => formik.setFieldValue("date_of_birth", date)}
                             onBlur={formik.handleBlur}
-                            value={formik.values.date_of_birth}
+                            dateFormat="dd MMMM yyyy"
                         />
                         {formik.touched.date_of_birth && formik.errors.date_of_birth ? <div>
                             {<div className='valid_feedbackMsg'>{formik.errors.date_of_birth}</div>}

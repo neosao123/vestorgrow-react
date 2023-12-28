@@ -24,7 +24,7 @@ function DefaultLayout({ children }) {
   const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
   const [blockContent, setBlockContent] = useState(true);
   const [loading, setLoading] = globalCtx.Loading
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [user, setUser] = globalCtx.user;
   const [shotChatlist, setShowChatList] = globalCtx.showChatList;
 
@@ -43,7 +43,8 @@ function DefaultLayout({ children }) {
       location.pathname === "/profile_picture" ||
       location.pathname === "/bio" ||
       location.pathname === "/usersuggestions1" ||
-      location.pathname === "/groupsuggestion1"
+      location.pathname === "/groupsuggestion1" ||
+      location.pathname === "/notfound"
 
     ) {
       setLayoutRequired(false);
@@ -90,19 +91,19 @@ function DefaultLayout({ children }) {
       navigate("/add_username", { replace: true })
     }
     else if (user.profilepictureUpdate === false) {
-      navigate("/update_profile",{ replace: true })
+      navigate("/update_profile", { replace: true })
     }
     else if (user.bioUpdate === false) {
-      navigate("/bio")
+      navigate("/bio", { replace: true })
     }
     else if (user.UserSuggestions === false) {
-      navigate("/usersuggestions1")
+      navigate("/usersuggestions1", { replace: true })
     }
     else if (user.groupSuggestion === false) {
-      navigate("/groupsuggestion1")
+      navigate("/groupsuggestion1", { replace: true })
     }
     else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
-      navigate("/")
+      navigate("/", { replace: true })
     }
   }, [])
 

@@ -13,6 +13,7 @@ const Screen1 = () => {
     const onBoardServ = new OnboardingService();
     const globalCtx = useContext(GlobalContext);
     const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [user, setUser] = globalCtx.user;
     const navigate = useNavigate();
 
     const getUserData = async (accessToken) => {
@@ -40,9 +41,9 @@ const Screen1 = () => {
         onSuccess: (codeResponse) => {
             getUserData(codeResponse.access_token)
                 .then(async (res) => {
-                    console.log(res)
                     let obj = {
-                        full_name: res.name,
+                        first_name: res.given_name,
+                        last_name: res.family_name,
                         email: res.email,
                         date_of_birth: res.date_of_birth,
                         profile_img: res.picture,
@@ -50,11 +51,10 @@ const Screen1 = () => {
                     }
                     onBoardServ.signupGmail(obj)
                         .then((res) => {
-                            if (res.message !== "Email already exist.") {
-                                setTempUser(res.user)
-                                localStorage.setItem("user", JSON.stringify(res.user));
-                                navigate("/signup_auth")
-                            }
+                            setTempUser(res.user);
+                            setUser(res.user);
+                            localStorage.setItem("user", JSON.stringify(res.user));
+                            navigate("/signup_auth");
                         })
                         .catch((error) => {
                             console.log("error:", error)

@@ -4,14 +4,17 @@ import GroupImage from "../../shared/GroupImage";
 import GlobalContext from "../../context/GlobalContext";
 import ChatService from "../../services/chatService";
 import StepsService from "../../services/stepsService";
+import UserService from "../../services/UserService";
 
 const GroupSuggestion1 = () => {
     const serv = new ChatService();
-    const stepServ = new StepsService()
+    const stepServ = new StepsService();
+    const userServ = new UserService();
     const globalCtx = useContext(GlobalContext);
     const navigate = useNavigate();
     const [curUser, setCurUser] = useState();
     const [user, setUser] = globalCtx.tempUser;
+    const [user1, setUser1] = globalCtx.user;
     const [chatGroupList, setChatGroupList] = useState([]);
     const [reqPrivateId, setReqPrivateId] = useState([]);
     const [reqPublicId, setReqPublicId] = useState([]);
@@ -32,11 +35,17 @@ const GroupSuggestion1 = () => {
                 groupId: groupId,
                 id: user._id
             };
-            await serv.tojoinGroup(obj).then((resp) => {
+            await serv.tojoinGroup(obj).then(async (resp) => {
                 if (resp.message) {
                     const element = document.querySelector("#group-" + groupId);
                     element.innerHTML = "Joined";
                     element.classList.add("btnColorBlack");
+                    await userServ.getUser(user._id)
+                        .then((res) => {
+                            localStorage.setItem("user", JSON.stringify(res.data))
+                            setUser({ ...res.data });
+                            setUser1({ ...res.data });
+                        })
                 }
             });
         } catch (err) {
@@ -60,7 +69,8 @@ const GroupSuggestion1 = () => {
             await serv.getUser(user._id)
                 .then((res) => {
                     localStorage.setItem("user", JSON.stringify(res.data))
-                    setUser({ ...res.data })
+                    setUser({ ...res.data });
+                    setUser1({ ...res.data });
                 })
         } catch (err) {
             console.log(err);

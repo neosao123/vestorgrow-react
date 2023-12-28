@@ -1,11 +1,12 @@
 .prf-img-container {
   position: relative;
+  max-width: 160px !important;
 }
 
 .prf-img-container .prf-img {
   display: block;
-  width: 135px !important;
-  height: 135px !important;
+  width: 160px !important;
+  height: 160px !important;
   border-radius: 50% !important;
   transition: 0.5s ease;
   backface-visibility: hidden;
@@ -58,44 +59,57 @@
   padding-left: 0.35rem !important;
 }
 
+
 .about_profile .profilePic {
-  bottom: -90px !important;
+  bottom: -14em !important;
+}
+
+.new_profile_pic {
+  top: -50px !important;
 }
 
 @media (max-width: 426px) {
   .prf-img-container {
-    width: 70px !important;
-    height: 70px !important;
+    width: 100px !important;
+    height: 100px !important;
   }
 
   .prf-img {
-    width: 70px !important;
-    height: 70px !important;
+    width: 100px !important;
+    height: 100px !important;
   }
 
   .prf-img-container .prf-img {
-    width: 70px !important;
-    height: 70px !important;
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .new_profile_pic {
+    top: 0px !important;
   }
 }
 
 @media (min-width: 426px) and (max-width: 1023px) {
   .prf-img-container {
-    width: 100px !important;
-    height: 100px !important;
+    width: 120px !important;
+    height: 120px !important;
   }
 
   .prf-img {
-    width: 100px !important;
-    height: 100px !important;
+    width: 120px !important;
+    height: 120px !important;
   }
 
   .prf-img-container .prf-img {
-    width: 100px !important;
-    height: 100px !important;
+    width: 120px !important;
+    height: 120px !important;
   }
 
   .about_profile .profilePic {
     bottom: -75px !important;
+  }
+
+  .new_profile_pic {
+    top: -5px !important;
   }
 }

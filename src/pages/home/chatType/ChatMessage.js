@@ -381,7 +381,7 @@ export default function ChatMessage({
             >
               <div className="userDetail">
                 <div className="chatMainProfile">
-                  <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} />
+                  <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} style={{ width: "60px", height: "60px", borderRadius: "50%" }} />
                   <div className="chatMainProfileContent">
                     <h6
                       className={`mb-0 ${expend ? "userNameIn-custom-classExpand" : "userNameIn-custom-class"}`}

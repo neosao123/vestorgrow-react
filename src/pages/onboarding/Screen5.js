@@ -5,13 +5,13 @@ import "./screen5.css"
 import { useFormik } from 'formik'
 import { useState } from 'react';
 import * as Yup from "yup";
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import GlobalContext from '../../context/GlobalContext';
 import OnboardingService from '../../services/onBoardingService'
 import { useContext } from 'react'
 
 const validationSchema = Yup.object({
-    username: Yup.string().required("Username is required.").min(4, "Minimum 4 characters required.").max(20, "Maximum 20 characters allowed.")
+    username: Yup.string().required("Username is required.").matches(/^\S*$/, 'Username cannot contain spaces').min(4, "Minimum 4 characters required.").max(20, "Maximum 20 characters allowed.")
 })
 
 const Screen5 = () => {
@@ -20,8 +20,10 @@ const Screen5 = () => {
     const globalCtx = useContext(GlobalContext);
     const [userEmail, setUserEmail] = globalCtx.UserEmail;
     const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [user, setUser] = globalCtx.user;
     const [showusername, setShowusername] = useState(false);
     const [userNames, setusernames] = useState([]);
+    const location = useLocation();
 
     const navigate = useNavigate();
 
@@ -35,6 +37,7 @@ const Screen5 = () => {
                 if (res.message === "Success") {
                     localStorage.setItem("user", JSON.stringify(res.user))
                     setTempUser(res.user)
+                    setUser(res.user)
                     if (res.user.isSocialLogin) {
                         navigate("/bio")
                     }
@@ -87,10 +90,14 @@ const Screen5 = () => {
                             {formik.errors.username}
                         </div> : null}
                     </div>
+                    {showusername && <div style={{ fontSize: "14px", color: "red", lineHeight: "10px" }}>
+                        <p><span style={{ fontWeight: "600" }}>Sorry!</span><span> this username is already taken</span></p>
+                        <p style={{ color: "black", fontSize: "16px" }}>You can use this instead.</p>
+                    </div>}
                     <div>
                         {
-                            setShowusername && userNames?.map((el) => {
-                                return <p style={{ color: "green", fontSize: "10px", lineHeight: "1px" }}>{el}</p>
+                            showusername && userNames?.map((el) => {
+                                return <p style={{ color: "green", fontSize: "14px", lineHeight: "8px" }}>{el}</p>
                             })
                         }
                     </div>

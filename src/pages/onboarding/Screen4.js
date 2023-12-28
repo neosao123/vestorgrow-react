@@ -27,6 +27,7 @@ const Screen4 = () => {
     const globalCtx = useContext(GlobalContext);
     const [userEmail, setUserEmail] = globalCtx.UserEmail;
     const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [user, setUser] = globalCtx.user;
     const [initialValue, setInitialValue] = useState({ password: "", confirm_password: "" });
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setConfirmPass] = useState(false);
@@ -41,6 +42,7 @@ const Screen4 = () => {
             .then((res) => {
                 localStorage.setItem("user", JSON.stringify(res.user))
                 setTempUser(res.user);
+                setUser(res.user);
                 navigate("/add_username", { replace: true })
             })
             .catch(err => console.log(err))

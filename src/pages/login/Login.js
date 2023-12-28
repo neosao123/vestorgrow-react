@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../services/UserService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -15,9 +15,11 @@ const ValidateSchema = Yup.object({
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const globalCtx = useContext(GlobalContext);
   const [isAuthentiCated, setIsAuthentiCated] = globalCtx.auth;
   const [user, setUser] = globalCtx.user;
+  const [tempUser, setTempUser] = globalCtx.tempUser;
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [showOtp, setShowOtp] = useState(false);
@@ -38,6 +40,7 @@ function Login() {
         setIsAuthentiCated(true);
         localStorage.setItem("user", JSON.stringify(resp.data))
         setUser(resp.data);
+        setTempUser(resp?.data)
         if (loginUser.accountVerified === true) {
           var hasGroupInvite = localStorage.getItem("group_invite");
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
@@ -47,19 +50,19 @@ function Login() {
           } else {
             setLoading(false)
             if (user.usernameUpdate === false) {
-              navigate("/add_username")
+              navigate("/add_username", { replace: true })
             }
             else if (user.profilepictureUpdate === false) {
-              navigate("/update_profile")
+              navigate("/update_profile", { replace: true })
             }
             else if (user.bioUpdate === false) {
-              navigate("/bio")
+              navigate("/bio", { replace: true })
             }
             else if (user.UserSuggestions === false) {
-              navigate("/usersuggestions1")
+              navigate("/usersuggestions1", { replace: true })
             }
             else if (user.groupSuggestion === false) {
-              navigate("/groupsuggestion1")
+              navigate("/groupsuggestion1", { replace: true })
             }
             else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
               navigate("/", { replace: true })
@@ -108,23 +111,22 @@ function Login() {
             navigate(hasGroupInvite);
           } else {
             if (user.usernameUpdate === false) {
-              navigate("/add_username")
+              navigate("/add_username", { replace: true })
             }
             else if (user.profilepictureUpdate === false) {
-              navigate("/update_profile")
+              navigate("/update_profile", { replace: true })
             }
             else if (user.bioUpdate === false) {
-              navigate("/bio")
+              navigate("/bio", { replace: true })
             }
             else if (user.UserSuggestions === false) {
-              alert("yes")
-              navigate("/usersuggestions1")
+              navigate("/usersuggestions1", { replace: true })
             }
             else if (user.groupSuggestion === false) {
-              navigate("/groupsuggestion1")
+              navigate("/groupsuggestion1", { replace: true })
             }
             else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
-              navigate("/")
+              navigate("/", { replace: true })
             }
           }
         } else {

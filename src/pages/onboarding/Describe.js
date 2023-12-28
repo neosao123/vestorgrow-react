@@ -18,6 +18,7 @@ const Describe = () => {
     const globalCtx = useContext(GlobalContext);
     const [initialValue, setInitialValue] = useState({ bio: "" });
     const [tempUser, setTempUser] = globalCtx.tempUser;
+    const [user, setUser] = globalCtx.user;
     const navigate = useNavigate();
 
 
@@ -28,7 +29,9 @@ const Describe = () => {
         }
         onBoardServ.updateBio(obj)
             .then((res) => {
+                console.log("res:", res.user)
                 setTempUser(res.user);
+                setUser(res.user)
                 localStorage.setItem("user", JSON.stringify(res.user));
                 navigate("/usersuggestions1")
             })

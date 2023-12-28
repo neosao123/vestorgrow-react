@@ -294,7 +294,7 @@ a {
 .profilePic {
   position: relative;
   margin: 0 20px;
-  top: -30px;
+  top: -40px !important;
   text-align: center;
 }
 
@@ -815,14 +815,9 @@ hr.horiz {
 .feedChatContent {
   background: #ffffff;
   box-shadow: 0px 3px 4px rgb(0 0 0 / 5%);
-  /* border-top-left-radius: 15px;
-  border-top-right-radius: 15px; */
   height: 84.3vh;
-  /* flex:1 */
-  margin-top: 1.875em;
-  /* position: relative; */
+  margin-top: 3.860em;
   transition: right 0.5s ease-in-out;
-
   position: fixed;
   right: 0;
 }
@@ -830,13 +825,8 @@ hr.horiz {
 .feedChatContent1 {
   background: #ffffff;
   box-shadow: 0px 3px 4px rgb(0 0 0 / 5%);
-  /* border-top-left-radius: 15px;
-  border-top-right-radius: 15px; */
   height: 84.3vh;
-  /* flex:1 */
-  margin-top: 1.875em;
-  /* position: relative; */
-
+  margin-top: 3.860em;
   position: fixed;
   right: -20em;
   transition: right 0.5s ease-in-out;
@@ -3535,11 +3525,10 @@ s .multiplePostRight .multiplePostimg {
   text-align: left;
   width: fit-content;
   /* margin-left: 0; */
-  margin: auto;
   top: unset;
-  /* left: 40px; */
+  left: 40px;
   /* position: absolute !important; */
-  bottom: -90px;
+  /* bottom: -90px; */
 }
 
 .edit_btn {

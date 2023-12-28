@@ -6,9 +6,15 @@ import * as Yup from "yup";
 
 const serv = new UserService();
 const ValidateSchema = Yup.object({
-  newPassword: Yup.string().required("New Password is a required field"),
+  newPassword: Yup.string().required("New Password is a required field").min(8, "Minimum 8 characters required.").matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+    'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one symbol'
+  ),
   otp: Yup.string().required("OTP is a required field"),
-  verifyPassword: Yup.string().required("Verify Password is a required field"),
+  verifyPassword: Yup.string().required("Verify Password is a required field").min(8, "Minimum 8 characters required.").matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+    'Confirm password must contain at least one uppercase letter, one lowercase letter, one digit, and one symbol'
+  ).oneOf([Yup.ref("newPassword")], "Confirm password must be same as new password."),
 });
 function ResetPassword() {
   const navigate = useNavigate();
@@ -43,13 +49,14 @@ function ResetPassword() {
     obj.email = location.state.email;
     try {
       const resp = await serv.resetPassword(obj);
-      console.log("RESP:", resp)
       if (resp?.result) {
+        console.log("resp:", resp.result)
         navigate("/login");
       } else {
         setErrorMsg(resp);
       }
     } catch (err) {
+      console.log("ERROR:", err)
       err = JSON.parse(err);
       setErrorMsg(err.err);
     }

@@ -184,23 +184,23 @@
 }
 
 .image_div {
-  width: 140px !important;
-  height: 140px !important;
+  width: 150px !important;
+  height: 150px !important;
   background-color: gray;
   border-radius: 50%;
 }
 
 .profile_pic_image {
-  width: 140px !important;
-  height: 140px !important;
+  width: 150px !important;
+  height: 150px !important;
 }
 
 .profile_image_pic {
-  margin: auto;
+  margin: 2em;
 }
 
 .profile_image_top_margin {
-  top: 5em !important;
+  top: 14em !important;
 }
 
 @media (min-width: 427px) and (max-width: 1023px) {
@@ -218,7 +218,7 @@
   }
 
   .profile_image_top_margin {
-    top: 4.2em !important;
+    top: 10em !important;
   }
 }
 
@@ -237,6 +237,6 @@
   }
 
   .profile_image_top_margin {
-    top: 1.5em !important;
+    top: 6.1em !important;
   }
 }
