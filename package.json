@@ -26,6 +26,7 @@
     "react-cropper": "^2.1.8",
     "react-datepicker": "^4.25.0",
     "react-dom": "^18.2.0",
+    "react-flatpickr": "^3.10.13",
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.3",
     "react-icons": "^4.10.1",

@@ -6,6 +6,7 @@ import ProfileImage from "../../shared/ProfileImage";
 import GlobalContext from "../../context/GlobalContext";
 import { NavLink, Link } from 'react-router-dom';
 import StepsService from "../../services/stepsService";
+import { toast } from "react-toastify";
 
 function UserSuggestion1() {
     const serv = new UserService();

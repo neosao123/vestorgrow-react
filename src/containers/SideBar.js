@@ -430,7 +430,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Discover peoples posts from all over the world</p>
               <div class="toolBottom">
-                <div class="toolcounter">2/6</div>
+                <div class="toolcounter">2/4</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext2">Next</button>
@@ -453,7 +453,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Access your profile to change display/banner pic. Also add a bio and see history of your posting</p>
               <div class="toolBottom">
-                <div class="toolcounter">3/6</div>
+                <div class="toolcounter">3/4</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext3">Next</button>
@@ -466,7 +466,7 @@ function Sidebar() {
           className="tooltipBox-Custom"
         />
       )}
-      {showToolTip === 4 && (
+      {/* {show === 4 && (
         <Tooltip
           anchorId="learning"
           place="bottom"
@@ -477,7 +477,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Refine or learn new skills in our learning area designed to support you in your journey</p>
               <div class="toolBottom">
-                <div class="toolcounter">4/6</div>
+                <div class="toolcounter">4/5</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext4">Next</button>
@@ -489,8 +489,8 @@ function Sidebar() {
           style={{ marginLeft: "90px", marginTop: "-120px" }}
           className="tooltipBox-Custom"
         />
-      )}
-      {showToolTip === 5 && (
+      )} */}
+      {showToolTip === 4 && (
         <Tooltip
           anchorId="message"
           place="bottom"
@@ -501,7 +501,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Access your private messages to begin making new connections worldwide</p>
               <div class="toolBottom">
-                <div class="toolcounter">5/6</div>
+                <div class="toolcounter">4/4</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext5">Next</button>

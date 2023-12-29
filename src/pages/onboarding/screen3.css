@@ -102,6 +102,12 @@
     color: #00808B;
 }
 
+.error_msg {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
 .signup_emailorphone {
     gap: 32px;
     width: 30em;
@@ -126,6 +132,15 @@
 .next_btn {
     max-width: 30em;
     width: 100%;
+}
+
+
+.otp_verification_btn_color {
+    background-color: #00808b !important;
+}
+
+.otp_verification_btn_color1 {
+    background-color: gray !important;
 }
 
 .chage_details_btn {
@@ -157,7 +172,7 @@
 
     }
 
-    .otp_div{
+    .otp_div {
         margin-top: 1em;
     }
 

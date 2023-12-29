@@ -10,6 +10,7 @@ import OnboardingService from '../../services/onBoardingService';
 import GlobalContext from '../../context/GlobalContext'
 import { useContext } from 'react'
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { toast } from 'react-toastify'
 
 const validationSchema = Yup.object({
     password: Yup.string().required("Password is required").min(8, "Minimum 8 characters required.").max(20, "Maximum 20 characters allowed.").matches(
@@ -40,6 +41,7 @@ const Screen4 = () => {
         }
         onBoardServ.updatePassword(obj)
             .then((res) => {
+                toast.success("Password updated successfully!")
                 localStorage.setItem("user", JSON.stringify(res.user))
                 setTempUser(res.user);
                 setUser(res.user);

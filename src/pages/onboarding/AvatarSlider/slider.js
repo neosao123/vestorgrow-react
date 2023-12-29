@@ -8,6 +8,7 @@ import { FaChevronRight } from "react-icons/fa";
 import GlobalContext from '../../../context/GlobalContext';
 import { useNavigate } from 'react-router-dom';
 import OnboardingService from '../../../services/onBoardingService';
+import { toast } from 'react-toastify';
 
 const sliderImages = [
   {
@@ -180,6 +181,7 @@ const SimpleSlider = () => {
     }
     onBoardServ.updateProfileImage(obj)
       .then((res) => {
+        toast.success("Avatar updated successfully!")
         localStorage.setItem("user", JSON.stringify(res.user));
         setTempUser(res.user);
         setUser(res.user);

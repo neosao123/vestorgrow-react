@@ -19,6 +19,8 @@ const GroupSuggestion1 = () => {
     const [reqPrivateId, setReqPrivateId] = useState([]);
     const [reqPublicId, setReqPublicId] = useState([]);
     const [showToolTip, setShowToolTip] = globalCtx.showToolTip;
+    const [isAuthentiCated, setIsAuthentiCated] = globalCtx.auth;
+
     const getGroups = async () => {
         let response = await serv.getSuggestedGroups({
             "filter": {
@@ -90,10 +92,18 @@ const GroupSuggestion1 = () => {
             localStorage.removeItem('group_invite');
             navigate(hasGroupInvite);
         } else {
-            stepServ.updateGroupSuggestions(user._id)
+            let deviceId = localStorage.getItem("device_id");
+            let obj = {
+                deviceId: deviceId,
+                email: user.email
+            }
+            stepServ.updateGroupSuggestions(user._id, obj)
                 .then((res) => {
+                    setIsAuthentiCated(true)
+                    localStorage.setItem("token", res.token)
                     setUser(res.data);
                     setUser1(res.data);
+                    localStorage.setItem("user", JSON.stringify(res.data))
                     setShowToolTip(1)
                     navigate("/", { replace: true });
                 })

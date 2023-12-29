@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { replace } from "formik";
+import { ToastContainer } from "react-toastify";
 function DefaultLayoutWithoutLogin({ children }) {
   const location = useLocation();
   const [headerRequired, setHeaderRequired] = useState(false);
@@ -73,6 +74,18 @@ function DefaultLayoutWithoutLogin({ children }) {
           </footer>
         )}
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
     </main>
   );
 }

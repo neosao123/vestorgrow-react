@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import GlobalContext from '../../context/GlobalContext';
 import OnboardingService from '../../services/onBoardingService'
 import { useContext } from 'react'
+import { toast } from 'react-toastify'
 
 const validationSchema = Yup.object({
     username: Yup.string().required("Username is required.").matches(/^\S*$/, 'Username cannot contain spaces').min(4, "Minimum 4 characters required.").max(20, "Maximum 20 characters allowed.")
@@ -35,6 +36,7 @@ const Screen5 = () => {
         onBoardServ.updateUsername(obj)
             .then((res) => {
                 if (res.message === "Success") {
+                    toast.success("Username updated successfully!")
                     localStorage.setItem("user", JSON.stringify(res.user))
                     setTempUser(res.user)
                     setUser(res.user)

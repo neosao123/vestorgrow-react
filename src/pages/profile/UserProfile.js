@@ -303,15 +303,15 @@ const UserProfile = () => {
                         </div>
                         <div className="userprof_btns userprof_btns_custom">
                             {isFollowing === "following" ? (
-                                <Link onClick={handleUnFollowRequest} className="btn btnColor">
+                                <Link onClick={handleUnFollowRequest} style={{ border: "1px solid #00808b", padding: "5px 15px", borderRadius: "20px", color: "white", fontWeight: "600", backgroundColor: "#00808b" }}>
                                     Following
                                 </Link>
                             ) : isFollowing === "requested" ? (
-                                <Link className="btn btnColor" onClick={handleRejectRequest}>
+                                <Link style={{ border: "1px solid #00808b", padding: "5px 15px", borderRadius: "20px", color: "white", fontWeight: "600", backgroundColor: "#00808b" }} onClick={handleRejectRequest}>
                                     Requested
                                 </Link>
                             ) : (
-                                <Link onClick={handleFollowRequest} className="btn btnColor follow_btn">
+                                <Link onClick={handleFollowRequest} className="editComm_btn">
                                     Follow
                                 </Link>
                             )}

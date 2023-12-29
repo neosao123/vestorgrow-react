@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import EditProfileImage from "../../popups/profile/EditProfileImage";
 import { useNavigate } from 'react-router-dom'
 import OnboardingService from '../../services/onBoardingService'
+import { toast } from 'react-toastify'
 
 const sliderImages = [
     {
@@ -75,6 +76,7 @@ const Screen6 = () => {
         }
         onBoardServ.skioOnboarding(tempUser._id, obj)
             .then((res) => {
+
             })
             .catch((error) => {
                 console.log(error)
@@ -136,7 +138,7 @@ const Screen6 = () => {
             {editprofileImg !== null && <EditProfileImage
                 file={editprofileImg}
                 onClose={() => { setEditProfileImg(null) }}
-                onComplete={() => navigate("/profile_picture", { replace: true })}
+                onComplete={() => { toast.success("Profile updated successfully!"); navigate("/profile_picture", { replace: true }) }}
             />}
 
         </>

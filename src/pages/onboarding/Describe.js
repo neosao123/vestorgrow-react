@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import OnboardingService from '../../services/onBoardingService';
 import { useContext } from 'react';
 import GlobalContext from '../../context/GlobalContext';
+import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object({
     bio: Yup.string().min(20, "Minimum 20 characters required.").max(160, "Maximum 160 characters allowed.")
@@ -29,7 +30,7 @@ const Describe = () => {
         }
         onBoardServ.updateBio(obj)
             .then((res) => {
-                console.log("res:", res.user)
+                toast.success("Bio updated successfully!")
                 setTempUser(res.user);
                 setUser(res.user)
                 localStorage.setItem("user", JSON.stringify(res.user));

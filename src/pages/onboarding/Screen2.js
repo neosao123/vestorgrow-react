@@ -11,6 +11,8 @@ import OnboardingService from '../../services/onBoardingService';
 import { useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_green.css";
 
 
 const validationSchema = Yup.object({
@@ -70,7 +72,6 @@ const Screen2 = () => {
                     localStorage.setItem("user", JSON.stringify(res.user))
                     setTempUser(res.user);
                     setUser(res.user);
-                    setShowEmailPopup(true);
                     navigate("/email_verification", { replace: true })
                 }
             })
@@ -89,9 +90,11 @@ const Screen2 = () => {
         enableReinitialize: true
     })
 
+    console.log("date_of_birth:", formik.values.date_of_birth)
+
     useEffect(() => {
         setEmailError("")
-    }, [formik.values.email])
+    }, [formik.values.email]);
 
 
     return (
@@ -150,13 +153,21 @@ const Screen2 = () => {
                     </div>
                     <div className='formcontrol'>
                         <label className='label'>Date of birth*</label>
-                        <DatePicker
+                        <Flatpickr
                             className='form_input'
                             name="date_of_birth"
-                            selected={formik.values.date_of_birth}
-                            onChange={(date) => formik.setFieldValue("date_of_birth", date)}
+                            value={formik.values.date_of_birth}
                             onBlur={formik.handleBlur}
-                            dateFormat="dd MMMM yyyy"
+                            onChange={(date) => formik.setFieldValue("date_of_birth", date)}
+                            options={{
+                                dateFormat: 'd F Y',
+                                // position: 'auto',
+                                maxDate: new Date(),
+                                // position: "auto",
+                                // positionElement: formik.touched.date_of_birth,
+                                appendTo: formik.touched.date_of_birth,
+                                static: true
+                            }}
                         />
                         {formik.touched.date_of_birth && formik.errors.date_of_birth ? <div>
                             {<div className='valid_feedbackMsg'>{formik.errors.date_of_birth}</div>}

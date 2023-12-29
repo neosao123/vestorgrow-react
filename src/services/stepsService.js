@@ -11,9 +11,9 @@ export default class StepsService {
         }
     }
 
-    async updateGroupSuggestions(id) {
+    async updateGroupSuggestions(id, obj) {
         try {
-            return await util.sendApiRequest("/steps/group/" + id, "POST", true);
+            return await util.sendApiRequest("/steps/group/" + id, "POST", true, obj);
         }
         catch (err) {
             throw err

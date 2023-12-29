@@ -35,11 +35,11 @@ const ChangeEmail = () => {
         }
         onBoardServ.changeEmail(obj)
             .then((res) => {
-                console.log(res)
                 if (res.message === "Email already exists.") {
                     setError(res.message)
                 }
                 else {
+                    toast.success("Email changed successfully!")
                     localStorage.setItem("user", JSON.stringify(res.user));
                     setTempUser(res.user);
                     navigate("/create_account")
