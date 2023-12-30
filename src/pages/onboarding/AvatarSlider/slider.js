@@ -175,21 +175,25 @@ const SimpleSlider = () => {
   }
 
   const handleClick = (src) => {
-    let obj = {
-      id: tempUser._id,
-      profile_img: src
-    }
-    onBoardServ.updateProfileImage(obj)
-      .then((res) => {
-        toast.success("Avatar updated successfully!")
-        localStorage.setItem("user", JSON.stringify(res.user));
-        setTempUser(res.user);
-        setUser(res.user);
-        navigate("/avatar", { replace: true });
-      })
-      .catch((error) => console.log(error));
-
-
+    // let obj = {
+    //   id: tempUser._id,
+    //   profile_img: src
+    // }
+    // onBoardServ.updateProfileImage(obj)
+    //   .then((res) => {
+    //     toast.success("Avatar updated successfully!")
+    //     localStorage.setItem("user", JSON.stringify(res.user));
+    //     setTempUser(res.user);
+    //     setUser(res.user);
+    //     navigate("/avatar", { replace: true });
+    //   })
+    //   .catch((error) => console.log(error));
+    let user = tempUser;
+    user.profile_img = src;
+    setTempUser(user);
+    setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
+    navigate("/avatar")
   }
 
   return (

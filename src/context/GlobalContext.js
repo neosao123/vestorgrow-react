@@ -134,6 +134,7 @@ export const GlobalProvider = ({ children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [emailPopup, setShowEmailPopup] = useState(false);
   const [pin, setPin] = useState(['', '', '', '']);
+  const [avatarImage, setAvatarImage] = useState("");
 
   return (
     <GlobalContext.Provider
