@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import GlobalContext from '../../context/GlobalContext'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import Loader from '../../components/Loader'
 
 const Srceen7 = () => {
     const globalCtx = useContext(GlobalContext);
@@ -28,7 +29,7 @@ const Srceen7 = () => {
             <div className='signupformdiv'>
                 <form className='signup_form1' style={{ width: "30em" }}>
                     <div className='opt_div' style={{ maxWidth: "250px", width: "100%", margin: "auto" }}>
-                        <img src={tempUser.profile_img} width={"100%"} alt="logo" />
+                        <img src={tempUser?.profile_img ? tempUser?.profile_img : "/images/profile/default-profile.png"} width={"100%"} alt="/images/profile/default-profile.png" />
                     </div>
                     <div className='opt_div'>
                         <button className='signup_emailorphone next_btn' onClick={() => navigate("/bio", { replace: true })}>

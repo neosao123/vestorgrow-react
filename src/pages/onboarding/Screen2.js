@@ -90,15 +90,13 @@ const Screen2 = () => {
         enableReinitialize: true
     })
 
-    console.log("date_of_birth:", formik.values.date_of_birth)
-
     useEffect(() => {
         setEmailError("")
     }, [formik.values.email]);
 
 
     return (
-        <>
+        <div style={{ zIndex: "9000" }}>
             <div>
                 <OnboardingHeader />
             </div>
@@ -197,7 +195,7 @@ const Screen2 = () => {
                     </div>
                 </form >
             </div >
-        </>
+        </div>
     )
 }
 

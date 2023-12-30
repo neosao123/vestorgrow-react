@@ -3,8 +3,8 @@ import './pininput.css'; // Import your CSS file
 import GlobalContext from '../../context/GlobalContext';
 
 const PinInput = () => {
-    const [pin, setPin] = useState(['', '', '', '']);
     const globalCtx = useContext(GlobalContext);
+    const [pin, setPin] = globalCtx.verificationPin;
     const [otp, setOtp] = globalCtx.emailverificationOTP;
     const inputRefs = [React.createRef(), React.createRef(), React.createRef(), React.createRef()];
 

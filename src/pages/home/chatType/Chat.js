@@ -398,21 +398,21 @@ export default function Chat({ setMediaFiles, setShowSentMsg, setShowCreateGroup
       <div className="feedChatUser">
         <div className="chatBoxGroupBottom" >
           {shotChatlist && <div className="chatBoxGroupBottom1">
+            <div className={`${!groupChat ? "active-chattype" : "inactive-chattype"} personale-chat`} onClick={handlePersonalChat} ><img src={PersonalChatImage} style={{ width: "25px", }} /><span className="personale-chat-span" >
+              Messages
+              <span className="personale-chat-span-span" style={{ left: -20, top: -10 }} >
+                {personalUnreadCount}
+              </span>
+            </span>
+            </div>
             <div className={`${groupChat ? "active-chattype" : "inactive-chattype"} group-chat`} >
-              <img src={groupImage} />
+              <img src={groupImage} style={{ width: "25px" }} />
               <span className="group-chat-span" onClick={handleGroupChat} >
                 Group Chat
                 <span className="group-chat-span-span" style={{ left: -20, top: -10 }} >
                   {groupUnreadCount}
                 </span>
               </span>
-            </div>
-            <div className={`${!groupChat ? "active-chattype" : "inactive-chattype"} personale-chat`} onClick={handlePersonalChat} ><img src={PersonalChatImage} /><span className="personale-chat-span" >
-              Messages
-              <span className="personale-chat-span-span" style={{ left: -20, top: -10 }} >
-                {personalUnreadCount}
-              </span>
-            </span>
             </div>
             <div className="picaret picaret-left" onClick={() => setShowChatList(prev => !prev)}>
               {shotChatlist && <h6> <span><PiCaretRight className="PiCaret-style" /></span></h6>}

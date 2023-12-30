@@ -54,11 +54,14 @@ const Describe = () => {
         }
         onBoardServ.skioOnboarding(tempUser._id, obj)
             .then((res) => {
+                setTempUser(res.user);
+                setUser(res.user)
+                localStorage.setItem("user", JSON.stringify(res.user));
+                navigate("/usersuggestions1")
             })
             .catch((error) => {
                 console.log(error)
-            })
-        navigate("/usersuggestions1", { replace: true })
+            });
     }
 
     return (
@@ -70,7 +73,6 @@ const Describe = () => {
                 <div className='description_div'>
                     <p className='description_title'>Describe yourself</p>
                     <p className='description_text'>What makes you special? Don’t think too hard, just have fun with it.</p>
-                    <p className='back_btn' onClick={() => navigate("/screen5")}><FaAngleLeft />Back</p>
                 </div>
             </div>
             <form onSubmit={formik.handleSubmit}>

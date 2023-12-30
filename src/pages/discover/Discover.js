@@ -196,14 +196,14 @@ export default function Discover() {
                         })}
                     </div>
                     {Loading ? (<div style={{ display: "flex", justifyContent: "center" }}><Spinner animation="border" variant="primary" /></div>) : (<div className="grid_discover">
-                        {filteredPosts &&
-                            filteredPosts.map((item, idx) => {
-                                const postMessage = item.message.replace(/<\/?a[^>]*>/g, "");
-                                const fullName = item.createdBy.first_name + " " + item.createdBy.last_name;
-                                const user_name = item.createdBy.user_name ?? fullName;
-                                const postReactions = item.postReactions ?? [];
+                        {filteredPosts.length > 0 &&
+                            filteredPosts?.map((item, idx) => {
+                                const postMessage = item?.message?.replace(/<\/?a[^>]*>/g, "");
+                                const fullName = item?.createdBy?.first_name + " " + item?.createdBy?.last_name;
+                                const user_name = item?.createdBy?.user_name ?? fullName;
+                                const postReactions = item?.postReactions ?? [];
                                 const youtubeUrl = helperServ.extractYouTubeURL(item?.message);
-                                const clientAvatar = item.createdBy?.profile_img !== "" ? item.createdBy?.profile_img : "/images/profile/default-profile.png";
+                                const clientAvatar = item?.createdBy?.profile_img !== "" ? item?.createdBy?.profile_img : "/images/profile/default-profile.png";
                                 return (
                                     <div
                                         key={item._id}
@@ -272,7 +272,7 @@ export default function Discover() {
                                                     {/* <ProfilePreview userId={item.createdBy._id} profile_img={item.createdBy?.profile_img} section="discovery" /> */}
                                                     <div>
                                                         <img
-                                                            alt={item.createdBy.user_name}
+                                                            alt={item?.createdBy?.user_name}
                                                             src={
                                                                 clientAvatar
                                                             }

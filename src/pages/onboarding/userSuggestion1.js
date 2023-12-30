@@ -7,6 +7,7 @@ import GlobalContext from "../../context/GlobalContext";
 import { NavLink, Link } from 'react-router-dom';
 import StepsService from "../../services/stepsService";
 import { toast } from "react-toastify";
+import "./usersuggestion1.css";
 
 function UserSuggestion1() {
     const serv = new UserService();
@@ -97,7 +98,7 @@ function UserSuggestion1() {
 
     return (
         <main className="w-100 clearfix userSuggestion bgColor">
-            <div className="signupLogo signupLogo_div_us">
+            <div className="signupLogo signupLogo_div_us" id="signupLogo_div_us1">
                 <Link alt="logo" className="img-fluid signupLogo_a">
                     <img src="/images/profile/logo_image-main.svg" className="img-fluid img-logo" alt="vestorgrow-logo" />
                 </Link>
@@ -110,7 +111,7 @@ function UserSuggestion1() {
                     </div>
                     <div className="suggestion_sec">
                         <div className="row allFeedUser">
-                            {userList.map((item, index) => (
+                            {userList?.map((item, index) => (
                                 <div className="col-sm-6 col-lg-4" key={index}>
                                     <div className="suggestion_Card borderCard suggestion_Card-custom">
                                         <div className="seggestCardtop d-flex">

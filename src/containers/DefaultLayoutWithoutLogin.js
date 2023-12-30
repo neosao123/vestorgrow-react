@@ -18,7 +18,7 @@ function DefaultLayoutWithoutLogin({ children }) {
 
   return (
     <main className={"w-100 clearfix" + (headerRequired && " socialMediaTheme")}>
-      <div className="themeContant p-0">
+      <div>
         {headerRequired && (
           <header className="w-100 clearfix topHeader" id="topHeader">
             <div className="topHeaderInner topHeaderInnerCustom d-flex align-items-center">

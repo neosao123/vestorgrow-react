@@ -439,7 +439,7 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
         />
       )}
       {showToolTip === 3 && (
@@ -462,7 +462,7 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
           className="tooltipBox-Custom"
         />
       )}
@@ -486,7 +486,7 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
           className="tooltipBox-Custom"
         />
       )} */}
@@ -510,7 +510,7 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
           className="tooltipBox-Custom"
         />
       )}

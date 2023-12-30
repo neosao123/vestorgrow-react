@@ -21,6 +21,7 @@ const Screen3 = () => {
     const navigate = useNavigate();
     const [userEmail, setUserEmail] = globalCtx.UserEmail;
     const [otp, setOtp] = globalCtx.emailverificationOTP;
+    const [pin, setPin] = globalCtx.verificationPin;
     const [tempUser, setTempUser] = globalCtx.tempUser;
     const [user, setUser] = globalCtx.user;
     const [emailPopup, setShowEmailPopup] = globalCtx.emailPopup;
@@ -52,13 +53,14 @@ const Screen3 = () => {
         }
         await onboardServ.emailVerification(obj)
             .then((res) => {
-                toast.success(res.message);
+                toast.success("OTP Verified and account created successfully!");
                 localStorage.setItem("user", JSON.stringify(res.user))
                 setTempUser(res.user);
                 setUser(res.user);
                 navigate("/update_password", { replace: true })
+                setPin(['', '', '', ''])
             })
-            .catch(error => setError("Invalid OTP."))
+            .catch(error => { setPin(["", "", "", ""]); toast.error("Invalid OTP.") })
     }
 
 
@@ -126,7 +128,7 @@ const Screen3 = () => {
                     <button disabled={otp.length !== 4} className={`signup_emailorphone next_btn ${otp.length !== 4 ? "otp_verification_btn_color1" : "otp_verification_btn_color"}`} onClick={handleSubmit}>
                         Next
                     </button>
-                    <button className='chage_details_btn' onClick={() => { setShowEmailPopup(false); navigate("/changeemail", { replace: true }) }}>
+                    <button className='chage_details_btn' onClick={() => { setShowEmailPopup(false); setPin(['', '', '', '']); navigate("/changeemail", { replace: true }) }}>
                         <FaArrowLeftLong />
                         Change Details
                     </button>

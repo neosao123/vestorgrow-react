@@ -9,8 +9,8 @@ import * as Yup from "yup";
 import GlobalContext from '../../context/GlobalContext';
 import OnboardingService from '../../services/onBoardingService';
 import { useEffect } from 'react';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_green.css";
 
 
 const validationSchema = Yup.object({
@@ -23,7 +23,7 @@ const validationSchema = Yup.object({
         .matches(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'Invalid last name.')
         .min(2, 'Last name should contain at least two characters'),
     email: Yup.string().required("Email is required.").email("Invalid email.").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email"),
-    date_of_birth: Yup.string().required("Date of birth is required."),
+    date_of_birth: Yup.date().required("Date of birth is required.").max(new Date(), 'Date must be less than today'),
     terms_and_condition: Yup.boolean().oneOf([true], "You must agree to the terms and service."),
 })
 
@@ -60,7 +60,7 @@ const Signup2 = () => {
                 localStorage.setItem("user", JSON.stringify(res.user))
                 setTempUser(res.user);
                 setUser(res.user);
-                navigate("/add_username", { replace: true })
+                navigate("/update_password", { replace: true })
 
             })
             .catch((err) => {
@@ -146,13 +146,18 @@ const Signup2 = () => {
                     </div>
                     <div className='formcontrol'>
                         <label className='label'>Date of birth*</label>
-                        <DatePicker
+                        <Flatpickr
                             className='form_input'
                             name="date_of_birth"
-                            selected={formik.values.date_of_birth}
-                            onChange={(date) => formik.setFieldValue("date_of_birth", date)}
+                            value={formik.values.date_of_birth}
                             onBlur={formik.handleBlur}
-                            dateFormat="dd MMMM yyyy"
+                            onChange={(date) => formik.setFieldValue("date_of_birth", date)}
+                            options={{
+                                dateFormat: 'd F Y',
+                                maxDate: new Date(),
+                                appendTo: formik.touched.date_of_birth,
+                                static: true
+                            }}
                         />
                         {formik.touched.date_of_birth && formik.errors.date_of_birth ? <div>
                             {<div className='valid_feedbackMsg'>{formik.errors.date_of_birth}</div>}

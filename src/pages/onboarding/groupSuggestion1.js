@@ -5,6 +5,7 @@ import GlobalContext from "../../context/GlobalContext";
 import ChatService from "../../services/chatService";
 import StepsService from "../../services/stepsService";
 import UserService from "../../services/UserService";
+import "./groupsuggestions.css"
 
 const GroupSuggestion1 = () => {
     const serv = new ChatService();
@@ -119,7 +120,7 @@ const GroupSuggestion1 = () => {
 
     return (
         <main className="w-100 clearfix userSuggestion bgColor">
-            <div className="signupLogo signupLogo_div_us">
+            <div className="signupLogo signupLogo_div_us" id="signupLogo_div_us1">
                 <Link alt="logo" className="img-fluid signupLogo_a">
                     <img src="/images/profile/logo_image-main.svg" className="img-fluid img-logo" alt="vestorgrow-logo" />
                 </Link>
@@ -181,13 +182,13 @@ const GroupSuggestion1 = () => {
                         <div className="allViews followBtndiv">
                         </div>
                         <div className="skipBTn">
-                            <NavLink className="editComm_btn" to={"/usersuggestion"}>
+                            <NavLink className="editComm_btn" to={"/usersuggestions1"}>
                                 Back
                             </NavLink>
                         </div>
                         <div className="skipBTn">
                             <NavLink className="btn btnColor" onClick={handleRedirect}>
-                                Next
+                                Finish
                             </NavLink>
                         </div>
                     </div>

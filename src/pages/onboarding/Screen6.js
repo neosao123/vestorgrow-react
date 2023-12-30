@@ -84,9 +84,9 @@ const Screen6 = () => {
         navigate("/bio", { replace: true })
     }
 
-    const handleUpload = () => {
+    const handleUpload = (image) => {
         setUser(tempUser);
-        setEditProfileImg("http://localhost:3000/images/profile/default-profile.png")
+        setEditProfileImg(image)
     }
 
 
@@ -99,7 +99,6 @@ const Screen6 = () => {
             </div>
             <div className='main_div'>
                 <div className='text_div'>
-                    <p className='back_btn'><FaAngleLeft />Back</p>
                     <p className='create_account_text'>Pick a profile picture</p>
                 </div>
                 <p className='create_account_description'>Upload your own photo or choose an avatar below? </p>
@@ -107,11 +106,13 @@ const Screen6 = () => {
             <div className=''>
                 <form className='signup_form1'>
                     <div className='formcontrol1'>
-                        <div className='image_input' onClick={handleUpload}>
-                            <div
+                        <div className='image_input'>
+                            <input
                                 type='file'
                                 id="fileInput"
+                                accept="image/*"
                                 className="file-input"
+                                onChange={(e) => handleUpload(e.target.files[0])}
                             />
                             <div className="camera-icon"></div>
                         </div>

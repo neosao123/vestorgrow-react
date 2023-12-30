@@ -34,8 +34,13 @@
     line-height: 19px;
 }
 
-.grid_item{
+.grid_item {
     max-height: 125px;
     height: 100%;
     min-height: 125px;
 }
+
+#signupLogo_div_us1 {
+    padding: 0px 45px !important;
+}
+

@@ -133,6 +133,7 @@ export const GlobalProvider = ({ children }) => {
   const [avatarIndex, setAvatarIndex] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [emailPopup, setShowEmailPopup] = useState(false);
+  const [pin, setPin] = useState(['', '', '', '']);
 
   return (
     <GlobalContext.Provider
@@ -176,6 +177,7 @@ export const GlobalProvider = ({ children }) => {
         avatarIndex: [avatarIndex, setAvatarIndex],
         currentSlide: [currentSlide, setCurrentSlide],
         emailPopup: [emailPopup, setShowEmailPopup],
+        verificationPin: [pin, setPin],
       }}
     >
       {children}
