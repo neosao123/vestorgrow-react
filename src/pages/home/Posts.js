@@ -29,6 +29,8 @@ import { wrap } from "framer-motion";
 import "./posts.css"
 import PostReportSuccess from "../../popups/post/ReportPostSuccess";
 import BlockUserSuccess from "../../popups/post/BlockUserSuccess";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "../../components/Loader";
 
 
 const Posts = () => {
@@ -67,6 +69,8 @@ const Posts = () => {
   const [deleteSuccessPopup, setDeleteSuccessPopup] = useState(false)
   const [showReportSuccess, setShowReportSuccess] = useState(false)
   const [blockUserSuccess, setBlockUserSuccess] = useState(false)
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasmore] = useState(true);
 
 
   const [search, setSearch] = useState({
@@ -111,23 +115,24 @@ const Posts = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      getPostList();
-    }, 200);
+    getPostList();
   }, [postSuccessPopup, search, change]);
 
   const getPostList = async () => {
     try {
       const obj = search;
+      obj.page = page;
       let resp = await postServ.myFeed(obj)
         .then((res) => {
-          setPostList(res.data)
-          setPostCount(res.total)
+          setPostList((prev) => [...prev, ...res?.data]);
+          setPostCount(res.count);
+          setPage(page + 1)
         })
-      if (resp?.data) {
-        setPostList(postList?.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
-        setPostCount(resp.total);
-      }
+        .catch((error) => console.log("error:", error))
+      // if (resp?.data) {
+      //   setPostList(postList?.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
+      //   setPostCount(resp.total);
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -219,6 +224,16 @@ const Posts = () => {
 
   document.body.addEventListener("click", () => setShowShareTo(false), true);
 
+  const LoaderStyle = {
+    display: "flex",
+    justifyContent: "center"
+  }
+
+  const EndTextStyle = {
+    display: "flex",
+    justifyContent: "center",
+  }
+
   return (
     <>
       <div className="middleColumn">
@@ -247,13 +262,23 @@ const Posts = () => {
             </div>
           </div>
         </div>
-        <div className="single_post_container" style={{ borderRadius: "15px" }}>
-          {postList.length > 0 &&
-            postList.map((item, idx) => {
-              return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} setBlockUserSuccess={setBlockUserSuccess} setShowUserLikedPost={setShowUserLikedPost} setShowUserSharedPost={setShowUserSharedPost} />
-            })}
-          <div style={{ padding: "10px" }}>
-          </div>
+        <div className="single_post_container" id="scrollableDiv" style={{ borderRadius: "15px" }}>
+          <InfiniteScroll
+            dataLength={postList.length}
+            loader={<div style={LoaderStyle}><Loader /></div>}
+            next={getPostList}
+            hasMore={postList.length < +postCount ? true : false}
+            endMessage={<div style={EndTextStyle}><p>No posts.</p></div>}
+            scrollableTarget="scrollableDiv"
+            scrollThreshold="200px"
+          >
+            {postList.length > 0 &&
+              postList.map((item, idx) => {
+                return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} setBlockUserSuccess={setBlockUserSuccess} setShowUserLikedPost={setShowUserLikedPost} setShowUserSharedPost={setShowUserSharedPost} />
+              })}
+          </InfiniteScroll>
+        </div>
+        <div style={{ marginBottom: "20px" }}>
         </div>
       </div >
       {showReportPopup && (
@@ -278,7 +303,7 @@ const Posts = () => {
               // setChange(prev=>!prev)
               // getPostList()
             }}
-            getposts={getPostList}
+            getposts={() => { setPostList([]); setPage(1); getPostList() }}
             onFail={() => {
               handleCreatePostPopup();
               handlePostFailPopup();

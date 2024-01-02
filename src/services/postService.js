@@ -44,7 +44,7 @@ export default class PostService {
                 }
                 return object;
             }, {});
-            return await util.sendApiRequest("/post/my/feed", "POST", true, category);
+            return await util.sendApiRequest(`/post/my/feed`, "POST", true, category);
         } catch (err) {
             throw err;
         }

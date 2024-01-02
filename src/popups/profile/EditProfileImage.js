@@ -38,7 +38,6 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
 
   const submitImage = async (fileImage) => {
     try {
-      console.log("fileImage:", fileImage)
       const formData = new FormData();
       formData.append("_id", user._id);
       formData.append("profile_img", fileImage);

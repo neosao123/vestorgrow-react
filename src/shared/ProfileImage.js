@@ -4,7 +4,7 @@ export default function ProfileImage({ url, style, isAvatar }) {
       src={url}
       alt="image"
       className="img-fluid image-fluid-custom-message"
-      style={style ? style : { borderRadius: "40px", width: "100%", height: "100%" }}
+      style={style ? { ...style, boxSizing: "contain" } : { borderRadius: "40px", width: "100%", height: "100%", boxSizing: "contain" }}
     />
   ) : (
     <img

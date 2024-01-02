@@ -7,11 +7,11 @@ import "./file.css"
 import SimpleSlider from './AvatarSlider/slider'
 import { useState } from 'react';
 import GlobalContext from '../../context/GlobalContext'
-import { useEffect } from 'react'
-import EditProfileImage from "../../popups/profile/EditProfileImage";
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import OnboardingService from '../../services/onBoardingService'
 import { toast } from 'react-toastify'
+import EditProfileImage1 from '../../popups/profile/EditProfileImage1'
 
 const sliderImages = [
     {
@@ -65,6 +65,7 @@ const Screen6 = () => {
     const [SliderHeaderTextIndex, setSliderHeaderTextIndex] = globalCtx.SliderHeaderTextIndex;
     const [tempUser, setTempUser] = globalCtx.tempUser;
     const [user, setUser] = globalCtx.user;
+    const [fileImage, setFileImage] = globalCtx.fileImage;
     const [slideHeader, setSliderHeader] = globalCtx.slideHeader;
     const [currentSlide, setCurrentSlide] = globalCtx.currentSlide;
     const navigate = useNavigate();
@@ -136,10 +137,10 @@ const Screen6 = () => {
                 </form>
             </div>
 
-            {editprofileImg !== null && <EditProfileImage
+            {editprofileImg !== null && <EditProfileImage1
                 file={editprofileImg}
                 onClose={() => { setEditProfileImg(null) }}
-                onComplete={() => { toast.success("Profile updated successfully!"); navigate("/profile_picture", { replace: true }) }}
+                onComplete={(file) => { setFileImage(file); navigate("/profile_picture", { replace: true }) }}
             />}
 
         </>

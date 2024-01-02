@@ -30,6 +30,7 @@
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.3",
     "react-icons": "^4.10.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-linkify": "^1.0.0-alpha",
     "react-loading-spin": "^2.1.9",
     "react-mentions": "^4.4.7",
