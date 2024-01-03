@@ -135,6 +135,7 @@ export const GlobalProvider = ({ children }) => {
   const [emailPopup, setShowEmailPopup] = useState(false);
   const [pin, setPin] = useState(['', '', '', '']);
   const [fileImage, setFileImage] = useState("");
+  const [Imagesrc, setImageSrc] = useState("");
 
   return (
     <GlobalContext.Provider
@@ -180,6 +181,7 @@ export const GlobalProvider = ({ children }) => {
         emailPopup: [emailPopup, setShowEmailPopup],
         verificationPin: [pin, setPin],
         fileImage: [fileImage, setFileImage],
+        Imagesrc: [Imagesrc, setImageSrc],
       }}
     >
       {children}

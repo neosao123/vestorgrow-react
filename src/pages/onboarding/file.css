@@ -27,9 +27,9 @@
 }
 
 .camera-icon {
-    width: 30px;
+    width: 25px;
     /* Adjust icon width as needed */
-    height: 30px;
+    height: 25px;
     /* Adjust icon height as needed */
     background: url('../../assets/images/camera_logo.svg') no-repeat;
     /* Replace with the path to your camera icon */
@@ -38,5 +38,5 @@
     position: absolute;
     top: 0;
     left: 0;
-    transform: translate(120%, 125%);
+    transform: translate(110%, 110%);
 }

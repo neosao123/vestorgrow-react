@@ -9,6 +9,7 @@ import OnboardingService from '../../services/onBoardingService';
 import { useContext } from 'react';
 import GlobalContext from '../../context/GlobalContext';
 import { toast } from 'react-toastify';
+import { IoChevronBackOutline } from "react-icons/io5";
 
 const validationSchema = Yup.object({
     bio: Yup.string().min(20, "Minimum 20 characters required.").max(160, "Maximum 160 characters allowed.")
@@ -70,9 +71,10 @@ const Describe = () => {
                 <OnboardingHeader />
             </div>
             <div className='main_div_describe'>
-                <div className='description_div'>
+                <div className='description_div' style={{ maxWidth: "650px" }}>
                     <p className='description_title'>Describe yourself</p>
-                    <p className='description_text'>What makes you special? Don’t think too hard, just have fun with it.</p>
+                    <p className='description_text' style={{ maxWidth: "300px", margin: "auto" }}>What makes you special? Don’t think too hard, just have fun with it.</p>
+                    <p onClick={() => navigate("/update_profile")} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                 </div>
             </div>
             <form onSubmit={formik.handleSubmit}>

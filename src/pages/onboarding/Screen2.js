@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 
 const validationSchema = Yup.object({
@@ -27,6 +28,14 @@ const validationSchema = Yup.object({
     email: Yup.string().required("Email is required.").email("Invalid email.").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email"),
     date_of_birth: Yup.date().required("Date of birth is required.").max(new Date(), 'Date must be less than today'),
     terms_and_condition: Yup.boolean().oneOf([true], "You must agree to the terms and service."),
+    password: Yup.string().required("Password is required").min(8, "Minimum 8 characters required.").max(20, "Maximum 20 characters allowed.").matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+        'Password must contain at least one lowercase letter, one uppercase letter, one symbol, and one number'
+    ),
+    confirm_password: Yup.string().required("Confirm password is required").min(8, "Minimum 8 characters required.").max(20, "Maximum 20 characters allowed.").matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+        'Password must contain at least one lowercase letter, one uppercase letter, one symbol, and one number'
+    ).oneOf([Yup.ref("password")], "Confirm password must be same as password.")
 })
 
 const Screen2 = () => {
@@ -45,8 +54,12 @@ const Screen2 = () => {
         last_name: "",
         email: "",
         date_of_birth: "",
+        password: "",
+        confirm_password: "",
         terms_and_condition: false
     });
+    const [showPass, setShowPass] = useState(false);
+    const [showConfirmPass, setConfirmPass] = useState(false);
 
 
     const onSubmit = async (values) => {
@@ -59,7 +72,9 @@ const Screen2 = () => {
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric',
-            })
+            }),
+            password: values.password,
+            confirm_password: values.confirm_password
         }
 
         await onBoardServ.signingUp(obj)
@@ -101,11 +116,11 @@ const Screen2 = () => {
                 <OnboardingHeader />
             </div>
             <div className='main_div'>
-                <p className='create_account_text'>Create your account</p>
+                <p className='create_account_text' style={{ marginBottom: "0px" }}>Create your account</p>
                 <p className='create_account_description'>Track where you see VestorGrow content across the web</p>
             </div>
             <div className='signupformdiv'>
-                <form className='signup_form' onSubmit={formik.handleSubmit}>
+                <form className='signup_form gap' onSubmit={formik.handleSubmit}>
                     <div className='formcontrol'>
                         <label className='label'>First name*</label>
                         <input
@@ -169,6 +184,42 @@ const Screen2 = () => {
                         />
                         {formik.touched.date_of_birth && formik.errors.date_of_birth ? <div>
                             {<div className='valid_feedbackMsg'>{formik.errors.date_of_birth}</div>}
+                        </div> : null}
+                    </div>
+                    <div className='formcontrol eye_icon_div'>
+                        <label className='label'>Password*</label>
+                        <input
+                            className='form_input'
+                            type={!showPass ? "password" : "text"}
+                            name='password'
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.password}
+                        />
+                        <div className='eye_icon'>
+                            {showPass && <IoEyeOffOutline onClick={() => setShowPass(false)} />}
+                            {!showPass && <IoEyeOutline onClick={() => setShowPass(true)} />}
+                        </div>
+                        {formik.touched.password && formik.errors.password ? <div>
+                            {<div className='valid_feedbackMsg'>{formik.errors.password}</div>}
+                        </div> : null}
+                    </div>
+                    <div className='formcontrol eye_icon_div'>
+                        <label className='label'>confirm Password*</label>
+                        <input
+                            className='form_input'
+                            type={!showConfirmPass ? "password" : "text"}
+                            name='confirm_password'
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.confirm_password}
+                        />
+                        <div className='eye_icon'>
+                            {showConfirmPass && <IoEyeOffOutline onClick={() => setConfirmPass(false)} />}
+                            {!showConfirmPass && <IoEyeOutline onClick={() => setConfirmPass(true)} />}
+                        </div>
+                        {formik.touched.confirm_password && formik.errors.confirm_password ? <div>
+                            {<div className='valid_feedbackMsg'>{formik.errors.confirm_password}</div>}
                         </div> : null}
                     </div>
                     <div className='formcontrol_checkbox'>

@@ -91,11 +91,11 @@ function DefaultLayout({ children }) {
       setLoading(false)
       navigate("/add_username", { replace: true })
     }
-    else if (user.profilepictureUpdate === false && user.usernameUpdate === true) {
+    else if (user.profilepictureUpdate === false && user.usernameUpdate === true && location.pathname !== "/avatar" && location.pathname !== "/profile_picture") {
       setLoading(false)
       navigate("/update_profile", { replace: true })
     }
-    else if (user.bioUpdate === false && user.profilepictureUpdate === true && user.usernameUpdate === true && (location.pathname == "/avatar" || location.pathname == "/profile_picture")) {
+    else if (location.pathname == "/avatar" || location.pathname == "/profile_picture") {
       setLoading(false);
       navigate(location.pathname, { replace: true })
     }

@@ -96,10 +96,10 @@ const Screen5 = () => {
                         <p><span style={{ fontWeight: "600" }}>Sorry!</span><span> this username is already taken</span></p>
                         <p style={{ color: "black", fontSize: "16px" }}>You can use this instead.</p>
                     </div>}
-                    <div>
+                    <div style={{ marginTop: "-20px" }}>
                         {
                             showusername && userNames?.map((el) => {
-                                return <p style={{ color: "green", fontSize: "14px", lineHeight: "8px" }}>{el}</p>
+                                return <p style={{ color: "#00808B", fontSize: "14px", lineHeight: "8px" }}>{el}</p>
                             })
                         }
                     </div>

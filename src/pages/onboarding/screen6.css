@@ -1,5 +1,6 @@
 .main_div {
     height: auto !important;
+    margin-top: 20px !important;
 }
 
 .signup_form1 {
@@ -19,8 +20,8 @@
 
 .image_input {
     border: 1px dashed #00808b;
-    width: 102px;
-    height: 102px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     position: relative;
 }
@@ -58,3 +59,4 @@
     letter-spacing: 0em;
     text-align: center;
 }
+

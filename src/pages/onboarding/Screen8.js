@@ -6,6 +6,7 @@ import GlobalContext from '../../context/GlobalContext';
 import UserService from '../../services/UserService';
 import { toast } from 'react-toastify';
 import util from '../../util/util';
+import { IoChevronBackOutline } from "react-icons/io5";
 
 const Screen8 = () => {
     const navigate = useNavigate();
@@ -45,9 +46,9 @@ const Screen8 = () => {
                 <OnboardingHeader />
             </div>
             <div className='main_div'>
-                <div className='text_div'>
-                    <p className='back_btn'><FaAngleLeft />Back</p>
+                <div className='text_div' style={{ maxWidth: "650px", width: "100%", margin: "auto", position: "relative" }}>
                     <p className='create_account_text'>Pick a profile picture</p>
+                    <p onClick={() => navigate("/update_profile", { replace: true })} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                 </div>
                 <p className='create_account_description'>Upload your own photo or choose an avatar below? </p>
             </div>

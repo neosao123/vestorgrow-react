@@ -8,6 +8,7 @@ import { NavLink, Link } from 'react-router-dom';
 import StepsService from "../../services/stepsService";
 import { toast } from "react-toastify";
 import "./usersuggestion1.css";
+import { IoChevronBackOutline } from "react-icons/io5";
 
 function UserSuggestion1() {
     const serv = new UserService();
@@ -105,11 +106,12 @@ function UserSuggestion1() {
             </div>
             <div className="sigUpSection2 signUp_Section signUp_Section-customPosition">
                 <div className="main_container">
-                    <div className="signUphead text-center mt-0 mb-2">
-                        <h3 className="mb-2">Follow 1 or more accounts</h3>
-                        <p>People you may want to follow</p>
+                    <div className="signUphead text-center mt-0 mb-2" style={{ maxWidth: "750px", width: "100%", margin: "auto", position: "relative" }}>
+                        <h3 className="mb-2" style={{ fontSize: "50px" }}>Follow 1 or more accounts</h3>
+                        <p style={{ fontSize: "16px", lineHeight: "22px", fontWeight: "400", maxWidth: "450px", width: "100%", textAlign: "start", margin: "auto" }}>When you follow someone, you’ll see their Tweets in your Timeline. You’ll also get more relevant recommendations</p>
+                        <p onClick={() => navigate("/bio")} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                     </div>
-                    <div className="suggestion_sec">
+                    <div className="suggestion_sec" style={{ marginTop: "40px" }}>
                         <div className="row allFeedUser">
                             {userList?.map((item, index) => (
                                 <div className="col-sm-6 col-lg-4" key={index}>
@@ -123,14 +125,14 @@ function UserSuggestion1() {
                                                     <span className="mb-0">{item?.user_name} </span>
                                                     {item.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="green-tick" /> : ""}{" "}
                                                 </h6>
-                                                <p className="mb-1">
+                                                {/* <p className="mb-1">
                                                     {item?.first_name} {item?.last_name}
-                                                </p>
+                                                </p> */}
                                                 <p className="mb-1">{item.title} </p>
                                                 <p className="mb-0">{item.followers} Followers</p>
                                             </div>
                                         </div>
-                                        <div className="seggestCardButton pt-4 mt-2 d-flex btnFollowDiv">
+                                        <div className="seggestCardButton pt-3 mt-2 d-flex btnFollowDiv">
                                             <Link
                                                 className="editComm_btn editComm_btn-custom"
                                                 onClick={() => handleRemoveUser(item._id)}
@@ -160,13 +162,11 @@ function UserSuggestion1() {
                             ))}
                         </div>
                     </div>
-                    <div className="back_Skipbtn back_Skipbtn-customBtn d-flex justify-content-end" >
-                        <div className="allViews followBtndiv">
-                        </div>
-                        <div className="skipBTn" onClick={handleUserSuggestion}>
-                            <NavLink className="btn btnColor">
+                    <div style={{ marginTop: "-15px" }}>
+                        <div style={{ margin: "auto", maxWidth: "480px", width: "100%" }} onClick={handleUserSuggestion}>
+                            <button disabled={user?.following < 0} type="button" style={{ width: "100%", height: "52px", backgroundColor: `${user.following > 0 ? "#00808B" : "#C0C8C9"}` }} className="btn btnColor">
                                 Next
-                            </NavLink>
+                            </button>
                         </div>
                     </div>
                 </div>

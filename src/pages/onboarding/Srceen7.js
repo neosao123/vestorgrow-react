@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Loader from '../../components/Loader'
 import OnboardingService from '../../services/onBoardingService'
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+import { IoChevronBackOutline } from "react-icons/io5";
+import "./srceen7.css"
 
 const Srceen7 = () => {
     const globalCtx = useContext(GlobalContext);
@@ -22,7 +24,7 @@ const Srceen7 = () => {
             id: tempUser._id,
             profile_img: tempUser.profile_img
         }
-       await onBoardServ.updateProfileImage(obj)
+        await onBoardServ.updateProfileImage(obj)
             .then((res) => {
                 console.log("RES:", res)
                 toast.success("Avatar updated successfully!")
@@ -44,8 +46,8 @@ const Srceen7 = () => {
                 <OnboardingHeader />
             </div>
             <div className='main_div'>
-                <div className='text_div'>
-                    <p className='back_btn'><FaAngleLeft />Back</p>
+                <div className='text_div' style={{ position: "relative", maxWidth: "650px", width: "100%", margin: "auto" }}>
+                    <p onClick={() => navigate("/update_profile", { replace: true })} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                     <p className='create_account_text'>Pick a profile picture</p>
                 </div>
                 <p className='create_account_description'>Upload your own photo or choose an avatar below? </p>

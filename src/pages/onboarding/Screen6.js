@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import OnboardingService from '../../services/onBoardingService'
 import { toast } from 'react-toastify'
-import EditProfileImage1 from '../../popups/profile/EditProfileImage1'
+import EditProfileImage1 from '../../popups/profile/EditProfileImage1';
 
 const sliderImages = [
     {
@@ -68,6 +68,7 @@ const Screen6 = () => {
     const [fileImage, setFileImage] = globalCtx.fileImage;
     const [slideHeader, setSliderHeader] = globalCtx.slideHeader;
     const [currentSlide, setCurrentSlide] = globalCtx.currentSlide;
+    const [Imagesrc, setImageSrc] = globalCtx.Imagesrc;
     const navigate = useNavigate();
 
 
@@ -88,6 +89,17 @@ const Screen6 = () => {
     const handleUpload = (image) => {
         setUser(tempUser);
         setEditProfileImg(image)
+    }
+
+    const handleNext = () => {
+        let user = tempUser;
+        console.log("user:", user);
+        console.log("image:", Imagesrc)
+        user.profile_img = Imagesrc;
+        setTempUser(user);
+        setUser(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        navigate("/avatar")
     }
 
 
@@ -123,14 +135,15 @@ const Screen6 = () => {
                         <div style={{ maxWidth: "30em", width: "100%" }}>
                             <SimpleSlider />
                         </div>
+                        <div style={{ fontSize: "16px", fontWeight: "500", color: "#465D61" }}>{currentSlide + 1}{" "}/{" "}{sliderImages.length}</div>
                     </div>
                     <div className='opt_div'>
-                        <button className='signup_emailorphone next_btn'>
+                        <button type='button' onClick={handleNext} className='signup_emailorphone next_btn'>
                             Next
                         </button>
                     </div>
                     <div className='opt_div'>
-                        <button className='skip_btn mb-4' onClick={handleSkip}>
+                        <button className='skip_btn mb-2' onClick={handleSkip}>
                             Skip
                         </button>
                     </div>

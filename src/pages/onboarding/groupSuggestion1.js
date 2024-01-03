@@ -6,6 +6,7 @@ import ChatService from "../../services/chatService";
 import StepsService from "../../services/stepsService";
 import UserService from "../../services/UserService";
 import "./groupsuggestions.css"
+import { IoChevronBackOutline } from "react-icons/io5";
 
 const GroupSuggestion1 = () => {
     const serv = new ChatService();
@@ -127,12 +128,13 @@ const GroupSuggestion1 = () => {
             </div>
             <div className="sigUpSection2 signUp_Section signUp_Section-customPosition">
                 <div className="main_container">
-                    <div className="signUphead text-center mt-0 mb-2">
-                        <h3 className="mb-2">Suggestions </h3>
-                        <p>Groups you wish to join...</p>
+                    <div className="signUphead text-center mt-0 mb-2" style={{ position: "relative", maxWidth: "650px", width: "100%", textAlign: "center", margin: "auto" }}>
+                        <h3 className="mb-2" style={{ fontSize: "50px" }}>Suggestions </h3>
+                        <p style={{ fontSize: "16px", lineHeight: "22px", fontWeight: "400" }}>Groups you wish to join...</p>
+                        <p onClick={() => navigate("/usersuggestions1")} style={{ position: "absolute", top: 12, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                     </div>
                     <div className="suggestion_sec">
-                        <div className="row g-3">
+                        <div className="row g-3" style={{ overflowY: "auto" }}>
                             {chatGroupList.map((item, index) => (
                                 <div className="col-sm-6 col-lg-4" key={index}>
                                     <div className="suggestion_Card borderCard groupSuggestion_Card-custom" style={{ marginBottom: "0px" }}>
@@ -178,7 +180,10 @@ const GroupSuggestion1 = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="back_Skipbtn back_Skipbtn-customBtn d-flex justify-content-end" >
+                    <div style={{ marginTop: "40px", display: "flex", gap: "5px", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                        <button onClick={handleRedirect} style={{ maxWidth: "20em", width: "100%", color: "white", borderRadius: "20px", border: "1px solid #00808B", backgroundColor: "#00808B", padding: "8px 0px", fontWeight: "500", fontSize: "18px" }} >Finish</button>
+                    </div>
+                    {/* <div className="back_Skipbtn back_Skipbtn-customBtn d-flex justify-content-end" >
                         <div className="allViews followBtndiv">
                         </div>
                         <div className="skipBTn">
@@ -191,7 +196,7 @@ const GroupSuggestion1 = () => {
                                 Finish
                             </NavLink>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </main>

@@ -1,12 +1,9 @@
 /* DynamicSlider.css */
 .slider-container {
-    width: 80%;
+    /* width: 80%; */
     margin: auto;
 }
 
-.slick-slider {
-    height: 400px;
-}
 
 .custom-slide {
     display: flex;
@@ -14,14 +11,14 @@
     justify-content: center;
     background-color: #ddd;
     height: 300px !important;
-    max-width: 99% !important;
+    /* max-width: 99% !important; */
     /* margin: auto !important; */
     margin-left: 1px !important;
 }
 
 .custom-slide1 {
     background-color: transparent;
-    height: 100% !important;
+    /* height: 100% !important; */
     margin: auto !important;
     /* Custom background color for Slide 1 */
 }
@@ -57,30 +54,44 @@
 }
 
 .image_height {
-    height: 200px !important;
-    width: 180px !important;
+    /* max-height: 150px !important;
+    height: 140px;
+    max-width: 110px !important; */
+    height: 100% !important;
+    /* width: 100% !important; */
 }
 
 .custom-prev {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 500;
-    margin-right: 90px;
+    margin-right: 70px;
+    margin-top: -20px !important;
 }
 
 .custom-next {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 500;
-    margin-left: 90px;
+    margin-left: 70px;
+    margin-top: -20px !important;
 }
 
 #avatar_div1 {
+    position: relative !important;
+    box-sizing: border-box !important;
+    max-height: 150px !important;
+    height: 150px;
     position: relative !important;
 }
 
 #checkmark {
     position: absolute !important;
-    top: 0 !important;
-    right: 0 !important;
+    top: 10px !important;
+    right: 15px !important;
+}
+
+.checkmark_img {
+    height: 24px !important;
+    width: 24px !important;
 }
 
 
@@ -98,8 +109,8 @@
     }
 
     .image_height {
-        height: 70px !important;
-        width: 60px !important;
+        height: 90px !important;
+        width: 70px !important;
     }
 }
 

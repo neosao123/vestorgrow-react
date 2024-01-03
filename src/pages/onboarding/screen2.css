@@ -9,7 +9,7 @@
     font-size: 50px;
     font-weight: 600;
     text-align: center;
-    margin-top: 52px;
+    margin-top: 20px !important;
     line-height: 63px;
 
 }
@@ -17,7 +17,7 @@
 .signupformdiv {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 20px !important;
 }
 
 .signup_form {
@@ -25,21 +25,24 @@
     /* height: 28.5em; */
     display: flex;
     flex-direction: column;
-    gap: 25px;
+}
+
+.gap {
+    gap: 10px !important;
 }
 
 .label {
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 14px;
+    line-height: 15px;
     font-weight: 600;
     color: #0D1B1D;
 }
 
 .form_input {
     width: 100%;
-    height: 48px;
+    height: 40px;
     border-radius: 50px;
-    padding: 12px 20px !important;
+    padding: 5px 15px !important;
     border: 1px solid #D1D1D1;
 }
 
@@ -123,6 +126,15 @@
     /* top: 10;
     /* Adjust this value for the desired spacing */
     /* left: 10; */
+}
+
+.eye_icon {
+    position: absolute;
+    margin-top: 30px !important;
+}
+
+.eye_icon_div {
+    position: relative;
 }
 
 
