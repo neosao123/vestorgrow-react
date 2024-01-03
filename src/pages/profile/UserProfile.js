@@ -258,7 +258,7 @@ const UserProfile = () => {
 
     return (
         <div>
-            <div className="socialContant profileContent main_container">
+            <div className="socialContant1 profileContent main_container">
                 <div className="myProfile_sec">
                     <div className="about_profile">
                         <div
@@ -275,7 +275,7 @@ const UserProfile = () => {
                         <div className="prf-img-container new_profile_pic" style={{ backgroundColor: "gray", borderRadius: "50%", marginLeft: "20px" }}>
                             <img className="prf-img" src={user?.profile_img !== "" ? user?.profile_img : "/images/profile/default-profile.png"} alt={user?.user_name} width={"90%"} height={"90%"} />
                             <div className="middle" onClick={handleShowEnlarge}>
-                                <div className="text"><i className="fa fa-external-link fa-2x text-primary"></i></div>
+                                <div className="text" ><i className="fa fa-external-link fa-2x text-light"></i></div>
                             </div>
                         </div>
                     </div>
@@ -396,7 +396,9 @@ const UserProfile = () => {
                                                     if (index < 5) {
                                                         return (
                                                             <div key={"abt-sgu-" + index} className="pfrx-sgx-bx" style={{ marginLeft: "20px", marginRight: "20px" }}>
-                                                                <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                                <div onClick={() => navigate("/userprofile/" + suggestedUser._id)}>
+                                                                    <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                                </div>
                                                                 <div className="ms-3">
                                                                     <div style={{ fontWeight: "600" }}>
                                                                         <NavLink to={"/userprofile/" + suggestedUser._id} style={{ color: "#000000", fontSize: "1.0rem", fontWeight: "600" }}>

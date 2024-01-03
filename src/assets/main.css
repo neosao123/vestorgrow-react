@@ -249,7 +249,11 @@ a {
 /**|| Top Graph Slider End ||**/
 .socialContant {
   padding: 32px;
-  padding-top: 64px;
+}
+
+.socialContant1 {
+  padding: 32px;
+  padding-top: 64px !important;
 }
 
 .aboutUserBox {

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import GlobalContext from "../../context/GlobalContext";
 import Suggested from "./Suggested";
-import "./homepage.css"
+import "./homepage.css";
 
 function HomePageOld() {
   const globalCtx = useContext(GlobalContext)

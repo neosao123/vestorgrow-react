@@ -141,8 +141,8 @@ function Suggested() {
         <div className="suggestionBody" style={{ padding: "0px 0px  0px 0px", display: "flex", flexDirection: "column", paddingLeft: "15px", paddingRight: "15px" }}>
           {suggestedHome?.length > 0 && suggestedHome?.slice(0, 4).map((user, i) => {
             return (
-              <div className={i == 0 ? `profile_box1` : `profile_box`}>
-                <div style={{ display: "flex"}} >
+              <div className={i == 0 ? `profile_box1` : `profile_box`} key={i}>
+                <div style={{ display: "flex" }} >
                   <Link to={"/userprofile/" + user?._id}>
                     <img
                       style={{ height: "48px", width: "48px", marginTop: "15px", borderRadius: "50%" }}
@@ -236,7 +236,7 @@ function Suggested() {
         <div className="button-header hscroll" style={{ borderBottom: "0" }}>
           {suggestTabBtn.map((tab) => {
             return (
-              <>
+              <div key={tab.key}>
                 <button
                   key={tab.key}
                   className={category === tab.tab ? "active-tab" : ""}
@@ -244,7 +244,7 @@ function Suggested() {
                 >
                   {tab.value}
                 </button>
-              </>
+              </div>
             );
           })}
         </div>
@@ -264,7 +264,7 @@ function Suggested() {
                 {
                   filteredSuggested?.map((user) => {
                     return (
-                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 min_width suggestionboxes"  >
+                      <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 min_width suggestionboxes" key={user._id} >
                         <div className="profileBox">
                           <Link to={"/userprofile/" + user?._id}>
                             <div className="profile-image">

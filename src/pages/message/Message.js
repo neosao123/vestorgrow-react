@@ -262,7 +262,7 @@ const Message = () => {
     return (
         <>
             <div className="socialContant chatsocialContant main_container pb-0 messagebox-fixed">
-                <div className="messageChatBox">
+                <div className="messageChatBox" style={{ marginTop: "67px" }}>
                     <div
                         className={"messageChatLeft messageChatLeftCustom d-md-block " + (chatBlock ? "d-sm-none d-none" : "d-sm-block d-block")}
                         style={{ borderTopLeftRadius: "15px" }}
@@ -500,7 +500,7 @@ const Message = () => {
                                                                 }
                                                             >
                                                                 <div className="leftSideProfile">
-                                                                    <ProfileImage url={item.sender?.profile_img}  style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
+                                                                    <ProfileImage url={item.sender?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                                                 </div>
                                                                 {item.deleted_for?.includes("all") || item.deleted_for?.includes(user?._id) ? (
                                                                     <div className="leftSideContant">

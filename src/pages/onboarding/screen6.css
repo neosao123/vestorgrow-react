@@ -50,3 +50,11 @@
     width: 100% !important;
     margin: 0px 10px !important;
 }
+
+.avatar_text {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 41px;
+    letter-spacing: 0em;
+    text-align: center;
+}

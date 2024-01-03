@@ -21,7 +21,7 @@ import DiscoverPost from "../../popups/discovery/DiscoverPost";
 import MyGroupList from "./MyGroupList";
 import LoadingSpin from "react-loading-spin";
 import Playeryoutube from '../../components/Playeryoutube';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import UserSharedPost from "../../popups/post/UserSharedPost";
 import './profile.css';
 import UserLikedPost from "../../popups/post/UserLikedPost";
@@ -31,7 +31,7 @@ import { toast } from 'react-toastify';
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 
 const Profile = () => {
-
+    const navigate = useNavigate();
     const suggestedServ = new SuggestedService();
     const userServ = new UserService();
     const postServ = new PostService();
@@ -513,7 +513,9 @@ const Profile = () => {
                                                     if (index < 5) {
                                                         return (
                                                             <div key={"abt-sgu-" + index} className="pfrx-sgx-bx">
-                                                                <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                                <div onClick={() => navigate("/userprofile/" + suggestedUser._id)}>
+                                                                    <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                                </div>
                                                                 <div className="ms-3">
                                                                     <NavLink to={"/userprofile/" + suggestedUser._id} style={{ color: "#000000", fontSize: "1.0rem", fontWeight: "600" }}>
                                                                         {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}

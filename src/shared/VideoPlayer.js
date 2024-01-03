@@ -39,7 +39,7 @@ function VideoPlayer({ videoUrl, setVideoUrl }) {
           </div>
         </div>
       </div>
-      <div class="modal-backdrop show"></div>
+      <div className="modal-backdrop show"></div>
     </>
   );
 }

@@ -84,6 +84,8 @@ export default function Discover() {
         } else {
             setSortType("Most Recent");
         }
+        setPostList([]);
+        setPage(1);
         getPostList(sortBy);
     };
 
@@ -180,7 +182,7 @@ export default function Discover() {
                     <div className="category-btn" style={{ width: "100%" }}>
                         {items.map((items) => {
                             return (
-                                <>
+                                <div key={items._id}>
                                     <button
                                         key={items._id}
                                         className={
@@ -191,7 +193,7 @@ export default function Discover() {
                                     >
                                         {items.keyword}
                                     </button>
-                                </>
+                                </div>
                             );
                         })}
                     </div>

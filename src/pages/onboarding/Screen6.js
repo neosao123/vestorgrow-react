@@ -104,9 +104,9 @@ const Screen6 = () => {
                 </div>
                 <p className='create_account_description'>Upload your own photo or choose an avatar below? </p>
             </div>
-            <div className=''>
+            <div className='mb-4'>
                 <form className='signup_form1'>
-                    <div className='formcontrol1'>
+                    <div className='formcontrol1' style={{ marginTop: "37px" }}>
                         <div className='image_input'>
                             <input
                                 type='file'
@@ -119,7 +119,7 @@ const Screen6 = () => {
                         </div>
                     </div>
                     <div className='avatar_div'>
-                        <h1>{sliderImages[currentSlide].text}</h1>
+                        <h1 className='avatar_text'>{sliderImages[currentSlide].text}</h1>
                         <div style={{ maxWidth: "30em", width: "100%" }}>
                             <SimpleSlider />
                         </div>

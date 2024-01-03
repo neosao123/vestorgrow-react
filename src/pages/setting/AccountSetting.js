@@ -335,8 +335,8 @@ export default function AccouctSetting() {
                       onBlur={formik1.handleBlur}
                       value={formik1.values.password}
                     />
-                    {showPassword && <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}><IoEyeOffOutline /></span>}
-                    {!showPassword && <span className="eye_icon" onClick={() => setShowPassword(!showPassword)}><IoEyeOutline /></span>}
+                    {showPassword && <span className="eye_icon1" onClick={() => setShowPassword(!showPassword)}><IoEyeOffOutline /></span>}
+                    {!showPassword && <span className="eye_icon1" onClick={() => setShowPassword(!showPassword)}><IoEyeOutline /></span>}
                   </div>
 
                   {formik1.touched.password && formik1.errors.password ? (
@@ -359,8 +359,8 @@ export default function AccouctSetting() {
                       onBlur={formik1.handleBlur}
                       value={formik1.values.newPassword}
                     />
-                    {shownewPassword && <span className="eye_icon" onClick={() => setShownewPassword(!shownewPassword)}><IoEyeOffOutline /></span>}
-                    {!shownewPassword && <span className="eye_icon" onClick={() => setShownewPassword(!shownewPassword)}><IoEyeOutline /></span>}
+                    {shownewPassword && <span className="eye_icon1" onClick={() => setShownewPassword(!shownewPassword)}><IoEyeOffOutline /></span>}
+                    {!shownewPassword && <span className="eye_icon1" onClick={() => setShownewPassword(!shownewPassword)}><IoEyeOutline /></span>}
                   </div>
                   {formik1.touched.newPassword && formik1.errors.newPassword ? (
                     <div className="valid_feedbackMsg">{formik1.errors.newPassword}</div>
@@ -382,8 +382,8 @@ export default function AccouctSetting() {
                       onBlur={formik1.handleBlur}
                       value={formik1.values.verifyPassword}
                     />
-                    {showverifyPassword && <span className="eye_icon" onClick={() => setShowVerifyPassword(!showverifyPassword)}><IoEyeOffOutline /></span>}
-                    {!showverifyPassword && <span className="eye_icon" onClick={() => setShowVerifyPassword(!showverifyPassword)}><IoEyeOutline /></span>}
+                    {showverifyPassword && <span className="eye_icon1" onClick={() => setShowVerifyPassword(!showverifyPassword)}><IoEyeOffOutline /></span>}
+                    {!showverifyPassword && <span className="eye_icon1" onClick={() => setShowVerifyPassword(!showverifyPassword)}><IoEyeOutline /></span>}
                   </div>
                   {formik1.touched.verifyPassword && formik1.errors.verifyPassword ? (
                     <div className="valid_feedbackMsg">{formik1.errors.verifyPassword}</div>

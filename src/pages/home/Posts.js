@@ -274,7 +274,7 @@ const Posts = () => {
           >
             {postList.length > 0 &&
               postList.map((item, idx) => {
-                return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} setBlockUserSuccess={setBlockUserSuccess} setShowUserLikedPost={setShowUserLikedPost} setShowUserSharedPost={setShowUserSharedPost} />
+                return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} setBlockUserSuccess={setBlockUserSuccess} setShowUserLikedPost={setShowUserLikedPost} setShowUserSharedPost={setShowUserSharedPost} onDelete={() => { setPostList([]); setPage(1); setChange(!change); setDeleteSuccessPopup(!deleteSuccessPopup) }} />
               })}
           </InfiniteScroll>
         </div>

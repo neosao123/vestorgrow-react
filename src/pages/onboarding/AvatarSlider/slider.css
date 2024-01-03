@@ -61,17 +61,40 @@
     width: 180px !important;
 }
 
+.custom-prev {
+    font-size: 40px;
+    font-weight: 500;
+    margin-right: 90px;
+}
+
+.custom-next {
+    font-size: 40px;
+    font-weight: 500;
+    margin-left: 90px;
+}
+
+#avatar_div1 {
+    position: relative !important;
+}
+
+#checkmark {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+}
 
 
 @media (max-width: 426px) {
     .custom-prev {
         /* Add styles for the previous arrow */
-        font-size: 10px !important;
+        font-size: 18px !important;
+        margin-right: 10px;
     }
 
     .custom-next {
         /* Add styles for the next arrow */
-        font-size: 10px !important;
+        font-size: 18px !important;
+        margin-left: 10px;
     }
 
     .image_height {
@@ -83,12 +106,14 @@
 @media (min-width: 427px) and (max-width: 1024px) {
     .custom-prev {
         /* Add styles for the previous arrow */
-        font-size: 15px !important;
+        font-size: 25px !important;
+        margin-left: 10px;
     }
 
     .custom-next {
         /* Add styles for the next arrow */
-        font-size: 15px !important;
+        font-size: 25px !important;
+        margin-right: 10px;
     }
 
     .image_height {

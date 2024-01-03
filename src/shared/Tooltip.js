@@ -54,7 +54,7 @@ export default function Tooltip({ anchorId, place, html, arrow, style }) {
                     }
                 }
             />
-            <div class="modal-backdrop show"></div>
+            <div className="modal-backdrop show"></div>
         </>
     )
 }

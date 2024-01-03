@@ -25,7 +25,7 @@ const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jf
 
 
 const SinglePost = ({ ...props }) => {
-    const { setShowUserSharedPost, setShowUserLikedPost, getPostList, item, index, idx, deleteSuccessPopup, setDeleteSuccessPopup, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost, handleUnFollowRequest, setMediaFilesCarousel, setImageIdx, setBlockUserSuccess } = props;
+    const { setShowUserSharedPost, setShowUserLikedPost, getPostList, item, index, idx, deleteSuccessPopup, setDeleteSuccessPopup, handleReportRequest, setShowSharePost, setSharePostId, handleSharePost, handleUnFollowRequest, setMediaFilesCarousel, setImageIdx, setBlockUserSuccess, onDelete } = props;
 
     const postServ = new PostService();
     const followerServ = new UserFollowerService();
@@ -157,9 +157,10 @@ const SinglePost = ({ ...props }) => {
             let resp = await postServ.deletePost(id);
             if (resp.message) {
                 setTimeout(() => {
-                    setChange(!change);
-                    getPostList()
-                    setDeleteSuccessPopup(!deleteSuccessPopup)
+                    // setChange(!change);
+                    // getPostList()
+                    // setDeleteSuccessPopup(!deleteSuccessPopup)
+                    onDelete();
                 }, 1000);
             }
         } catch (err) {
