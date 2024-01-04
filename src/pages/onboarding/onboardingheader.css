@@ -1,0 +1,19 @@
+.logo {
+    display: flex !important;
+    gap: 10px;
+    width: 206px;
+    height: 39px;
+    margin-left: 40px;
+}
+
+.logo_text {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 30px;
+    font-style: "Gilroy";
+}
+
+.logo_img {
+    width: 26px;
+    height: 26px;
+}

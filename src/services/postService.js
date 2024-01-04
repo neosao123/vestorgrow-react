@@ -44,7 +44,7 @@ export default class PostService {
                 }
                 return object;
             }, {});
-            return await util.sendApiRequest("/post/my/feed", "POST", true, category);
+            return await util.sendApiRequest(`/post/my/feed`, "POST", true, category);
         } catch (err) {
             throw err;
         }
@@ -53,6 +53,13 @@ export default class PostService {
     async getPost(id) {
         try {
             return await util.sendApiRequest("/post/" + id, "GET", true);
+        } catch (err) {
+            throw err;
+        }
+    }
+    async getPostDetails(obj) {
+        try {
+            return await util.sendApiRequest("/post/singlepost", "POST", true, obj);
         } catch (err) {
             throw err;
         }
@@ -105,9 +112,12 @@ export default class PostService {
             throw err;
         }
     }
-    async sharePost(data) {
+    async sharePost(postid) {
+        let obj = {
+            postId: postid
+        }
         try {
-            return await util.sendApiRequest("/post/share", "POST", true, data);
+            return await util.sendApiRequest("/post/share", "POST", true, obj);
         } catch (err) {
             throw err;
         }
@@ -133,7 +143,7 @@ export default class PostService {
         }
     }
     async getPostUniqueReactions(data) {
-        try { 
+        try {
             return await util.sendApiRequest("/postlike/posts/reactions", "Post", true, data);
         } catch (err) {
             throw err;

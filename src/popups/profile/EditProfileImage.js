@@ -41,10 +41,10 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
       const formData = new FormData();
       formData.append("_id", user._id);
       formData.append("profile_img", fileImage);
-      const resp = await userServ.editProfile(formData);
-      if (resp.data) {
-        setUser(resp.data.result);
-        localStorage.setItem("user", JSON.stringify(resp.data.result));
+      const resp = await userServ.editProfilePicture(formData);
+      if (resp?.data) {
+        setUser(resp.data.data);
+        localStorage.setItem("user", JSON.stringify(resp.data.data));
         onClose();
       }
     } catch (error) {
@@ -58,10 +58,10 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
       const formData = new FormData();
       formData.append("_id", user._id);
       formData.append("profile_img", "");
-      const resp = await userServ.editProfile(formData);
+      const resp = await userServ.editProfilePicture(formData);
       if (resp.data) {
-        setUser(resp.data.result);
-        localStorage.setItem("user", JSON.stringify(resp.data.result));
+        setUser(resp.data.data);
+        localStorage.setItem("user", JSON.stringify(resp.data.data));
         onClose();
       }
     } catch (error) {
@@ -80,7 +80,7 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
   const handleZoomOut = () => {
     if (cropperRef.current) {
       const cropper = cropperRef.current.cropper;
-      cropper.zoom(-0.1);     
+      cropper.zoom(-0.1);
     }
   };
 
@@ -115,14 +115,14 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
                 <div className="modal-body px-0">
                   <div className="tabSendContent">
                     <div style={{ display: "flex" }}>
-                      <div id="image-cropper" className="profileImageCropper profileImageCropperCustom"> 
+                      <div id="image-cropper" className="profileImageCropper profileImageCropperCustom">
                         <Cropper
                           src={toBeCroped}
                           style={{ width: "100%", minHeight: "480px", maxHeight: "480px" }}
                           initialAspectRatio={1}
                           guides={false}
                           crop={onCrop}
-                          ref={cropperRef} 
+                          ref={cropperRef}
                           center={true}
                           zoom={zoom}
                           viewMode={1}
@@ -131,7 +131,7 @@ export default function EditProfileImage({ file, onClose, onComplete }) {
                           cropBoxMovable={false}
                           movable={true}
                         />
-                         
+
                       </div>
                     </div>
                     <div className="cropper_rage_custom">

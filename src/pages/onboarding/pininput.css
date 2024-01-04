@@ -1,0 +1,24 @@
+.pin-tab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pin-tab input {
+    width: 20%;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid #D1D1D1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+@media (max-width : 425px) {
+    .pin-tab input {
+        width: 20%;
+        max-width: 20%;
+        height: 50px;
+        border-radius: 20px;
+    }
+}

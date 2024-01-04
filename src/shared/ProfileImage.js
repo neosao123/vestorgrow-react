@@ -1,10 +1,10 @@
-export default function ProfileImage({ url, style }) {
+export default function ProfileImage({ url, style, isAvatar }) {
   return url && url !== "" ? (
     <img
       src={url}
-      alt="profile-img"
+      alt="image"
       className="img-fluid image-fluid-custom-message"
-      style={style ? style : { borderRadius: "40px" }}
+      style={style ? { ...style, objectFit: "contain", backgroundColor: "white" } : { borderRadius: "40px", width: "90%", height: "90%", objectFit: "contain", backgroundColor: "white" }}
     />
   ) : (
     <img

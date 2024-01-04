@@ -6,9 +6,15 @@ import * as Yup from "yup";
 
 const serv = new UserService();
 const ValidateSchema = Yup.object({
-  newPassword: Yup.string().required("New Password is a required field"),
+  newPassword: Yup.string().required("New Password is a required field").min(8, "Minimum 8 characters required.").matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+    'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one symbol'
+  ),
   otp: Yup.string().required("OTP is a required field"),
-  verifyPassword: Yup.string().required("Verify Password is a required field"),
+  verifyPassword: Yup.string().required("Verify Password is a required field").min(8, "Minimum 8 characters required.").matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+    'Confirm password must contain at least one uppercase letter, one lowercase letter, one digit, and one symbol'
+  ).oneOf([Yup.ref("newPassword")], "Confirm password must be same as new password."),
 });
 function ResetPassword() {
   const navigate = useNavigate();
@@ -21,6 +27,7 @@ function ResetPassword() {
     newPassword: "",
     verifyPassword: "",
   });
+
   const resendOtp = async () => {
     let obj = {
       email: location.state.email,
@@ -36,17 +43,20 @@ function ResetPassword() {
       setErrorMsg(err.err);
     }
   };
+
   const onSubmit = async (values) => {
     let obj = { ...values };
     obj.email = location.state.email;
     try {
       const resp = await serv.resetPassword(obj);
       if (resp?.result) {
+        console.log("resp:", resp.result)
         navigate("/login");
       } else {
         setErrorMsg(resp);
       }
     } catch (err) {
+      console.log("ERROR:", err)
       err = JSON.parse(err);
       setErrorMsg(err.err);
     }
@@ -55,9 +65,11 @@ function ResetPassword() {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   const handleShowPasswordVeri = () => {
     setShowPasswordVeri(!showPasswordVeri);
   };
+
   const formik = useFormik({
     initialValues: loginObj,
     validateOnBlur: true,
@@ -65,6 +77,7 @@ function ResetPassword() {
     validationSchema: ValidateSchema,
     enableReinitialize: true,
   });
+
   return (
     <main className="w-100 clearfix socialMediaTheme">
       {/* login page Start*/}

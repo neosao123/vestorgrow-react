@@ -1,0 +1,93 @@
+.main_div_describe {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.description_div {
+    max-width: 25em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 3em;
+}
+
+.description_title {
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 63px;
+}
+
+.description_text {
+    width: 94%;
+    text-align: center;
+    font-weight: 500;
+    line-height: 22px;
+    font-size: 16px;
+}
+
+.back_btn {
+    position: absolute;
+    top: 12%;
+    left: -30%;
+}
+
+.bio_main_div {
+    display: flex;
+    justify-content: center;
+}
+
+.bio_div {
+    max-width: 38em !important;
+    height: 12em;
+    width: 100% !important;
+    position: relative;
+    padding: 10px;
+}
+
+.textarea_bio {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    border: 2px solid #D1D1D1;
+    border-radius: 12px;
+    resize: none;
+}
+
+.bio_length {
+    position: absolute;
+    right: 0;
+    bottom: 1;
+    margin-top: -5px;
+}
+
+.btn_div {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    height: auto;
+    margin-top: 50px !important;
+}
+
+.signup_form {
+    max-width: 30em;
+}
+
+@media (max-width : 768px) {
+    .description_div {
+        margin-top: 4em;
+    }
+
+    .back_btn {
+        top: -20%;
+        left: 40%;
+    }
+
+    .bio_length {
+        margin-right: 10px;
+    }
+}

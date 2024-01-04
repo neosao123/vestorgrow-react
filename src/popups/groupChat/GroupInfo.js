@@ -16,24 +16,26 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
   const [showDeleteGroup, setShowDeleteGroup] = useState(false);
   const [groupDetail, setGroupDetail] = useState({});
   const [showMemberList, setShowMemberList] = useState(false);
+  const [groupInfoId, setGroupInfoId] = globalCtx.groupInfoId;
 
   useEffect(() => {
     getGroupDetails();
-  }, [groupId]);
+  }, [groupInfoId]);
 
   const getGroupDetails = async () => {
     try {
-      await serv.getChat(groupId).then((resp) => {
+      await serv.getChat(groupInfoId).then((resp) => {
         setGroupDetail({ ...resp.data });
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const handleJoinGroup = async (groupId) => {
+
+  const handleJoinGroup = async (groupInfoId) => {
     try {
       let obj = {
-        groupId: groupId,
+        groupId: groupInfoId,
       };
       await serv.joinGroup(obj).then((resp) => {
         if (resp.message) {
@@ -44,6 +46,7 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
       console.log(err);
     }
   };
+
   const handleSendInvitation = async (invitedUser) => {
     try {
       let obj = {
@@ -59,17 +62,18 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
       console.log(err);
     }
   };
+  
   const handleDeleteChat = async () => {
     setShowDeleteGroup({ _id: groupDetail?._id, chatName: groupDetail.chatName });
-    // try {
-    //   await serv.deleteChat(id).then((resp) => {
-    //     if (resp.message) {
-    //       // onFinish();
-    //     }
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      await serv.deleteChat(groupInfoId).then((resp) => {
+        if (resp.message) {
+          onFinish();
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -79,17 +83,16 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
           <div className="vertical-align-center vertical-align-center-custom">
             <div className="edit-profile modal-dialog modal-lg modal-lg-custom modal-lg-customMobileInfo">
               <div className="modal-content">
-                <div className="modal-header modal-headerInfoGroup-custom">
+                <div className="modal-header modal-headerInfoGroup-custom" style={{ overflow: "auto" }}>
                   <div className="modal-BackCreateGroup-custom" onClick={onClose}>
                     <img
                       className="arrow"
                       src="/images/icons/left-arrow.svg"
                       alt=""
-                    // onClick={setShowNotification(false)}
                     />
                   </div>
                   <div className="followesNav groupInfo groupInfo-headingCustom">
-                    <h4 className="mb-0">Group Infromation</h4>
+                    <h4 className="mb-0">Group Information</h4>
                     {groupDetail?.createdBy?._id == user._id ? (
                       <button className="joinedButton">Created</button>
                     ) : (
@@ -101,7 +104,7 @@ export default function GroupInfo({ onClose, onFinish, groupId, onEdit }) {
                     <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={onClose} />
                   </div>
                 </div>
-                <div style={{ height: "calc(100vh - 150px)", overflowY: "scroll", overflowX: "hidden", margin: "15px" }}>
+                <div style={{ height: "calc(100vh - 150px)", overflowY: "auto", overflowX: "hidden", margin: "15px" }}>
                   <div className="groupMainDetail groupMainDetail-customPadding">
                     <div className="groupLogo m-3">
                       {groupDetail.chatLogo ? (

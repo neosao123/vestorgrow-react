@@ -9,7 +9,6 @@ const Report = ({ onClose, object }) => {
         .reportPost(object)
         .then((resp) => {
           if (resp.message) {
-            console.log(resp.message);
             onClose();
           }
         })

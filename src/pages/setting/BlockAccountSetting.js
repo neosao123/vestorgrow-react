@@ -21,6 +21,7 @@ export default function BlockAccountSetting() {
                 }
             }
             let resp = await blockedServ.listUser(obj)
+            console.log("res:",resp)
             if (resp.data) {
                 setUserList(resp.data)
             }

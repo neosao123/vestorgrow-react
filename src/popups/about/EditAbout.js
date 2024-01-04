@@ -6,10 +6,25 @@ import UserService from "../../services/UserService";
 import { toast } from 'react-toastify';
 
 const ValidateSchema = Yup.object().shape({
-    bio: Yup.string().required("Bio is required"),
-    gender: Yup.string(),
+    bio: Yup.string().required("Bio is required").transform((value, originalValue) => {
+        if (typeof originalValue === 'string') {
+            return originalValue.trim();
+        }
+        return originalValue;
+    }).min(10, "Min 10 characters required.").transform((value, originalValue) => {
+        if (typeof originalValue === 'string') {
+            return originalValue.trim();
+        }
+        return originalValue;
+    }).max(500, "Maximum 500 characters allowed."),
+    gender: Yup.string().required("Gender is required.").transform((value, originalValue) => {
+        if (typeof originalValue === 'string') {
+            return originalValue.trim();
+        }
+        return originalValue;
+    }).matches(/^[A-Za-z]+$/, 'Only alphabetic characters are allowed in the gender.'),
     //email: Yup.string(),
-    webkitUrl: Yup.string(),
+    websiteUrl: Yup.string().url('Invalid URL format'),
     investmentInterests: Yup.array()
 });
 
@@ -103,7 +118,7 @@ export default function EditAbout({ onClose }) {
                         </div>
                         <div className="mb-3 mb-sm-4 commonform">
                             <label htmlFor="invtInt" className="form-label">
-                                Investment Interests
+                            Personal Development Interests
                             </label>
                             <div className="d-flex align-items-center">
                                 <input
@@ -118,11 +133,11 @@ export default function EditAbout({ onClose }) {
                                     type="button"
                                     className={
                                         "add-key-design ms-2 " +
-                                        (tempKeyword !== "" && formik.values.investmentInterests.length < 20
+                                        (tempKeyword !== "" && formik.values.investmentInterests.length < 20 && tempKeyword.length < 20
                                             ? "active"
                                             : "disabled")
                                     }
-                                    disabled={!(tempKeyword !== "" && formik.values.investmentInterests.length < 20)}
+                                    disabled={!(tempKeyword !== "" && formik.values.investmentInterests.length < 20 && tempKeyword.length < 20)}
                                     onClick={(e) => {
                                         formik.setFieldValue("investmentInterests", [...formik.values.investmentInterests, tempKeyword]);
                                         setTempKeyword("");
@@ -135,6 +150,16 @@ export default function EditAbout({ onClose }) {
                                     />
                                 </button>
                             </div>
+                            {
+                                (tempKeyword !== "" && tempKeyword.length > 20) ? (
+                                    <div className="valid_feedbackMsg">Maximum 20 characters allowed.</div>
+                                ) : null
+                            }
+                            {
+                                (tempKeyword.length < 2 && tempKeyword !== "") ? (
+                                    <div className="valid_feedbackMsg">Minimum 2 characters required.</div>
+                                ) : null
+                            }
                             <div className="investment-keywords mt-3">
                                 {formik.values.investmentInterests.map((item, idx) => {
                                     return (
@@ -160,7 +185,7 @@ export default function EditAbout({ onClose }) {
                             <div class="input-group mb-3 input-group-sm" style={{ border: "1px solid #d1d1d1", borderRadius: "50px" }}>
                                 <span class="input-group-text" style={{ background: "transparent", border: "none" }}><img src="./images/icons/globe.svg" alt="website" /></span>
                                 <input
-                                    style={{ border: "none",background:"transparent" }}
+                                    style={{ border: "none", background: "transparent" }}
                                     className={
                                         "form-control" + (formik.touched.websiteUrl && formik.errors.websiteUrl ? " is-invalid" : "")
                                     }

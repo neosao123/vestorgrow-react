@@ -9,6 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import UserFollowerService from "../../services/userFollowerService";
 import Loader from "../../components/Loader";
 import '../../assets/Suggested.css';
+import "./Allsuggestins.css"
 
 function AllSuggestions({ showModal, closeSuggestionModal }) {
     const suggestedServ = new SuggestedService();
@@ -97,7 +98,7 @@ function AllSuggestions({ showModal, closeSuggestionModal }) {
                                     <h1 className="modal-title fs-5" id="exampleModalLabel">
                                         Suggestions
                                     </h1>
-                                    <div className="suggestInputGroup">
+                                    <div className="suggestInputGroup suggestion_search">
                                         <img
                                             src="/images/icons/search.svg"
                                             alt="search-icon"
@@ -130,7 +131,7 @@ function AllSuggestions({ showModal, closeSuggestionModal }) {
                                 </div>
                                 <div className="modal-body">
                                     <div
-                                        className="suggestionModalBody"
+                                        className="suggestionModalBody overflow_suggestionbox"
                                     >
                                         {loading ? (
                                             // Display loader while loading is true
@@ -144,7 +145,7 @@ function AllSuggestions({ showModal, closeSuggestionModal }) {
                                                 {
                                                     filteredSuggested?.map((user) => {
                                                         return (
-                                                            <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                                                            <div className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 min_width suggestionboxes">
                                                                 <div className="profileBox">
                                                                     <Link to={"/userprofile/" + user?._id}>
                                                                         <div className="profile-image">
@@ -164,9 +165,7 @@ function AllSuggestions({ showModal, closeSuggestionModal }) {
                                                                                     : user.user_name}
                                                                             </span>
                                                                             <span className="title">
-                                                                                {user?.title !== "" ? user?.title?.length > 18
-                                                                                    ? user?.title?.slice(0, 18) + "..."
-                                                                                    : user.title : ""}
+                                                                                {user?.title ? user?.title?.length > 22 ? user?.title?.slice(0, 22) + "..." : user?.title : "Vestorgrow User"}
                                                                             </span>
                                                                             <span className="followers">
                                                                                 {user.followers} Followers

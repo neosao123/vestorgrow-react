@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
+import TextareaAutosize from 'react-textarea-autosize';
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -13,8 +14,15 @@ import ImageCarousel from "../../../popups/imageCarousel/ImageCarousel";
 import VideoImageThumbnail from "react-video-thumbnail-image";
 import Linkify from "react-linkify";
 import { SecureLink } from "react-secure-link";
+import { AiOutlineMinus } from "react-icons/ai"
+import { RiArrowDropDownLine } from "react-icons/ri"
+import { motion } from 'framer-motion';
+import maxIcon from "../../../assets/images/maximize.svg"
+import minIcon from "../../../assets/images/minimize.svg"
+import "./chatmessage.css"
 const serv = new ChatService();
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
+
 export default function ChatMessage({
   chatId,
   socket,
@@ -26,11 +34,16 @@ export default function ChatMessage({
   onClose,
   setMediaFiles,
   isOnline,
+  index,
+  item,
+  chatusers,
+  colors
 }) {
   let chatCompare = chatId;
   const navigate = useNavigate();
   const globalCtx = useContext(GlobalContext);
   const [user, setUser] = globalCtx.user;
+  const [messageData, setMessageData] = globalCtx.getMessageData;
   const [mUser, setMUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [messageList, setMessageList] = useState([]);
@@ -40,51 +53,98 @@ export default function ChatMessage({
   const [showEmoji, setShowEmoji] = useState(false);
   const [imageIdx, setImageIdx] = useState(0);
   const [activeBtn, setActiveBtn] = useState(false);
+  const [minimize, setMinimize] = useState(false);
+  const [expanded, setExpanded] = globalCtx.expandedArray;
+  const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
+  const [row, setRow] = useState(1);
+  const [maxRow, setMaxRow] = useState(4);
+
   // const [mediaFiles, setMediaFiles] = useState([]);
-  const [expend, setExpend] = useState(0); //0 for normal 1 for expend 2 for minimize
+  const [expend, setExpend] = useState(false); //0 for normal 1 for expend 2 for minimize
   const [message, setMessage] = useState({
     content: "",
     file: "",
     sender: user?._id,
   });
+  // const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
+  // const [chatName, setChatName] = useState(null)
+  // const [chatLogo, setChatLogo] = useState(null)
+  // const [groupChat, setgroupChat] = useState(false)
+
 
   useEffect(() => {
-    // var objDiv = document.getElementById(`messagess${chatId}`);
-    // objDiv.scrollTop = objDiv.scrollHeight;
     socket.on("messageRecieved", (newMessage) => {
+      socket.emit("readMessage", {
+        chat: newMessage?.chat,
+        messageId: newMessage?._id,
+        receivedBy: user?._id
+      });
       for (const item in latestMsgList) {
         if (item === newMessage.chat) {
           setLatestMsgList({ ...latestMsgList, [item]: newMessage });
         }
       }
+      // if chat is not selected or doesn't match current chat
       if (
-        !chatCompare || // if chat is not selected or doesn't match current chat
-        chatCompare !== newMessage.chat
+        !chatCompare || chatCompare !== newMessage.chat
       ) {
-        // for (const item in unreadCount) {
-        //     if (item == newMessage.chat) {
-        //         setUnreadCount({ ...unreadCount, [item]: unreadCount[item] + 1 })
-        //     }
-        // }
+        // do nothing
       } else {
         setMessageList([...messageList, newMessage]);
       }
     });
   });
+
   useEffect(() => {
     getMessage(getMessageData.id, getMessageData.oUser, getMessageData.users);
   }, [getMessageData]);
 
   useEffect(() => {
+    let newArr = JSON.parse(localStorage.getItem("messageboxstate"))
+    if (messageData.length >= 4) {
+      newArr.forEach((el, i) => {
+        if (i === 0) {
+          el.isminimize = true
+        }
+      })
+    }
+    if (messageData.length >= 5) {
+
+      newArr.forEach((el, i) => {
+        if (i === 1) {
+          el.isminimize = true
+        }
+      })
+    }
+    if (newArr.length > 5) {
+      newArr = newArr.slice(1)
+    }
+    localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+    setMessageBoxState(newArr)
+
+  }, [messageData])
+
+  useEffect(() => {
+    messageBoxState.filter((el) => {
+      if (el.chatId === chatCompare) {
+        setMinimize(el.isminimize)
+        setExpend(el.isExpanded)
+      }
+    })
+  }, [messageBoxState]);
+
+  useEffect(() => {
     var objDiv = document.getElementById(`messagess${chatId}`);
-    objDiv.scrollTop = objDiv.scrollHeight;
+    if (objDiv) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
   }, [messageList]);
+
   const getMessage = async (id, oUser, users) => {
     setMUser(oUser);
-    // setChatId(id)
-    // chatCompare = id
-    setUsers([...users]);
-    socket.emit("joinChat", id);
+    if (users) {
+      setUsers([...users]);
+    }
     try {
       let obj = {
         filter: {
@@ -95,23 +155,28 @@ export default function ChatMessage({
         if (resp.data) {
           setMessageList([...resp.data]);
         }
-
         var objDiv = document.getElementById(`messagess${chatId}`);
-        objDiv.scrollTop = objDiv.scrollHeight;
+        if (objDiv) {
+          objDiv.scrollTop = objDiv.scrollHeight;
+        }
       });
     } catch (err) {
       console.log(err);
     }
   };
+
   const handleDelete = (id) => {
     setShowDeleteMsgPopup(id);
   };
+
   const handleDeleteChat = (id) => {
     setShowDeleteChatPopup(id);
   };
+
   const handleBlockUser = (id) => {
     setShowBlockUserPopup(id);
   };
+
   const sendMessage = async () => {
     setActiveBtn(true);
     setShowEmoji(false);
@@ -158,127 +223,188 @@ export default function ChatMessage({
       });
     }
     setActiveBtn(false);
+    setRow(1);
   };
 
   let date = moment(Date()).format("DD MMMM YYYY");
-  const handleKeypress = (e) => {
-    if (e.keyCode === 13) {
+
+  const handleKeypress = (evt) => {
+    if (evt.keyCode === 13 && !evt.shiftKey) {
       sendMessage();
     }
   };
+
   const handleNavigate = (url) => {
     navigate(url);
   };
 
+  const handleMaximize = (currChatId) => {
+
+    let existingArr = JSON.parse(localStorage.getItem("messageboxstate"));
+
+    // console.log(currChatId, existingArr)
+    if (expend) {
+      existingArr.forEach((el) => {
+        if (el.chatId === currChatId) {
+          el.isExpanded = false;
+        }
+      })
+      localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+      setMessageBoxState(existingArr)
+    } else {
+      if (messageData?.length >= 3) {
+        existingArr.forEach((el) => {
+          if (el.chatId === currChatId) {
+            el.isExpanded = true;
+          }
+          else {
+            el.isminimize = true;
+            el.isExpanded = false
+          }
+        })
+        localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+        setMessageBoxState(existingArr)
+      } else {
+        existingArr.forEach((el) => {
+          if (el.chatId === currChatId) {
+            el.isExpanded = true;
+          }
+        })
+        localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+        setMessageBoxState(existingArr)
+      }
+    }
+
+  }
+
+  const handleChangeMessage = (e) => {
+    if (message.content.length < 28) {
+      setRow(1)
+    }
+    else if (message.content.length < 56) {
+      setRow(2)
+    }
+    else {
+      setRow(3)
+    }
+    setMessage({ ...message, content: e.target.value })
+  }
+
   return (
     <>
-      <div className={`chatBox chatBoxCustom position-relative ${expend === 1 ? "chatBoxLarge" : ""}`}>
-        <div
-          className="chatBoxHead position-relative"
-          onClick={(e) => {
-            if (
-              e.target.classList.contains("img-dots") ||
-              e.target.classList.contains("search_cross") ||
-              e.target.classList.contains("chatBoxUser") ||
-              e.target.classList.contains("userProfileImg")
-            ) {
-              e.preventDefault();
-            } else {
-              if (expend == 2) {
-                setExpend(0);
+      {!minimize ? (<motion.div
+        initial={!minimize ? 'hidden' : 'visible'}
+        animate={!minimize ? 'visible' : 'hidden'}
+        exit="hidden"
+        variants={{
+          visible: { opacity: 1, scale: 1, x: 0, y: 0 },
+          hidden: { opacity: 0, scale: 0, x: 0, y: 0 },
+        }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className={`chatBox chatBoxCustom position-relative chatbox_top  ${expend ? "chatBoxLarge" : ""}`} >
+          <div
+            className="chatBoxHead position-relative"
+            onClick={(e) => {
+              if (
+                e.target.classList.contains("img-dots") ||
+                e.target.classList.contains("search_cross") ||
+                e.target.classList.contains("chatBoxUser") ||
+                e.target.classList.contains("userProfileImg")
+              ) {
+                e.preventDefault();
+              } else {
+                if (expend == 2) {
+                  let existingArr = JSON.parse(localStorage.getItem("messageboxstate"))
+                  let newArr = existingArr.map((el, i) => {
+                    if (el.chatId === chatCompare) {
+                      el.isExpanded = false
+                    }
+                  })
+                  localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+                  // setExpend(0);
+                }
               }
-            }
-          }}
-        >
-          {/* <img src="/images/img/profile-image3.png" alt="profile-img" className="img-fluid" /> */}
-          <div className="userProfileImg" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
-            <ProfileImage url={mUser?.profile_img} style={{ width: "32px", borderRadius: "50%" }} />
-            {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
-          </div>
-          <div className="chatBoxUser" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
-            <h6 className={`mb-0 ${expend === 1 ? "userName-custom-classExpand" : "userName-custom-class"}`}>
-              <span className="mb-0" title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}>
-                {mUser?.user_name
-                  ? mUser.user_name.length > 15
-                    ? mUser?.user_name.slice(0, 15) + "..."
-                    : mUser?.user_name
-                  : "Vestorgrow user"}
-              </span>{" "}
-              {mUser?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
-            </h6>
-            <p>{isOnline.includes(mUser?._id) ? "Online" : "Offline"}</p>
-          </div>
-          <div className="options">
-            <div className="dropdown">
-              <Link data-bs-toggle="dropdown">
-                <img src="/images/icons/dots.svg" alt="dots" className="img-fluid img-dots" />
-              </Link>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link className="dropdown-item">
-                    Report
-                  </Link>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleBlockUser(mUser)}>
-                    Block
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="javascript:void(0);" onClick={() => setExpend(2)}>
-                    Minimize
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    href="javascript:void(0);"
-                    style={{ color: "#CC1F29" }}
-                    onClick={() => handleDeleteChat(chatId)}
-                  >
-                    Delete
-                  </a>
-                </li>
-              </ul>
+            }}
+          >
+
+            <div className="userProfileImg" onClick={() => { if (getMessageData?.groupChat === false) { handleNavigate("/userprofile/" + mUser?._id) } }}>
+              <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} style={{ width: "32px", borderRadius: "50%" }} />
+              {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
             </div>
-            <a href="javascript:void(0);" onClick={() => setExpend(expend !== 0 ? 0 : 1)}>
-              <img src="/images/icons/expend.svg" alt="dots" className="img-fluid" />
-            </a>
-            <a href="javascript:void(0);" onClick={onClose}>
-              <img src="images/profile/cross-icon.svg" className="search_cross" alt="" />
-            </a>
+            <div className="chatBoxUser" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
+              <h6 className={`mb-0 ${expend ? "userName-custom-classExpand" : "userName-custom-class"}`}>
+                <span className="mb-0" title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}>
+                  {!getMessageData?.groupChat && (mUser?.user_name
+                    ? mUser?.user_name?.length > 15
+                      ? mUser?.user_name?.slice(0, 15) + "..."
+                      : mUser?.user_name
+                    : "Vestorgrow user")}
+                  {
+                    getMessageData?.groupChat && getMessageData?.chatName && getMessageData?.chatName?.length > 15 ? getMessageData?.chatName?.slice(0, 15) + "..." : getMessageData?.chatName
+                  }
+                </span>{" "}
+                {mUser?.role?.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="Subscribed User" /> : ""}
+              </h6>
+              <p>{isOnline?.includes(mUser?._id) ? "Online" : "Offline"}</p>
+            </div>
+            <div className="options">
+              <div className="dropdown">
+                <div onClick={() => {
+                  // setMinimize(true)
+                  let existingArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+                  existingArr.forEach((el) => {
+                    if (el.chatId === chatCompare) {
+                      el.isminimize = true
+                    }
+                  })
+                  localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+                  setMessageBoxState(existingArr)
+                }}>
+                  <AiOutlineMinus style={{ color: "black" }} className="icon_size" />
+                </div>
+              </div>
+              <span onClick={() => handleMaximize(chatCompare)}>
+                {!expend && <img src={maxIcon} alt="dots" className="img-fluid icon_size" />}
+                {expend && <img src={minIcon} alt="dots" className="img-fluid icon_size" />}
+              </span>
+              <span onClick={onClose}>
+                <img src="images/profile/cross-icon.svg" className="search_cross icon_size" alt="" />
+              </span>
+            </div>
           </div>
-        </div>
-        {expend !== 2 && (
-          <>
+          <div>
             <div
-              className={`messagess msgSection msgSection-Custom allFeedUser overflowScrollStop ${expend === 1 ? "msgSectionLarge" : ""
+              className={`messagess msgSection msgSection-Custom allFeedUser overflowScrollStop ${expend ? "msgSectionLarge" : ""
                 }`}
               id={`messagess${chatId}`}
             >
               <div className="userDetail">
                 <div className="chatMainProfile">
-                  <ProfileImage url={mUser?.profile_img} />
+                  <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} style={{ width: "60px", height: "60px", borderRadius: "50%" }} />
                   <div className="chatMainProfileContent">
                     <h6
-                      className={`mb-0 ${expend === 1 ? "userNameIn-custom-classExpand" : "userNameIn-custom-class"}`}
+                      className={`mb-0 ${expend ? "userNameIn-custom-classExpand" : "userNameIn-custom-class"}`}
                       title={mUser?.user_name ? mUser?.user_name : "Vestorgrow user"}
                     >
-                      {/* {mUser?.user_name ? mUser?.user_name : "Vestorgrow user"} */}
-                      {mUser?.user_name
-                        ? mUser.user_name.length > 15
-                          ? mUser?.user_name.slice(0, 15) + "..."
+                      {!getMessageData?.groupChat && (mUser?.user_name
+                        ? mUser.user_name?.length > 15
+                          ? mUser?.user_name?.slice(0, 15) + "..."
                           : mUser?.user_name
-                        : "Vestorgrow user"}
+                        : "Vestorgrow user")}
+                      {
+                        getMessageData?.groupChat && getMessageData?.chatName
+                      }
                     </h6>
-                    <p>
+                    {!getMessageData?.groupChat && <p>
                       {mUser?.first_name} {mUser?.last_name}
-                    </p>
-                    <p>{mUser?.bio}</p>
+                    </p>}
+                    {!getMessageData?.groupChat && <p>{mUser?.bio}</p>}
+                    {getMessageData?.groupChat && <p></p>}
                   </div>
                 </div>
               </div>
-              {messageList.map((item, idx) => {
+              {messageList?.map((item, idx) => {
                 let itemDate = moment(item.createdAt).format("DD MMMM YYYY");
                 let showDate = false;
                 if (date !== itemDate || idx === 0) {
@@ -289,14 +415,14 @@ export default function ChatMessage({
                   <>
                     {showDate && (
                       <div className="chatWeeks chatWeeksMargin">
-                        <h6>{itemDate === moment(Date()).format("DD MMMM YYYY") ? "Today" : itemDate}</h6>
+                        <h6 style={{ color: "#d1d1d1" }}>{itemDate === moment(Date()).format("DD MMMM YYYY") ? "Today" : itemDate}</h6>
                       </div>
                     )}
                     {!(item.deleted_for?.includes("all") || item.deleted_for?.includes(user?._id)) && (
                       <div
                         className={
                           "messgage-sectionCustom left-section " +
-                          (item.sender?._id == user?._id ? "right-section" : "")
+                          (item?.sender?._id === user?._id ? "right-section" : "")
                         }
                       >
                         <div className="chatprofileImg">
@@ -319,6 +445,7 @@ export default function ChatMessage({
                                       <a
                                         className="dropdown-item"
                                         href="javascript:void(0);"
+
                                         onClick={() => navigator.clipboard.writeText(item.content)}
                                       >
                                         Copy
@@ -342,10 +469,10 @@ export default function ChatMessage({
                         ) : (
                           <div className="position-relative messgage-sectionCustom">
                             <div className="msgContentHead">
-                              <div className={`msgContent h-100 ${expend === 1 ? "msgContentLarge" : ""}`}>
+                              <div className={`msgContent h-100 ${expend ? "msgContentLarge" : ""}`}>
                                 {item.file?.length > 0 && (
                                   <div className="chatGallery d-flex align-items-center">
-                                    <div className="groupGallery">
+                                    <div className="groupGallery" >
                                       <div
                                         className={
                                           "chatGalleryInner d-flex flex-wrap " +
@@ -354,16 +481,6 @@ export default function ChatMessage({
                                       >
                                         {item.file.map((i, idx) => {
                                           return (
-                                            // idx < 2 &&
-                                            // <div
-                                            //   className="galleryImage"
-                                            //   onClick={() => {
-                                            //     setMediaFiles([...item.file]);
-                                            //     setImageIdx(idx);
-                                            //   }}
-                                            // >
-                                            //   <img src={i} alt="profile-image" className="img-fluid" />
-                                            // </div>
                                             <div
                                               className="galleryImage"
                                               onClick={() => {
@@ -390,45 +507,67 @@ export default function ChatMessage({
                                       href={decoratedHref}
                                       key={key}
                                       target="_self"
-                                      className="messageLink-CustomColor"
+                                      className={(item?.sender?._id == user?._id ? "messageLink-CustomColor" : "messageLink-CustomColor1")}
                                     >
                                       {decoratedText}
                                     </SecureLink>
                                   )}
                                 >
-                                  {item.content && <p className="whiteSpace text-break">{item.content}</p>}
+                                  {item.content && <p
+
+                                    className="whiteSpace text-break msg-height"
+
+                                    style={{ color: `${item.sender?._id === user?._id ? "#ffffff" : "#282828"}`, fontSize: "16px" }}
+                                  >
+                                    <div
+                                      style={{
+                                        fontSize: "12px",
+                                        display: "flex",
+                                        justifyContent: "space-between"
+                                      }}
+                                    >
+                                      <span> {item?.sender?._id !== user?._id &&
+                                        <span style={{ color: `${!getMessageData?.groupChat ? "#00808B" : colors[chatusers?.findIndex(obj => obj._id === item?.sender?._id)]}`, marginRight: "0.3rem" }}>
+                                          {item?.sender?.user_name?.length <= 15 ? item?.sender?.user_name : item?.sender?.user_name.slice(0, 15) + "..."}</span>
+                                      }{moment(item.createdAt).format("HH:mm")}
+                                      </span>
+                                      <span className="dropdown" >
+                                        <a href="javascript:void(0);" data-bs-toggle="dropdown">
+                                          {item?.sender?._id !== user?._id && <RiArrowDropDownLine style={{ fontSize: "20px", color: `${item.sender?._id !== user?._id ? "#282828" : "#ffffff"}` }} />}
+                                        </a>
+                                        <ul className="dropdown-menu">
+                                          <li>
+                                            <a
+                                              className="dropdown-item"
+                                              href="javascript:void(0);"
+                                              onClick={() => navigator.clipboard.writeText(item.content)}
+                                            >
+                                              Copy
+                                            </a>
+                                          </li>
+                                          <li>
+                                            <a
+                                              className="dropdown-item dropdown-item-red"
+                                              href="javascript:void(0);"
+                                              onClick={() => handleDelete(item)}
+                                            >
+                                              Delete
+                                            </a>
+                                          </li>
+                                        </ul>
+                                      </span>
+                                    </div>
+                                    <div>
+                                      {item.content}
+                                    </div>
+                                  </p>}
                                 </Linkify>
                               </div>
                               {/* <a href="javascript:void(0);" data-bs-toggle="dropdown"><img src="/images/icons/dots.svg" alt="dots" className="img-fluid" /></a> */}
                               <div className="messageDropDownCustom-web">
-                                <div className="dropdown">
-                                  <a href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    <img src="/images/icons/dots.svg" alt="dots" className="img-fluid" />
-                                  </a>
-                                  <ul className="dropdown-menu">
-                                    <li>
-                                      <a
-                                        className="dropdown-item"
-                                        href="javascript:void(0);"
-                                        onClick={() => navigator.clipboard.writeText(item.content)}
-                                      >
-                                        Copy
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a
-                                        className="dropdown-item dropdown-item-red"
-                                        href="javascript:void(0);"
-                                        onClick={() => handleDelete(item)}
-                                      >
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
+
                               </div>
                             </div>
-                            <span className="msgTime msgTime-autoCustom">{moment(item.createdAt).format("HH:mm")}</span>
                           </div>
                         )}
                       </div>
@@ -462,9 +601,9 @@ export default function ChatMessage({
               <div
                 // className="imagePreview imagePreviewChat"
                 className={
-                  message.content.length < 25
+                  message?.content?.length < 25
                     ? "imagePreview imagePreviewChat"
-                    : message.content.length < 60
+                    : message?.content?.length < 60
                       ? "imagePreview imagePreviewChat imagePreviewChat-two"
                       : "imagePreview imagePreviewChat imagePreviewChat-three"
                 }
@@ -474,45 +613,56 @@ export default function ChatMessage({
               </div>
             )}
             <div
-              className={`textArea chatInput ${expend === 1 ? "textAreaLarge" : ""} textAreaCustom`}
+              className={`textArea chatInput ${expend ? "textAreaLarge" : ""} textAreaCustom`}
               id="emojiPickerChat-id-custom"
+              style={{ backgroundColor: "white" }}
             >
-              {/* <input type="text" className="form-control gray-color-custom" placeholder="Write your message..." /> */}
-              {/* <input
-            type="text"
-            className="form-control gray-color-custom input-group-custom"
-            onChange={(e) => setMessage({ ...message, content: e.target.value })}
-            value={message.content}
-            onKeyDown={handleKeypress}
-            placeholder="Write your message..."
-          /> */}
-              <textarea
-                className="form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser"
-                rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "2" : "3"}
+              {/* <textarea
+                className={`form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser ${expend ? "chatmessagebox_textarea1" : "chatmessagebox_textarea2"}`}
+                rows={row.toString()}
                 type="text"
-                placeholder="Write a message..."
-                onChange={(e) => setMessage({ ...message, content: e.target.value })}
+                placeholder="Type your message..."
+                onChange={(e) => handleChangeMessage(e)}
                 onKeyDown={handleKeypress}
+                style={{ resize: "none", overflowY: "hidden" }}
+
+                value={message.content}
+              /> */}
+              <TextareaAutosize
+                className={`form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser ${expend ? "chatmessagebox_textarea1" : "chatmessagebox_textarea2"}`}
+                placeholder="Type your message..."
+                type="text"
+                onKeyDown={handleKeypress}
+                onChange={(e) => handleChangeMessage(e)}
+                maxRows={2}
                 value={message.content}
               />
-              <div className="input-group-custom-child">
-                <span className="input-group-text gray-color-custom emoji" id="emojiPickerChat-btn-id-custom">
-                  <a href="javascript:void(0);" onClick={() => setShowEmoji(!showEmoji)}>
-                    <img src="/images/icons/smile.svg" className="img-fluid" alt="smile-emoji" />
-                  </a>
-                </span>
-                {/* <span className="input-group-text gray-color-custom emoji"><a href="javascript:void(0);" ><img src="/images/icons/smile.svg" alt className="img-fluid" /></a></span> */}
-                <span className="input-group-text file-upload gray-color-custom">
+              <div className="chat_message_box_div">
+                <span className="input-group-text file-upload gray-color-custom emoji_span_color">
                   <a href="javascript:void(0);">
                     <label htmlFor={`imagess${chatId}`}>
-                      <img src="/images/icons/img-upload.svg" alt="file-upload" className="img-fluid" />
+                      {/* <img src="/images/icons/img-upload.svg" width={expend && "25px"} alt="file-upload" className="img-fluid" /> */}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_6517_57009)">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M3.58845 18.5196C1.60661 16.2176 1.8661 12.7449 4.16806 10.7631L6.6689 8.60997C7.12929 8.2136 7.82383 8.26549 8.2202 8.72588C8.61657 9.18627 8.56467 9.88081 8.10428 10.2772L5.60344 12.4303C4.22227 13.6194 4.06657 15.703 5.25568 17.0842C6.44479 18.4653 8.52841 18.621 9.90959 17.4319L12.4104 15.2788C12.8708 14.8824 13.5654 14.9343 13.9617 15.3947C14.3581 15.8551 14.3062 16.5496 13.8458 16.946L11.345 19.0991C9.04301 21.081 5.5703 20.8215 3.58845 18.5196Z" fill="#222222" />
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M9.88761 7.29063C9.49124 6.83025 9.54314 6.13571 10.0035 5.73933L12.5044 3.58624C14.8063 1.60437 18.279 1.86383 20.2609 4.16576C22.2427 6.46769 21.9832 9.9404 19.6813 11.9223L17.1804 14.0754C16.7201 14.4717 16.0255 14.4198 15.6291 13.9595C15.2328 13.4991 15.2847 12.8045 15.7451 12.4082L18.2459 10.2551C19.6271 9.06594 19.7828 6.98232 18.5937 5.60116C17.4046 4.22 15.3209 4.06432 13.9398 5.25344L11.4389 7.40654C10.9785 7.80291 10.284 7.75102 9.88761 7.29063Z" fill="#222222" />
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M8.59074 14.2135C8.19437 13.7531 8.24627 13.0586 8.70666 12.6622L13.7083 8.35599C14.1687 7.95962 14.8633 8.01151 15.2596 8.4719C15.656 8.93228 15.6041 9.62683 15.1437 10.0232L10.142 14.3294C9.68165 14.7258 8.98711 14.6739 8.59074 14.2135Z" fill="#222222" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_6517_57009">
+                            <rect width="24" height="24" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
                     </label>
                   </a>
                 </span>
-                <div className="sendBtn sendBtnCustom message-btn-resize-custom">
-                  {/* <button type="button" className="btn p-0" onClick={sendMessage}>
-                    <img src="/images/icons/send.svg" alt="send" className="img-fluid" />
-                  </button> */}
+                <span className="input-group-text gray-color-custom emoji emoji_span_color" id="emojiPickerChat-btn-id-custom" >
+                  <a href="javascript:void(0);" onClick={() => setShowEmoji(!showEmoji)}>
+                    <img src="/images/icons/smile.svg" width={expend && "25px"} className="img-fluid" alt="smile-emoji" />
+                  </a>
+                </span>
+                <div className="sendBtn sendBtnCustom message-btn-resize-custom send_btn" >
                   <button type="button" onClick={sendMessage} className="btn p-0" disabled={activeBtn}>
                     {activeBtn ? (
                       <i className="fa-solid fa-spinner"></i>
@@ -535,44 +685,71 @@ export default function ChatMessage({
                 }}
               />
             </div>
-          </>
-        )}
-      </div>
-      {showDeleteMsgPopup && (
-        <DeleteMessage
-          onClose={() => setShowDeleteMsgPopup(null)}
-          onFinish={() => {
-            setShowDeleteMsgPopup(null);
-            getMessage(showDeleteMsgPopup.chat, mUser, users);
+          </div>
+        </div></motion.div >) : (
+        <motion.div
+          initial={minimize ? 'hidden' : 'visible'}
+          animate={minimize ? 'visible' : 'hidden'}
+          exit="hidden"
+          variants={{
+            visible: { opacity: 1, scale: 1, x: 0, y: 0 },
+            hidden: { opacity: 0, scale: 1, x: '100%', y: '100%' },
           }}
-          message={showDeleteMsgPopup}
-        />
-      )}
-      {showDeleteChatPopup && (
-        <DeleteChat
-          onClose={() => setShowDeleteChatPopup(null)}
-          onFinish={() => {
-            setShowDeleteChatPopup(null);
-            getChatList();
-            onClose();
-          }}
-          chat={showDeleteChatPopup}
-        />
-      )}
-      {showBlockUserPopup && (
-        <BlockUser
-          onClose={() => setShowBlockUserPopup(null)}
-          onFinish={() => {
-            setShowBlockUserPopup(null);
-            getChatList();
-            onClose();
-          }}
-          user={showBlockUserPopup}
-        />
-      )}
-      {/* {mediaFiles && mediaFiles.length > 0 && (
-        <ImageCarousel onClose={() => setMediaFiles(null)} mediaFiles={mediaFiles} imageIdx={imageIdx} />
-      )} */}
+          transition={{ duration: 1 }}
+        >
+          <div className="profile_img_main_div" onClick={() => {
+            let existingArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+            existingArr.forEach((el) => {
+              if (el.chatId === chatCompare) {
+                el.isminimize = false
+              }
+            })
+            localStorage.setItem("messageboxstate", JSON.stringify(existingArr))
+            setMessageBoxState(existingArr)
+          }}>
+            <ProfileImage url={getMessageData?.groupChat ? getMessageData?.chatLogo : mUser?.profile_img} className="profile_img" />
+          </div>
+        </motion.div>
+      )
+      }
+      {
+        showDeleteMsgPopup && (
+          <DeleteMessage
+            onClose={() => setShowDeleteMsgPopup(null)}
+            onFinish={() => {
+              setShowDeleteMsgPopup(null);
+              getMessage(showDeleteMsgPopup.chat, mUser, users);
+            }}
+            message={showDeleteMsgPopup}
+          />
+        )
+      }
+      {
+        showDeleteChatPopup && (
+          <DeleteChat
+            onClose={() => setShowDeleteChatPopup(null)}
+            onFinish={() => {
+              setShowDeleteChatPopup(null);
+              getChatList();
+              onClose();
+            }}
+            chat={showDeleteChatPopup}
+          />
+        )
+      }
+      {
+        showBlockUserPopup && (
+          <BlockUser
+            onClose={() => setShowBlockUserPopup(null)}
+            onFinish={() => {
+              setShowBlockUserPopup(null);
+              getChatList();
+              onClose();
+            }}
+            user={showBlockUserPopup}
+          />
+        )
+      }
     </>
   );
 }

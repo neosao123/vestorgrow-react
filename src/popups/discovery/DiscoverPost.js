@@ -26,7 +26,7 @@ import Playeryoutube from "../../components/Playeryoutube";
 import OriginalPostCreator from "../../components/OriginalPostCreator";
 
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
-export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, changePostIdx }) {
+export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, changePostIdx, getPostList }) {
   const postServ = new PostService();
   const discoverServ = new DiscoverService();
   const followerServ = new UserFollowerService();
@@ -64,6 +64,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
     }
     getPost();
   }, [postId]);
+
   const getFollowStatus = async (id) => {
     try {
       let resp = await followerServ.isFollowing({ followingId: id });
@@ -74,6 +75,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       console.log(err);
     }
   };
+
   const getPost = async () => {
     try {
       let resp = await discoverServ.getPost(postId);
@@ -87,6 +89,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       console.log(err);
     }
   };
+
   const dislikePost = async (postId) => {
     try {
       let resp = await postServ.dislikePost(postId);
@@ -103,11 +106,8 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
   }
 
   const updatePostAfterReaction = (mode, postId, data) => {
-    if (mode === "inc") {
-      getPost();
-    } else {
-      getPost();
-    }
+    getPost()
+    getPostList()
   }
 
   const handleSharePost = async (postIdx, shareType) => {
@@ -135,6 +135,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       }
     }
   };
+
   const likePost = async (postId) => {
     try {
       let resp = await postServ.likePost({ postId: postId });
@@ -145,6 +146,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
       console.log(err);
     }
   };
+
   const handleShowComment = (id) => {
     if (showCommentPostList.includes(id)) {
       setShowCommentPostList(showCommentPostList.filter((i) => i !== id));
@@ -153,6 +155,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
     }
     setShowCommentDirect((prevState) => !prevState);
   };
+
   const handleFollowRequest = async (userId) => {
     try {
       let resp = await followerServ.sendFollowReq({ followingId: userId });
@@ -223,7 +226,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
           <div className="vertical-align-center vertical-align-center-custom">
             <div
               className={
-                "discoverPosts modal-dialog modal-xl discoverPostSmall " +
+                "discoverPosts modal-dialog discoverPostSmall " +
                 (post?.mediaFiles && post?.mediaFiles.length > 0 ? "discoverPostsCustom" : "discoverPostsCustomText")
               }
             >
@@ -461,7 +464,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
                           <div className="likeShareIcon">
                             <ul className="nav">
                               <li className="nav-item">
-                                <FBReactions postReaction={post?.reaction ?? null} postId={post?._id} updatePostAfterReaction={updatePostAfterReaction} />
+                                <FBReactions postReaction={post?.reaction ?? null} postId={post?._id} updatePostAfterReaction={updatePostAfterReaction} getPost={getPost} />
                               </li>
                               <li className="nav-item">
                                 <a
@@ -484,7 +487,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
                                     <span>Share</span>
                                   </a>
                                   <ul className="dropdown-menu dropdown-menu-customPaddingPost">
-                                    <li>
+                                    {(user?._id !== post?.createdBy._id) && <li>
                                       <a
                                         className="dropdown-item"
                                         href="javascript:void(0);"
@@ -497,7 +500,7 @@ export default function DiscoverPost({ onClose, postId, slideLeft, slideRight, c
                                         />
                                         Share to feed
                                       </a>
-                                    </li>
+                                    </li>}
                                     <li>
                                       <a
                                         className="dropdown-item"

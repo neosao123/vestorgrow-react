@@ -1,254 +1,331 @@
-.discoveryHeading {
-  font-weight: 600;
-}
+ .discoveryHeading {
+   font-weight: 600;
+ }
 
-.mostRecent {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem 0;
-}
+ .mostRecent {
+   display: flex;
+   justify-content: center;
+   margin: 1.5rem 0;
+   align-items: center;
+ }
 
-.discoverFeed {
-  display: flex;
-  gap: 14px;
-  overflow-y: auto;
-  padding: 0 15px;
-}
+ .mostRecent .btn-1 {
+   border-radius: 50px;
+   border-color: #1e1e1e;
+   padding: 8px 24px;
+ }
 
-.category-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin: 1.5rem auto;
-}
+ .mostRecent .btn:hover {
+   border-color: #00808b;
+ }
 
-.category-btn button {
-  padding: 5px 20px;
-  border: none;
-  color: #000000;
-  background: #c5c5c5;
-  border-radius: 10px;
-  font-weight: 500;
-}
+ .mostRecent .dropdown ul.dropdown-menu {
+   background: #ffffff;
+   box-shadow: 0px 3px 8px rgb(0 0 0 / 11%);
+   border-radius: 10px;
+   padding: 20px 0;
+   /* min-width: 100%; */
+ }
 
-.category-btn button:hover,
-.category-btn button:focus,
-.category-btn button.active-category {
-  color: #ffffff;
-  background-color: #00808b;
-}
+ .mostRecent .dropdown ul.dropdown-menu li a {
+   font-weight: 500;
+   font-size: 16px;
+   line-height: 19px;
+   height: 35px;
+   display: flex;
+   align-items: center;
+   color: #465d61;
+ }
 
-.mostRecent .btn {
-  color: #00808b;
-  border: 1px solid #00808b;
-}
+ .discoverFeed {
+   display: flex;
+   gap: 14px;
+   overflow-y: auto;
+   padding: 0 15px;
+ }
 
-.discoverPosts .modal-content {
-  border-radius: 0px;
-}
+ .category-btn {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   gap: 5px;
+   margin: 1.5rem auto;
+ }
 
-.discoverPosts .commentHeight {
-  height: 100%;
-  overflow-y: auto;
-}
+ .category-btn button {
+   padding: 5px 20px;
+   border: none;
+   color: #000000;
+   background: #c5c5c5;
+   border-radius: 10px;
+   font-weight: 500;
+ }
 
-.discover {
-  position: relative;
-  border-radius: 15px 15px 15px 15px;
-  /* border: 1px solid #cce3e8; */
-  border: none;
-  transition: all 0.3s ease;
-  border-radius: 15px 15px 15px 15px;
-}
+ .category-btn button:hover,
+ .category-btn button:focus,
+ .category-btn button.active-category {
+   color: #ffffff;
+   background-color: #00808b;
+ }
 
-.discover:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+ .mostRecent .btn {
+   color: #00808b;
+   border: 1px solid #00808b;
+ }
 
-@media (min-width: 769px) and (max-width: 991px) {
-  .discoverPostsCustom .discovery-content {
-    width: 95%;
-    margin: 0 auto;
-  }
-  .discoverPostModelBodyCustom {
-    grid-template-columns: 380px 1fr;
-  }
-}
+ .discoverPosts .modal-content {
+   border-radius: 0px;
+ }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
+ .discoverPosts .commentHeight {
+   height: 100%;
+   overflow-y: auto;
+ }
 
-@media (min-width: 768px) {
-  .grid {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-}
+ .discover {
+   position: relative;
+   border-radius: 15px 15px 15px 15px;
+   border: none;
+   transition: all 0.3s ease;
+ }
 
-.grid-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-decoration: none;
-  color: inherit;
-}
+ .discover:hover {
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
 
-.dis .grid-image,
-.dis .grid-video video,
-.dis .grid-youtube img {
-  height: 317px !important;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 15px 15px 0px 0px;
-}
+ .grid_discover {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-gap: 10px !important;
+   max-width: 1150px;
+   justify-content: center;
+   align-items: center;
+ }
 
-.dis .react-video-thumbnail-image img {
-  height: 317px !important;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 15px 15px 0px 0px;
-}
+ .grid-item {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   text-decoration: none;
+   margin: auto;
+   color: inherit;
+   min-width: 320px;
+   max-width: 355px;
+   max-height: 400px;
+   width: 100%;
+ }
 
-.video-overlay {
-  position: absolute;
-  top: 20px;
-  right: 5px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
+ .dis .grid-image,
+ .dis .grid-video video,
+ .dis .grid-youtube img {
+   height: 317px !important;
+   width: 100%;
+   object-fit: cover;
+   border-radius: 15px 15px 0px 0px;
+ }
 
-.video-overlay i {
-  color: #fff;
-  font-size: 1.2rem;
-}
+ .grid-video {
+   height: 316px !important;
+   width: 100%;
+   object-fit: cover;
+   border-radius: 15px 15px 0px 0px;
+ }
 
-.overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-decoration: none;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 4px;
-}
+ .dis .react-video-thumbnail-image img {
+   height: 317px !important;
+   width: 100%;
+   object-fit: cover;
+   border-radius: 15px 15px 0px 0px;
+ }
 
-.grid-text {
-  background-color: #cce3e8;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  border-radius: 15px 15px 0px 0px;
-  height: 317px;
-  position: relative;
-}
+ .video-overlay {
+   position: absolute;
+   top: 20px;
+   right: 5px;
+   transform: translate(-50%, -50%);
+   pointer-events: none;
+ }
 
-.text-content {
-  padding: 20px;
-  text-align: left;
-  position: absolute;
-  left: 0;
-}
+ .video-overlay i {
+   color: #fff;
+   font-size: 1.2rem;
+ }
 
-.grid-details {
-  background-color: #fff;
-  border-radius: 15px;
-  padding: 10px;
-  z-index: 2;
-  margin-top: -15px;
-  position: relative;
-  height: 80px;
-}
+ .overlay {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   text-decoration: none;
+   color: #fff;
+   background-color: rgba(0, 0, 0, 0.5);
+   padding: 10px;
+   border-radius: 4px;
+ }
 
-.grid-user {
-  display: flex;
-  align-items: center;
-}
+ .grid-text {
+   background-color: #cce3e8;
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+   border-radius: 15px 15px 0px 0px;
+   height: 317px;
+   position: relative;
+ }
 
-.grid-user img.prf-pic {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  margin-right: 5px;
-  margin-left: 5px;
-  margin-top: -32px;
-}
+ .text-content {
+   padding: 20px;
+   text-align: left;
+   position: absolute;
+   left: 0;
+ }
 
-.grid-user-name {
-  font-weight: 600;
-  cursor: pointer;
-}
+ .grid-details {
+   background-color: #fff;
+   border-radius: 15px;
+   padding: 10px;
+   z-index: 2;
+   margin-top: -15px;
+   position: relative;
+   height: 80px;
+ }
 
-.grid-likes {
-  color: #000000;
-  margin-left: auto;
-  margin-right: 5px;
-}
+ .grid-user {
+   display: flex;
+   align-items: center;
+ }
 
-.grid-likes span {
-  color: #000000;
-}
+ .grid-user img.prf-pic {
+   height: 50px;
+   width: 50px;
+   border-radius: 50%;
+   border: 3px solid #fff;
+   margin-right: 5px;
+   margin-left: 5px;
+   margin-top: -32px;
+ }
 
-.grid-likes a {
-  padding: 0;
-  display: flex;
-}
+ .grid-user-name {
+   font-weight: 600;
+   cursor: pointer;
+ }
 
-.grid-text-content {
-  margin-top: 5px;
-  margin-left: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 350px;
-}
+ .grid-likes {
+   color: #000000;
+   margin-left: auto;
+   margin-right: 5px;
+ }
 
-@media (min-width: 768px) and (max-width: 991px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-  }
-}
+ .grid-likes span {
+   color: #000000;
+ }
 
-@media (min-width: 481px) and (max-width: 767px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-  }
-}
+ .grid-likes a {
+   padding: 0;
+   display: flex;
+ }
 
-@media (max-width: 480px) {
-  .grid {
-    grid-template-columns: 1fr;
-    justify-content: center;
-    max-width: 100%;
-  }
-}
+ .grid-text-content {
+   margin-top: 5px;
+   margin-left: 5px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   width: 350px;
+   width: 100%;
+ }
 
-.grid-youtube iframe {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: #cce3e8;
-}
+ .main_category_btn {
+   padding: 0px 10px;
+   border-radius: 10px;
+   font-size: 18px;
+   font-weight: 600;
+   line-height: 21px;
+   color: #000000;
+ }
 
-.grid-likes .floating-reactions-container {
-  display: flex;
-  align-items: center;
-}
+ .category_div {
+   display: flex;
+   justify-content: center;
+   padding: 15px 0px 10px 0px;
+ }
 
-.grid-likes .floating-reactions-container span {
-  position: relative;
-}
+ .main_div_category {
+   max-width: 25em;
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   text-align: center;
+ }
 
-.floating-reactions-container span img {
-  width: 24px;
-  height: 24px;
-}
+ .main_category_btn1 {
+   padding: 0px 10px;
+   border-radius: 10px;
+   font-size: 18px;
+   font-weight: 600;
+   line-height: 21px;
+   color: #00808b;
+   text-decoration: underline;
+ }
+
+ .main_category_btn:hover {
+   color: #00808B;
+ }
+
+ .main_category_btn.active:hover {
+   color: #00808b;
+ }
+
+
+ @media (min-width: 768px) and (max-width: 991px) {
+   .grid_discover {
+     grid-template-columns: repeat(2, 1fr);
+     justify-content: center;
+   }
+
+   .discoverPostsCustom .discovery-content {
+     width: 95%;
+     margin: 0 auto;
+   }
+
+   .discoverPostModelBodyCustom {
+     grid-template-columns: 33.33% 1fr;
+   }
+ }
+
+ @media (min-width: 481px) and (max-width: 767px) {
+   .grid_discover {
+     grid-template-columns: repeat(2, 1fr);
+     justify-content: center;
+   }
+ }
+
+ @media (max-width: 480px) {
+   .grid_discover {
+     grid-template-columns: 1fr;
+     justify-content: center;
+     max-width: 100%;
+   }
+ }
+
+ .grid-youtube iframe {
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   background-color: #cce3e8;
+ }
+
+ .grid-likes .floating-reactions-container {
+   display: flex;
+   align-items: center;
+ }
+
+ .grid-likes .floating-reactions-container span {
+   position: relative;
+ }
+
+ .floating-reactions-container span img {
+   width: 24px;
+   height: 24px;
+ }

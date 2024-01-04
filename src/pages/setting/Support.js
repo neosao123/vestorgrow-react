@@ -176,7 +176,7 @@ const Support = () => {
               </div>
             </div>
             {/* Learning */}
-            <div className="accordion-item mb-3 " >
+            {/* <div className="accordion-item mb-3 " >
               <h2 className="accordion-header" id="head-five">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#d5" aria-expanded="false" aria-controls="d5">
                   <h5 className="">Learning</h5>
@@ -224,7 +224,7 @@ const Support = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* Settings */}
             <div className="accordion-item mb-3" >
               <h2 className="accordion-header" id="head-six">
@@ -291,7 +291,7 @@ const Support = () => {
               </div>
             </div>
             {/* Refunds */}
-            <div className="accordion-item mb-3 " >
+            {/* <div className="accordion-item mb-3 " >
               <h2 className="accordion-header" id="head-seven">
                 <button className="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#d7" aria-expanded="false" aria-controls="d7">
                   <h5 className="">Refunds</h5>
@@ -308,7 +308,7 @@ const Support = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* Reporting */}
             <div className="accordion-item mb-3 " >
               <h2 className="accordion-header" id="head-eight">

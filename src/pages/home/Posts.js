@@ -1,39 +1,37 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "linkify-plugin-mention";
 import GlobalContext from "../../context/GlobalContext";
-import CreatePost from "../../popups/post/CreatePost";
-import PostShareSuccess from "../../popups/post/PostSharedSuccess";
-import PostShareFail from "../../popups/post/PostSharedFail";
+
 import PostService from "../../services/postService";
-import VideoImageThumbnail from "react-video-thumbnail-image";
-import moment from "moment";
 import ProfileImage from "../../shared/ProfileImage";
-import Comment from "../../shared/Comment";
-import SharePostSelect from "../../popups/post/SharePostSelect";
 import UserBlockedServ from "../../services/userBlockedService";
 import UserFollowerService from "../../services/userFollowerService";
+import HelperFunctions from "../../services/helperFunctions";
+import ReportService from "../../services/reportService";
+
+import Report from "../../popups/report/Report";
 import ImageCarousel from "../../popups/imageCarousel/ImageCarousel";
 import Unfollow from "../../popups/unfollow/Unfollow";
 import UserLikedPost from "../../popups/post/UserLikedPost";
 import UserSharedPost from "../../popups/post/UserSharedPost";
-import HelperFunctions from "../../services/helperFunctions";
-import ReportService from "../../services/reportService";
-import Linkify from "react-linkify";
-import { SecureLink } from "react-secure-link";
-import Report from "../../popups/report/Report";
-import LoadingSpin from "react-loading-spin";
-import FBReactions from "../../components/FBReactions";
-import "linkify-plugin-mention";
 import OtherPostSharedSuccess from "../../popups/post/OtherPostSharedSuccess";
 import OtherPostShareFail from "../../popups/post/OtherPostSharedFail";
-import ScrollMore from "../../shared/ScrollMore";
-import YoutubeThumbnail from "../../components/YoutubeThumbnail";
-import Playeryoutube from "../../components/Playeryoutube";
-import SharedPost from "../../components/SharedPost";
-import OriginalPostCreator from "../../components/OriginalPostCreator";
 import SinglePost from "../../components/_main/Dashboard/SinglePost";
+import CreatePost from "../../popups/post/CreatePost";
+import PostShareSuccess from "../../popups/post/PostSharedSuccess";
+import PostShareFail from "../../popups/post/PostSharedFail";
+import SharePostSelect from "../../popups/post/SharePostSelect";
+import UserService from "../../services/UserService";
+import PostCreateSuccess from "../../popups/post/PostCreatedSuccess";
+import DeletePostSuccess from "../../popups/post/DeletePostSuccess";
+import { wrap } from "framer-motion";
+import "./posts.css"
+import PostReportSuccess from "../../popups/post/ReportPostSuccess";
+import BlockUserSuccess from "../../popups/post/BlockUserSuccess";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "../../components/Loader";
 
-const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 
 const Posts = () => {
 
@@ -42,6 +40,7 @@ const Posts = () => {
   const blockedServ = new UserBlockedServ();
   const reportServ = new ReportService();
   const helperServ = new HelperFunctions();
+  const serv = new UserService()
   const globalCtx = useContext(GlobalContext);
   const [user, setUser] = globalCtx.user;
   const [createPostPopup, setCreatePostPopup] = globalCtx.createPostPopup;
@@ -54,7 +53,7 @@ const Posts = () => {
   const [showMoreList, setShowMoreList] = useState([]);
   const [showShareTo, setShowShareTo] = useState(false);
   const [imageIdx, setImageIdx] = useState(0);
-  const [mediaFiles, setMediaFiles] = useState([]);
+  const [mediaFilesCarousel, setMediaFilesCarousel] = useState([]);
   const [showUnfollowPopup, setShowUnfollowPopup] = useState(false);
   const [showUserLikedPost, setShowUserLikedPost] = useState(false);
   const [showUserSharedPost, setShowUserSharedPost] = useState(false);
@@ -65,6 +64,14 @@ const Posts = () => {
   const [showOtherPostSharedPopup, setShowOtherPostSharedPopup] = useState(false);
   const [showOtherPostFailedPopup, setShowOtherPostFailedPopup] = useState(false);
   const [postCount, setPostCount] = useState(0);
+  const [change, setChange] = useState(false)
+  const [sharePostId, setSharePostId] = useState(null)
+  const [deleteSuccessPopup, setDeleteSuccessPopup] = useState(false)
+  const [showReportSuccess, setShowReportSuccess] = useState(false)
+  const [blockUserSuccess, setBlockUserSuccess] = useState(false)
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasmore] = useState(true);
+
 
   const [search, setSearch] = useState({
     filter: {
@@ -74,62 +81,62 @@ const Posts = () => {
     length: 20,
   });
 
-  let twitterurl = "http://twitter.com/share?text=vestorgrow home page&url=";
-  let facebookurl = "https://www.facebook.com/sharer/sharer.php?t=vestorgrow home page&u=";
-  let mailto = `mailto:${user?.email}?subject=Vestorgrow!!!&body=`;
 
-  // let link = encodeURI(window.location.origin + "/post")
-
-  let loading = false;
-
-  const handleCreatePostPopup = () => {
-    setCreatePostPopup(!createPostPopup);
-    setShowLoadingBar(false);
-  };
-  const handlePostSuccessPopup = () => {
-    setPostSuccessPopup(!postSuccessPopup);
-    setShowLoadingBar(false);
-  };
-  const handlePostFailPopup = () => {
-    setPostFailPopup(!postFailPopup);
-    setShowLoadingBar(false);
-  };
-
-  
-
-  useEffect(() => {
-    setTimeout(() => {
-      getPostList();
-    }, 1000);
-  }, [postSuccessPopup, search]);
-
-  const getPostList = async () => {
+  const getUserData = async () => {
     try {
-      loading = true;
-      const obj = search;
-      let resp = await postServ.myFeed(obj);
-      console.log(resp.data[0]);
+      let resp = await serv.getUser(user?._id);
       if (resp.data) {
-        setPostList(postList.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
-        setPostCount(resp.total);
+        setUser({ ...resp.data });
+        localStorage.setItem("user", JSON.stringify(resp.data))
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const options = {
-    formatHref: {
-      mention: (href) => process.env.REACT_APP_API_BASEURL + "/userprofile/profiles" + href,
-    },
+  const handleCreatePostPopup = () => {
+    setCreatePostPopup(!createPostPopup);
+    setShowLoadingBar(false);
   };
 
-  function reachedBottomCall() {
-    let searchTemp = { ...search };
-    searchTemp.start = search.start + search.length;
-    setSearch(searchTemp);
+  const handlePostSuccessPopup = () => {
+    setPostSuccessPopup(!postSuccessPopup);
+    setShowLoadingBar(false);
+  };
+
+  const handlePostFailPopup = () => {
+    setPostFailPopup(!postFailPopup);
+    setShowLoadingBar(false);
+  };
+
+  const handleDeleteSuccessPopup = () => {
+    setDeleteSuccessPopup(!deleteSuccessPopup);
+    setShowLoadingBar(false);
   }
 
+  useEffect(() => {
+    getPostList();
+  }, [postSuccessPopup, search, change]);
+
+  const getPostList = async () => {
+    try {
+      const obj = search;
+      obj.page = page;
+      let resp = await postServ.myFeed(obj)
+        .then((res) => {
+          setPostList((prev) => [...prev, ...res?.data]);
+          setPostCount(res.count);
+          setPage(page + 1)
+        })
+        .catch((error) => console.log("error:", error))
+      // if (resp?.data) {
+      //   setPostList(postList?.length > 0 && search.start !== 0 ? [...postList, ...resp.data] : resp.data);
+      //   setPostCount(resp.total);
+      // }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const blockUser = async (userId) => {
     try {
@@ -149,7 +156,7 @@ const Posts = () => {
     try {
       let resp = await postServ.unhidePost(postId);
       if (resp.message) {
-        loading = false;
+        // loading = false;
         getPostList();
       }
     } catch (err) {
@@ -157,55 +164,35 @@ const Posts = () => {
     }
   };
 
-  const updatePostAfterReaction = (mode, postId, data, uniqueReactions) => {
-    if (mode === "inc") {
-      let _postList = postList;
-      let _postListIdx = _postList.findIndex((i) => i._id === postId);
-      _postList[_postListIdx].reaction = {
-        _id: data._id,
-        postId: data.postId,
-        type: data.type
-      };
-      _postList[_postListIdx].isLiked = true;
-      _postList[_postListIdx].postReactions = uniqueReactions;
-      _postList[_postListIdx].likeCount = _postList[_postListIdx].likeCount + 1;
-      setPostList([..._postList]);
-    } else {
-      let _postList = postList;
-      let _postListIdx = _postList.findIndex((i) => i._id === postId);
-      _postList[_postListIdx].reaction = null;
-      _postList[_postListIdx].isLiked = false;
-      _postList[_postListIdx].likeCount = _postList[_postListIdx].likeCount - 1;
-      _postList[_postListIdx].postReactions = uniqueReactions;
-      setPostList([..._postList]);
-    }
-  }
-
   const handleSharePost = async (postIdx, shareType) => {
-    let post = postList[postIdx];
-    if (!post.originalPostId) {
-      post.originalPostId = post._id;
-      post.parentPostId = post._id;
-    } else {
-      post.parentPostId = post._id;
-    }
-    post.shareType = shareType;
-    if (shareType === "Selected") {
-      setDataForSharePost(post);
-      setShowSharePost(true);
-    } else {
-      try {
-        let resp = await postServ.sharePost(post);
-        if (resp.data) {
-          getPostList();
-          setShowOtherPostSharedPopup(!showOtherPostSharedPopup);
-        } else {
-          setShowOtherPostFailedPopup(!showOtherPostFailedPopup);
-        }
-      } catch (err) {
-        console.log(err);
+    // console.log("SHARETOFEED:", postIdx, shareType)
+    // console.log(postList)
+    // let post = postList[postIdx];
+    // console.log(post)
+    // if (!post.originalPostId) {
+    //   post.originalPostId = post._id;
+    //   post.parentPostId = post._id;
+    // } else {
+    //   post.parentPostId = post._id;
+    // }
+    // post.shareType = shareType;
+    // if (shareType === "Selected") {
+    //   setDataForSharePost(post);
+    //   setShowSharePost(true);
+    // }
+    // else {
+    try {
+      let resp = await postServ.sharePost(postIdx);
+      if (resp.data) {
+        getPostList();
+        setShowOtherPostSharedPopup(!showOtherPostSharedPopup);
+      } else {
+        setShowOtherPostFailedPopup(!showOtherPostFailedPopup);
       }
+    } catch (err) {
+      console.log(err);
     }
+    // }
   };
 
   const handleShowComment = (id) => {
@@ -217,8 +204,13 @@ const Posts = () => {
   };
 
   const handleUnFollowRequest = async (id, userName) => {
-    setUnfollowUserData({ id: id, userName: userName });
+    setUnfollowUserData({ id: id, userName: userName })
     setShowUnfollowPopup(true);
+    setTimeout(() => {
+      getUserData()
+      getPostList()
+    }, 2000);
+
   };
 
   const handleReportRequest = async (postId) => {
@@ -232,22 +224,20 @@ const Posts = () => {
 
   document.body.addEventListener("click", () => setShowShareTo(false), true);
 
-  // check youtube video url 
-  const matchYoutubeUrl = (url) => {
-    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    return (url.match(p)) ? true : false;
+  const LoaderStyle = {
+    display: "flex",
+    justifyContent: "center"
   }
 
-  // const extractYouTubeURL = (text) => {
-  //   const youtubeURLRegex = /(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/\S+/gi;
-  //   const matches = text.match(youtubeURLRegex);
-  //   return matches ? matches[0] : null;
-  // }
+  const EndTextStyle = {
+    display: "flex",
+    justifyContent: "center",
+  }
 
   return (
     <>
       <div className="middleColumn">
-        <div className="new-post_custom-div sticky-top-custom">
+        <div className="new-post_custom-div sticky-top-custom post_container" style={{ marginTop: "35px" }}>
           <div className="new-post_custom-divInner-top"></div>
           <div className="new-post_custom-divInner">
             <div className="bgWhiteCard addPhotoVideoPost d-none d-md-block sticky-top-custom">
@@ -272,96 +262,116 @@ const Posts = () => {
             </div>
           </div>
         </div>
-        {postList.length > 0 &&
-          postList.map((item, idx) => {
-            return item.isHidden ? (
-              <div className="bgDarkCard postHidden d-none d-md-block">
-                <div className="postHiddenInner d-flex align-items-center">
-                  <div className="hideIconWhite">
-                    <img
-                      src="/images/icons/hide-icon-white.svg"
-                      alt="hide-icon-white"
-                      className="img-fluid"
-                      onClick={() => unhidePost(item._id)}
-                    />
-                  </div>
-                  <div className="postHiddenTxt">
-                    <h5>Post Hidden</h5>
-                    <p>You won't see this post on your timeline</p>
-                  </div>
-                  <div className="postHiddenClose">
-                    <NavLink onClick={() => unhidePost(item._id)}>
-                      <img src="/images/icons/close-white.svg" alt="close-white" className="img-fluid" />
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <SinglePost item={item} idx={idx} />
-            );
-          })}
-      </div>
+        <div className="single_post_container" id="scrollableDiv" style={{ borderRadius: "15px" }}>
+          <InfiniteScroll
+            dataLength={postList.length}
+            loader={<div style={LoaderStyle}><Loader /></div>}
+            next={getPostList}
+            hasMore={postList.length < +postCount ? true : false}
+            endMessage={<div style={EndTextStyle}><p>No posts.</p></div>}
+            scrollableTarget="scrollableDiv"
+            scrollThreshold="200px"
+          >
+            {postList.length > 0 &&
+              postList.map((item, idx) => {
+                return <SinglePost index={idx} item={item} idx={idx} key={idx} deleteSuccessPopup={deleteSuccessPopup} setDeleteSuccessPopup={setDeleteSuccessPopup} setMediaFilesCarousel={setMediaFilesCarousel} handleUnFollowRequest={() => handleUnFollowRequest(item?.createdBy?._id, item?.createdBy?.user_name)} setChange={setChange} change={change} handleReportRequest={handleReportRequest} setShowSharePost={setShowSharePost} setSharePostId={setSharePostId} handleSharePost={handleSharePost} getPostList={getPostList} setImageIdx={setImageIdx} setBlockUserSuccess={setBlockUserSuccess} setShowUserLikedPost={setShowUserLikedPost} setShowUserSharedPost={setShowUserSharedPost} onDelete={() => { setPostList([]); setPage(1); setChange(!change); setDeleteSuccessPopup(!deleteSuccessPopup) }} />
+              })}
+          </InfiniteScroll>
+        </div>
+        <div style={{ marginBottom: "20px" }}>
+        </div>
+      </div >
       {showReportPopup && (
         <Report
           onClose={() => {
             setReportData(null);
             setShowReportPopup(false);
+            setShowReportSuccess(true)
           }}
           object={reportData}
         />
-      )}
-      {createPostPopup && (
-        <CreatePost
-          onClose={handleCreatePostPopup}
-          onSuccess={() => {
-            handleCreatePostPopup();
-            handlePostSuccessPopup();
-            setSearch({ ...search, start: 0 });
-          }}
-          onFail={() => {
-            handleCreatePostPopup();
-            handlePostFailPopup();
-          }}
-        />
-      )}
-      {postSuccessPopup && <PostShareSuccess onClose={handlePostSuccessPopup} />}
-      {showOtherPostSharedPopup && (
-        <OtherPostSharedSuccess onClose={() => setShowOtherPostSharedPopup(!showOtherPostSharedPopup)} />
-      )}
-      {showOtherPostFailedPopup && (
-        <OtherPostShareFail onClose={() => setShowOtherPostFailedPopup(!showOtherPostFailedPopup)} />
-      )}
+      )
+      }
+      {
+        createPostPopup && (
+          <CreatePost
+            onClose={handleCreatePostPopup}
+            onSuccess={() => {
+              handleCreatePostPopup();
+              handlePostSuccessPopup();
+              // setSearch({ ...search, start: 0 });
+              // setChange(prev=>!prev)
+              // getPostList()
+            }}
+            getposts={() => { setPostList([]); setPage(1); getPostList() }}
+            onFail={() => {
+              handleCreatePostPopup();
+              handlePostFailPopup();
+            }}
+          />
+        )
+      }
+      {deleteSuccessPopup && <DeletePostSuccess onClose={handleDeleteSuccessPopup} />}
+      {postSuccessPopup && <PostCreateSuccess onClose={handlePostSuccessPopup} />}
+      {
+        showOtherPostSharedPopup && (
+          <OtherPostSharedSuccess onClose={() => setShowOtherPostSharedPopup(!showOtherPostSharedPopup)} />
+        )
+      }
+      {
+        showOtherPostFailedPopup && (
+          <OtherPostShareFail onClose={() => setShowOtherPostFailedPopup(!showOtherPostFailedPopup)} />
+        )
+      }
       {postFailPopup && <PostShareFail onClose={handlePostFailPopup} />}
-      {showSharePost && <SharePostSelect onClose={() => setShowSharePost(!showSharePost)} post={dataForSharePost} />}
-      {mediaFiles && mediaFiles.length > 0 && (
-        <ImageCarousel onClose={() => setMediaFiles(null)} mediaFiles={mediaFiles} imageIdx={imageIdx} />
-      )}
-      {showUnfollowPopup && (
-        <Unfollow
-          onClose={() => {
-            setUnfollowUserData(null);
-            setShowUnfollowPopup(false);
-            getPostList();
-          }}
-          userData={unfollowUserData}
-        />
-      )}
-      {showUserLikedPost && (
-        <UserLikedPost
-          onClose={() => {
-            setShowUserLikedPost(false);
-          }}
-          postId={showUserLikedPost}
-        />
-      )}
-      {showUserSharedPost && (
-        <UserSharedPost
-          onClose={() => {
-            setShowUserSharedPost(false);
-          }}
-          postId={showUserSharedPost}
-        />
-      )}
+      {showSharePost && <SharePostSelect onClose={() => setShowSharePost(!showSharePost)} postId={sharePostId} />}
+      {
+        mediaFilesCarousel && mediaFilesCarousel.length > 0 && (
+          <ImageCarousel onClose={() => setMediaFilesCarousel(null)} mediaFiles={mediaFilesCarousel} imageIdx={imageIdx} />
+        )
+      }
+      {
+        showUnfollowPopup && (
+          <Unfollow
+            onClose={() => {
+              setUnfollowUserData(null);
+              setShowUnfollowPopup(false);
+              getPostList();
+              getUserData()
+            }}
+            // getUserData={getUserData}
+            userData={unfollowUserData}
+          />
+        )
+      }
+      {
+        showUserLikedPost && (
+          <UserLikedPost
+            onClose={() => {
+              setShowUserLikedPost(false);
+            }}
+            postId={showUserLikedPost}
+          />
+        )
+      }
+      {
+        showUserSharedPost && (
+          <UserSharedPost
+            onClose={() => {
+              setShowUserSharedPost(false);
+            }}
+            postId={showUserSharedPost}
+          />
+        )
+      }
+      {
+        showReportSuccess && (<PostReportSuccess onClose={() => {
+          setShowReportSuccess(false)
+        }} />)
+      }
+      {
+        blockUserSuccess && (<BlockUserSuccess onClose={() => { setBlockUserSuccess(false) }} />)
+      }
     </>
   )
 }

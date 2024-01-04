@@ -257,6 +257,16 @@ export default class ChatService {
         throw err;
       });
   }
+  tojoinGroup(payload) {
+    return util
+      .sendApiRequest("/chat/tojoingroup", "POST", true, payload)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
   deleteInvitation(payload) {
     return util
       .sendApiRequest("/chat/deleteinvitation", "POST", true, payload)
@@ -336,4 +346,25 @@ export default class ChatService {
         throw err;
       });
   }
+
+  getTotalUnreadCount(payload) {
+    return util.sendApiRequest("/chat/totalunreadcount", "POST", true, payload)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        throw err;
+      })
+  }
+
+  getPersonalChatByMembers(payload) {
+    return util.sendApiRequest("/chat/find/members/chat", "POST", true, payload)
+      .then((res) => {
+        return res
+      })
+      .then((err) => {
+        throw err;
+      })
+  }
+
 }

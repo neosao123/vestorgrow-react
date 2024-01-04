@@ -4,6 +4,7 @@ import UserService from "../../services/UserService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import getGoogleOAuthURL from "../../util/getGoogleOAuthURL";
+import GlobalContext from "../../context/GlobalContext";
 
 const serv = new UserService();
 
@@ -14,6 +15,7 @@ const ValidateSchema = Yup.object({
 });
 function Signup() {
   const navigate = useNavigate();
+  const globalCtx = useContext(GlobalContext)
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [loginObj, setLoginObj] = new useState({
@@ -21,6 +23,7 @@ function Signup() {
     password: "",
     user_name: "",
   });
+  const [loading, setLoading] = globalCtx.Loading;
 
   const onSubmit = async (values) => {
     let obj = { ...values };

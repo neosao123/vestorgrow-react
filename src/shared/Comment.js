@@ -50,6 +50,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
   // const [showReplyList, setShowReplyList] = useState([])
   const [showNewReplyList, setShowNewReplyList] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [activeBtn, setActiveBtn] = useState(false);
   const [value, setValue] = useState("");
   const [searchText, setSearchText] = useState("");
   const [mentionedUserList, setMentionedUserList] = useState([]);
@@ -226,6 +227,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
   };
 
   const onSubmit = async (values) => {
+    setActiveBtn(true);
     setShowEmoji(false);
     values.postId = post._id;
     try {
@@ -244,12 +246,23 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
         updatePost();
         setShowCommentPostList([...showCommentPostList, obj.postId]);
         formik.values.comment = "";
+        setValue("")
         setMessage({ ...message, content: "" });
         setShowEmoji(false);
+
       }
+
     } catch (error) {
       console.log(error);
+      setValue("")
+      setInitialValue({
+        comment: "",
+        postId: post._id,
+        createdBy: user._id,
+      })
     }
+    formik.values.comment = "";
+    setActiveBtn(false);
   };
 
   const formik = useFormik({
@@ -302,64 +315,81 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
     <>
       <div>
         <form onSubmit={formik.handleSubmit}>
-          <div className="sendPost d-flex align-items-center sendPostHome" id="emojiPickerComment-id-Custom">
-            {showEmoji && (
-              <div
-                className={"picker-head emojiPicker-comment-up"}
-              >
-                <div className="closeBtnPositionCustom close-btn-picker">
-                  <button
-                    type="button"
-                    className="btn-close btn-close-inner-custom"
-                    onClick={() => setShowEmoji(false)}
+          <div className="d-flex flex-column"
+            style={{ position: "relative", justifyContent: "center" }}
+          >
+            <div className="mb-1 mx-auto bg-transparent"
+              style={{
+                position: "absolute", bottom: "50px", left: "50%",
+                transform: "translateX(-50%)"
+              }}
+            >
+              {showEmoji && (
+                <div className="picker-head emojiPicker-comment-up"
+                  style={{ position: "relative", width: "100%" }}
+                >
+                  <div /*className="closeBtnPositionCustom close-btn-picker"*/
+                    style={{ position: "absolute", top: "-20px", right: "-20px", zIndex: 1 }}
+                  >
+                    <button
+                      type="button"
+                      className="btn-close btn-close-inner-custom"
+                      onClick={() => setShowEmoji(false)}
+                    />
+                  </div>
+                  <Picker
+                    data={data}
+                    perLine={isMobile ? 7 : 9}
+                    onClickOutside={(e) => {
+                      if (!e.target.closest("#emojiPickerComment-id-Custom")) {
+                        setShowEmoji(false);
+                      }
+                    }}
+                    onEmojiSelect={(e) => handleEmojiSelection(e, e.native)}
+                    previewPosition={"none"}
+                    searchPosition={"none"}
+                    navPosition={"top"}
                   />
                 </div>
-                <Picker
-                  data={data}
-                  perLine={isMobile ? 7 : 9}
-                  onClickOutside={(e) => {
-                    if (!e.target.closest("#emojiPickerComment-id-Custom")) {
-                      setShowEmoji(false);
-                    }
-                  }}
-                  onEmojiSelect={(e) => handleEmojiSelection(e, e.native)}
-                  previewPosition={"none"}
-                  searchPosition={"none"}
-                  navPosition={"none"}
-                />
+              )}
+            </div>
+            <div className="sendPost d-flex align-items-center sendPostHome " id="emojiPickerComment-id-Custom">
+              <div className="mn-cmt-container ">
+                <div className="prfimg" onClick={onClose}>
+                  <Link to={"/userprofile/" + user?._id}>
+                    <img src={user?.profile_img !== "" ? user.profile_img : "/images/profile/default-profile.png"} alt="" />
+                  </Link>
+                </div>
+                <MentionsInput
+                  value={message.content}
+                  onChange={handleChange}
+                  style={defaultStyle}
+                  className="asd"
+                  placeholder="Write a comment"
+                >
+                  <Mention
+                    trigger="@"
+                    id="comment"
+                    name="comment"
+                    onChange={handleChangeInput}
+                    markup="@@@____id__^^__display__@@@"
+                    data={fetchUsers}
+                    style={defaultMention}
+                    renderSuggestion={CustomSuggestion}
+                    appendSpaceOnAdd={true}
+                  />
+                </MentionsInput>
+                <div className="emojiBtn" id="emojiPickerComment-btn-id-Custom" onClick={() => setShowEmoji(!showEmoji)}>
+                  <img src="/images/icons/emoji.png" alt="" className="img-fluid img-emoji-dummy" />
+                </div>
+                {activeBtn ? (
+                  <i className="fa-solid fa-spinner"></i>
+                ) : (
+                  <button type="submit" className="btn sendPostbtn">
+                    <img src="/images/icons/send.svg" alt="like" className="img-fluid" />
+                  </button>
+                )}
               </div>
-            )}
-            <div className="mn-cmt-container">
-              <div className="prfimg" onClick={onClose}>
-                <Link to={"/userprofile/" + user?._id}>
-                  <img src={user?.profile_img !== "" ? user.profile_img : "/images/profile/default-profile.png"} alt="" />
-                </Link>
-              </div>
-              <MentionsInput
-                value={message.content}
-                onChange={handleChange}
-                style={defaultStyle}
-                className="asd"
-                placeholder="Write a comment"
-              >
-                <Mention
-                  trigger="@"
-                  id="comment"
-                  name="comment"
-                  onChange={handleChangeInput}
-                  markup="@@@____id__^^__display__@@@"
-                  data={fetchUsers}
-                  style={defaultMention}
-                  renderSuggestion={CustomSuggestion}
-                  appendSpaceOnAdd={true}
-                />
-              </MentionsInput>
-              <div className="emojiBtn" id="emojiPickerComment-btn-id-Custom" onClick={() => setShowEmoji(!showEmoji)}>
-                <img src="/images/icons/emoji.png" alt="" className="img-fluid img-emoji-dummy" />
-              </div>
-              <button type="submit" className="btn sendPostbtn">
-                <img src="/images/icons/send.svg" alt="like" className="img-fluid" />
-              </button>
             </div>
           </div>
         </form>
@@ -403,16 +433,16 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                           <span>{moment(item?.createdAt).fromNow()}</span>
                         </div>
                         <div className="userReplyDots">
-                          <div className="commonDropDown dropdown">
+                          {item.createdBy?._id === user._id && <div className="commonDropDown dropdown">
                             <a data-bs-toggle="dropdown" href="javascript:void(0);">
                               <img src="/images/icons/dots.svg" alt="dots-white" className="img-fluid" />
                             </a>
                             <ul className="dropdown-menu">
-                              <li>
+                              {/* {user._id !== item?.createdBy._id && <li>
                                 <Link className="dropdown-item">
                                   Report
                                 </Link>
-                              </li>
+                              </li>} */}
                               {item.createdBy?._id === user._id ? (
                                 <li>
                                   <Link className="dropdown-item" onClick={() => deleteComment(item?._id)}>
@@ -423,7 +453,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                 ""
                               )}
                             </ul>
-                          </div>
+                          </div>}
                         </div>
                       </div>
                     </div>
@@ -502,7 +532,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                           <span>{moment(reply?.createdAt).fromNow()}</span>
                                         </div>
                                         <div className="userReplyDots">
-                                          <div className="commonDropDown dropdown">
+                                          {reply.createdBy?._id === user._id && <div className="commonDropDown dropdown">
                                             <Link data-bs-toggle="dropdown">
                                               <img
                                                 src="/images/icons/dots.svg"
@@ -511,11 +541,11 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                               />
                                             </Link>
                                             <ul className="dropdown-menu">
-                                              <li>
+                                              {/* <li>
                                                 <Link className="dropdown-item">
                                                   Report
                                                 </Link>
-                                              </li>
+                                              </li> */}
                                               {reply.createdBy?._id === user._id ? (
                                                 <li onClick={() => deleteCommentReply(reply?._id)}>
                                                   <button type="button" className="dropdown-item">
@@ -526,7 +556,7 @@ export default function Comment({ post, showCommentList, updatePost, heightUnset
                                                 ""
                                               )}
                                             </ul>
-                                          </div>
+                                          </div>}
                                         </div>
                                       </div>
                                     </div>

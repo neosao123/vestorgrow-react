@@ -23,6 +23,7 @@ import Select from "react-select";
 import ChatMsgTimeStamp from "../../components/ChatMsgTimeStamp";
 import "./message.css";
 import NewChat from "../../components/NewChat";
+import { toast } from "react-toastify";
 
 const Message = () => {
 
@@ -78,6 +79,7 @@ const Message = () => {
     };
 
     const getMessage = async (id, oUser, users) => {
+
         setMessage({
             content: "",
             file: "",
@@ -183,7 +185,7 @@ const Message = () => {
             },
         };
         if (filterText) {
-            obj.filter.userName = filterText;
+            obj.filter.search = filterText;
         }
         try {
             await serv.listAllChat(obj).then((resp) => {
@@ -245,21 +247,25 @@ const Message = () => {
     }
 
     let date = moment(Date()).format("DD MMMM YYYY");
+    useEffect(() => {
+        getChatList();
+    }, [filterText])
 
     useEffect(() => {
         getFollowerList();
-        getChatList();
         socket.emit("setup", user);
         socket.on("connected", () => setSocketConnected(true));
         setShowMessage("new");
-    }, [filterText]);
+    }, []);
+
 
     return (
         <>
-            <div className="socialContant chatsocialContant main_container pb-0">
-                <div className="messageChatBox">
+            <div className="socialContant chatsocialContant main_container pb-0 messagebox-fixed">
+                <div className="messageChatBox" style={{ marginTop: "67px" }}>
                     <div
                         className={"messageChatLeft messageChatLeftCustom d-md-block " + (chatBlock ? "d-sm-none d-none" : "d-sm-block d-block")}
+                        style={{ borderTopLeftRadius: "15px" }}
                     >
                         <div className="messageLeftHeader">
                             <div className="messageHeading">
@@ -339,6 +345,7 @@ const Message = () => {
                     </div>
                     <div
                         className={"messageChatRight messageChatRightCustom position-relative d-md-block " + (chatBlock ? "d-sm-flex d-flex" : "d-sm-none d-none")}
+                        style={{ borderTopRightRadius: "15px" }}
                     >
                         {showMessage === "new" ?
                             (
@@ -353,7 +360,7 @@ const Message = () => {
                                             </div>
                                             <div className="userProfileInner" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
                                                 <div className="userProfileImg">
-                                                    <ProfileImage url={mUser?.profile_img} />
+                                                    <ProfileImage url={mUser?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                                     {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
                                                 </div>
                                                 <div className="userProfileTxt userProfileTxt-custom">
@@ -413,7 +420,7 @@ const Message = () => {
                                                 </div>
                                                 <div className="userProfileInner" onClick={() => handleNavigate("/userprofile/" + mUser?._id)}>
                                                     <div className="userProfileImg">
-                                                        <ProfileImage url={mUser?.profile_img} />
+                                                        <ProfileImage url={mUser?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                                         {isOnline.includes(mUser?._id) && <span className="msgOnline" />}
                                                     </div>
                                                     <div className="userProfileTxt userProfileTxt-custom">
@@ -493,7 +500,7 @@ const Message = () => {
                                                                 }
                                                             >
                                                                 <div className="leftSideProfile">
-                                                                    <ProfileImage url={item.sender?.profile_img} />
+                                                                    <ProfileImage url={item.sender?.profile_img} style={user?.profile_img ? { width: "40px", height: "40px", borderRadius: "20px" } : { borderRadius: "30px" }} />
                                                                 </div>
                                                                 {item.deleted_for?.includes("all") || item.deleted_for?.includes(user?._id) ? (
                                                                     <div className="leftSideContant">
@@ -657,6 +664,7 @@ const Message = () => {
                                                     value={message.content}
                                                     onKeyDown={handleKeypress}
                                                     placeholder="Write your message..."
+
                                                 />
                                                 <input
                                                     style={{ display: "none" }}
@@ -670,7 +678,6 @@ const Message = () => {
                                                         event.target.value = null;
                                                     }}
                                                 />
-
                                                 <span
                                                     className="input-group-text bg-white emoji emoji-picker-customMobile"
                                                     id="emojiPicker-btn-id-Custom"
@@ -686,6 +693,8 @@ const Message = () => {
                                                         </label>
                                                     </a>
                                                 </span>
+
+
                                             </div>
                                         </div>
                                         <div className="sendBtn">

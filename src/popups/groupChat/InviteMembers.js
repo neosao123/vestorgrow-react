@@ -16,6 +16,7 @@ export default function InviteMembers({ onClose, onConfirm, chatId, existingUser
   const [copiedText, setCopiedText] = useState("");
   const [showLoading, setShowLoading] = useState(false);
   const [chatMembers, setChatMembers] = useState([]);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     getFollowerList();
@@ -64,8 +65,10 @@ export default function InviteMembers({ onClose, onConfirm, chatId, existingUser
   const handleInvitationList = (id) => {
     if (invitedList.includes(id)) {
       setInvitedList(invitedList.filter((i) => i !== id));
+      setIsClicked(false)
     } else {
       setInvitedList([...invitedList, id]);
+      setIsClicked(false)
     }
   };
 
@@ -182,15 +185,27 @@ export default function InviteMembers({ onClose, onConfirm, chatId, existingUser
                                       Member
                                     </a>
                                   ) : (
-                                    <a
-                                      href="javascript:void(0);"
-                                      onClick={() => handleInvitationList(item.userId?._id)}
-                                      className={
-                                        "btn " + (invitedList.includes(item.userId?._id) ? "followingBtn" : "btnColor")
-                                      }
-                                    >
-                                      Invite
-                                    </a>
+                                    <>
+                                      {!isClicked && <a
+                                        href="javascript:void(0);"
+                                        onClick={() => { handleInvitationList(item.userId?._id); isClicked(true) }}
+                                        className={
+                                          "btn " + (invitedList.includes(item.userId?._id) ? "followingBtn" : "btnColor")
+                                        }
+                                      >
+                                        Invite
+                                      </a>}
+                                      {isClicked && <a
+                                        href="javascript:void(0);"
+
+                                        className={
+                                          "btn " + (invitedList.includes(item.userId?._id) ? "followingBtn" : "btnColor")
+                                        }
+                                      >
+                                        ...Loading
+                                      </a>}
+                                    </>
+
                                   )}
                                 </div>
                               </div>

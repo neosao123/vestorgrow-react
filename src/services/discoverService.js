@@ -1,7 +1,7 @@
 import util from "../util/util";
 import axios from "axios";
 export default class DiscoverService {
-  async postList(data) {
+  async postList(data, page) {
     try {
       const category = Object.keys(data).reduce((object, key) => {
         if (data[key] !== "") {
@@ -9,7 +9,7 @@ export default class DiscoverService {
         }
         return object;
       }, {});
-      return await util.sendApiRequest("/discover/list", "POST", true, category);
+      return await util.sendApiRequest(`/discover/list?page=${page}`, "POST", true, category);
     } catch (err) {
       throw err;
     }
@@ -22,9 +22,9 @@ export default class DiscoverService {
       throw err;
     }
   }
-  async getPopularTags() {
+  async getPopularTags(obj) {
     try {
-      return await util.sendApiRequest("/discover/popular/keywords", "GET");
+      return await util.sendApiRequest("/discover/popular/keywords", "POST", true, obj);
     } catch (err) {
       throw err;
     }

@@ -133,7 +133,7 @@ export default function SearchBar() {
                 </h4>
                 <p class="tooltipContent">Search for other users</p>
                 <div class="toolBottom">
-                  <div class="toolcounter">1/6</div>
+                  <div class="toolcounter">1/4</div>
                   <div class="toolButton">
                     <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                     <button class="btn btnColor tooltipbtn" id="tooltipNext1">Next</button>

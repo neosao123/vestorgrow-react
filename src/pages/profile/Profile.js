@@ -21,7 +21,7 @@ import DiscoverPost from "../../popups/discovery/DiscoverPost";
 import MyGroupList from "./MyGroupList";
 import LoadingSpin from "react-loading-spin";
 import Playeryoutube from '../../components/Playeryoutube';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import UserSharedPost from "../../popups/post/UserSharedPost";
 import './profile.css';
 import UserLikedPost from "../../popups/post/UserLikedPost";
@@ -31,7 +31,7 @@ import { toast } from 'react-toastify';
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 
 const Profile = () => {
-
+    const navigate = useNavigate();
     const suggestedServ = new SuggestedService();
     const userServ = new UserService();
     const postServ = new PostService();
@@ -66,6 +66,7 @@ const Profile = () => {
 
     const [suggestedUsers, setSuggestedUsers] = useState([]);
     const [showSuggestedProfiles, setShowSuggestedProfiles] = useState(false);
+    const [mousehover, setMouserHover] = useState(false);
 
     const getPostList = async () => {
         const obj = { filter: {} };
@@ -286,19 +287,54 @@ const Profile = () => {
         getSuggestedUsers();
     }, []);
 
+    const handlemouseHover = () => {
+        setMouserHover(true);
+    }
+
+    const handlemouseOut = () => {
+        setMouserHover(false);
+    }
+
+    const handleShowImage = (img) => {
+        setShowEditProfileImg(img)
+    }
+
     return (
         <div>
             <div className="socialContant profileContent main_container">
-                <div className="myProfile_sec"> 
+                <div className="myProfile_sec">
                     <div className="about_profile">
                         <div
                             className="profileCoverPic mx-0"
                             style={
                                 user?.cover_img
-                                    ? { backgroundImage: `url(${user?.cover_img})` }
-                                    : { backgroundImage: "url(/images/profile/image_cover_profile.png)" }
+                                    ? { backgroundImage: `url(${user?.cover_img})`, backgroundColor: "grey", display: "flex" }
+                                    : { backgroundImage: "url(/images/profile/image_cover_profile.png)", backgroundColor: "grey" }
+
                             }
                         >
+                            <div className="profile_image_pic position-relative profile_image_top_margin image_div" style={{ borderRadius: "50%" }}
+                                onMouseOver={handlemouseHover}
+                                onMouseOut={handlemouseOut}
+                            >
+                                <div className={`profile_pic_image profile_pic_image  ${mousehover ? "profile_image_pic_actual1" : "profile_image_pic_actual"}`} id="profile_image"
+                                >
+                                    <ProfileImage url={user?.profile_img} style={{ height: "100%", width: "100%", borderRadius: "80px" }} />
+                                </div>
+                                <div
+                                    className={`edit_btnImg edit_btnImg-customMobile ${mousehover ? "edit_image_btn1" : "edit_image_btn"}`}
+                                    id="edit_button"
+                                    onClick={() => handleShowImage(user.profile_img ? user.profile_img : "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg")}
+                                >
+                                    <div style={{ margin: "auto" }}>
+                                        <a href="javascript:void(0)" >
+                                            <label htmlFor="profile_image">
+                                                <img src="/images/profile/Edit.svg" alt="Edit Icon" />
+                                            </label>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="edit_btn" onClick={() => setShowEditCoverImg(user?.cover_img)}>
                                 <a href="javascript:void(0)">
                                     <label htmlFor="cover_image">
@@ -307,7 +343,7 @@ const Profile = () => {
                                 </a>
                             </div>
                         </div>
-                        <div className="profilePic position-relative">
+                        {/* <div className="profilePic position-relative" style={{ border: "1px solid blue" }}>
                             <ProfileImage url={user?.profile_img} style={{ borderRadius: "80px" }} />
                             <div
                                 className="edit_btnImg edit_btnImg-customMobile"
@@ -319,7 +355,7 @@ const Profile = () => {
                                     </label>
                                 </a>
                             </div>
-                        </div>
+                        </div> */}
                         {!user?.cover_img && (
                             <input
                                 style={{ display: "none" }}
@@ -360,10 +396,10 @@ const Profile = () => {
                                 <p className="txtOne mb-0">
                                     {user?.title?.length > 400 ? user?.title?.slice(0, 400) + "..." : user?.title}
                                 </p>
-                                <p className="txtTwo mb-0">
+                                {user?.location && <p className="txtTwo mb-0">
                                     <img src="/images/profile/location.svg" alt="location-tag" />
                                     {user?.location}
-                                </p>
+                                </p>}
                             </div>
                             <div className="followers d-flex" style={{ color: "#06897E", fontWeight: "600" }}>
                                 <div onClick={() => setShowUserList("follower")} >
@@ -383,7 +419,7 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="page_link">
+                    <div className="page_link ">
                         <ul className="nav nav-pills">
                             <li className="nav-item">
                                 <div className={activeTab === "about" ? "nav-link active" : "nav-link"} onClick={() => {
@@ -417,7 +453,7 @@ const Profile = () => {
                                     <div className="card-body">
                                         {showEditAbout === true ?
                                             (
-                                                <>
+                                                <div style={{ paddingRight: "24px", paddingLeft: "24px" }}>
                                                     <div>
                                                         <h6 className="card-section-title">
                                                             <span className="me-2">Edit About</span>
@@ -425,17 +461,17 @@ const Profile = () => {
                                                         </h6>
                                                     </div>
                                                     <EditAbout onClose={() => setShowEditAbout(false)} />
-                                                </>
+                                                </div>
                                             ) : (
-                                                <>
+                                                <div style={{ paddingLeft: "24px", paddingRight: "24px" }}>
                                                     <h6 className="card-section-title">About</h6>
-                                                    <div className="row">
-                                                        <div className="col-12 mb-3">
+                                                    <div className="row about_profile">
+                                                        {user?.bio && <div className="col-12 mb-3">
                                                             <div className="abt-title">Bio</div>
                                                             <p dangerouslySetInnerHTML={{ __html: user.bio }} />
-                                                        </div>
-                                                        <div className="col-12 mb-4">
-                                                            <div className="abt-title">Investment Interests</div>
+                                                        </div>}
+                                                        {user?.investmentInterests?.length > 0 && <div className="col-12 mb-4">
+                                                            <div className="abt-title">Personal Development Interests</div>
                                                             <div className="investment-keywords">
                                                                 {user?.investmentInterests && user?.investmentInterests.map((item, idx) => {
                                                                     return (
@@ -445,19 +481,19 @@ const Profile = () => {
                                                                     );
                                                                 })}
                                                             </div>
-                                                        </div>
-                                                        <div className="col-12 mb-4">
+                                                        </div>}
+                                                        {user?.websiteUrl && <div className="col-12 mb-4">
                                                             <img src="/images/icons/globe.svg" alt="globe" className="me-2" />
                                                             <span dangerouslySetInnerHTML={{ __html: user.websiteUrl }} />
-                                                        </div>
+                                                        </div>}
                                                         <div className="col-12 text-center">
                                                             <div className="editComm_btn editComm_btnCustom" onClick={handleEditAbout}>
                                                                 <img src="/images/profile/editIcon.svg" alt="edit-icon" />
-                                                                <span>Edit About</span>
+                                                                <span className="edit_btn_gap">Edit About</span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </>
+                                                </div>
                                             )
                                         }
                                     </div>
@@ -465,26 +501,29 @@ const Profile = () => {
                             </div>
                             <div className="col-sm-12 col-md-5 col-lg-4">
                                 <div className="card border-0">
-                                    <div className="card-body">
+                                    <div className="card-body" id="card_body" >
                                         <div className="suggested-header">
                                             <h6 className="card-title">Suggested for you</h6>
                                             <div className="see-all-link" onClick={() => setShowSuggestedProfiles(!showSuggestedProfiles)}>See All</div>
                                         </div>
-                                        <div>
+                                        <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
                                             {
-                                                suggestedUsers && suggestedUsers.map((suggestedUser, index) => {
+                                                suggestedUsers && suggestedUsers?.map((suggestedUser, index) => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;
                                                     if (index < 5) {
                                                         return (
                                                             <div key={"abt-sgu-" + index} className="pfrx-sgx-bx">
-                                                                <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                                <div onClick={() => navigate("/userprofile/" + suggestedUser._id)}>
+                                                                    <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                                </div>
                                                                 <div className="ms-3">
-                                                                    <div style={{ fontWeight: "600" }}>{suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}</div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    <NavLink to={"/userprofile/" + suggestedUser._id} style={{ color: "#000000", fontSize: "1.0rem", fontWeight: "600" }}>
+                                                                        {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
+                                                                    </NavLink>
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btnColor1 btnFollow`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}
@@ -507,17 +546,19 @@ const Profile = () => {
                     <div className={activeTab === "posts" ? "tab-pane active" : "tab-pane"} id="posts">
                         <div className="row mt-3">
                             {
-                                postList && postList.map((item, idx) => {
+                                postList.length > 0 && postList.map((item, idx) => {
+
                                     const postReactions = item.postReactions ?? [];
-                                    const youtubeUrl = helperServ.extractYouTubeURL(item.message);
+                                    const youtubeUrl = helperServ.extractYouTubeURL(item?.message);
+
                                     return (
-                                        <div key={idx} className="col-sm-4 col-lg-4 dynamic-width-custom">
-                                            <div className="bgWhiteCard feedBox post_box">
+                                        <div key={idx} className="col-sm-4 col-lg-4 dynamic-width-custom mb-2 profile_post_padding">
+                                            <div className="bgWhiteCard feedBox post_box" style={{ maxHeight: "99.5%", minHeight: "99.5%" }}>
                                                 <div className="feedBoxInner">
                                                     <div className="feedBoxHead d-flex align-items-center">
                                                         <div className="feedBoxHeadLeft">
                                                             <div className="feedBoxHeadName">
-                                                                <h4 dangerouslySetInnerHTML={{ __html: item.message }} />
+                                                                <h4 dangerouslySetInnerHTML={{ __html: item?.message }} />
                                                                 <p>
                                                                     <span>{moment(item.createdAt).format("DD MMM YYYY")}</span>
                                                                     <i className="fa fa-circle" aria-hidden="true" />
@@ -565,7 +606,7 @@ const Profile = () => {
                                                     {item?.mediaFiles.length > 0 ? (
                                                         <div
                                                             className="postImg mx_minus postImg-custom-profile"
-                                                            onClick={() => handlePostPopup(item._id, idx)}
+                                                            onClick={() => handlePostPopup(item?._id, idx)}
                                                         >
                                                             {
                                                                 isImage.includes(item?.mediaFiles[0].split(".").pop()) ? (
@@ -602,11 +643,12 @@ const Profile = () => {
                                                         </div>
                                                     )}
                                                     <div className="postTxt" onClick={() => handlePostPopup(item._id, idx)}>
-                                                        <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />
+                                                        {item?.message && <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />}
+                                                        {!item?.message && <p><br /></p>}
                                                     </div>
                                                     <div className="likeShareIconCounter">
                                                         <ul className="nav">
-                                                            <li className="nav-item">
+                                                            <li className="nav-item" style={{ cursor: "pointer" }}>
                                                                 {
                                                                     item.likeCount > 0 ? (
                                                                         <div className={"d-flex align-items-center"} onClick={() => setShowUserLikedPost(item._id)}>
@@ -661,8 +703,8 @@ const Profile = () => {
                     </div>
                     <div className={activeTab === "groups" ? "tab-pane active" : "tab-pane"} id="groups">
                         <div className="row g-2">
-                            <div className="col-sm-12 col-md-8 col-lg-8">
-                                <div className="card border-0">
+                            <div className="col-sm-12 col-md-8 col-lg-8" >
+                                <div className="card border-0" style={{ paddingLeft: "24px", paddingRight: "24px" }}>
                                     <div className="card-body">
                                         <h6 className="card-section-title">Groups</h6>
                                         <div>
@@ -680,7 +722,7 @@ const Profile = () => {
                                             <h6 className="card-title">Suggested for you</h6>
                                             <div className="see-all-link" onClick={() => setShowSuggestedProfiles(!showSuggestedProfiles)}>See All</div>
                                         </div>
-                                        <div>
+                                        <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
                                             {
                                                 suggestedUsers && suggestedUsers.map((suggestedUser, index) => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;
@@ -694,11 +736,11 @@ const Profile = () => {
                                                                             {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
                                                                         </NavLink>
                                                                     </div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    {/* <div >{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div> */}
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btnColor1 btnFollow`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}
@@ -734,7 +776,6 @@ const Profile = () => {
                     onComplete={handleCoverImage}
                 />
             )}
-
             {showEditProfileImg && (
                 <EditProfileImage
                     file={showEditProfileImg}

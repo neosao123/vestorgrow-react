@@ -8,7 +8,10 @@ export default function ImageCarousel({ onClose, mediaFiles, imageIdx }) {
   const [mediaFile, setMediaFile] = useState(mediaFiles);
   return (
     <>
-      <div className="modal modal-custom_Zindex" style={{ display: "block" }}>
+      <div className="modal modal-custom_Zindex" style={{
+        display: "block",
+        marginTop:"40px"
+      }}>
         <div className="vertical-alignment-helper position-relative-class">
           {/* <div className="closeBtnPositionCustom">
             <button type="button" className="btn-close btn-close-inner-custom" onClick={onClose} />
@@ -53,7 +56,8 @@ export default function ImageCarousel({ onClose, mediaFiles, imageIdx }) {
                                 <img src={item} alt="gallery" className="img-fluid" />
                               ) : (
                                 <>
-                                  <div className="position-relative postCustomLongImgpx" style={{ background: "#000" }}>                                 
+                                  <div className="position-relative postCustomLongImgpx" style={{ background: "#000" }}>
+                                    {console.log("ITEM:", item)}
                                     <ReactPlayer
                                       width="100%"
                                       height="100%"
@@ -61,7 +65,7 @@ export default function ImageCarousel({ onClose, mediaFiles, imageIdx }) {
                                       url={item}
                                       playing={true}
                                       onReady={() => console.log("ready")}
-                                    /> 
+                                    />
                                   </div>
                                 </>
                               )}
@@ -77,7 +81,7 @@ export default function ImageCarousel({ onClose, mediaFiles, imageIdx }) {
         </div>
       </div>
       <div className="modal-backdrop show modal-backdrop-black show-black image-dark-backdrop"></div>
-      <div className="closeBtnPositionCustom closeBtnPositionCustom-fixed"> 
+      <div className="closeBtnPositionCustom closeBtnPositionCustom-fixed">
         <button
           type="button"
           class="btn-close btn-close-white btn-close-inner-custom"

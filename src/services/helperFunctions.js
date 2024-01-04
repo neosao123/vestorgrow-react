@@ -1,5 +1,5 @@
 export default class HelperFunctions {
-    idExtractor = (text) =>     {
+    idExtractor = (text) => {
         const messageArray = text.split(" ");
         const regexPattern = /@@@__(.*?)\^\^/;
         const regexPattern1 = /@@@__([\s\S]*?)\^\^/;

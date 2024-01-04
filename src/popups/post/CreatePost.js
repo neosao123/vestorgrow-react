@@ -16,6 +16,10 @@ import defaultMention from "./defaultMention";
 import UserFollowerService from "../../services/userFollowerService";
 import HelperFunctions from "../../services/helperFunctions";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "./postcategory.css"
+import Form from 'react-bootstrap/Form';
+import "./radiocustomstyle.css"
 
 const serv = new UserService();
 const userFollowerServ = new UserFollowerService();
@@ -24,6 +28,7 @@ const helperFunctions = new HelperFunctions();
 const ValidateSchema = Yup.object().shape({
     // message: Yup.string().required("Required"),
     shareType: Yup.string().required("Required"),
+    category: Yup.string().required("Category is required.")
 });
 
 function fetchUsers(query, callback) {
@@ -40,7 +45,7 @@ function fetchUsers(query, callback) {
     }).then(callback);
 }
 
-export default function CreatePost({ onClose, onSuccess, onFail }) {
+export default function CreatePost({ onClose, onSuccess, onFail, getposts }) {
 
     const source = axios.CancelToken.source();
 
@@ -62,7 +67,8 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
         message: "",
         mediaFiles: "",
         shareType: "Friends",
-        postKeywords: []
+        postKeywords: [],
+        category: "financial"
     });
 
     useEffect(() => {
@@ -90,47 +96,63 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
     };
 
     const onSubmit = async (values) => {
-        try {
-            setIsSubmit(true);
-            const dirtyHtmlPostMessage = helperFunctions.mentionedUserLinkGenerator(inputPost);
-            const mentionedUsers = helperFunctions.idExtractor(inputPost);
-            //console.log("Dirty HTML =>", dirtyHtmlPostMessage, "Ids=>", mentionedUsers);
+        if (inputPost !== "" || values.mediaFiles.length > 0) {
+            try {
+                setIsSubmit(true);
+                const dirtyHtmlPostMessage = helperFunctions.mentionedUserLinkGenerator(inputPost);
+                const mentionedUsers = helperFunctions.idExtractor(inputPost);
+                //console.log("Dirty HTML =>", dirtyHtmlPostMessage, "Ids=>", mentionedUsers);
 
-            const formData = new FormData();
-            formData.append("message", dirtyHtmlPostMessage);
-            formData.append("shareType", values.shareType);
-            formData.append("createdBy", user._id);
-            formData.append("mentionedUsers", mentionedUsers);
-            formData.append("postKeywords", values.postKeywords);
-            if (Array.isArray(values.mediaFiles)) {
-                values.mediaFiles.forEach((element) => {
-                    formData.append("mediaFiles", element);
+                const formData = new FormData();
+                formData.append("message", dirtyHtmlPostMessage);
+                formData.append("shareType", values.shareType);
+                formData.append("createdBy", user._id);
+                formData.append("mentionedUsers", mentionedUsers);
+                formData.append("postKeywords", values.postKeywords);
+                formData.append("category", values.category);
+                if (Array.isArray(values.mediaFiles)) {
+                    values.mediaFiles.forEach((element) => {
+                        formData.append("mediaFiles", element);
+                    });
+                }
+
+                await postServ.sendPost(formData).then((resp) => {
+                    if (resp.data) {
+                        onSuccess();
+                        setIsSubmit(false);
+                        getposts()
+                    } else {
+                        onFail();
+                        setIsSubmit(false);
+                    }
+                }).catch(error => {
+                    if (axios.isCancel(error)) {
+                        console.log('Request canceled:', error.message);
+                        setIsSubmit(false);
+                    } else {
+                        console.log('Error:', error.message);
+                        setIsSubmit(false);
+                    }
                 });
+            } catch (error) {
+                onFail();
+                console.log(error);
+                setIsSubmit(false);
             }
-
-            await postServ.sendPost(formData).then((resp) => {
-                if (resp.data) {
-                    onSuccess();
-                    setIsSubmit(false);
-                } else {
-                    onFail();
-                    setIsSubmit(false);
-                }
-            }).catch(error => {
-                if (axios.isCancel(error)) {
-                    console.log('Request canceled:', error.message);
-                    setIsSubmit(false);
-                } else {
-                    console.log('Error:', error.message);
-                    setIsSubmit(false);
-                }
-            });
-
-        } catch (error) {
-            onFail();
-            console.log(error);
-            setIsSubmit(false);
+        } else {
+            toast.info(`Please add something into input.`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            })
+            return
         }
+
 
     };
 
@@ -170,9 +192,9 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
         setInputPost(e.target.value);
         if (newValue === "") {
             setMentionedUserIds([]);
-            console.log('Selected user IDs:', mentionedUserIds);
         }
     };
+
 
     const CustomSuggestion = ({ suggestion, ...props }) => (
         <div {...props} style={{ padding: "5px", display: "flex", alignItems: "center" }}>
@@ -184,13 +206,14 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
         </div>
     );
 
+
     return (
         <>
             <div className="modal" style={{ display: "block" }}>
                 <div className="vertical-alignment-helper">
                     <div className="vertical-align-center">
                         <div className="createPostModel modal-dialog modal-lg">
-                            <div className="modal-content">
+                            <div className="modal-content" style={{ overflowY: "auto", maxHeight: "750px" }}>
                                 <form onSubmit={formik.handleSubmit}>
                                     <div className="modal-header">
                                         <div className="followesNav">
@@ -277,9 +300,31 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
                                                                     appendSpaceOnAdd={true}
                                                                 />
                                                             </MentionsInput>
-                                                            {formik.touched.message && formik.errors.message ? (
-                                                                <div className="formik-errors bg-error">{formik.errors.message}</div>
-                                                            ) : null}
+                                                        </div>
+                                                    </div>
+                                                    <div style={{ display: "flex", alignItems: "center", gap: "25px", marginTop: "10px", marginBottom: "5px" }}>
+                                                        <div className="post_category">Category:</div>
+                                                        <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+                                                            <Form.Check
+                                                                inline
+                                                                label="Financial"
+                                                                value="financial"
+                                                                name="category"
+                                                                type="radio"
+                                                                checked={formik.values.category === "financial"}
+                                                                onChange={formik.handleChange}
+                                                                onBlur={formik.handleBlur}
+                                                            />
+                                                            <Form.Check
+                                                                inline
+                                                                label="Mental"
+                                                                value="mental"
+                                                                name="category"
+                                                                checked={formik.values.category === "mental"}
+                                                                type="radio"
+                                                                onChange={formik.handleChange}
+                                                                onBlur={formik.handleBlur}
+                                                            />
                                                         </div>
                                                     </div>
                                                     <div className="post-tag-parent">
@@ -303,14 +348,26 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
                                                                 type="button"
                                                                 id="button-addon2"
                                                                 onClick={(e) => {
-                                                                    formik.setFieldValue("postKeywords", [...formik.values.postKeywords, tempKeyword]);
-                                                                    setTempKeyword("");
+                                                                    if (tempKeyword !== "") {
+                                                                        formik.setFieldValue("postKeywords", [...formik.values.postKeywords, tempKeyword]);
+                                                                        setTempKeyword("");
+                                                                    }
                                                                 }}
+                                                                disabled={((tempKeyword !== "" && tempKeyword.length < 2) || (tempKeyword !== "" && tempKeyword.length > 25) || formik.values.postKeywords.length >= 20) ? true : false}
                                                             >
                                                                 <i className="fa fa-plus-circle"></i>
                                                             </button>
                                                         </div>
-                                                        <div className="post-keyword-container d-flex">
+                                                        {
+                                                            (tempKeyword !== "" && tempKeyword.length > 25) && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Maximum 25 characters allowed.</div>
+                                                        }
+                                                        {
+                                                            (tempKeyword !== "" && tempKeyword.length < 2) && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Minimum 2 characters required.</div>
+                                                        }
+                                                        {
+                                                            formik.values.postKeywords.length >= 20 && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Maximum 20 keyWords allowed.</div>
+                                                        }
+                                                        <div className="post-keyword-container d-flex flex-wrap gap-2">
                                                             {
                                                                 formik.values.postKeywords.map((item, idx) => {
                                                                     return (
@@ -364,7 +421,7 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
                                     ) : formik.values.mediaFiles.length === 1 ? (
                                         <div className="modal-body">
                                             <div className="tabSendContent">
-                                                <div className="followersList">
+                                                <div className="followersList" style={{ height: "auto" }}>
                                                     <div className="createPostMind d-flex mb-3">
                                                         <div className="createPostProf">
                                                             <ProfileImage url={user?.profile_img} style={{ borderRadius: "80px" }} />
@@ -418,11 +475,21 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
                                                                     formik.setFieldValue("postKeywords", [...formik.values.postKeywords, tempKeyword]);
                                                                     setTempKeyword("");
                                                                 }}
+                                                                disabled={((tempKeyword !== "" && tempKeyword.length < 2) || (tempKeyword !== "" && tempKeyword.length > 25) || formik.values.postKeywords.length >= 20) ? true : false}
                                                             >
                                                                 <i className="fa fa-plus-circle"></i>
                                                             </button>
                                                         </div>
-                                                        <div className="post-keyword-container d-flex">
+                                                        {
+                                                            (tempKeyword !== "" && tempKeyword.length > 25) && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Maximum 25 characters allowed.</div>
+                                                        }
+                                                        {
+                                                            (tempKeyword !== "" && tempKeyword.length < 2) && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Minimum 2 characters required.</div>
+                                                        }
+                                                        {
+                                                            formik.values.postKeywords.length >= 20 && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Maximum 20 keyWords allowed.</div>
+                                                        }
+                                                        <div className="post-keyword-container d-flex flex-wrap gap-2">
                                                             {
                                                                 formik.values.postKeywords.map((item, idx) => {
                                                                     return (
@@ -582,11 +649,21 @@ export default function CreatePost({ onClose, onSuccess, onFail }) {
                                                                     formik.setFieldValue("postKeywords", [...formik.values.postKeywords, tempKeyword]);
                                                                     setTempKeyword("");
                                                                 }}
+                                                                disabled={((tempKeyword !== "" && tempKeyword.length < 2) || (tempKeyword !== "" && tempKeyword.length > 25) || formik.values.postKeywords.length >= 20) ? true : false}
                                                             >
                                                                 <i className="fa fa-plus-circle"></i>
                                                             </button>
                                                         </div>
-                                                        <div className="post-keyword-container d-flex">
+                                                        {
+                                                            (tempKeyword !== "" && tempKeyword.length > 25) && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Maximum 25 characters allowed.</div>
+                                                        }
+                                                        {
+                                                            (tempKeyword !== "" && tempKeyword.length < 2) && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Minimum 2 characters required.</div>
+                                                        }
+                                                        {
+                                                            formik.values.postKeywords.length >= 20 && <div className="formik-errors bg-error" style={{ color: "red", marginTop: "-10px", fontSize: "14px" }}>Maximum 20 keyWords allowed.</div>
+                                                        }
+                                                        <div className="post-keyword-container d-flex flex-wrap gap-2">
                                                             {
                                                                 formik.values.postKeywords.map((item, idx) => {
                                                                     return (

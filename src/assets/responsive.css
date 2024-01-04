@@ -30,6 +30,7 @@
 }
 
 @media only screen and (min-width: 1200px) {
+
   .modal-lg,
   .modal-xl {
     max-width: 620px;
@@ -48,7 +49,7 @@
 
 @media only screen and (min-width: 1440px) {
   .main_container {
-    max-width: 1440px;
+    max-width: 1150px;
     margin: 0 auto;
   }
 
@@ -171,7 +172,7 @@
   }
 
   .socialContant {
-    padding: 32px 15px;
+    /* padding: 32px 15px; */
   }
 
   .socialContantInner {
@@ -242,13 +243,13 @@
     height: 220px;
   }
 
-  .about_profile .profilePic > img {
+  .about_profile .profilePic>img {
     width: 100px;
     height: 100px;
   }
 
   .about_profile .profilePic {
-    bottom: -50px;
+    bottom: -78px;
   }
 
   .usercontentBox {
@@ -372,7 +373,7 @@
     right: 40px;
   }
 
-  .userchatIcon > a {
+  .userchatIcon>a {
     background: #04747d;
     padding: 12px;
     border-radius: 50%;
@@ -387,6 +388,7 @@
   }
 
   .leftColumn {
+    padding-top: 45px;
     width: 40%;
   }
 
@@ -517,12 +519,12 @@
     transform: translateX(0px);
   }
 
-  .userchatIcon > a img {
+  .userchatIcon>a img {
     width: 25px;
     height: 25px;
   }
 
-  .userchatIcon > a {
+  .userchatIcon>a {
     background: #04747d;
     padding: 13px 10px;
     border-radius: 50%;
@@ -674,7 +676,7 @@
     top: 0;
   }
 
-  .userchatIcon > a img {
+  .userchatIcon>a img {
     width: 18px;
     height: 18px;
   }
@@ -699,7 +701,7 @@
     column-gap: 12px;
   }
 
-  .trending_news > a {
+  .trending_news>a {
     width: calc(50% - 6px);
   }
 
@@ -1338,6 +1340,7 @@
     flex-wrap: wrap;
     gap: 15px;
   }
+
   .suggestion_sec {
     height: calc(100vh - 300px);
   }
@@ -1395,7 +1398,7 @@
     padding: 8px;
   }
 
-  .agreementLogin input:checked + label:after {
+  .agreementLogin input:checked+label:after {
     top: 4px;
     left: 8px;
     width: 5px;
@@ -1666,7 +1669,7 @@
     width: 100%;
   }
 
-  .sett_privacy .userprof_btns > a {
+  .sett_privacy .userprof_btns>a {
     width: auto;
   }
 
@@ -1772,21 +1775,22 @@
 }
 
 @media (max-width: 450px) {
+
   .edit_profile .about_profile .profileCoverPic,
   .about_profile .profileCoverPic {
     height: 150px;
   }
 
-  .edit_profile .about_profile .profilePic > img,
-  .about_profile .profilePic > img {
+  .edit_profile .about_profile .profilePic>img,
+  .about_profile .profilePic>img {
     width: 70px;
     height: 70px;
   }
 
   .edit_profile .about_profile .profilePic,
   .about_profile .profilePic {
-    bottom: -30px;
-    left: 20px;
+    bottom: -37px !important;
+    /* left: 20px; */
   }
 
   .edit_btnImg img {
@@ -1855,7 +1859,7 @@
 }
 
 @media (max-width: 350px) {
-  .profileform_btn > a {
+  .profileform_btn>a {
     padding: 0px 20px !important;
     line-height: 26px;
     height: 28px;

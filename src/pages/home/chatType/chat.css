@@ -1,0 +1,324 @@
+.chatBoxParent {
+    position: absolute;
+
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.input-container i {
+    margin-right: 5px;
+    /* Adjust as needed */
+    color: #999;
+    /* Icon color */
+}
+
+.input-field:focus {
+    outline: none;
+    border: none;
+}
+
+
+@media (-webkit-device-pixel-ratio: 1.00) {
+    .chatBoxParent {
+        bottom: 0rem;
+
+    }
+}
+
+
+@media (-webkit-device-pixel-ratio: 1.25) {
+    .chatBoxParent {
+        bottom: 1.0rem;
+
+    }
+}
+
+
+@media (-webkit-device-pixel-ratio: 1.50) {
+    .chatBoxParent {
+        bottom: 1.75rem;
+
+    }
+}
+
+.feedChatUser {
+    width: 18em !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding-top: 10px !important;
+}
+
+.chatBoxGroupBottom1 {
+    display: flex !important;
+    justify-content: center !important;
+    border-bottom: 1px solid #d1d1d1 !important;
+}
+
+.chatBoxGroupBottom2 {
+    display: flex !important;
+    justify-content: center !important;
+    border-bottom: 1px solid #ffffff !important;
+}
+
+.active-chattype {
+    border-bottom: 4px solid #00808b !important
+}
+
+.inactive-chattype {
+    border-bottom: 4px solid white !important
+}
+
+.PiCaret-style {
+    color: #08808b;
+    font-size: 20px;
+}
+
+.group-chat {
+    width: 45% !important;
+    padding: 5px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+}
+
+.group-chat img {
+    color: black !important;
+}
+
+.group-chat-span {
+    font-weight: 600 !important;
+    margin-left: 5px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+}
+
+.group-chat-span-span {
+    position: absolute !important;
+    background-color: red !important;
+    color: white !important;
+    border-radius: 50% !important;
+    font-size: 8px !important;
+    height: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 20px !important;
+    left: - 20 !important;
+    top: - 10 !important
+}
+
+.personale-chat {
+    width: 40%;
+    padding: 5px;
+    cursor: pointer
+}
+
+.personale-chat-span {
+    font-weight: 600 !important;
+    margin-left: 5px !important;
+    position: relative !important
+}
+
+.personale-chat-span-span {
+    position: absolute !important;
+    background-color: red !important;
+    color: white !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 50% !important;
+    font-size: 8px !important;
+    border-radius: 50%
+}
+
+.picaret {
+    text-align: center !important;
+    display: flex !important;
+    align-items: Center !important;
+    justify-content: center !important;
+    padding-right: 10px !important
+}
+
+.chatbox-header {
+    display: flex !important;
+    width: 80% !important;
+}
+
+.req-btn,
+.join-btn {
+    font-size: 14px !important;
+}
+
+.chatbox-header-down {
+    width: 30% !important;
+    padding: 10px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+}
+
+.group-chat-span-down {
+    font-weight: 600 !important;
+    margin-left: 5px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+}
+
+.group-chat-span-span-down {
+    position: absolute !important;
+    background-color: red !important;
+    color: white !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 50% !important;
+    font-size: 8px !important;
+    border-radius: 50%
+}
+
+.personale-chat-div {
+    width: 30% !important;
+    padding: 10px !important;
+    cursor: pointer !important;
+}
+
+.personale-chat-div-span {
+    font-weight: 600 !important;
+    margin-left: 5px !important;
+    position: relative !important;
+}
+
+.personale-chat-div-span-span {
+    position: absolute !important;
+    background-color: red !important;
+    color: white !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 50% !important;
+    font-size: 8px !important;
+    border-radius: 50% !important;
+}
+
+.feedChatHeading {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.input-container {
+    background-color: #E7E7E7 !important;
+    margin: 0px 0px 15px 15px !important;
+    margin-bottom: 15px !important;
+    border: none !important;
+    width: 100%
+}
+
+.input-field {
+    border: none !important;
+    background-color: #E7E7E7 !important;
+    width: 80% !important;
+    height: 30px !important;
+}
+
+.chatBoxParent {
+    position: fixed !important;
+    bottom: 0 !important;
+    right: 19.3em !important;
+    z-index: 9000 !important;
+    height: auto !important;
+    width: auto !important;
+}
+
+.join-btn {
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 5px 10px !important;
+    background-color: #00808b !important;
+    border: none !important;
+}
+
+.req-btn {
+    color: white !important;
+    border-radius: 20px !important;
+    padding: 5px 10px !important;
+    background-color: #00808b !important;
+    border: none !important;
+}
+
+.delete-chat-span {
+    font-size: 18px !important;
+    margin-left: 5px !important;
+}
+
+.mddelete-font {
+    font-size: 25px;
+}
+
+.leave-group {
+    font-size: 18px !important;
+    margin-left: 5px !important;
+}
+
+.messageChatLeftHeadIcon {
+    margin-bottom: 10px !important;
+}
+
+.spinner-border {
+    margin: 130px !important;
+}
+
+.feedChatUserMsgGroup {
+    padding-bottom: 10px !important;
+    height: 85vh !important;
+}
+
+.allFeedUser {
+    height: 90% !important;
+    width: 100% !important;
+}
+
+.search-icon {
+    padding-left: 10px !important;
+}
+
+.profile-img-div {
+    height: 44px !important;
+    width: 44px !important;
+}
+
+.profile-img-div-img {
+    height: 44px !important;
+    width: 44px !important;
+    border-radius: 50% !important;
+}
+
+.div-time-stamp {
+    font-size: 16px !important;
+    margin-left: 20px !important;
+}
+
+.picaret-left {
+    margin-left: 8px !important;
+}
+
+.picaret-bottom {
+    margin-right: -15px;
+}

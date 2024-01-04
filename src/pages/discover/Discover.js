@@ -10,6 +10,9 @@ import YoutubeThumbnail from "../../components/YoutubeThumbnail";
 import Playeryoutube from "../../components/Playeryoutube";
 import "./discover.css"
 import ProfilePreview from "../../components/ProfilePreview";
+import Loader from "../../components/Loader";
+import VideoThumbnailComp from "./VideoThumbnail"
+import { Spinner } from "react-bootstrap";
 
 const isImage = ["gif", "jpg", "jpeg", "png", "svg", "HEIC", "heic", "webp", "jfif", "pjpeg", "pjp", "avif", "apng"];
 const isVideo = ["mp4"];
@@ -19,15 +22,23 @@ export default function Discover() {
     const globalCtx = useContext(GlobalContext);
     const [searchText, setSearchText] = globalCtx.searchText;
     const [items, setItems] = useState([{ _id: "1", keyword: "all" }]);
-    const [postList, setPostList] = useState(null);
+    const [postList, setPostList] = useState([]);
     const [sortType, setSortType] = useState("Most Recent");
     const [showPostId, setShowPostId] = useState("");
     const [postIdx, setPostIdx] = useState();
     const [showUserLikedPost, setShowUserLikedPost] = useState(false);
+    const [Loading, setLoading] = useState(false);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [activeLink, setActiveLink] = useState("show_all")
 
     const getTags = async () => {
         try {
-            let resp = await discoverServ.getPopularTags();
+            let obj = {
+                category: activeLink
+            }
+            let resp = await discoverServ.getPopularTags(obj);
             if (resp.message === "Keywords Found") {
                 const items = resp.result.data.map((item) => item);
                 setItems([{ _id: "1", keyword: "all" }, ...items]);
@@ -35,25 +46,34 @@ export default function Discover() {
         } catch (err) {
             console.log(err);
         }
+        setLoading(false)
     };
 
     const getPostList = async (sortBy) => {
+        setLoading(true)
         const obj = { filter: {} };
         obj.filter.is_active = true;
         obj.filter.searchText = searchText;
+        obj.filter.category = category;
+        obj.filter.maincategory = activeLink;
         if (sortBy) {
             obj.sortBy = sortBy;
         } else {
             obj.sortBy = { createdAt: "desc" };
         }
         try {
-            let resp = await discoverServ.postList(obj);
+            let resp = await discoverServ.postList(obj, page);
             if (resp.data) {
-                setPostList(resp.data);
+                setPostList(prev => [...prev, ...resp.data]);
+                setTotal(resp.total);
+                setTotalPages(resp.totalPages);
+                setLoading(false);
             }
         } catch (err) {
+            setLoading(false);
             console.log(err);
         }
+
     };
 
     const handleSorting = (sortType) => {
@@ -64,6 +84,8 @@ export default function Discover() {
         } else {
             setSortType("Most Recent");
         }
+        setPostList([]);
+        setPage(1);
         getPostList(sortBy);
     };
 
@@ -119,16 +141,18 @@ export default function Discover() {
     useEffect(() => {
         getPostList();
         getTags();
-    }, [searchText]);
+    }, [searchText, category, page, activeLink]);
+
+
+
 
     return (
-        <>
-            <div className="discoveryHeading discoveryHeading-mobile">
-                Discover the latest and trending insights within <span className="vestColor">VestorGrow</span>
-            </div>
-            <div className="socialContant socialContentCustom main_container">
-                {/*Discover Column Section Start*/}
-                <div className="mostRecent mostRecent-Custom">
+        <div className="socialContantInner d-flex flex-column">
+            <div className="socialContant socialContentCustom" style={{ width: "100%" }}>
+                <div className="discoveryHeading discoveryHeading-mobile">
+                    Discover the latest and trending insights within< span className="vestColor" > VestorGrow</span >
+                </div >
+                <div className="mostRecent">
                     <div className="dropdown">
                         <a type="button" className="btn btn-1" data-bs-toggle="dropdown">
                             {sortType}
@@ -147,34 +171,41 @@ export default function Discover() {
                         </ul>
                     </div>
                 </div>
-                <div className="container dis">
-                    <div className="category-btn">
+                <div className="category_div">
+                    <div className="main_div_category">
+                        <Link className={`${activeLink}` === "show_all" ? "main_category_btn1" : "main_category_btn"} onClick={() => { setPage(1); setPostList([]); setActiveLink("show_all"); setCategory("all") }}>Show All</Link>
+                        <Link className={`${activeLink}` === "financial" ? "main_category_btn1" : "main_category_btn"} onClick={() => { setPage(1); setPostList([]); setActiveLink("financial"); setCategory("all") }}>Financial</Link>
+                        <Link className={`${activeLink}` === "mental" ? "main_category_btn1" : "main_category_btn"} onClick={() => { setPage(1); setPostList([]); setActiveLink("mental"); setCategory("all") }}>Mental</Link>
+                    </div>
+                </div>
+                <div className="dis" >
+                    <div className="category-btn" style={{ width: "100%" }}>
                         {items.map((items) => {
                             return (
-                                <>
+                                <div key={items._id}>
                                     <button
                                         key={items._id}
                                         className={
-                                            category === items.keyword ? "active-category" : ""
+                                            category === items.keyword.toLowerCase() ? "active-category" : ""
                                         }
-                                        onClick={() => handleClick(items.keyword)}
+                                        onClick={() => { setPage(1); setPostList([]); handleClick(items.keyword.toLowerCase()) }}
                                         style={{ textTransform: "capitalize" }}
                                     >
                                         {items.keyword}
                                     </button>
-                                </>
+                                </div>
                             );
                         })}
                     </div>
-                    <div className="grid">
-                        {filteredPosts &&
-                            filteredPosts.map((item, idx) => {
-                                const postMessage = item.message.replace(/<\/?a[^>]*>/g, "");
-                                const fullName = item.createdBy.first_name + " " + item.createdBy.last_name;
-                                const user_name = item.createdBy.user_name ?? fullName;
-                                const postReactions = item.postReactions ?? [];
-                                const youtubeUrl = helperServ.extractYouTubeURL(item.message);
-                                const clientAvatar = item.createdBy?.profile_img !== "" ? item.createdBy?.profile_img : "/images/profile/default-profile.png";
+                    {Loading ? (<div style={{ display: "flex", justifyContent: "center" }}><Spinner animation="border" variant="primary" /></div>) : (<div className="grid_discover">
+                        {filteredPosts.length > 0 &&
+                            filteredPosts?.map((item, idx) => {
+                                const postMessage = item?.message?.replace(/<\/?a[^>]*>/g, "");
+                                const fullName = item?.createdBy?.first_name + " " + item?.createdBy?.last_name;
+                                const user_name = item?.createdBy?.user_name ?? fullName;
+                                const postReactions = item?.postReactions ?? [];
+                                const youtubeUrl = helperServ.extractYouTubeURL(item?.message);
+                                const clientAvatar = item?.createdBy?.profile_img !== "" ? item?.createdBy?.profile_img : "/images/profile/default-profile.png";
                                 return (
                                     <div
                                         key={item._id}
@@ -197,11 +228,14 @@ export default function Discover() {
                                                         ></div>
                                                     ) : (
                                                         <div className="grid-video">
-                                                            <VideoImageThumbnail
+                                                            {/* <VideoImageThumbnail
                                                                 videoUrl={item.mediaFiles[0]}
+                                                                thumbnailHandler={(thumbnail) => console.log(thumbnail)}
                                                                 alt="video"
+                                                            /> */}
 
-                                                            />
+                                                            <VideoThumbnailComp videoURL={item?.mediaFiles[0]} />
+
                                                             <div className="video-overlay">
                                                                 <i className="fa-solid fa-film"></i>
                                                             </div>
@@ -240,7 +274,7 @@ export default function Discover() {
                                                     {/* <ProfilePreview userId={item.createdBy._id} profile_img={item.createdBy?.profile_img} section="discovery" /> */}
                                                     <div>
                                                         <img
-                                                            alt={item.createdBy.user_name}
+                                                            alt={item?.createdBy?.user_name}
                                                             src={
                                                                 clientAvatar
                                                             }
@@ -250,7 +284,7 @@ export default function Discover() {
                                                     <span className="grid-user-name">
                                                         {user_name.length > 12 ? (user_name.slice(0, 12) + "...") : user_name}
                                                     </span>
-                                                    <div className="grid-likes">
+                                                    <div className="grid-likes" style={{ cursor: "pointer" }}>
                                                         {item.likeCount > 0 ? (
                                                             <div className={"d-flex align-items-center"} onClick={() => setShowUserLikedPost(item?._id)}>
                                                                 <div className="floating-reactions-container">
@@ -276,15 +310,21 @@ export default function Discover() {
                                                         )}
                                                     </div>
                                                 </div>
+                                                {/* <div style={{ border: "1px solid red", width: "100%" }}></div> */}
                                                 <p className="grid-text-content" dangerouslySetInnerHTML={{ __html: postMessage }} />
+
                                             </div>
                                         </div>
                                     </div>
                                 );
                             })}
+                    </div>)}
+                    {!Loading && +page < +totalPages && <div className="my-4" style={{ display: "flex", justifyContent: "center" }}>
+                        <button onClick={() => setPage(page => page + 1)} className="px-3 py-1 text-white border border-none" style={{ borderRadius: "20px", backgroundColor: "#00728b" }}>Load More</button>
                     </div>
+                    }
                 </div>
-            </div>
+            </div >
             {
                 showPostId && (
                     <DiscoverPost
@@ -293,8 +333,10 @@ export default function Discover() {
                         slideLeft={postIdx > 0}
                         slideRight={postIdx < postList.length - 1}
                         changePostIdx={changePostIdx}
+                        getPostList={getPostList}
                     />
-                )}
-        </>
+                )
+            }
+        </div >
     );
 }

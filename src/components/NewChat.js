@@ -118,7 +118,7 @@ const NewChat = ({ ...props }) => {
                     <h4>New Message</h4>
                 </div>
                 <div className="composeSearching border-top border-1" >
-                    <div className="compose_Searchbar">
+                    <div className="compose_Searchbar" >
                         <img src="/images/icons/search.svg" alt="search" className="img-fluid search_Icon" />
                         <Select
                             isMulti
@@ -171,7 +171,7 @@ const NewChat = ({ ...props }) => {
                                                         >
                                                             <div className="followOtherUser">
                                                                 <div className="followOtherUserPic">
-                                                                    <ProfileImage url={item.userId.profile_img} />
+                                                                    <ProfileImage url={item.userId.profile_img} style={user?.profile_img ? { width: "64px", borderRadius: "32px" } : { borderRadius: "30px" }} />
                                                                 </div>
                                                                 <div className="followOtherUserName">
                                                                     <h5 className="mb-0">{item.userId?.user_name}</h5>

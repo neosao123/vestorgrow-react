@@ -73,10 +73,11 @@ export default function PostDetail() {
     try {
       let resp = await discoverServ.getPost(params.id);
       if (resp.data) {
-        setPost(resp.data);
-        getFollowStatus(resp.data.createdBy._id);
+        console.log("RESPONSE:", resp.data)
+        setPost(resp?.data);
+        getFollowStatus(resp?.data?.createdBy?._id);
         setMetaData(true);
-        setPostReactions(resp.data.postReactions ?? []);
+        setPostReactions(resp?.data?.postReactions ?? []);
         setYouttubeURL(helperServ.extractYouTubeURL(resp.data.message));
       }
     } catch (err) {
@@ -427,7 +428,7 @@ export default function PostDetail() {
                     <div className="likeShareIcon">
                       <ul className="nav">
                         <li className="nav-item">
-                          <FBReactions postReaction={post?.reaction ?? null} postId={params.id} updatePostAfterReaction={updatePostAfterReaction} />
+                          <FBReactions postReaction={post?.reaction ?? null} postId={params.id} getPost={getPost} updatePostAfterReaction={updatePostAfterReaction} />
                         </li>
                         <li className="nav-item">
                           <a
@@ -449,7 +450,7 @@ export default function PostDetail() {
                               <img src="/images/icons/share.svg" alt="share" className="img-fluid" /> <span>Share</span>
                             </a>
                             <ul className="dropdown-menu dropdown-menu-customPaddingPost">
-                              <li>
+                              {/* <li>
                                 <a
                                   className="dropdown-item"
                                   href="javascript:void(0);"
@@ -462,7 +463,7 @@ export default function PostDetail() {
                                   />{" "}
                                   Share to feed
                                 </a>
-                              </li>
+                              </li> */}
                               <li>
                                 <a
                                   className="dropdown-item"
@@ -549,6 +550,7 @@ export default function PostDetail() {
                           // showCommentList={showCommentPostList.includes(post?._id)}
                           showCommentList={showCommentDirect}
                           updatePost={getPost}
+                          heightUnset={true}
                         />
                       )}
                     </div>

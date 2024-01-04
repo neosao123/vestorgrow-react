@@ -247,6 +247,52 @@ export default class UserService {
       throw err;
     }
   }
+
+  async editProfilePicture(signupObj) {
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : "no-token";
+    const config = {
+      headers: {
+        content: "multipart/form-data",
+        Authorization: "Bearer " + token,
+      },
+    };
+    try {
+      const response = await axios.post(process.env.REACT_APP_API_BASEURL + "/user/editprofilepicture", signupObj, config);
+      if (response.err) {
+        throw new Error(response.err);
+      } else {
+        // localStorage.setItem("user", JSON.stringify(response.data.result));
+        // localStorage.setItem("token", response.data.token);
+        return response;
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
+
+  async editCoverPicture(signupObj) {
+    const token = localStorage.getItem("token") ? localStorage.getItem("token") : "no-token";
+    const config = {
+      headers: {
+        content: "multipart/form-data",
+        Authorization: "Bearer " + token,
+      },
+    };
+    try {
+      const response = await axios.post(process.env.REACT_APP_API_BASEURL + "/user/editcoverimage", signupObj, config);
+      if (response.err) {
+        throw new Error(response.err);
+      } else {
+        // localStorage.setItem("user", JSON.stringify(response.data.result));
+        // localStorage.setItem("token", response.data.token);
+        return response;
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
+
   getSearchData(payload) {
     return util
       .sendApiRequest("/user/getSearchData", "POST", true, payload)
@@ -326,5 +372,25 @@ export default class UserService {
       .catch((err) => {
         throw err;
       });
+  }
+  async passUpdateotp(payload) {
+    return util
+      .sendApiRequest("/user/updatepassword/otp", "POST", true, payload)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        throw err;
+      })
+  }
+
+  async updatePassword(payload) {
+    return util.sendApiRequest("/user/updatepassword/password", "POST", true, payload)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        throw err
+      })
   }
 }

@@ -9,6 +9,7 @@ import SearchBar from "./SearchBar";
 import moment from "moment";
 import ChatService from "../services/chatService";
 import Tooltip from "../shared/Tooltip";
+import Logo from "../assets/images/logo-2.svg"
 
 const serv = new UserService();
 const chatServ = new ChatService();
@@ -27,6 +28,7 @@ function Header() {
   const [showFollowReq, setShowFollowReq] = useState(false);
   const [addClassPara, setAddClassPara] = useState(false);
   const [addClassfull, setAddClassFull] = useState(false);
+  const [updateChatList, setUpdateChatList] = globalCtx.UpdateChat;
 
   useEffect(() => {
     getNotificationList();
@@ -41,8 +43,8 @@ function Header() {
   const getNotificationList = async () => {
     try {
       let resp = await notificationServ.notificationList({});
-      if (resp.data) {
-        setNotificationList([...resp.data]);
+      if (resp?.data) {
+        setNotificationList([...resp?.data]);
       }
     } catch (err) {
       console.log(err);
@@ -52,13 +54,14 @@ function Header() {
   const getFollowReq = async () => {
     try {
       let resp = await followServ.listFollowReq({});
-      if (resp.data) {
-        setFollowReq([...resp.data]);
+      if (resp?.data) {
+        setFollowReq([...resp?.data]);
       }
     } catch (err) {
       console.log(err);
     }
   };
+
   const getFollowingStatus = async (id) => {
     try {
       let resp = await followServ.isFollowing({ followingId: id });
@@ -70,6 +73,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const deleteNotification = async (id) => {
     try {
       let resp = await notificationServ.deleteNotification(id);
@@ -81,26 +85,33 @@ function Header() {
       console.log(err);
     }
   };
-  const handleLogout = async () => {
+
+  const handleLogOut = async () => {
     try {
-      let resp = await serv.logout({});
-      if (resp) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        navigate("/login");
-        window.location.reload(true);
-      }
+      await serv.logout({})
+        .then((res) => {
+          if (res.data) {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.reload(true)
+            // navigate("/login")
+
+          }
+        })
     } catch (error) {
       console.log(error);
     }
-    // localStorage.clear();
-  };
+
+  }
+
   const handleShowNotification = () => {
     setShowNotification(!showNotification);
   };
+
   const handleShowFollowReqList = () => {
     setShowFollowReq(!showFollowReq);
   };
+
   const handleRejectReq = async (id) => {
     try {
       let resp = await followServ.rejectFollowReq(id);
@@ -123,6 +134,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleAcceptReq = async (id) => {
     try {
       let obj = { followingId: id };
@@ -152,6 +164,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleFollowRequest = async (id) => {
     try {
       let resp = await followServ.sendFollowReq({ followingId: id });
@@ -171,6 +184,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleUnFollowRequest = async (id) => {
     // setUnfollowUserData({ id: params.id, userName: user.user_name })
     // setShowUnfollowPopup(true)
@@ -192,6 +206,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const getUserData = async () => {
     try {
       let resp = await serv.getUser(user?._id);
@@ -202,6 +217,7 @@ function Header() {
       console.log(err);
     }
   };
+
   const handleJoinGroup = async (groupId, id, user_id) => {
     try {
       let obj = {
@@ -210,15 +226,17 @@ function Header() {
       };
       await chatServ.joinGroup(obj).then((resp) => {
         if (resp.message) {
-          setActiveChat(2);
+          // setActiveChat(2);
           setGroupJoinedByNoti(groupId);
           deleteNotification(id);
+          setUpdateChatList(!updateChatList);
         }
       });
     } catch (err) {
       console.log(err);
     }
   };
+
   const deleteInvitation = async (groupId, id) => {
     try {
       let obj = {
@@ -251,14 +269,13 @@ function Header() {
   };
 
   return (
-    // <>    <header className="w-100 clearfix topHeader sticky-top" >
     <>
       {" "}
-      <header className="w-100 clearfix topHeader sticky-top-header-custom" id="topHeader">
-        <div className="topHeaderInner d-flex align-items-center topHeaderInner-custom">
-          <div className="mobileLogo d-block d-xl-none mobileLogoCustom">
+      <header className="w-100 clearfix topHeader sticky-top-header-custom" id="topHeader" style={{ paddingLeft: "0px", paddingRight: "14px", zIndex: 999 }}>
+        <div className="topHeaderInner d-flex align-items-center topHeaderInner-custom" >
+          <div className="mobileLogo d-block  mobileLogoCustom" >
             <Link to="/">
-              <img src="/images/logo-2.svg" alt="logo" className="img-fluid" />
+              <img src={Logo} alt="logo" />
             </Link>
           </div>
           <div className="topHeaderLeftSec d-md-block">
@@ -299,6 +316,7 @@ function Header() {
                       <div
                         className="notifyHeading d-flex notifyHeading-customSize notifyHeading-customfr-mobile"
                         onClick={handleShowFollowReqList}
+
                       >
                         <img className="arrow" src="/images/icons/left-arrow.svg" alt="" />
                         <h4 className="w-100 mb-0">Follow requests</h4>
@@ -310,12 +328,10 @@ function Header() {
                               <Link className="dropdown-item position-relative" id={"noti-" + item._id}>
                                 <div className="notifyGroup followReqList">
                                   <div className=" position-relative">
-                                    {/* <div className="taskEmployeeImg rounded-circle" style={{ left: 0 }}> */}
                                     <ProfileImage
                                       url={item?.userId?.profile_img}
                                       style={{ minWidth: "48px", height: "48px", borderRadius: "50%" }}
                                     />
-                                    {/* </div> */}
                                   </div>
                                   <div
                                     className={
@@ -404,7 +420,7 @@ function Header() {
                     </>
                   ) : (
                     <>
-                      <div className="notifyHeading notifyHeading-custom-mobile">
+                      <div className="notifyHeading notifyHeading-custom-mobile" >
                         <div className="notifyHeading-backButton" onClick={() => setShowNotification(false)}>
                           <img
                             className="arrow"
@@ -413,7 +429,7 @@ function Header() {
                           // onClick={setShowNotification(false)}
                           />
                         </div>
-                        <h4 className="mb-0">Notifcations</h4>
+                        <h4 className="mb-0">Notifications</h4>
                       </div>
                       <div className="dropdownGroup h-100 overflowScrollStop">
                         <Link className="dropdown-item" onClick={handleShowFollowReqList}>
@@ -621,7 +637,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" onClick={handleLogout}>
+                    <Link className="dropdown-item" onClick={handleLogOut}>
                       Logout
                     </Link>
                   </li>

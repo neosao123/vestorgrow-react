@@ -1,0 +1,210 @@
+.main_div {
+    padding: 0px 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.create_account_text {
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 20px !important;
+    line-height: 63px;
+
+}
+
+.signupformdiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px !important;
+}
+
+.signup_form {
+    width: 30em;
+    /* height: 28.5em; */
+    display: flex;
+    flex-direction: column;
+}
+
+.gap {
+    gap: 10px !important;
+}
+
+.label {
+    font-size: 14px;
+    line-height: 15px;
+    font-weight: 600;
+    color: #0D1B1D;
+}
+
+.form_input {
+    width: 100%;
+    height: 40px;
+    border-radius: 50px;
+    padding: 5px 15px !important;
+    border: 1px solid #D1D1D1;
+}
+
+.formcontrol {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.formcontrol_text {
+    text-align: center;
+    color: #465D61;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.formcontrol_checkbox {
+    width: 100%;
+    display: flex;
+}
+
+.signupcheckbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 50% !important;
+    cursor: pointer;
+    border: 1px solid #0D1B1D;
+    margin-top: 3px;
+}
+
+.signupcheckbox_text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    margin-left: 5px;
+}
+
+.signup_emailorphone {
+    gap: 32px;
+    width: 100% !important;
+    height: 3.25em;
+    border-radius: 25px;
+    background-color: #00808B;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+
+.checkbox_term {
+    color: #00808B;
+}
+
+
+.checkbox-round {
+    width: 1em;
+    height: 1em;
+    border-radius: 50% !important;
+    cursor: pointer;
+    border: 1px solid #0D1B1D;
+    vertical-align: middle;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+
+.checkbox-round:checked {
+    background-color: #00808B;
+    border: 2px solid #0D1B1D;
+}
+
+
+.flatpickr-calendar {
+    position: absolute;
+    /* top: 10;
+    /* Adjust this value for the desired spacing */
+    /* left: 10; */
+}
+
+.eye_icon {
+    position: absolute;
+    margin-top: 30px !important;
+}
+
+.eye_icon_div {
+    position: relative;
+}
+
+
+@media (max-width : 768px) {
+    .signup_form {
+        padding: 20px;
+    }
+}
+
+
+
+
+/* checkbox style */
+
+/* body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+} */
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.hidden-checkbox {
+    position: absolute;
+    opacity: 0;
+}
+
+.custom-checkbox-label {
+    height: 20px;
+    width: 20px;
+    border: 2px solid #000;
+    /* Black border color */
+    border-radius: 20px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.custom-checkbox-label:before {
+    content: '';
+    display: block;
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.hidden-checkbox:checked+.custom-checkbox-label:before {
+    transform: translate(-50%, -85%) scale(1);
+    background-color: transparent;
+    border-radius: 50%;
+    /* Change the background color when checked */
+    content: '\2713';
+    /* Unicode checkmark character */
+    font-size: 12px;
+    color: #000;
+    font-weight: 800;
+    /* Color of the checkmark */
+}
+
+.custom-checkbox-text {
+    font-size: 16px;
+}

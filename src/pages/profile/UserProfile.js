@@ -258,7 +258,7 @@ const UserProfile = () => {
 
     return (
         <div>
-            <div className="socialContant profileContent main_container">
+            <div className="socialContant1 profileContent main_container">
                 <div className="myProfile_sec">
                     <div className="about_profile">
                         <div
@@ -268,29 +268,25 @@ const UserProfile = () => {
                                     ? { backgroundImage: `url(${user?.cover_img})` }
                                     : { backgroundImage: "url(/images/profile/image_cover_profile.png)" }
                             }
-                        ></div>
-                        <div className="profilePic position-relative">
-                            <div className="prf-img-container">
-                                <img className="prf-img" src={user?.profile_img !== "" ? user?.profile_img : "/images/profile/default-profile.png"} alt={user?.user_name} />
-                                <div className="middle" onClick={handleShowEnlarge}>
-                                    <div className="text"><i className="fa fa-external-link fa-2x text-primary"></i></div>
-                                </div>
+                        >
+                        </div>
+                    </div>
+                    <div className="profilePic position-relative">
+                        <div className="prf-img-container new_profile_pic" style={{ backgroundColor: "gray", borderRadius: "50%", marginLeft: "20px" }}>
+                            <img className="prf-img" src={user?.profile_img !== "" ? user?.profile_img : "/images/profile/default-profile.png"} alt={user?.user_name} width={"90%"} height={"90%"} />
+                            <div className="middle" onClick={handleShowEnlarge}>
+                                <div className="text" ><i className="fa fa-external-link fa-2x text-light"></i></div>
                             </div>
                         </div>
                     </div>
-                    <div className="usercontentBox d-flex align-items-end justify-content-between">
+                    <div className="usercontentBox d-flex align-items-end justify-content-between mt-0">
                         <div className="user_data">
                             <div className="user_profileTxt user_profileTxt-custom-flex">
                                 <h4 className="mb-1">
-                                    {user?.user_name.length > 27 ? user?.user_name.slice(0, 27) + "..." : user?.user_name}
+                                    {user?.user_name.length > 24 ? user?.user_name.slice(0, 27) + "..." : user?.user_name}
                                     {user?.role.includes("userPaid") ? <img src="/images/icons/green-tick.svg" alt="green-tick" /> : ""}
                                 </h4>
-                                <p className="txtOne mb-0">
-                                    {user?.first_name} {user?.last_name}
-                                </p>
-                                <p className="txtOne mb-0">
-                                    {user?.title?.length > 400 ? user?.title?.slice(0, 400) + "..." : user?.title}
-                                </p>
+                                <div>{user?.title !== undefined ? user?.title.length > 27 ? user?.title.slice(0, 27) + "..." : user?.title : "Vestorgrow User"}</div>
                                 <p className="txtTwo mb-0">
                                     <img src="/images/profile/location.svg" alt="loaction-img" />
                                     {user?.location}
@@ -307,15 +303,15 @@ const UserProfile = () => {
                         </div>
                         <div className="userprof_btns userprof_btns_custom">
                             {isFollowing === "following" ? (
-                                <Link onClick={handleUnFollowRequest} className="btn btnColor">
+                                <Link onClick={handleUnFollowRequest} style={{ border: "1px solid #00808b", padding: "5px 15px", borderRadius: "20px", color: "white", fontWeight: "600", backgroundColor: "#00808b" }}>
                                     Following
                                 </Link>
                             ) : isFollowing === "requested" ? (
-                                <Link className="btn btnColor" onClick={handleRejectRequest}>
+                                <Link style={{ border: "1px solid #00808b", padding: "5px 15px", borderRadius: "20px", color: "white", fontWeight: "600", backgroundColor: "#00808b" }} onClick={handleRejectRequest}>
                                     Requested
                                 </Link>
                             ) : (
-                                <Link onClick={handleFollowRequest} className="btn btnColor">
+                                <Link onClick={handleFollowRequest} className="editComm_btn">
                                     Follow
                                 </Link>
                             )}
@@ -356,16 +352,16 @@ const UserProfile = () => {
                     <div className={activeTab === "about" ? "tab-pane active" : "tab-pane"} id="about">
                         <div className="row g-2">
                             <div className="col-sm-12 col-md-7 col-lg-8">
-                                <div className="card border-0">
-                                    <div className="card-body">
+                                <div className="card border-0" style={{ border: "1px solid red" }}>
+                                    <div className="card-body" style={{ marginLeft: "24px", marginRight: "24px" }}>
                                         <h6 className="card-section-title">About</h6>
-                                        <div className="row">
-                                            <div className="col-12 mb-3">
+                                        <div className="row about_profile">
+                                            {user?.bio && <div className="col-12 mb-3">
                                                 <div className="abt-title">Bio</div>
                                                 <p dangerouslySetInnerHTML={{ __html: user?.bio }} />
-                                            </div>
+                                            </div>}
                                             <div className="col-12 mb-4">
-                                                <div className="abt-title">Investment Interests</div>
+                                                {user?.investmentInterests.length > 0 && <div className="abt-title">Personal Development Interests</div>}
                                                 <div className="keyWord mt-3 d-flex">
                                                     {
                                                         user?.investmentInterests && user?.investmentInterests.map((item, idx) => {
@@ -378,10 +374,10 @@ const UserProfile = () => {
                                                     }
                                                 </div>
                                             </div>
-                                            <div className="col-12 mb-4">
+                                            {user?.websiteUrl && <div className="col-12 mb-4">
                                                 <img src="/images/icons/globe.svg" alt="globe" className="me-2" />
                                                 <span dangerouslySetInnerHTML={{ __html: user?.websiteUrl }} />
-                                            </div>
+                                            </div>}
                                         </div>
                                     </div>
                                 </div>
@@ -399,19 +395,21 @@ const UserProfile = () => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;
                                                     if (index < 5) {
                                                         return (
-                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx">
-                                                                <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx" style={{ marginLeft: "20px", marginRight: "20px" }}>
+                                                                <div onClick={() => navigate("/userprofile/" + suggestedUser._id)}>
+                                                                    <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
+                                                                </div>
                                                                 <div className="ms-3">
                                                                     <div style={{ fontWeight: "600" }}>
                                                                         <NavLink to={"/userprofile/" + suggestedUser._id} style={{ color: "#000000", fontSize: "1.0rem", fontWeight: "600" }}>
                                                                             {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
                                                                         </NavLink>
                                                                     </div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    {/* <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div> */}
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btnColor1 btnFollow`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}
@@ -439,8 +437,8 @@ const UserProfile = () => {
                                     const postReactions = item.postReactions ?? [];
                                     const youtubeUrl = helperServ.extractYouTubeURL(item.message);
                                     return (
-                                        <div className="col-sm-4 col-lg-4 dynamic-width-custom">
-                                            <div className="bgWhiteCard feedBox post_box">
+                                        <div className="col-sm-4 col-lg-4 dynamic-width-custom profile_post_padding">
+                                            <div className="bgWhiteCard feedBox post_box" style={{ maxHeight: "97.5%", minHeight: "97.5%" }}>
                                                 <div className="feedBoxInner">
                                                     <div className="feedBoxHead d-flex align-items-center">
                                                         <div className="feedBoxHeadLeft">
@@ -526,7 +524,8 @@ const UserProfile = () => {
                                                         </div>
                                                     )}
                                                     <div className="postTxt" onClick={() => handlePostPopup(item._id, idx)}>
-                                                        <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />
+                                                        {item?.message && <p className="mb-0 postcontent postcontent-custom" dangerouslySetInnerHTML={{ __html: item.message.slice(0, 85) }} />}
+                                                        {!item?.message && <p className="mb-0 postcontent postcontent-custom"><br /></p>}
                                                     </div>
                                                     <div className="likeShareIconCounter">
                                                         <ul className="nav align-items-center">
@@ -583,7 +582,7 @@ const UserProfile = () => {
                     <div className={activeTab === "groups" ? "tab-pane active" : "tab-pane"} id="groups">
                         <div className="row g-2">
                             <div className="col-sm-12 col-md-7 col-lg-8">
-                                <div className="card border-0">
+                                <div className="card border-0" style={{ paddingLeft: "24px", paddingRight: "24px" }}>
                                     <div className="card-body">
                                         <h6 className="card-section-title">Groups</h6>
                                         <div>
@@ -607,7 +606,7 @@ const UserProfile = () => {
                                                     const privateUser = suggestedUser?.setting?.private ? suggestedUser?.setting?.private : false;
                                                     if (index < 5) {
                                                         return (
-                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx">
+                                                            <div key={"abt-sgu-" + index} className="pfrx-sgx-bx" style={{ marginLeft: "20px", marginRight: "20px" }}>
                                                                 <ProfileImage url={suggestedUser.profile_img} style={{ borderRadius: "50%", width: "48px", height: "48px" }} />
                                                                 <div className="ms-3">
                                                                     <div style={{ fontWeight: "600" }}>
@@ -615,11 +614,11 @@ const UserProfile = () => {
                                                                             {suggestedUser?.user_name.length > 27 ? suggestedUser?.user_name.slice(0, 27) + "..." : suggestedUser?.user_name}
                                                                         </NavLink>
                                                                     </div>
-                                                                    <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div>
-                                                                    <div>{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : " "}</div>
+                                                                    {/* <div>{suggestedUser?.first_name || " "} {suggestedUser?.last_name || " "}</div> */}
+                                                                    <div className="suggestion_title">{suggestedUser?.title !== undefined ? suggestedUser?.title.length > 27 ? suggestedUser?.title.slice(0, 27) + "..." : suggestedUser?.title : "Vestorgrow User"}</div>
                                                                     <div>
                                                                         <button
-                                                                            className={`btn btnColor btnFollow`}
+                                                                            className={`btn btnColor1 btnFollow`}
                                                                             onClick={() => handleFollowReq(suggestedUser._id, suggestedUser.user_name, privateUser)}
                                                                         >
                                                                             {privateUser ? "Request" : "Follow"}

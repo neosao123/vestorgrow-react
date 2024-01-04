@@ -7,9 +7,12 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import Select from "react-select";
 import SentMessage from "./SentMessage";
+import Max from "../../assets/images/maximize.svg"
+import Min from "../../assets/images/minimize.svg"
+import { toast } from "react-toastify";
 const serv = new ChatService();
 const userFollowerServ = new UserFollowerService();
-export default function ComposeMessage({ onClose, onFinish, deskView }) {
+export default function ComposeMessage({ onClose, onFinish, deskView, getMessage, setShowMsg }) {
   const globalCtx = useContext(GlobalContext);
   const [user, setUser] = globalCtx.user;
   const [userList, setUserList] = useState([]);
@@ -24,6 +27,11 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
     file: "",
     sender: user._id,
   });
+  const [chatId, setCaId] = useState("")
+  const [activeBtn, setActiveBtn] = useState("")
+  const [getMessageData, setGetMessageData] = globalCtx.getMessageData;
+  const [messageBoxState, setMessageBoxState] = globalCtx.MessageBoxStateMaintainance;
+
 
   useEffect(() => {
     getFollowerList();
@@ -55,6 +63,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
     }
   };
 
+
   const sendMsg = async () => {
     try {
       let obj = {
@@ -84,11 +93,51 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
     // setUserList([]);
   };
 
+  //this is main message send function
   const sendMessage = async () => {
+    if ((message.content === "" || message.content === undefined || message.content === null) && compUserList.length < 1) {
+      toast.info(`Plese select users and write your message message in input.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return
+    }
+    else if (message.content === "" || message.content === undefined || message.content === null) {
+      toast.info(`Please write your message in input.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return
+    }
+    else if (compUserList.length < 1) {
+      toast.info(`Please select users.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+      return
+    }
     try {
+      // file: message.file,
       let obj = {
         content: message.content,
-        // file: message.file,
         users: compUserList,
       };
       // const formData = new FormData();
@@ -105,6 +154,26 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
       // }
       await serv.composeMsg(obj).then((resp) => {
         if (resp.data) {
+          let oUser = compUserList[compUserList.length - 1];
+          let users = resp.data.users;
+          let newArr = JSON.parse(localStorage.getItem("messageboxstate")) || [];
+          let obj = {
+            chatId: resp.data.chat,
+            isExpanded: false,
+            isminimize: false,
+            // index: idx
+          }
+          let isPresent;
+          if (newArr) {
+            isPresent = newArr.some(el => el.chatId === obj.chatId)
+          }
+          if (!isPresent) {
+            newArr.push(obj)
+            localStorage.setItem("messageboxstate", JSON.stringify(newArr))
+            setMessageBoxState(newArr)
+          }
+          getMessage(resp.data.chat, oUser, users)
+          setShowMsg(true)
           onFinish();
         }
       });
@@ -131,6 +200,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
   //   }
   // };
   // getMsgList();
+
 
   const formatOptionLabel = ({ value, label, full_name, banner }, { context }) => {
     if (context === "value") {
@@ -160,6 +230,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
     }
     return false;
   };
+
 
   return (
     <>
@@ -215,8 +286,8 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
                             control: (baseStyles, state) => ({
                               background: "#E7E7E7",
                               borderRadius: "0 35px 35px 0",
-                              border:"none",
-                              boxShadow:"none"
+                              border: "none",
+                              boxShadow: "none"
                             }),
                           }}
                           filterOption={customFilterOption}
@@ -236,14 +307,10 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
                           <div className="search_dataList search_dataList-custom">
                             <div className="overflow_searchList followListsInner">
                               {userList.filter((i) => {
-                                console.log(i.userId);
-                                //return i.userId?.user_name?.toLowerCase().includes(searchText.toLowerCase());
                                 return i.userId?.user_name?.toLowerCase().startsWith(searchText);
                               }).length > 0 ? (
                                 userList
                                   .filter((i) => {
-                                    console.log(i.userId);
-                                    //return i.userId?.user_name?.toLowerCase().includes(searchText.toLowerCase());
                                     return i.userId?.user_name?.toLowerCase().startsWith(searchText);
                                   })
                                   .map((item) => {
@@ -326,17 +393,19 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
         <div className={`chatBox chatBoxCustom position-relative ${expend == 1 ? "chatBoxLarge" : ""}`}>
           <div className="chatBoxHead position-relative chatBoxHead_Custom">
             <h4>New Message</h4>
-            <div className="feedBoxHeadRight options">
+            <div className="feedBoxHeadRight options" style={{ marginTop: "-10px" }}>
               <a href="javascript:void(0);" onClick={() => setExpend(expend !== 0 ? 0 : 1)}>
-                <img src="/images/icons/expend.svg" alt="dots" className="img-fluid" />
+                {expend === 0 && <img src={Max} alt="dots" className="img-fluid" />}
+                {expend === 1 && <img src={Min} alt="dots" className="img-fluid" />}
               </a>
               <a href="javascript:void(0);" onClick={onClose}>
                 <img src="images/profile/cross-icon.svg" className="search_cross" />
               </a>
             </div>
           </div>
-          <div className="composeSearching">
-            <div className="compose_Searchbar compose_Searchbar-custom">
+          <div className="composeSearching" style={{ padding: "0rem 0.5rem 0.35rem 0.5rem" }}>
+            <div className="compose_Searchbar compose_Searchbar-custom" style={{ paddingLeft: "10px", paddingTop: "0px", paddingBottom: "0px" }}>
+              <i className="fas fa-search" style={{ paddingLeft: "10px",paddingTop:"15px" }}></i>
               <Select
                 isMulti
                 isClearable={false}
@@ -359,30 +428,11 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
                   IndicatorSeparator: () => null,
                   DropdownIndicator: () => null,
                 }}
+                placeholder="Type a name"
               />
-              {/* <input
-                type="text"
-                onChange={(e) => setSearchText(e.target.value)}
-                value={searchText}
-                className="form-control"
-                placeholder="Type a name or multiple names"
-                name="search"
-              />
-              <div className="search_result_d">
-                {compUserList.map((item) => {
-                  return <span className="badge search_value">@{item.user_name}</span>;
-                })}
-              </div>
-              {compUserList.length > 0 && (
-                <img
-                  src="/images/profile/cross-icon.svg"
-                  className="search_cross"
-                  onClick={() => handleCompUserList()}
-                />
-              )} */}
             </div>
             {searchText && (
-              <div className="searchListFlow">
+              <div className="searchListFlow" style={{ width: "100%", border: "1px solid red" }}>
                 <div className="search_dataList">
                   <div className="overflow_searchList followListsInner">
                     {userList.filter((i) => {
@@ -429,7 +479,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
             )}
           </div>
           <div
-            className={`messagess msgSection allFeedUser overflowScrollStop ${expend === 1 ? "msgSectionLarge-message" : "msgSectionLarge-message-sm"
+            className={`messagess msgSection1 allFeedUser overflowScrollStop ${expend === 1 ? "msgSectionLarge-message" : "msgSectionLarge-message-sm"
               }`}
             id={`messagess`}
           ></div>
@@ -450,43 +500,55 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
               />
             </div>
           )}
-          <div className={`textArea chatInput ${expend == 1 ? "textAreaLarge" : ""} textAreaCustom`}>
-            {/* <textarea
-                              className="form-control"
-                              rows={6}
-                              id
-                              name
-                              placeholder="Message"
-                              value={msg}
-                              onChange={(e) => setMsg(e.currentTarget.value)}
-                            /> */}
+          <div
+            className={`textArea chatInput ${expend ? "textAreaLarge" : ""} textAreaCustom`}
+            id="emojiPickerChat-id-custom"
+            style={{ backgroundColor: "white", marginTop: `${expend ? "100px" : "0px"}` }}
+          >
             <textarea
               className="form-control gray-color-custom input-group-custom input-group-msg-custom allFeedUser"
-              rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "2" : "3"}
+              rows={message.content.length < 25 ? "1" : message.content.length < 60 ? "1" : "1"}
               type="text"
+              // style={{height:"unset"}}
               placeholder="Type your message..."
               onChange={(e) => setMessage({ ...message, content: e.target.value })}
               // onKeyDown={handleKeypress}
+
               value={message.content}
+              style={{ height: "unset", borderRadius: `${expend ? "30px" : "25px"}`, paddingRight: `${expend ? "25px" : "20px"}`, paddingLeft: `${expend ? "25px" : "20px"}`, paddingTop: `${expend ? "12px" : "8px"}`, paddingBottom: `${expend ? "12px" : "8px"}`, width: "100%", marginBottom: "5px", fontSize: `${expend ? "20px" : "18px"}`, resize: "none" }}
             />
-            <div className="input-group-custom-child">
-              <span className="input-group-text gray-color-custom emoji">
-                <a href="javascript:void(0);" onClick={() => setShowEmoji(!showEmoji)}>
-                  <img src="/images/icons/smile.svg" alt className="img-fluid" />
-                </a>
-              </span>
-              {/* <span className="input-group-text gray-color-custom emoji"><a href="javascript:void(0);" ><img src="/images/icons/smile.svg" alt className="img-fluid" /></a></span> */}
-              <span className="input-group-text file-upload gray-color-custom">
+            <div style={{ backgroundColor: "white", display: "flex", position: "relative" }}>
+              <span className="input-group-text file-upload gray-color-custom" style={{ backgroundColor: "white" }} >
                 <a href="javascript:void(0);">
-                  <label htmlFor={`imagess`}>
-                    <img src="/images/icons/img-upload.svg" alt="file-upload" className="img-fluid" />
+                  <label htmlFor={`imagess${chatId}`}>
+                    {/* <img src="/images/icons/img-upload.svg" width={expend && "25px"} alt="file-upload" className="img-fluid" /> */}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_6517_57009)">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.58845 18.5196C1.60661 16.2176 1.8661 12.7449 4.16806 10.7631L6.6689 8.60997C7.12929 8.2136 7.82383 8.26549 8.2202 8.72588C8.61657 9.18627 8.56467 9.88081 8.10428 10.2772L5.60344 12.4303C4.22227 13.6194 4.06657 15.703 5.25568 17.0842C6.44479 18.4653 8.52841 18.621 9.90959 17.4319L12.4104 15.2788C12.8708 14.8824 13.5654 14.9343 13.9617 15.3947C14.3581 15.8551 14.3062 16.5496 13.8458 16.946L11.345 19.0991C9.04301 21.081 5.5703 20.8215 3.58845 18.5196Z" fill="#222222" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.88761 7.29063C9.49124 6.83025 9.54314 6.13571 10.0035 5.73933L12.5044 3.58624C14.8063 1.60437 18.279 1.86383 20.2609 4.16576C22.2427 6.46769 21.9832 9.9404 19.6813 11.9223L17.1804 14.0754C16.7201 14.4717 16.0255 14.4198 15.6291 13.9595C15.2328 13.4991 15.2847 12.8045 15.7451 12.4082L18.2459 10.2551C19.6271 9.06594 19.7828 6.98232 18.5937 5.60116C17.4046 4.22 15.3209 4.06432 13.9398 5.25344L11.4389 7.40654C10.9785 7.80291 10.284 7.75102 9.88761 7.29063Z" fill="#222222" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.59074 14.2135C8.19437 13.7531 8.24627 13.0586 8.70666 12.6622L13.7083 8.35599C14.1687 7.95962 14.8633 8.01151 15.2596 8.4719C15.656 8.93228 15.6041 9.62683 15.1437 10.0232L10.142 14.3294C9.68165 14.7258 8.98711 14.6739 8.59074 14.2135Z" fill="#222222" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_6517_57009">
+                          <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
                   </label>
                 </a>
               </span>
-              <div className="sendBtn sendBtnCustom message-btn-resize-custom">
-                <button type="button" className="btn p-0" onClick={sendMessage}>
-                  {/* <button type="button" className="btn p-0" > */}
-                  <img src="/images/icons/send.svg" alt="send" className="img-fluid" />
+              <span className="input-group-text gray-color-custom emoji" id="emojiPickerChat-btn-id-custom" style={{ backgroundColor: "white" }} >
+                <a href="javascript:void(0);" onClick={() => setShowEmoji(!showEmoji)}>
+                  <img src="/images/icons/smile.svg" width={expend ? "25px" : "20px"} className="img-fluid" alt="smile-emoji" />
+                </a>
+              </span>
+              <div className="sendBtn sendBtnCustom message-btn-resize-custom" style={{ position: "absolute", right: 0 }}>
+                <button type="button" onClick={sendMessage} className="btn p-0" disabled={activeBtn}>
+                  {activeBtn ? (
+                    <i className="fa-solid fa-spinner"></i>
+                  ) : (
+                    <img src="/images/icons/send.svg" alt="send" className="img-fluid" />
+                  )}
                 </button>
               </div>
             </div>
@@ -494,7 +556,7 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
               style={{ display: "none" }}
               type="file"
               name="images"
-              id={`imagess`}
+              id={`imagess${chatId}`}
               accept="image/*"
               multiple={true}
               onChange={(event) => {
@@ -502,20 +564,6 @@ export default function ComposeMessage({ onClose, onFinish, deskView }) {
                 event.target.value = null;
               }}
             />
-            {/* <div className="postFile mt-3">
-                              <div className="postBtn ms-auto">
-                                <a
-                                  href="javascript:void(0)"
-                                  className={
-                                    "btn btnColor " + (compUserList.length > 0 && msg !== "" ? "" : "disabled")
-                                  }
-                                  onClick={sendMsg}
-                                >
-                                  {" "}
-                                  Send message
-                                </a>
-                              </div>
-                            </div> */}
           </div>
         </div>
       )}

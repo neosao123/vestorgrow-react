@@ -9,7 +9,7 @@ export default function Tooltip({ anchorId, place, html, arrow, style }) {
     const [user, setUser] = globalCtx.user
     const [showToolTip, setShowToolTip] = globalCtx.showToolTip
     useEffect(() => {
-        if (showToolTip + 1 > 5) {
+        if (showToolTip + 1 > 3) {
             handleFirstView()
         }
         document.getElementById("tooltipNext" + showToolTip)?.addEventListener("click", () => setShowToolTip(showToolTip + 1))
@@ -49,12 +49,12 @@ export default function Tooltip({ anchorId, place, html, arrow, style }) {
                         boxShadow: "0px 3px 4px rgba(0, 0, 0, 0.05)",
                         borderRadius: "15px",
                         opacity: 1,
-                        zIndex: 2000,
+                        zIndex: 20000,
                         ...style
                     }
                 }
             />
-            <div class="modal-backdrop show"></div>
+            <div className="modal-backdrop show"></div>
         </>
     )
 }

@@ -14,11 +14,16 @@ import Modal from 'react-bootstrap/Modal';
 const serv = new ChatService();
 
 const ValidateSchema = Yup.object().shape({
-  chatName: Yup.string().required("Required"),
+  chatName: Yup.string().required("Required").min(3, "Minimum 3 characters required"),
   chatLogo: Yup.string().required("Required"),
-  chatDesc: Yup.string().required("Required"),
-  chatRules: Yup.string().required("Required"),
-  // isPrivate: Yup.string().required("Required"),
+  chatDesc: Yup.string().required("Required").min(20, "Minimum 20 characters required"),
+  chatRules: Yup.string().required("Required").min(20, "Minimum 20 characters required"),
+  chatKeyword: Yup.array().min(3, 'At least 3 item is required')
+    .of(
+      Yup.string()
+        .min(2, "Minimun 2 characters required.")
+        .max(20, "Maximum 20 characters are allowed.")
+    )
 });
 
 export default function CreateGroup({ onClose, onFinish, groupId }) {
@@ -32,6 +37,12 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
   const [showCropper, setShowCropper] = useState(false);
   const [groupData, setGroupData] = useState();
   const [showEditProfileImg, setShowEditProfileImg] = useState(null);
+  const [unreadCount, setUnreadCount] = globalCtx.UnReadCount;
+  const [latestMsgList, setLatestMsgList] = globalCtx.LatestmsgList;
+  const [chatList, setChatList] = globalCtx.ChatList;
+  const [isGroupChat, setisGroupChat] = globalCtx.isGroupChat;
+  const [isloading, setisLoading] = globalCtx.isLoading;
+
 
   const [initialValue, setInitialValue] = useState({
     chatName: "",
@@ -67,7 +78,50 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
     }
   };
 
+
+
+
+
+
+  const getChatList = async () => {
+
+    try {
+      let obj = {
+        filter: {
+          isGroupChat: isGroupChat,
+        },
+      };
+      await serv.listAllChat(obj).then((resp) => {
+        if (resp.data) {
+          resp.data = resp.data.filter((i) => !i.deleted_for.includes(user._id));
+          setChatList([...resp.data]);
+          let unreadCountList = unreadCount;
+          let latestMsgListTemp = latestMsgList;
+          resp.data.map((item) => {
+            if (item.latestMessage.sender !== user._id) {
+              unreadCountList[item._id] = item.unreadCount;
+            }
+            latestMsgListTemp[item._id] = item.latestMessage;
+          });
+          setUnreadCount(unreadCountList);
+          setLatestMsgList(latestMsgListTemp);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      setisLoading(false)
+    }
+    setisLoading(false)
+  };
+
+
+
+
+
+
   const onSubmit = async (value) => {
+    //alert("button clicked")
+    console.log(value)
     setActiveBtn(true);
     try {
       const formData = new FormData();
@@ -92,6 +146,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
         });
       }
       setActiveBtn(false);
+      getChatList()
     } catch (err) { }
   };
 
@@ -135,7 +190,7 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                   <form onSubmit={formik.handleSubmit} >
                     <div className="groupMainDetail groupMainDetail-customPadding" >
                       <div style={{ position: "relative" }} className="mb-3">
-                        <div className="groupLogo2 m-3" >
+                        <div className="groupLogo2 m-3" style={{ display: "flex", justifyContent: "center", alignItems: "center", alignContent: "center", position: "relative" }}>
                           <GroupImage
                             url={
                               typeof formik.values.chatLogo == "string"
@@ -143,6 +198,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                 : URL.createObjectURL(formik.values.chatLogo)
                             }
                           />
+                          {formik.touched.chatLogo && formik.errors.chatLogo ? (
+                            <div className="valid_feedbackMsg" style={{ position: "absolute" }}>{formik.errors.chatLogo}</div>
+                          ) : null}
                         </div>
 
                         <div onClick={() => setShowEditProfileImg(formik.values.chatLogo)}>
@@ -201,6 +259,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                     placeholder="Please describe your group"
                                     style={{ borderRadius: "5px" }}
                                   />
+                                  {formik.touched.chatDesc && formik.errors.chatDesc ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatDesc}</div>
+                                  ) : null}
                                 </div>
                                 <div className="m-4 mb-sm-4 commonform commonformBioCustom">
                                   <label>Rules*</label>
@@ -214,6 +275,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                     placeholder="Lay down some house rules"
                                     style={{ borderRadius: "5px" }}
                                   />
+                                  {formik.touched.chatRules && formik.errors.chatRules ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatRules}</div>
+                                  ) : null}
                                 </div>
                                 <div className="m-4 mb-sm-4 commonform">
                                   <p>
@@ -232,11 +296,12 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                       type="button"
                                       className={
                                         "add-key-design ms-2 " +
-                                        (tempKeyword !== "" && formik.values.chatKeyword.length < 3
+                                        (tempKeyword !== "" && tempKeyword.length < 20
                                           ? "active"
                                           : "disabled")
                                       }
                                       disabled={!(tempKeyword !== "" && formik.values.chatKeyword.length < 3)}
+
                                       onClick={(e) => {
                                         formik.setFieldValue("chatKeyword", [...formik.values.chatKeyword, tempKeyword]);
                                         setTempKeyword("");
@@ -249,17 +314,13 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                       />
                                     </button>
                                   </div>
+                                  {formik.touched.chatKeyword && formik.errors.chatKeyword ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatKeyword}</div>
+                                  ) : null}
+                                  {tempKeyword.length > 20 && <div className="valid_feedbackMsg">Minimum 20 characters allowed.</div>}
                                   <div className="keyWord mt-3 d-flex">
                                     {formik.values.chatKeyword.map((item, idx) => {
                                       return (
-                                        // <input
-                                        //   type={"text"}
-                                        //   placeholder=""
-                                        //   className=""
-                                        //   name={`chatKeyword[${idx}]`}
-                                        //   value={formik.values.chatKeyword[idx]}
-                                        //   onChange={formik.handleChange}
-                                        // />
                                         <span className="keywordListItem">
                                           <p>{formik.values.chatKeyword[idx]}</p>
                                           <img
@@ -277,6 +338,9 @@ export default function CreateGroup({ onClose, onFinish, groupId }) {
                                       );
                                     })}
                                   </div>
+                                  {/* {formik.touched.chatKeyword && formik.errors.chatKeyword ? (
+                                    <div className="valid_feedbackMsg">{formik.errors.chatKeyword}</div>
+                                  ) : null} */}
                                 </div>
                                 <div className="m-4 mb-sm-4 commonform d-flex align-items-center justify-content-between">
                                   <p className="privateLabel">Group type*</p>

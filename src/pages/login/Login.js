@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserService from "../../services/UserService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import GlobalContext from "../../context/GlobalContext";
+import Loader from "../../components/Loader";
 
 const serv = new UserService();
 
@@ -14,9 +15,11 @@ const ValidateSchema = Yup.object({
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const globalCtx = useContext(GlobalContext);
   const [isAuthentiCated, setIsAuthentiCated] = globalCtx.auth;
   const [user, setUser] = globalCtx.user;
+  const [tempUser, setTempUser] = globalCtx.tempUser;
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [showOtp, setShowOtp] = useState(false);
@@ -25,37 +28,67 @@ function Login() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values) => {
+    setLoading(true)
     let obj = { ...values };
     try {
       const resp = await serv.login(obj);
       if (resp?.token) {
         const loginUser = resp.data;
         setIsAuthentiCated(true);
+        localStorage.setItem("user", JSON.stringify(resp.data))
         setUser(resp.data);
+        setTempUser(resp?.data)
         if (loginUser.accountVerified === true) {
           var hasGroupInvite = localStorage.getItem("group_invite");
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
             localStorage.removeItem('group_invite');
+            setLoading(false)
             navigate(hasGroupInvite);
           } else {
-            navigate("/");
+            setLoading(false)
+            if (user.usernameUpdate === false) {
+              navigate("/add_username", { replace: true })
+            }
+            else if (user.profilepictureUpdate === false) {
+              navigate("/update_profile", { replace: true })
+            }
+            else if (user.bioUpdate === false) {
+              navigate("/bio", { replace: true })
+            }
+            else if (user.UserSuggestions === false) {
+              navigate("/usersuggestions1", { replace: true })
+            }
+            else if (user.groupSuggestion === false) {
+              navigate("/groupsuggestion1", { replace: true })
+            }
+            else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+              navigate("/", { replace: true })
+            }
+
           }
         } else {
           const resp = await serv.signinActivationLink(loginUser.email);
           if (resp?.result) {
+            setLoading(false)
             navigate("/signin/inactive", { state: { email: loginUser.email } });
+
           } else {
+            setLoading(false)
             setErrorMsg(resp.error);
           }
         }
       } else if (resp.message) {
+        setLoading(false)
         setShowOtp(true);
       } else {
+        setLoading(false)
         setErrorMsg(resp);
       }
     } catch (err) {
+      setLoading(false)
       err = JSON.parse(err.message);
       setErrorMsg(err.err);
     }
@@ -77,7 +110,24 @@ function Login() {
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
             navigate(hasGroupInvite);
           } else {
-            navigate("/");
+            if (user.usernameUpdate === false) {
+              navigate("/add_username", { replace: true })
+            }
+            else if (user.profilepictureUpdate === false) {
+              navigate("/update_profile", { replace: true })
+            }
+            else if (user.bioUpdate === false) {
+              navigate("/bio", { replace: true })
+            }
+            else if (user.UserSuggestions === false) {
+              navigate("/usersuggestions1", { replace: true })
+            }
+            else if (user.groupSuggestion === false) {
+              navigate("/groupsuggestion1", { replace: true })
+            }
+            else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+              navigate("/", { replace: true })
+            }
           }
         } else {
           const resp = await serv.signinActivationLink(loginUser.email);
@@ -110,8 +160,8 @@ function Login() {
     enableReinitialize: true,
   });
 
-  return (
-    <main className="w-100 clearfix socialMediaTheme">
+  return loading ? <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", maxHeight: "100vh" }}><Loader /></div> : (
+    <main className="w-100 clearfix socialMediaTheme" style={{ height: "100vh", marginTop: "-32px" }}>
       {/* login page Start*/}
       <div className="loginpage d-flex">
         <div className="loginForm_left loginForm_left_flex">
@@ -194,7 +244,7 @@ function Login() {
                       ) : null}
                       <span className="showHidetoggle">
                         {!formik.errors.password ? (
-                          showPassword ? (
+                          !showPassword ? (
                             <img
                               src="/images/profile/show_pass.svg"
                               className="showLoginPass"
@@ -234,7 +284,7 @@ function Login() {
             </div>
             <div className="loginPara text-center mt-3">
               <p>
-                <a href="javascript:void(0)" className="join" onClick={() => navigate("/signup")}>
+                <a href="javascript:void(0)" className="join" onClick={() => navigate("/join")}>
                   <span className="underline_span-text">Join</span>
                 </a>{" "}
                 to unlock the best of VestorGrow.

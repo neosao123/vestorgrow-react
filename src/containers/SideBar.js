@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import GlobalContext from "../context/GlobalContext";
 import UserService from "../services/UserService";
 import Tooltip from "../shared/Tooltip";
+import LearningLogo from "../assets/images/learning.svg"
 
 const serv = new UserService();
 function Sidebar() {
@@ -18,17 +19,18 @@ function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      let resp = await serv.logout({});
-      if (resp) {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        navigate("/login");
-        window.location.reload(true);
-      }
+      await serv.logout({})
+        .then((res) => {
+          if (res.data) {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.href = "/login"
+            // navigate("/login")
+          }
+        })
     } catch (error) {
       console.log(error);
     }
-    // localStorage.clear();
   };
 
   useEffect(() => {
@@ -108,7 +110,7 @@ function Sidebar() {
 
   return (
     <>
-      <aside className={"themeSidebar Sidebar-more-zindex-c"}>
+      <aside className={"themeSidebar Sidebar-more-zindex-c"} >
         <div className="sidebarInner sidebarInnerCustom">
           <div className="themeLogo">
             <Link to="/">
@@ -116,7 +118,25 @@ function Sidebar() {
             </Link>
           </div>
           <div className="themeMenu themeMenuCustom">
-            <ul className="nav flex-column"> 
+            <ul className="nav flex-column">
+              {/* <li className={"nav-item " + (selectedNavIcon === "/news" ? " active" : "")}>
+                <Link className={"nav-link" + (selectedNav === "/news" ? " active" : "")} to="/news">
+                  <div className="sideMenu">
+                    <div className="menuIcon">
+                      <svg width="21" height="21" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M22.6668 8.72722L14.6668 1.71389C13.9334 1.05795 12.984 0.695313 12.0001 0.695312C11.0162 0.695313 10.0668 1.05795 9.33346 1.71389L1.33346 8.72722C0.909951 9.10599 0.571993 9.57063 0.342089 10.0902C0.112185 10.6098 -0.00439008 11.1724 0.000126392 11.7406V23.3939C0.000126392 24.4548 0.421554 25.4722 1.1717 26.2223C1.92184 26.9725 2.93926 27.3939 4.00013 27.3939H20.0001C21.061 27.3939 22.0784 26.9725 22.8286 26.2223C23.5787 25.4722 24.0001 24.4548 24.0001 23.3939V11.7272C24.0027 11.1613 23.8853 10.6013 23.6554 10.0841C23.4256 9.56698 23.0886 9.1045 22.6668 8.72722ZM14.6668 24.7272H9.33346V18.0606C9.33346 17.7069 9.47394 17.3678 9.72398 17.1177C9.97403 16.8677 10.3132 16.7272 10.6668 16.7272H13.3335C13.6871 16.7272 14.0262 16.8677 14.2763 17.1177C14.5263 17.3678 14.6668 17.7069 14.6668 18.0606V24.7272ZM21.3335 23.3939C21.3335 23.7475 21.193 24.0866 20.9429 24.3367C20.6929 24.5867 20.3537 24.7272 20.0001 24.7272H17.3335V18.0606C17.3335 16.9997 16.912 15.9823 16.1619 15.2321C15.4117 14.482 14.3943 14.0606 13.3335 14.0606H10.6668C9.60593 14.0606 8.58851 14.482 7.83837 15.2321C7.08822 15.9823 6.66679 16.9997 6.66679 18.0606V24.7272H4.00013C3.6465 24.7272 3.30737 24.5867 3.05732 24.3367C2.80727 24.0866 2.66679 23.7475 2.66679 23.3939V11.7272C2.66703 11.5379 2.70758 11.3508 2.78575 11.1784C2.86391 11.006 2.9779 10.8522 3.12013 10.7272L11.1201 3.72722C11.3634 3.51346 11.6762 3.39558 12.0001 3.39558C12.324 3.39558 12.6368 3.51346 12.8801 3.72722L20.8801 10.7272C21.0223 10.8522 21.1363 11.006 21.2145 11.1784C21.2927 11.3508 21.3332 11.5379 21.3335 11.7272V23.3939Z"
+                          fill="currentColor"
+                        />
+                      </svg> 
+                    </div>
+                    <div className="menuTxt">
+                      <span>News</span>
+                    </div>
+                  </div>
+                </Link>
+                <div className="activeBar"></div>
+              </li> */}
               <li className={"nav-item " + (selectedNavIcon === "/" ? " active" : "")} onClick={handleClickHome}>
                 <Link className={"nav-link" + (selectedNav === "/" ? " active" : "")} to="/">
                   <div className="sideMenu">
@@ -213,7 +233,7 @@ function Sidebar() {
                 </Link>
                 <div className="activeBar"></div>
               </li>
-              <li className={"nav-item d-none d-md-block " + (selectedNav === "/learning" ? " active" : "")}>
+              {/* <li className={"nav-item d-none d-md-block " + (selectedNav === "/learning" ? " active" : "")}>
                 <Link
                   className={"nav-link" + (selectedNav === "/learning" ? " active" : "")}
                   to="/learning"
@@ -221,14 +241,7 @@ function Sidebar() {
                 >
                   <div className="sideMenu">
                     <div className="menuIcon">
-                      <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M28.2266 2.80717C27.2709 2.64255 26.3031 2.55781 25.3333 2.55384C22.0244 2.55113 18.7846 3.49994 16 5.28717C13.2081 3.5234 9.96882 2.59788 6.66662 2.62051C5.69681 2.62448 4.72902 2.70922 3.77328 2.87384C3.46023 2.92781 3.17672 3.09178 2.97383 3.33623C2.77094 3.58068 2.662 3.88953 2.66662 4.20717V20.2072C2.66376 20.4031 2.70412 20.5972 2.78482 20.7758C2.86552 20.9543 2.98457 21.1129 3.13351 21.2402C3.28246 21.3675 3.45763 21.4604 3.64656 21.5123C3.83549 21.5642 4.03354 21.5738 4.22662 21.5405C6.13731 21.2097 8.09489 21.2646 9.98404 21.7019C11.8732 22.1393 13.6557 22.9503 15.2266 24.0872L15.3866 24.1805H15.5333C15.6812 24.2421 15.8398 24.2738 16 24.2738C16.1601 24.2738 16.3187 24.2421 16.4666 24.1805H16.6133L16.7733 24.0872C18.3332 22.9249 20.1106 22.0876 22.0001 21.625C23.8897 21.1623 25.8528 21.0837 27.7733 21.3938C27.9664 21.4272 28.1644 21.4175 28.3533 21.3656C28.5423 21.3137 28.7174 21.2208 28.8664 21.0935C29.0153 20.9662 29.1344 20.8076 29.2151 20.6291C29.2958 20.4506 29.3361 20.2564 29.3333 20.0605V4.06051C29.3194 3.75671 29.2021 3.46679 29.0008 3.23882C28.7995 3.01086 28.5264 2.85855 28.2266 2.80717ZM14.6666 20.5272C12.1998 19.2294 9.45397 18.5521 6.66662 18.5538C6.22662 18.5538 5.78662 18.5538 5.33328 18.5538V5.22051C5.77736 5.19491 6.22254 5.19491 6.66662 5.22051C9.51113 5.21736 12.2936 6.05209 14.6666 7.62051V20.5272ZM26.6666 18.6072C26.2133 18.6072 25.7733 18.6072 25.3333 18.6072C22.5459 18.6055 19.8001 19.2828 17.3333 20.5805V7.62051C19.7063 6.05209 22.4888 5.21736 25.3333 5.22051C25.7774 5.19491 26.2225 5.19491 26.6666 5.22051V18.6072ZM28.2266 24.1405C27.2709 23.9759 26.3031 23.8911 25.3333 23.8872C22.0244 23.8845 18.7846 24.8333 16 26.6205C13.2153 24.8333 9.97546 23.8845 6.66662 23.8872C5.69681 23.8911 4.72902 23.9759 3.77328 24.1405C3.59972 24.168 3.43331 24.2296 3.28363 24.3217C3.13395 24.4138 3.00395 24.5346 2.90111 24.677C2.79826 24.8195 2.7246 24.981 2.68436 25.152C2.64411 25.3231 2.63808 25.5004 2.66662 25.6738C2.73437 26.0201 2.9366 26.3254 3.229 26.5228C3.5214 26.7202 3.88014 26.7937 4.22662 26.7272C6.13731 26.3964 8.09489 26.4512 9.98404 26.8886C11.8732 27.326 13.6557 28.137 15.2266 29.2738C15.4524 29.4346 15.7227 29.521 16 29.521C16.2772 29.521 16.5475 29.4346 16.7733 29.2738C18.3442 28.137 20.1267 27.326 22.0159 26.8886C23.905 26.4512 25.8626 26.3964 27.7733 26.7272C28.1198 26.7937 28.4785 26.7202 28.7709 26.5228C29.0633 26.3254 29.2655 26.0201 29.3333 25.6738C29.3618 25.5004 29.3558 25.3231 29.3155 25.152C29.2753 24.981 29.2016 24.8195 29.0988 24.677C28.9959 24.5346 28.8659 24.4138 28.7163 24.3217C28.5666 24.2296 28.4002 24.168 28.2266 24.1405Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-
-                      {/* <img src="/images/icons/learning-material.svg" alt="menu-icon" className="img-fluid" /> */}
+                      <img src={LearningLogo} alt="image" />
                     </div>
                     <div className="menuTxt">
                       <span>Learning</span>
@@ -236,7 +249,7 @@ function Sidebar() {
                   </div>
                 </Link>
                 <div className="activeBar"></div>
-              </li>
+              </li> */}
               <li
                 className={"nav-item " + (selectedNavIcon === "/message" ? " active" : "")}
                 onClick={handleClickMessage}
@@ -303,7 +316,7 @@ function Sidebar() {
             </ul>
           </div>
           <div className="themeLogOut themeLogOutCustom ">
-            <a className="nav-link themeLogOutLink" href="#" onClick={handleLogout}>
+            <a className="nav-link themeLogOutLink" onClick={handleLogout}>
               <div className="sideMenu">
                 <div className="menuIcon">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -417,7 +430,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Discover peoples posts from all over the world</p>
               <div class="toolBottom">
-                <div class="toolcounter">2/6</div>
+                <div class="toolcounter">2/4</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext2">Next</button>
@@ -426,7 +439,7 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
         />
       )}
       {showToolTip === 3 && (
@@ -440,7 +453,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Access your profile to change display/banner pic. Also add a bio and see history of your posting</p>
               <div class="toolBottom">
-                <div class="toolcounter">3/6</div>
+                <div class="toolcounter">3/4</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext3">Next</button>
@@ -449,11 +462,11 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
           className="tooltipBox-Custom"
         />
       )}
-      {showToolTip === 4 && (
+      {/* {show === 4 && (
         <Tooltip
           anchorId="learning"
           place="bottom"
@@ -464,7 +477,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Refine or learn new skills in our learning area designed to support you in your journey</p>
               <div class="toolBottom">
-                <div class="toolcounter">4/6</div>
+                <div class="toolcounter">4/5</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext4">Next</button>
@@ -473,11 +486,11 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
           className="tooltipBox-Custom"
         />
-      )}
-      {showToolTip === 5 && (
+      )} */}
+      {showToolTip === 4 && (
         <Tooltip
           anchorId="message"
           place="bottom"
@@ -488,7 +501,7 @@ function Sidebar() {
               </h4>
               <p class="tooltipContent">Access your private messages to begin making new connections worldwide</p>
               <div class="toolBottom">
-                <div class="toolcounter">5/6</div>
+                <div class="toolcounter">4/4</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
                   <button class="btn btnColor tooltipbtn" id="tooltipNext5">Next</button>
@@ -497,7 +510,7 @@ function Sidebar() {
             </div>
           `}
           arrow="arrow arrowLeft"
-          style={{ marginLeft: "90px", marginTop: "-120px" }}
+          style={{ marginLeft: "80px", marginTop: "-120px" }}
           className="tooltipBox-Custom"
         />
       )}

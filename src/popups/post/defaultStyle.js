@@ -8,15 +8,16 @@ export default {
         margin: "none",
         fontWeight: "normal",
         color: "white",
-        outline: "none"
+        outline: "none",
+        // overflowY: ""
     },
     "&multiLine": {
         control: {
             color: "white",
             minHeight: 100,
-            maxHeight: 300,
-            overflowY: "auto",
-            outline: "none"
+            maxHeight: 150,
+            overflowY: "hidden",
+            outline: "none",
         },
         highlighter: {
             padding: 9,
@@ -34,7 +35,7 @@ export default {
             fontSize: "12px",
             maxHeight: "200px",
             width: "250px",
-            overflowY: "scroll",
+            overflowY: "auto",
             scrollbarColor: "inherit",
             zIndex: "2"
         },

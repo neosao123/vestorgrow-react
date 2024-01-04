@@ -1,0 +1,256 @@
+.single_news_main_box {
+    width: calc(100%-5.625rem) !important;
+    position: fixed;
+    top: 4.375rem;
+    left: 5.625rem;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    padding-top: 1.25rem;
+}
+
+.single_news_box {
+    max-width: 58.25rem;
+    height: auto;
+    margin: auto;
+    border-radius: 0.9375rem 0.9375rem 0px 0px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.news_img {
+    height: 25rem;
+    width: 100%;
+    position: relative;
+    background-image: url("https://kchanews.com/wp-content/uploads/2014/09/bigstock-Breaking-News-Screen-36237841.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.9375rem 0.9375rem 0px 0px;
+}
+
+.single_news_headline {
+    width: 50rem;
+    height: 7.75rem;
+    position: absolute;
+    bottom: 0;
+    max-width: 50rem;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%);
+    background-color: #ffffff;
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px 20px 0px 20px;
+}
+
+.news_data {
+    width: 100%;
+    height: auto;
+    padding: 1.6875rem 4.75rem;
+}
+
+.share_btn {
+    width: 85px;
+    height: 36px;
+    border: 1px solid green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vestogrow_title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    color: #000000;
+
+}
+
+.single_news_headline_title {
+    display: flex;
+    justify-content: space-between;
+    /* text-align: center; */
+    align-items: center;
+}
+
+.share_icon {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.share_text {
+    width: 43px;
+    height: 19px;
+    text-align: center;
+}
+
+.news_headline {
+    width: 35.75rem;
+    height: 4.5rem;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36px;
+}
+
+.tags_comment_div {
+    width: 100%;
+    padding: 0px 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.news_tag {
+    border: 1px solid #00808b;
+    padding: 0px 15px;
+    color: #00808b;
+    border-radius: 15px;
+}
+
+.date {
+    color: #000000;
+    line-height: 16px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.divider {
+    height: 15px;
+    width: 2px;
+    background-color: #000000;
+    margin-top: 5px;
+}
+
+.comments {
+    color: #00808b;
+    margin-top: 2px;
+}
+
+.shares {
+    color: #00808b;
+    margin-top: 2px;
+}
+
+.description {
+    padding: 0px 0px 0px 20px;
+    width: 46.25rem;
+    height: auto;
+    margin-top: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.showmore_btn {
+    color: #00808b;
+    border: none;
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.show_more {
+    border: none;
+    background-color: #ffffff;
+    color: #00808b;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.show_more_box {
+    height: 18.875rem;
+    width: auto;
+    margin-left: 20px;
+    margin-right: 20px !important;
+    border: 1px solid red;
+    margin-top: 20px;
+}
+
+.more_from_vestorgrow {
+    font-family: Gilroy;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.sell_all_btn_box {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sell_all_btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ffffff;
+    background-color: #00808b;
+    color: #ffffff;
+    border-radius: 20px;
+    font-family: Gilroy;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.sell_all_news {
+    height: auto;
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.all_news_title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.all_news_title div {
+    width: 82px;
+
+}
+
+.news_div {
+    border: 1px solid blue;
+    height: 10rem;
+    min-width: 15.625rem;
+}
+
+.news_div img {
+    width: 100%;
+}
+
+.news_head {
+    font-family: Gilroy;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #0D1B1D;
+    margin-top: 15px;
+}
+
+.news_arrows {
+    display: flex;
+}
+
+.arrow {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+
+@media screen and  (max-width:1200px) {
+    .single_news_main_box {
+        left: 0;
+    }
+}

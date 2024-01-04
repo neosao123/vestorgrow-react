@@ -10,6 +10,8 @@ const LoadingData = () => {
     const [isAuthentiCated, setIsAuthentiCated] = globalCtx.auth;
     const [user, setUser] = globalCtx.user;
 
+
+
     const navigate = useNavigate();
     const location = useLocation();
     const [errorMsg, setErrorMsg] = useState("");
@@ -25,7 +27,8 @@ const LoadingData = () => {
                         setErrorMsg("");
                         localStorage.setItem("user", JSON.stringify(resp.data));
                         setUser(resp.data);
-                        navigate('/');
+                        console.log("response:", resp.data)
+                        navigate('/', { replace: true });
                     }, 3000);
                 } else {
                     setErrorMsg(resp.message);
@@ -54,6 +57,7 @@ const LoadingData = () => {
     };
 
     useEffect(() => {
+        alert()
         setActivated();
     }, []);
 

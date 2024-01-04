@@ -1,14 +1,19 @@
+body {
+  margin-top: 32px;
+  top: 98px;
+}
+
 .suggestionBox {
-  position: relative; 
+  position: sticky;
   /* height: ; */
   background: #fff;
   border-radius: 15px;
+  /* padding-top: 10px; */
 }
 
 .suggestionHead {
   font-size: 15px;
   font-weight: 600;
-  margin-top: 32px;
   height: 56px;
   display: flex;
   justify-content: space-between;
@@ -22,12 +27,15 @@
 }
 
 .suggestionBody {
-  height: 180px;
-  max-height: 180px;
+  /* height: 180px;
+  max-height: 180px; */
+  width: 100%;
+  height: auto;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
+  border-top: 1px solid #d0cfcf !important;
+  /* flex-wrap: wrap; */
+  /* align-items: center; */
+  /* justify-content: space-evenly; */
   /* overflow-y: scroll; */
 }
 
@@ -36,23 +44,24 @@
 }
 
 .suggestionBody .profileBox {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  width: 140px;
-  height: 152px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  width: 10%;
+  /* height: 100%; */
+  /* height: 152px; */
   /* margin-top: 10px; */
 }
 
-.suggestionBody .profileBox button { 
+.suggestionBody .profileBox button {
   background: #00808b;
   border-radius: 50px;
   outline: 0;
   border: 0;
   font-weight: 500;
   color: #fff;
-  padding:5px 20px;
+  padding: 5px 20px;
 }
 
 .suggestionBody .profileBox a {
@@ -83,7 +92,10 @@
 }
 
 .profileBox .name {
-  font-weight: 600;
+  font-weight: 600 !important;
+  font-size: 16px;
+  color: #0B1E1C;
+  font-style: Gilroy;
 }
 
 .profileBox .title {
@@ -103,6 +115,11 @@
 #exampleModalLabel {
   font-family: gilroy;
   font-weight: 600;
+  margin-left: 2%;
+}
+
+.modal_div {
+  margin-right: 1%;
 }
 
 .button-header {
@@ -120,8 +137,7 @@
   color: #465d61;
 }
 
-.button-header button:nth-child(1),
-.button-header button:nth-child(2) {
+.button-header button:nth-child(1) .button-header button:nth-child(2) {
   border-right: 2px solid #d1d1d1;
 }
 
@@ -184,7 +200,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: space-between; */
   padding: 6px 0;
   column-gap: 15px;
 }
@@ -238,8 +254,9 @@
 
 @media only screen and (min-width: 992px) {
   .suggestionBox .profileBox {
-    width: 100px;
-    height: 120px;
+    width: 30%;
+    /* height: 120px; */
+    /* height: auto; */
     padding-bottom: 20px;
   }
 
@@ -280,6 +297,7 @@
   .modal-header {
     flex-direction: column;
   }
+
   .suggestInputGroup {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
@@ -289,4 +307,126 @@
 
 .hscroll::-webkit-scrollbar {
   height: 5px;
+}
+
+
+.follow_btn {
+  color: #0d1b1d !important;
+  background-color: #fff !important;
+  border: 1px solid #b1b1b1 !important;
+  margin-top: 5px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  width: 84px !important;
+  height: 34px !important;
+  padding: 5px 15px !important;
+  border-radius: 18px !important;
+}
+
+.follow_btn:hover {
+  /* box-shadow: inset 30em 0 #00808b !important; */
+  border: 1px solid #00808b !important;
+  transition: all 0.6s ease-out !important;
+  cursor: pointer !important;
+  background-color: #ebf5f2 !important;
+
+}
+
+.min_width {
+  min-width: 300px;
+}
+
+.see_all_follow_btn {
+
+  color: #0d1b1d !important;
+  background-color: #fff !important;
+  border: 1px solid #b1b1b1 !important;
+}
+
+.see_all_follow_btn:hover {
+  border: 1px solid #00808b !important;
+  transition: all 0.6s ease-out !important;
+  cursor: pointer !important;
+  background-color: #ebf5f2 !important;
+}
+
+.profile_box {
+  display: flex !important;
+  gap: 15px !important;
+  border-top: 0.5px solid #ebeaea !important;
+  width: 100% !important;
+  padding: 5px 0px !important;
+}
+
+.profile_box1 {
+  display: flex !important;
+  gap: 15px !important;
+  /* border-top: 1px solid #d0cfcf !important; */
+  border-top: none;
+  width: 100% !important;
+  padding: 5px 0px !important;
+}
+
+.suggestionboxes {
+  margin: auto;
+}
+
+.overflow_suggestionbox {
+  overflow-y: scroll !important;
+}
+
+.overflow_suggestionbox::-webkit-scrollbar {
+  width: 4px !important;
+  background: #222222 !important;
+}
+
+.overflow_suggestionbox::-webkit-scrollbar-track {
+  background: #d1d1d1 !important;
+}
+
+/* Handle */
+.overflow_suggestionbox::-webkit-scrollbar-thumb {
+  background: #222222 !important;
+  border-radius: 34px !important;
+  width: 4px;
+}
+
+#suggestion_box_list::-webkit-scrollbar-thumb {
+  background: #222222 !important;
+  border-radius: 34px !important;
+  width: 4px;
+}
+
+
+@media screen and (min-width:768px) {
+  .modal_header {
+    justify-content: space-evenly;
+    margin-left: 8%;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .modal_header {
+    justify-content: space-evenly;
+    margin-left: 15%;
+  }
+}
+
+@media screen and (min-width:1200px) {
+  .modal_header {
+    justify-content: space-evenly;
+    margin-left: 25%;
+  }
+}
+
+
+
+.--toastify-icon-color-success {
+  color: #007a8b;
+  background-color: #007a8b;
+}
+
+.--toast-bg {
+  color: #007a8b;
+  background-color: #007a8b;
 }

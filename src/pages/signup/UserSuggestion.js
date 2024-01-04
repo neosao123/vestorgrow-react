@@ -5,10 +5,12 @@ import UserFollowerServ from "../../services/userFollowerService";
 import ProfileImage from "../../shared/ProfileImage";
 import GlobalContext from "../../context/GlobalContext";
 import { NavLink, Link } from 'react-router-dom';
+import StepsService from "../../services/stepsService";
 
 function UserSuggestion() {
   const serv = new UserService();
   const followServ = new UserFollowerServ();
+  const stepServ = new StepsService();
   const globalCtx = useContext(GlobalContext);
   const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
@@ -16,6 +18,8 @@ function UserSuggestion() {
   const [reqPublicId, setReqPublicId] = useState([]);
   const [curUser, setCurUser] = useState();
   const [user, setUser] = globalCtx.user;
+
+
 
   useEffect(() => {
     getUserList();
@@ -25,6 +29,27 @@ function UserSuggestion() {
     let data = await serv.getMostFollowedUsers({ id: user._id });
     setUserList(data.data.filter((usr) => usr._id !== user._id));
   };
+
+
+  const handleUserSuggestion = async () => {
+    try {
+        await stepServ.updateUserSuggestions(user._id)
+          .then(async () => {
+            const res = await serv.getUser(user._id)
+            if (res.data) {
+              localStorage.setItem("user", JSON.stringify(res.data))
+              setUser({ ...res.data })
+              navigate("/groupsuggestion1")
+            }
+          })
+
+
+      
+
+    } catch (err) {
+      throw err
+    }
+  }
 
   const handleFollowReq = async (id) => {
     try {
@@ -38,7 +63,6 @@ function UserSuggestion() {
         } else if (!followingIdUser.data.setting.private) {
           setReqPublicId((oldId) => [...oldId, resp.data.followingId]);
         }
-
         setCurUser(resp.data.userId);
       } else if (reqPrivateId.find((i) => i === id) !== undefined) {
         let res = await followServ.deleteFollowReq({
@@ -48,19 +72,19 @@ function UserSuggestion() {
         setReqPrivateId((oldId) => [...oldId.filter((i) => i !== res.result.followingId)]);
       } else if (reqPublicId.find((i) => i === id) !== undefined) {
         let res = await followServ.unfollowUser(id);
-        // let resp = await followServ.deleteFollowReq({
-        //   userId: curUser,
-        //   followingId: id,
-        // });
         setReqPublicId((oldId) => [...oldId.filter((i) => i !== id)]);
       }
-      // if (resp.data) {
-      //   setUserList(userList.filter((i) => i._id !== id));
-      // }
+      await serv.getUser(user._id)
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res.data))
+          setUser({ ...res.data })
+        })
+
     } catch (err) {
       console.log(err);
     }
   };
+
 
   const handleRemoveUser = (id) => {
     setUserList(userList.filter((i) => i._id !== id));
@@ -134,12 +158,13 @@ function UserSuggestion() {
             <div className="allViews followBtndiv">
             </div>
             <div className="skipBTn">
-              <NavLink className="editComm_btn" to={"/signup/inactive"}>
+              <NavLink className="editComm_btn" to={`/signup/active/${user.active_token
+}`}>
                 Back
               </NavLink>
             </div>
-            <div className="skipBTn">
-              <NavLink className="btn btnColor" to="/groupsuggestion">
+            <div className="skipBTn" onClick={handleUserSuggestion}>
+              <NavLink className="btn btnColor">
                 Next
               </NavLink>
             </div>

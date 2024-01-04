@@ -91,3 +91,19 @@
 .allMsgUserInner {
   border-bottom: 1px solid #e3e2e2;
 }
+
+.message-box-main {
+  position: fixed !important;
+  left: 100px !important;
+  right: 0 !important;
+  top: 30px
+}
+
+@media only screen and (min-width: 1200px) {
+  .messagebox-fixed {
+    position: fixed !important;
+    left: 100px !important;
+    right: 0 !important;
+    top: 0
+  }
+}
