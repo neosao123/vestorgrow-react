@@ -67,7 +67,7 @@ const Screen1 = () => {
     })
 
     return (
-        <>
+        <div>
             <div>
                 <OnboardingHeader />
             </div>
@@ -89,7 +89,7 @@ const Screen1 = () => {
                 </button>
                 <p className='redirect_login_text'>Already have an account? <span className='redirect_login_text_singin' onClick={() => navigate("/login")}>Sign in</span></p>
             </div>
-        </>
+        </div>
     )
 }
 

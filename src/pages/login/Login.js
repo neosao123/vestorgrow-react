@@ -41,7 +41,6 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(resp.data))
         setUser(resp.data);
         setTempUser(resp?.data)
-        console.log("RESPONSE!:", resp)
         if (loginUser.accountVerified === true) {
           var hasGroupInvite = localStorage.getItem("group_invite");
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
@@ -90,7 +89,7 @@ function Login() {
       }
     } catch (err) {
       setLoading(false)
-      // err = JSON.parse(err.message);
+      err = JSON.parse(err.message);
       setErrorMsg(err.err);
     }
   };

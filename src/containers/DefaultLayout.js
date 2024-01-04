@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useMatch, useNavigate } from "react-router-dom";
 import Sidebar from "./SideBar";
 import Header from "./Header";
 import OwlCarousel from "react-owl-carousel";
@@ -11,6 +11,7 @@ import GlobalContext from "../context/GlobalContext";
 import ChatsType from "../pages/home/ChatsType";
 import Loader from "../components/Loader";
 import ChatSidebar from "../components/SideBar/ChatSidebar.js";
+import { replace } from "formik";
 
 
 function DefaultLayout({ children }) {
@@ -87,34 +88,60 @@ function DefaultLayout({ children }) {
 
 
   useEffect(() => {
-    if (user.usernameUpdate === false) {
+    if (user.usernameUpdate === false || location.pathname === "/add_username") {
       setLoading(false)
-      navigate("/add_username", { replace: true })
+      navigate("/add_username")
     }
-    else if (user.profilepictureUpdate === false && user.usernameUpdate === true && location.pathname !== "/avatar" && location.pathname !== "/profile_picture") {
+    else if ((user.profilepictureUpdate === false && user.usernameUpdate === true && location.pathname !== "/avatar" && location.pathname !== "/profile_picture") || location.pathname === "/update_profile") {
       setLoading(false)
-      navigate("/update_profile", { replace: true })
+      navigate("/update_profile")
     }
     else if (location.pathname == "/avatar" || location.pathname == "/profile_picture") {
       setLoading(false);
-      navigate(location.pathname, { replace: true })
+      navigate(location.pathname)
     }
-    else if (user.bioUpdate === false && user.profilepictureUpdate === true && user.usernameUpdate === true) {
+    else if ((user.bioUpdate === false && user.profilepictureUpdate === true && user.usernameUpdate === true) || location.pathname === "/bio") {
       setLoading(false)
-      navigate("/bio", { replace: true })
+      navigate("/bio")
     }
-    else if (user.UserSuggestions === false && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) {
+    else if ((user.UserSuggestions === false && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) || location.pathname === "/usersuggestions1") {
       setLoading(false)
-      navigate("/usersuggestions1", { replace: true })
+      navigate("/usersuggestions1")
     }
-    else if (user.groupSuggestion === false && user.UserSuggestions === true && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) {
+    else if ((user.groupSuggestion === false && user.UserSuggestions === true && user.bioUpdate === true && user.profilepictureUpdate === true && user.usernameUpdate === true) || location.pathname === "/groupsuggestion1") {
       setLoading(false)
-      navigate("/groupsuggestion1", { replace: true })
+      navigate("/groupsuggestion1")
     }
     else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true) {
       navigate("/", { replace: true })
     }
-  }, [location.pathname])
+  }, [])
+
+  // useEffect(() => {
+  //   if (user.usernameUpdate === false || user.profilepictureUpdate === false || user.bioUpdate === false || user.groupSuggestion === false || user.UserSuggestions === false) {
+  //     if (user.usernameUpdate === false) {
+  //       navigate("/add_username", { replace: true })
+  //     }
+  //     else if (user.profilepictureUpdate === false) {
+  //       navigate("/update_profile", { replace: true })
+  //     }
+  //     else if (location.pathname == "/avatar" || location.pathname == "/profile_picture") {
+  //       navigate(location.pathname)
+  //     }
+  //     else if (user.bioUpdate === false) {
+  //       navigate("/bio", { replace: true })
+  //     }
+  //     else if (user.UserSuggestions === false) {
+  //       navigate("/usersuggestions1", { replace: true })
+  //     }
+  //     else {
+  //       navigate("/groupsuggestion1", { replace: true })
+  //     }
+  //   }
+  //   else {
+  //     navigate(location.pathname)
+  //   }
+  // }, [location.pathname])
 
   if (blockContent) {
     return loading ? <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}><Loader /></div> : (
@@ -139,7 +166,7 @@ function DefaultLayout({ children }) {
     );
   } else {
     return loading ? <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}><Loader /></div> : (
-      <main className={"clearfix " + (headerRequired && " socialMediaTheme")}>
+      user.usernameUpdate === false ? (<Navigate to={"/add-username"} replace={true} />) : user.profilepictureUpdate === false ? <Navigate to="/update_profile" replace={true} /> : user.bioUpdate === false ? <Navigate to={"/bio"} replace={true} /> : user.UserSuggestions === false ? <Navigate to={"usersuggestions1"} replace={true} /> : user.groupSuggestion === false ? <Navigate to={"/groupsuggestion1"} replace={true} /> : (<main className={"clearfix " + (headerRequired && " socialMediaTheme")}>
         {layoutRequired && <Sidebar />}
         <div
           className={
@@ -168,7 +195,7 @@ function DefaultLayout({ children }) {
 
         {(location.pathname === "/" || location.pathname === "/dashboard" || location.pathname === "/discover") && <ChatsType />}
 
-      </main>
+      </main>)
     );
   }
 }

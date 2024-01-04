@@ -119,7 +119,7 @@ const Screen2 = () => {
                 <p className='create_account_description'>Track where you see VestorGrow content across the web</p>
             </div>
             <div className='signupformdiv'>
-                <form className='signup_form gap' onSubmit={formik.handleSubmit}>
+                <form className='signup_form gap-2' onSubmit={formik.handleSubmit}>
                     <div className='formcontrol'>
                         <label className='label'>First name*</label>
                         <input
@@ -204,7 +204,7 @@ const Screen2 = () => {
                         </div> : null}
                     </div>
                     <div className='formcontrol eye_icon_div'>
-                        <label className='label'>confirm Password*</label>
+                        <label className='label'>Confirm Password*</label>
                         <input
                             className='form_input'
                             type={!showConfirmPass ? "password" : "text"}
@@ -221,7 +221,7 @@ const Screen2 = () => {
                             {<div className='valid_feedbackMsg'>{formik.errors.confirm_password}</div>}
                         </div> : null}
                     </div>
-                    <div className='formcontrol_checkbox'>
+                    {/* <div className='formcontrol_checkbox'>
                         <input
                             className='signupcheckbox checkbox-round'
                             type='checkbox'
@@ -231,9 +231,22 @@ const Screen2 = () => {
                             value={formik.values.terms_and_condition}
                         />
                         <span className='signupcheckbox_text'> By signing up, you agree to the <span className='checkbox_term'> Terms of Service</span></span>
+                    </div> */}
+                    <div className="custom-checkbox formcontrol_checkbox">
+                        <input
+                            type="checkbox"
+                            id="myCheckbox"
+                            className="hidden-checkbox"
+                            name="terms_and_condition"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.terms_and_condition}
+                        />
+                        <label for="myCheckbox" className="custom-checkbox-label"></label>
+                        <span className="custom-checkbox-text"><span className='signupcheckbox_text'> By signing up, you agree to the <span className='checkbox_term'> Terms of Service</span></span></span>
                     </div>
                     {formik.touched.terms_and_condition && formik.errors.terms_and_condition ? <div>
-                        {<div className='valid_feedbackMsg'>{formik.errors.terms_and_condition}</div>}
+                        {<div className='valid_feedbackMsg' style={{ marginTop: "-5px" }} >{formik.errors.terms_and_condition}</div>}
                     </div> : null}
                     <div className='formcontrol'>
                         <button className='signup_emailorphone' type='submit'>

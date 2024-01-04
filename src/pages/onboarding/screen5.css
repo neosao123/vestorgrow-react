@@ -98,6 +98,25 @@
     border: 1px solid #D1D1D1;
 }
 
+.username_input_color {
+    border: 1px solid red;
+    color: red;
+}
+
+.username_input_color1 {
+    border: 1px solid #D1D1D1;
+    color: #000000;
+
+}
+
+
+.valid_color {
+    color: green !important;
+    border: 1px solid green !important;
+}
+
+
+
 .opt_div {
     padding: 0px 0px;
     display: flex;
