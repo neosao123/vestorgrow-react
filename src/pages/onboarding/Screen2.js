@@ -73,8 +73,7 @@ const Screen2 = () => {
                 day: 'numeric',
                 year: 'numeric',
             }),
-            password: values.password,
-            confirm_password: values.confirm_password
+            password: values.password
         }
 
         await onBoardServ.signingUp(obj)

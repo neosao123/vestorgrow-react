@@ -111,7 +111,7 @@ function DefaultLayout({ children }) {
       setLoading(false)
       navigate("/groupsuggestion1", { replace: true })
     }
-    else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true && user.ProfileUpdates === true) {
+    else if (user.usernameUpdate === true && user.profilepictureUpdate === true && user.bioUpdate === true && user.groupSuggestion === true && user.UserSuggestions === true) {
       navigate("/", { replace: true })
     }
   }, [location.pathname])

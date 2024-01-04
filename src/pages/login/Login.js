@@ -41,6 +41,7 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(resp.data))
         setUser(resp.data);
         setTempUser(resp?.data)
+        console.log("RESPONSE!:", resp)
         if (loginUser.accountVerified === true) {
           var hasGroupInvite = localStorage.getItem("group_invite");
           if (hasGroupInvite !== null && hasGroupInvite !== "") {
@@ -89,7 +90,7 @@ function Login() {
       }
     } catch (err) {
       setLoading(false)
-      err = JSON.parse(err.message);
+      // err = JSON.parse(err.message);
       setErrorMsg(err.err);
     }
   };
@@ -161,7 +162,7 @@ function Login() {
   });
 
   return loading ? <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", maxHeight: "100vh" }}><Loader /></div> : (
-    <main className="w-100 clearfix socialMediaTheme" style={{ height: "100vh" }}>
+    <main className="w-100 clearfix socialMediaTheme" style={{ height: "100vh", marginTop: "-32px" }}>
       {/* login page Start*/}
       <div className="loginpage d-flex">
         <div className="loginForm_left loginForm_left_flex">

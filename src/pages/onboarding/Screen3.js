@@ -57,8 +57,8 @@ const Screen3 = () => {
                 localStorage.setItem("user", JSON.stringify(res.user))
                 setTempUser(res.user);
                 setUser(res.user);
-                navigate("/update_password", { replace: true })
                 setPin(['', '', '', ''])
+                navigate("/add_username", { replace: true })
             })
             .catch(error => { setPin(["", "", "", ""]); toast.error("Invalid OTP.") })
     }
