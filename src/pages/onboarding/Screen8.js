@@ -7,6 +7,7 @@ import UserService from '../../services/UserService';
 import { toast } from 'react-toastify';
 import util from '../../util/util';
 import { IoChevronBackOutline } from "react-icons/io5";
+import "./screen8.css"
 
 const Screen8 = () => {
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Screen8 = () => {
             <div>
                 <OnboardingHeader />
             </div>
-            <div className='main_div'>
+            <div className='main_div margin_bottom_profile'>
                 <div className='text_div' style={{ maxWidth: "650px", width: "100%", margin: "auto", position: "relative" }}>
                     <p className='create_account_text'>Pick a profile picture</p>
                     <p onClick={() => navigate("/update_profile", { replace: true })} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
@@ -54,10 +55,10 @@ const Screen8 = () => {
             </div>
             <div className='signupformdiv'>
                 <form className='signup_form1' style={{ width: "30em" }}>
-                    <div className='opt_div' style={{ maxWidth: "300px", width: "100%", margin: "auto", borderRadius: "50%" }}>
-                        <img width={"100%"} height={"100%"} src={URL.createObjectURL(fileImage)} alt="logo" />
+                    <div className='opt_div' style={{ maxWidth: "300px", height: "300px", width: "100%", margin: "auto", borderRadius: "50%", overflow: "hidden", padding: "10px", objectFit: "cover", backgroundColor: "#8b8a85", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <img width={"90%"} height={"90%"} style={{ objectFit: "contain" }} src={URL.createObjectURL(fileImage)} alt="logo" />
                     </div>
-                    <div className='opt_div'>
+                    <div className='opt_div next_button_margin_top'>
                         <button className='signup_emailorphone next_btn' type='button' onClick={() => submitImage(fileImage)}>
                             Next
                         </button>

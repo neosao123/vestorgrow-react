@@ -25,7 +25,10 @@ const Screen5 = () => {
     const [user, setUser] = globalCtx.user;
     const [showusername, setShowusername] = useState(false);
     const [userNames, setusernames] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
+    const [clicked, setClicked] = useState(false);
     const location = useLocation();
+
 
     const navigate = useNavigate();
 
@@ -56,6 +59,18 @@ const Screen5 = () => {
             .catch(err => console.log(err))
     }
 
+
+    const getUsernameSuggestions = async () => {
+        try {
+            let response = await onBoardServ.usernameSuggestions(formik.values.username);
+            console.log("response:", response.userNameSuggestionArr)
+            setSuggestions(response.userNameSuggestionArr)
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     const formik = useFormik({
         initialValues: initialValue,
         validateOnBlur: true,
@@ -65,10 +80,22 @@ const Screen5 = () => {
     })
 
     useEffect(() => {
-        if (showusername) {
-            setShowusername(false);
-        }
-    }, [formik.values.username])
+        setShowusername(false);
+        getUsernameSuggestions();
+    }, [formik.values.username]);
+
+
+    const handleUsernameSuggestion = (el) => {
+        formik.setValues({
+            username: el
+        });
+        setClicked(true)
+        setTimeout(() => {
+            setClicked(false)
+            setSuggestions([]);
+        }, 500);
+    }
+
 
 
 
@@ -107,7 +134,14 @@ const Screen5 = () => {
                     <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
                         {
                             showusername && userNames?.map((el) => {
-                                return <p style={{ color: "#00808B", fontSize: "16px", fontWeight: "400", fontFamily: "poppins", lineHeight: "8px" }}>{el}</p>
+                                return <p onClick={() => handleUsernameSuggestion(el)} style={{ color: "#00808B", fontSize: "16px", fontWeight: "400", fontFamily: "poppins", lineHeight: "8px" }}>{el}</p>
+                            })
+                        }
+                    </div>
+                    <div style={{ marginTop: "-10px", marginLeft: "10px" }}>
+                        {
+                            !clicked && !showusername && suggestions?.map((el) => {
+                                return <p onClick={() => handleUsernameSuggestion(el)} style={{ color: "#00808B", fontSize: "16px", fontWeight: "400", fontFamily: "poppins", lineHeight: "8px" }}>{el}</p>
                             })
                         }
                     </div>

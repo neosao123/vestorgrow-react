@@ -57,7 +57,6 @@ const LoadingData = () => {
     };
 
     useEffect(() => {
-        alert()
         setActivated();
     }, []);
 

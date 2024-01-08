@@ -1,3 +1,32 @@
 #signupLogo_div_us1 {
     padding: 0px 45px !important;
 }
+
+
+#back_button_group {
+    position: absolute;
+    top: 0;
+    left: -100px;
+    font-size: 16px;
+    color: #000000
+}
+
+@media (min-width: 427px) and (max-width: 768px) {
+    #back_button_group {
+        left: 30px !important;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 426px) {
+    #back_button_group {
+        left: 150px !important;
+        top: -10px !important;
+    }
+}
+
+@media (min-width:1441px) {
+    #group_margin {
+        margin-top: 80px !important;
+        margin-bottom: 80px !important;
+    }
+}

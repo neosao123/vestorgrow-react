@@ -504,7 +504,7 @@ function Sidebar() {
                 <div class="toolcounter">4/4</div>
                 <div class="toolButton">
                   <button class="editComm_btn tooltipbtn" id="tooltipSkip">Skip</button>
-                  <button class="btn btnColor tooltipbtn" id="tooltipNext5">Next</button>
+                  <button class="btn btnColor tooltipbtn" id="tooltipNext4">Next</button>
                 </div>
               </div>
             </div>

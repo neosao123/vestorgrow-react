@@ -45,9 +45,9 @@ const Srceen7 = () => {
             <div>
                 <OnboardingHeader />
             </div>
-            <div className='main_div'>
+            <div className='main_div heading_margin_bottom'>
                 <div className='text_div' style={{ position: "relative", maxWidth: "650px", width: "100%", margin: "auto" }}>
-                    <p onClick={() => navigate("/update_profile", { replace: true })} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
+                    <p onClick={() => navigate("/update_profile", { replace: true })} id='back_button'><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                     <p className='create_account_text'>Pick a profile picture</p>
                 </div>
                 <p className='create_account_description'>Upload your own photo or choose an avatar below? </p>
@@ -58,7 +58,7 @@ const Srceen7 = () => {
                         <img src={tempUser?.profile_img ? tempUser?.profile_img : "/images/profile/default-profile.png"} width={"100%"} alt="/images/profile/default-profile.png" />
                     </div>
                     <div className='opt_div'>
-                        <button className='signup_emailorphone next_btn' type='button' onClick={handleClick}>
+                        <button className='signup_emailorphone next_btn next_button_margin' type='button' onClick={handleClick}>
                             Next
                         </button>
                     </div>

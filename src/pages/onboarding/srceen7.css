@@ -1,0 +1,44 @@
+.next_button_margin {
+    margin-top: 70px !important;
+}
+
+.heading_margin_bottom {
+    margin-bottom: 70px !important;
+}
+
+#back_button {
+    position: absolute !important;
+    top: 10px !important;
+    left: -100px !important;
+    font-size: 16px !important;
+    color: #000000 !important;
+    cursor: pointer !important
+}
+
+@media (min-width: 425px) and (max-width: 768px) {
+    #back_button {
+        left: 20px !important;
+    }
+
+    .next_button_margin {
+        margin-top: 30px !important;
+    }
+
+    .heading_margin_bottom {
+        margin-bottom: 30px !important;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 424px) {
+    #back_button {
+        left: 100px !important;
+    }
+
+    .next_button_margin {
+        margin-top: 10px !important;
+    }
+
+    .heading_margin_bottom {
+        margin-bottom: 10px !important;
+    }
+}

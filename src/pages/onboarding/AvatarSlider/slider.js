@@ -230,6 +230,9 @@ const SimpleSlider = () => {
   //   getAllAvatar()
   // }, [])
 
+  console.log("IMAGESRC:", Imagesrc)
+
+
   return (
     <div style={{ maxHeight: "150px", height: "150px" }}>
       {sliderImages.length > 0 && <Slider {...settings} style={sliderStyle}>
@@ -238,15 +241,15 @@ const SimpleSlider = () => {
             return <div key={el.id} style={maindivstyle}>
               <div style={divStyle}>
                 <div onClick={() => handleClick(el.src1)} id='avatar_div1'>
-                  <img src={el.src1} className='image_height' alt="Slide 1" />
+                  <img src={el.src1} className='image_height' style={{ opacity: `${Imagesrc !== "" ? (Imagesrc === el.src1 ? "1" : "0.4") : "1"}` }} alt="Slide 1" />
                   {Imagesrc !== "" && Imagesrc === el.src1 && <div id='checkmark'><img src={Check} alt='check' className='checkmark_img' /></div>}
                 </div>
                 <div onClick={() => handleClick(el.src2)} id='avatar_div1'>
-                  <img src={el.src2} className='image_height' alt="Slide 1" />
+                  <img src={el.src2} className='image_height' style={{ opacity: `${Imagesrc !== "" ? (Imagesrc === el.src2 ? "1" : "0.4") : "1"}` }} alt="Slide 1" />
                   {Imagesrc !== "" && Imagesrc === el.src2 && <div id='checkmark'><img src={Check} alt='check' className='checkmark_img' /></div>}
                 </div>
                 <div onClick={() => handleClick(el.src3)} id='avatar_div1'>
-                  <img src={el.src3} className='image_height' alt="Slide 1" />
+                  <img src={el.src3} className='image_height' style={{ opacity: `${Imagesrc !== "" ? (Imagesrc === el.src3 ? "1" : "0.4") : "1"}` }} alt="Slide 1" />
                   {Imagesrc !== "" && Imagesrc === el.src3 && <div id='checkmark'><img src={Check} alt='check' className='checkmark_img' /></div>}
                 </div>
               </div>

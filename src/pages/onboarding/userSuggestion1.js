@@ -107,12 +107,12 @@ function UserSuggestion1() {
             <div className="sigUpSection2 signUp_Section signUp_Section-customPosition">
                 <div className="main_container">
                     <div className="signUphead text-center mt-0 mb-2" style={{ maxWidth: "750px", width: "100%", margin: "auto", position: "relative" }}>
-                        <h3 className="mb-2" style={{ fontSize: "50px" }}>Follow 1 or more accounts</h3>
+                        <h3 className="mb-2" style={{ fontSize: "50px", fontWeight: "600", lineHeight: "60px" }}>Follow 1 or more accounts</h3>
                         <p style={{ fontSize: "16px", lineHeight: "22px", fontWeight: "400", maxWidth: "450px", width: "100%", textAlign: "start", margin: "auto" }}>When you follow someone, you’ll see their Tweets in your Timeline. You’ll also get more relevant recommendations</p>
-                        <p onClick={() => navigate("/bio")} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
+                        <p onClick={() => navigate("/bio")} id="back_btn_user"><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                     </div>
                     <div className="suggestion_sec" style={{ marginTop: "40px" }}>
-                        <div className="row allFeedUser">
+                        <div className="row allFeedUser personal_margin">
                             {userList?.map((item, index) => (
                                 <div className="col-sm-6 col-lg-4" key={index}>
                                     <div className="suggestion_Card borderCard suggestion_Card-custom">

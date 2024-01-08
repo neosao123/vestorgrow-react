@@ -9,11 +9,11 @@ export default function Tooltip({ anchorId, place, html, arrow, style }) {
     const [user, setUser] = globalCtx.user
     const [showToolTip, setShowToolTip] = globalCtx.showToolTip
     useEffect(() => {
-        if (showToolTip + 1 > 3) {
-            handleFirstView()
+        if (showToolTip + 1 >= 3) {
+            handleFirstView();
         }
         document.getElementById("tooltipNext" + showToolTip)?.addEventListener("click", () => setShowToolTip(showToolTip + 1))
-        document.getElementById("tooltipSkip")?.addEventListener("click", () => { setShowToolTip(0); handleFirstView() })
+        document.getElementById("tooltipSkip")?.addEventListener("click", () => { handleFirstView(); setShowToolTip(0) })
     }, [showToolTip])
     const handleFirstView = () => {
         try {

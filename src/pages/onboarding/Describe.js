@@ -65,6 +65,10 @@ const Describe = () => {
             });
     }
 
+    useEffect(() => {
+        formik.setValues({ bio: tempUser?.bio })
+    }, [])
+
     return (
         <div>
             <div>
@@ -74,7 +78,7 @@ const Describe = () => {
                 <div className='description_div' style={{ maxWidth: "650px" }}>
                     <p className='description_title'>Describe yourself</p>
                     <p className='description_text' style={{ maxWidth: "300px", margin: "auto" }}>What makes you special? Don’t think too hard, just have fun with it.</p>
-                    <p onClick={() => navigate("/update_profile")} style={{ position: "absolute", top: 20, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
+                    <p onClick={() => navigate("/update_profile")} id='back_button_describe'><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                 </div>
             </div>
             <form onSubmit={formik.handleSubmit}>

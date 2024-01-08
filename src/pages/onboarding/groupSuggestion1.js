@@ -62,6 +62,7 @@ const GroupSuggestion1 = () => {
         try {
             let obj = {
                 groupId: groupId,
+                id: user._id
             };
             await serv.userInvitation(obj).then((resp) => {
                 if (resp.message) {
@@ -129,11 +130,11 @@ const GroupSuggestion1 = () => {
             <div className="sigUpSection2 signUp_Section signUp_Section-customPosition">
                 <div className="main_container">
                     <div className="signUphead text-center mt-0 mb-2" style={{ position: "relative", maxWidth: "650px", width: "100%", textAlign: "center", margin: "auto" }}>
-                        <h3 className="mb-2" style={{ fontSize: "50px" }}>Suggestions </h3>
+                        <h3 className="mb-2" style={{ fontSize: "50px", fontWeight: "600", lineHeight: "60px" }}>Suggestions </h3>
                         <p style={{ fontSize: "16px", lineHeight: "22px", fontWeight: "400" }}>Groups you wish to join...</p>
-                        <p onClick={() => navigate("/usersuggestions1")} style={{ position: "absolute", top: 12, left: 0, fontSize: "16px", color: "#000000" }}><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
+                        <p onClick={() => navigate("/usersuggestions1")} id="back_button_group"><IoChevronBackOutline style={{ marginBottom: "4px" }} />Back</p>
                     </div>
-                    <div className="suggestion_sec">
+                    <div className="suggestion_sec" id="group_margin">
                         <div className="row g-3" style={{ overflowY: "auto" }}>
                             {chatGroupList.map((item, index) => (
                                 <div className="col-sm-6 col-lg-4" key={index}>

@@ -92,4 +92,13 @@ export default class OnboardingService {
             throw error
         }
     }
+
+    async usernameSuggestions(username) {
+        try {
+            return await util.sendApiRequest(`/usersuggestions`, "POST", true, { username: username })
+        }
+        catch (error) {
+            throw error
+        }
+    }
 }
